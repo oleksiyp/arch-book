@@ -17,6 +17,21 @@ This repo is a 14-course Coursera specialization on software architecture ("Soft
 - **References are neutral bibliography entries** — author and *title* (plus publisher/year in full course texts), with the title linked to the book's official web page (publisher or oreilly.com catalog). No chapter/part-to-module mappings.
 - Security, cloud, and AI concerns are woven throughout, not siloed.
 
+## Course text style (canonical exemplar: course001.md)
+
+Full course texts replace the TOC-only pages and follow course001.md exactly:
+
+- **Opening**: one-line epigraph as a blockquote (original aphorism preferred; at most one short attributed quote per course), then a "Welcome" section framing the course and its place in the arc.
+- **Encore** — the concert-ticketing startup (500× on-sale spikes, no double-selling, bots, team of nine) — is the specialization-wide running example. It *evolves* course by course: decomposed in Course 3, scaled in Course 4, split into services in Course 5, SaaS-ified in Course 13, platform at 40 teams in Course 14. Land every major concept on Encore concretely before generalizing.
+- **Modules** are `## Module N: Title` sections matching the course's 5-module TOC. Prose argues rather than lists — each module opens by dismantling a comfortable assumption (the building metaphor, the entity trap, pros-and-cons tables without arbiters).
+- **Figures**: numbered `*Figure N — caption.*` lines under each visual; captions are assertive and add insight, never restate the diagram. Mermaid by default, inline SVG for small precise figures, canvas at most once per course.
+- **Callouts**: definitions, laws, and named traps as bold-led blockquotes (`> **The entity trap.** ...`).
+- **Tables do real work**: business-statement→characteristic translations, trade-off matrices arbitrated by characteristics, worked ADRs as tables. Never decorative.
+- **Module closings**: `**Recap.**` (2–4 sentences) + `**Exercise N.1.**` (one, concrete, opinionated).
+- **Course closing**: a kata/graded project with a *new* brief (never Encore — learners must transfer, not copy; briefs are deliberately smaller businesses that punish overengineering), a rubric table phrased as reviewer questions, a short "Where you now stand" bridge to the next course, then a linked `## References` section (author — linked *title*, publisher, year).
+- **Tone**: warm authority; dry humor in moderation; honest about what every choice loses (first law); no filler, no hype. Trade-off analysis arbitrated by characteristics is the repeated method of every course.
+- **Length**: comparable to course001.md (~4,000–5,000 words).
+
 ## Illustration strategy
 
 Never commit binary images (PNG/JPG). All visuals are text-authored and rendered in the browser. Choose by case:
