@@ -4,7 +4,7 @@ This repo is a 14-course Coursera specialization on software architecture ("Soft
 
 ## Publishing
 
-- Private repo `oleksiyp/arch-course`; public site at https://oleksiyp.github.io/arch-course/
+- Private repo `oleksiyp/arch-spec`; public site at https://oleksiyp.github.io/arch-spec/
 - Deployed by `.github/workflows/deploy.yml` (Jekyll build → GitHub Pages) on every push to `main`
 - Theme: Cayman, customized in `assets/css/style.scss` and `_layouts/default.html`
 - Palette: dark navy `#1b1f3b`, violet `#6c2bd9` / `#5a23c8`, cyan `#00c9ff`, link blue `#0b7ecb`
