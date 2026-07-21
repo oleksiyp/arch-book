@@ -1,6 +1,6 @@
 # Specialization: Software Architecture in the AI & Cloud Era — The Road to Platform Architecture
 
-A 12-course Coursera specialization that takes a working engineer from architectural thinking to designing and running full platforms. The curriculum deliberately discards legacy-era material (UML modeling, orchestration-driven SOA, enterprise service buses) and is built around what architecture means today: cloud-native distributed systems, event-driven backbones, secure-by-design thinking, AI-infused workloads — all converging on **platform architecture** as the destination discipline: internal developer platforms, multi-tenant SaaS platforms, self-service data platforms, and governance delivered as paved roads rather than review boards.
+A 13-course Coursera specialization that takes a working engineer from architectural thinking to designing and running full platforms. The curriculum deliberately discards legacy-era material (UML modeling, orchestration-driven SOA, enterprise service buses) and is built around what architecture means today: cloud-native distributed systems, event-driven backbones, secure-by-design thinking, AI-infused workloads — all converging on **platform architecture** as the destination discipline: internal developer platforms, multi-tenant SaaS platforms, self-service data platforms, and governance delivered as paved roads rather than review boards.
 
 ## The Arc
 
@@ -10,7 +10,7 @@ A 12-course Coursera specialization that takes a working engineer from architect
 
 **The modern era (Courses 9–11):** security architecture and zero trust, cloud-native operations and SRE, architecting AI/LLM systems.
 
-**Destination (Course 12):** platform architecture and platform engineering — the capstone where everything converges into designing a platform.
+**Destination (Courses 12–13):** multi-tenant SaaS architecture, then platform engineering and the capstone — where everything converges into designing a platform.
 
 ## Courses
 
@@ -25,4 +25,5 @@ A 12-course Coursera specialization that takes a working engineer from architect
 9. [Security Architecture and Zero Trust](course009.md)
 10. [Cloud-Native Operations: Serverless, Kubernetes, and SRE](course010.md)
 11. [Architecting AI Systems: LLMs, RAG, and Agents](course011.md)
-12. [Platform Architecture and Platform Engineering (Capstone)](course012.md)
+12. [Multi-Tenant SaaS Architecture](course012.md)
+13. [Platform Engineering and the Capstone](course013.md)

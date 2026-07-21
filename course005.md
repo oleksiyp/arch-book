@@ -39,5 +39,5 @@ Equally important, the course covers the socio-technical half that decides succe
 - "You build it, you run it" and active service ownership
 - Conway's Law in practice: stream-aligned teams and enabling teams
 - Governance and standardization: golden paths instead of review boards
-- Why microservices at scale demand a platform (bridge to Course 12)
+- Why microservices at scale demand a platform (bridge to Course 13)
 - Graded exercise: microservice adoption assessment for a case-study company

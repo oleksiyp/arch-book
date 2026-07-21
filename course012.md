@@ -1,42 +1,42 @@
-# Course 12: Platform Architecture and Platform Engineering (Capstone)
+# Course 12: Multi-Tenant SaaS Architecture
 
 ## Description
 
-This is the destination of the specialization. Everything learned so far — styles, decomposition, distributed systems, events, APIs, data, security, operations, AI — converges in the discipline of **platform architecture**: designing systems whose users are other engineering teams. Students learn the anatomy of an internal developer platform (golden paths, self-service infrastructure, platform APIs, scorecards), the platform-as-product operating model (platform teams serve customers, not tickets), and governance delivered as paved roads and policy-as-code rather than review boards. Evolutionary architecture completes the picture: fitness functions and architectural metrics become the platform's automated guardrails, letting hundreds of teams move fast inside safe boundaries.
+Software-as-a-Service is where most modern architectures ultimately earn revenue, and multi-tenancy is its defining constraint: one system, many customers, with isolation, fairness, and per-tenant economics designed in rather than bolted on. This course gives the full treatment of multi-tenant architecture: the SaaS mindset and the control plane / application plane split, deployment models (silo, pool, bridge) and how to mix them per tier, tenant onboarding and identity, tenant-aware routing, data partitioning, and — the topic that decides whether a SaaS business survives its first enterprise customer — tenant isolation and noisy-neighbor management.
 
-The course then extends platform thinking outward to **multi-tenant SaaS platforms** — deployment models, tenant onboarding, isolation, tiering, and tenant-aware operations — treating commercial SaaS as platform architecture with billing attached. A strategy module gives architects the tools to justify and steer platform investment: technology strategy patterns, the architect-elevator skill of connecting the engine room to the boardroom, and systems thinking for the feedback loops that make platforms succeed or stall. The capstone project synthesizes the entire specialization: students design a complete platform for a case-study company — golden paths, platform APIs, event and data infrastructure, security guardrails, AI services, migration strategy, and an executive narrative — reviewed against the trade-off discipline built across all eleven prior courses.
+The course is deliberately placed just before the platform capstone because a SaaS product *is* a platform with billing attached: the control plane, self-service onboarding, and tenant-aware operations built here are the same machinery the capstone generalizes to internal platforms. Concrete architectures are studied on both Kubernetes and serverless stacks, and the course closes with the commercial realities — tiering strategies, per-tenant cost visibility, migrating an existing single-tenant product to SaaS, and multi-tenant GenAI features where prompts, corpora, and spend must all be isolated per tenant.
 
-**Primary sources:** *Building Multi-Tenant SaaS Architectures* (Golding), *Building Evolutionary Architectures* (Ford, Parsons, Kua, Sadalage), *Software Architecture Metrics* (Ciceri et al.), *The Software Architect Elevator* (Hohpe), *Technology Strategy Patterns* (Hewitt), *Learning Systems Thinking* (Montalion), *Enabling Microservice Success* (Watt)
+**Primary sources:** *Building Multi-Tenant SaaS Architectures* (Golding), *Enabling Microservice Success* (Watt) for operational practices
 
 ## Table of Contents
 
-### Module 1: Why Platforms
-- From projects to products to platforms: the consolidation of everything before
-- Internal developer platforms: golden paths, self-service, cognitive-load reduction
-- Platform-as-product: customers, adoption curves, and the thinnest viable platform
-- Anti-patterns: mandate-driven platforms, ivory-tower platforms, platform-as-ticket-queue
+### Module 1: The SaaS Mindset
+- What makes SaaS different: one system, many customers, continuous operation
+- Control plane vs. application plane — the fundamental split
+- Multi-tenant fundamentals: what "tenant" touches (identity, data, compute, cost)
+- Deployment models: silo, pool, bridge — trade-offs and mixing per tier
 
-### Module 2: Platform Anatomy
-- Platform APIs and control planes; everything-as-a-service internally
-- Golden paths in practice: templates, scaffolding, scorecards, service catalogs
-- Composing prior courses into planes: compute (Course 10), events (6), data (8), APIs (7), AI services (11)
-- Governance as code: fitness functions, policy engines, automated guardrails
-- Architectural metrics: modularity maturity, four key metrics, goal-question-metric
+### Module 2: Tenant Lifecycle
+- Onboarding as architecture: frictionless, automated, observable
+- Tenant identity and authentication; mapping tenants into tokens
+- Tenant management and configuration; tenant context propagation
+- Tenant-aware routing: subdomain, path, and claim-based strategies
 
-### Module 3: Multi-Tenant SaaS Platforms
-- The SaaS mindset; control plane vs. application plane
-- Deployment models: silo, pool, bridge; tiering strategies
-- Onboarding, identity, tenant routing, and tenant-aware operations
-- Isolation and noisy-neighbor management; per-tenant cost and GenAI tenancy
-- Migration strategies: taking an existing product to multi-tenant SaaS
+### Module 3: Building Multi-Tenant Services
+- Designing services that are tenant-aware without tenant-riddled code
+- Data partitioning: pooled tables, schema-per-tenant, database-per-tenant
+- Tenant isolation: runtime enforcement, scoped credentials, blast-radius thinking
+- Noisy neighbors: throttling, fairness, and workload partitioning
 
-### Module 4: Platform Strategy and Leadership
-- Technology strategy patterns: Wardley-style situational awareness, build-vs-buy, bet sizing
-- The architect elevator: selling options, executive narratives, riding between floors
-- Systems thinking: feedback loops, leverage points, and why platform adoption stalls
-- Evolving the platform: deprecation, migration campaigns, avoiding zombie systems
+### Module 4: SaaS on Real Stacks
+- Kubernetes SaaS: namespaces, quotas, and isolation patterns on EKS-class platforms
+- Serverless SaaS: per-function isolation, concurrency limits, cost attribution
+- Tenant-aware operations: per-tenant health, metrics, and support tooling
+- Per-tenant cost: measuring, attributing, and acting on unit economics
 
-### Module 5: Capstone Project
-- Brief: a scaling company with 40 product teams, a legacy monolith, new AI ambitions, and compliance pressure
-- Deliverables: platform architecture (C4), golden-path definitions, event/data/AI service design, security guardrail set, fitness-function suite, migration roadmap, and a 10-minute executive presentation
-- Peer review against the specialization rubric: every decision defended as a trade-off, every claim measurable
+### Module 5: The Business of Multi-Tenancy
+- Tiering strategies: mapping business tiers to architecture (silo premium, pooled standard)
+- Migration: taking a single-tenant product to multi-tenant SaaS without stopping the world
+- SaaS anywhere: extending SaaS into customer environments
+- GenAI and multi-tenancy: isolating prompts, retrieval corpora, and AI spend per tenant
+- Graded project: multi-tenant architecture for a case-study product — deployment model per tier, isolation design, onboarding flow, and cost-attribution plan
