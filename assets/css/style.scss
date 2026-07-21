@@ -1,0 +1,53 @@
+---
+---
+
+@import "{{ site.theme }}";
+
+.page-header {
+    background-image: linear-gradient(120deg, #1b1f3b, #6c2bd9 45%, #00c9ff);
+    background-color: #6c2bd9;
+    padding-bottom: 1.2rem;
+}
+
+.project-name a:link, .project-name a:visited {
+    color: white;
+}
+
+.project-name a:hover, .project-name a:active {
+    color: white;
+    text-decoration: none;
+}
+
+.main-content {
+    h1, h2, h3, h4, h5, h6 {
+        color: #5a23c8;
+    }
+
+    a {
+        color: #0b7ecb;
+    }
+}
+
+.btn {
+    border-radius: 0.4rem;
+}
+
+.crumbs {
+    background: #14172e;
+    padding: 0.55rem 1rem;
+    text-align: center;
+    font-size: 0.9rem;
+
+    a {
+        color: rgba(255, 255, 255, 0.85);
+        text-decoration: none;
+
+        &:hover {
+            color: #00c9ff;
+        }
+    }
+}
+
+.site-footer {
+    color: #819198;
+}
