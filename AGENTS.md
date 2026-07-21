@@ -1,6 +1,6 @@
 # AGENTS.md — Working on This Repository
 
-This repo is a 13-course Coursera specialization on software architecture ("Software Architecture in the AI & Cloud Era — The Road to Platform Architecture"). Content lives in `README.md` (index) and `course001.md`–`course013.md`. Source books (PDFs, gitignored) are in `books/`.
+This repo is a 14-course Coursera specialization on software architecture ("Software Architecture in the AI & Cloud Era — The Road to Platform Architecture"). Content lives in `README.md` (index) and `course001.md`–`course014.md`. Source books (PDFs, gitignored) are in `books/`.
 
 ## Publishing
 
@@ -12,8 +12,9 @@ This repo is a 13-course Coursera specialization on software architecture ("Soft
 ## Content rules
 
 - **No legacy-era material**: no UML, no orchestration-driven SOA/ESB except as brief cautionary history. Diagrams are C4-style, expressed as diagrams-as-code.
-- The curriculum arc converges on **platform architecture** (Course 13). Keep forward references ("bridge to Course N") accurate when renumbering.
-- Every course file: title, 2-paragraph description, "Primary sources" line, 5-module TOC.
+- The curriculum arc converges on **platform architecture** (Course 14). Keep forward references ("bridge to Course N") accurate when renumbering.
+- Every course file: title, 2-paragraph description, "References" line (TOC-style pages) or closing "References" section (full course texts), 5-module TOC.
+- **References are neutral bibliography entries** — author and *title* (plus publisher/year in full course texts), with the title linked to the book's official web page (publisher or oreilly.com catalog). No chapter/part-to-module mappings.
 - Security, cloud, and AI concerns are woven throughout, not siloed.
 
 ## Illustration strategy
@@ -34,7 +35,7 @@ Use Mermaid for:
 - **System topologies, component relationships, context maps** → `flowchart` (use `subgraph` for boundaries/platforms/bounded contexts)
 - **Interactions over time** (API calls, sagas, onboarding flows, agent loops) → `sequenceDiagram`
 - **Lifecycles and state** (tenant lifecycle, circuit breaker states, deployment stages) → `stateDiagram-v2`
-- **C4 context/container diagrams** → `C4Context` / `C4Container` (Mermaid supports these natively)
+- **C4 context/container diagrams** → do NOT use Mermaid's `C4Context`/`C4Container` (its renderer overlaps edge labels and scatters nodes). Draw them as `flowchart LR` with C4 semantics: rounded nodes for people, rectangles for systems, `classDef` palette — person `#1b1f3b`, system `#6c2bd9`, external `#e8e8ee` — and verb-labeled edges. See Figure 2 in course001.md for the canonical example.
 - **Roadmaps/migration timelines** → `gantt` (sparingly)
 
 Accept Mermaid's auto-layout: don't fight node positions. If a flowchart gets tangled beyond ~15 nodes, split it into two diagrams instead of tweaking.

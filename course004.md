@@ -6,7 +6,7 @@ Every architecture in this specialization eventually runs on multiple machines, 
 
 The second half turns theory into scalable system design: stateless service tiers, load balancing, distributed caching, asynchronous messaging as the scalability workhorse, and the resilience patterns — timeouts, retries with backoff and jitter, circuit breakers, bulkheads, backpressure, load shedding — that separate systems that degrade gracefully from systems that cascade. Kubernetes-era structural patterns (sidecar, ambassador, adapter, sharded and scatter/gather services) are introduced as reusable vocabulary. Students leave able to design a system for a stated scale target and defend its failure behavior.
 
-**Primary sources:** *Foundations of Scalable Systems* (Gorton), *Designing Distributed Systems* (Burns)
+**References:** [*Foundations of Scalable Systems*](https://www.oreilly.com/library/view/foundations-of-scalable/9781098106058/) (Gorton), [*Designing Distributed Systems*](https://www.oreilly.com/library/view/designing-distributed-systems/9781098156343/) (Burns)
 
 ## Table of Contents
 

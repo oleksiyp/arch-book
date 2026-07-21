@@ -6,7 +6,7 @@ Event-driven architecture is the backbone of modern digital infrastructure — t
 
 The course also covers long-running business processes: workflow engines, process orchestration, and the pragmatic balance between choreographed events and orchestrated processes for automation that spans services, humans, and time. Students study "flow" as an emerging property of enterprises — composable event streams as products — which sets up both the data mesh course and the platform capstone, where event infrastructure becomes a self-service platform capability.
 
-**Primary sources:** *Building Event-Driven Microservices* (Bellemare), *Practical Process Automation* (Ruecker), *Flow Architectures* (Brown), *Fundamentals of Software Architecture* ch. 14 (Richards & Ford)
+**References:** [*Building Event-Driven Microservices*](https://www.oreilly.com/library/view/building-event-driven-microservices/9798341622180/) (Bellemare), [*Practical Process Automation*](https://www.oreilly.com/library/view/practical-process-automation/9781492061441/) (Rücker), [*Flow Architectures*](https://www.oreilly.com/library/view/flow-architectures/9781492075882/) (Urquhart), [*Fundamentals of Software Architecture*](https://www.oreilly.com/library/view/fundamentals-of-software/9781098175504/) (Richards & Ford)
 
 ## Table of Contents
 

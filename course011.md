@@ -1,41 +1,41 @@
-# Course 11: Architecting AI Systems: LLMs, RAG, and Agents
+# Course 11: Cloud-Native Operations: Serverless, Kubernetes, and SRE
 
 ## Description
 
-AI workloads are now a standard part of the architect's portfolio, and they bend every rule learned so far: non-deterministic components, quality measured statistically rather than with pass/fail tests, latency and cost profiles dominated by model inference, and new security surfaces like prompt injection. This course teaches the architecture of AI-infused systems: where models sit in a system topology, retrieval-augmented generation as the workhorse pattern for grounding LLMs in private data, agentic architectures with tool use and orchestration loops, and the evaluation-driven development loop that replaces traditional QA for probabilistic components. Classic ML serving (feature pipelines, model registries, online/offline skew) is covered as the foundation that GenAI systems still rest on.
+Architecture that can't be operated is fiction. This course covers the operational half of modern architecture: the cloud execution models (containers and Kubernetes, serverless functions and managed services) and their trade-offs in cost, elasticity, and operational burden; infrastructure as code and GitOps as the delivery substrate; and observability and SRE practice — SLIs, SLOs, error budgets — as the feedback loop that keeps architecture honest. Serverless receives a full treatment as an architectural approach: event-driven function composition, enterprise readiness, testing, cost modeling (the "pay-per-use changes your architecture" argument), and its operational model where most traditional ops work disappears into the provider.
 
-The treatment is deliberately vendor-neutral and trade-off driven: buy vs. host, model routing across capability tiers, caching and batching for cost control, guardrails and human-in-the-loop patterns for risk control, and observability for token-level economics. The course connects backward to earlier material — RAG corpora are data products (Course 8), AI security extends zero trust (Course 9), inference is a capacity problem (Course 10) — and forward to the capstone, where AI capabilities become another paved-road service the platform offers to product teams.
+Students also learn evolutionary operations: deployment topologies, progressive delivery at the infrastructure level, capacity and cost architecture (FinOps for architects), and sustainability as an emerging characteristic. The course keeps score with the four key metrics (deployment frequency, lead time, MTTR, change fail rate) and architecture fitness functions, teaching students to treat operability as a designed property. It closes with the question that leads to the capstone: once you can operate one system well, how do you make operability a self-service capability for every team — that is, a platform?
 
-**Primary sources:** current practitioner literature and provider architecture guidance (this domain moves faster than books); *Building Multi-Tenant SaaS Architectures* ch. 16 (Golding) for GenAI multi-tenancy; Course 8 data-product foundations
+**References:** [*Serverless Development on AWS*](https://www.oreilly.com/library/view/serverless-development-on/9781098141929/) (Brisals & Hedger), [*Building Microservices*](https://www.oreilly.com/library/view/building-microservices-2nd/9781492034018/) (Newman), [*Enabling Microservice Success*](https://www.oreilly.com/library/view/enabling-microservice-success/9781098130787/) (Wells), [*Software Architecture Metrics*](https://www.oreilly.com/library/view/software-architecture-metrics/9781098112226/) (Ciceri, Farley et al.), [*Designing Distributed Systems*](https://www.oreilly.com/library/view/designing-distributed-systems/9781098156343/) (Burns)
 
 ## Table of Contents
 
-### Module 1: AI in the System Topology
-- The AI-infused system: models as components with probabilistic contracts
-- Classic ML serving: feature pipelines, registries, online/offline skew, drift
-- LLM integration patterns: direct call, gateway, router across model tiers
-- Build vs. buy vs. host: capability, cost, latency, and data-governance trade-offs
+### Module 1: Cloud Execution Models
+- The spectrum: VMs → containers → Kubernetes → serverless → fully managed
+- Kubernetes for architects: what the scheduler gives you and what it costs
+- Serverless architecture: functions, managed services, event composition
+- Choosing an execution model per workload: latency, burst, cost, team maturity
 
-### Module 2: Retrieval-Augmented Generation
-- Why RAG: grounding, freshness, and access control vs. fine-tuning
-- Ingestion architecture: chunking, embeddings, vector and hybrid search
-- Retrieval quality: reranking, query rewriting, metadata filtering
-- The RAG corpus as a data product: contracts, lineage, permissions
+### Module 2: Delivery Infrastructure
+- Infrastructure as code; immutable infrastructure; GitOps
+- Environments, ephemeral previews, and configuration architecture
+- Progressive delivery: canary, blue-green, feature flags at infra level
+- The four key metrics as an architecture scorecard
 
-### Module 3: Agentic Architectures
-- Tool use and function calling; the agent loop as an orchestration problem
-- Single agent vs. multi-agent topologies; workflow engines vs. free-running loops
-- State, memory, and context management as architectural concerns
-- Failure containment: timeouts, budgets, sandboxing, human-in-the-loop gates
+### Module 3: Observability and SRE
+- Logs, metrics, traces; wide events and high-cardinality debugging
+- SLIs, SLOs, and error budgets: turning reliability into a decision framework
+- Alerting philosophy: symptoms over causes; on-call that doesn't burn people
+- Incident response and blameless postmortems as architectural feedback
 
-### Module 4: Quality, Safety, and Security
-- Evaluation-driven development: golden sets, LLM-as-judge, regression evals in CI
-- Guardrails: input/output filtering, structured outputs, policy enforcement
-- AI security: prompt injection, data exfiltration, model misuse — threat modeling AI features
-- Responsible deployment: monitoring for drift, bias, and degraded behavior
+### Module 4: Cost, Capacity, and Sustainability
+- FinOps for architects: unit economics, cost as a fitness function
+- Serverless cost modeling: when pay-per-use wins and when it bankrupts you
+- Capacity planning and autoscaling architecture
+- Sustainability: carbon-aware and efficiency-driven design choices
 
-### Module 5: Operating AI at Scale
-- Inference economics: token costs, caching, batching, model routing
-- Latency architecture: streaming responses, speculative and parallel calls
-- Multi-tenant AI: isolation of prompts, corpora, and spend per tenant
-- Graded project: architecture for an AI assistant over private enterprise data — topology, RAG design, eval plan, threat model, and cost model
+### Module 5: Operability by Design
+- Operational fitness functions and production readiness reviews
+- Testing serverless and distributed systems: local reality vs. cloud reality
+- Keeping things up to date: dependency, runtime, and platform lifecycle
+- Graded project: operations architecture (deployment, observability, SLOs, cost model) for the Course 5 case-study system

@@ -1,39 +1,40 @@
-# Course 9: Security Architecture and Zero Trust
+# Course 9: Data Architecture: From Distributed Data to Data Mesh
 
 ## Description
 
-In the cloud era, security is an architectural characteristic, not a compliance checkbox — and the architect, not a downstream security team, makes most of the decisions that determine whether a system is defensible. This course teaches secure-by-design thinking: threat modeling as a routine design activity, trust boundaries as first-class architectural elements, and the zero-trust model — never trust the network, always verify identity — as the organizing principle for modern system security. Students learn workload identity, mTLS and service-to-service authorization, secret management, supply-chain integrity (dependencies, images, provenance), and multi-tenant isolation models, all applied to the microservice, API, and event-driven architectures from earlier courses.
+Data is where distributed architectures get hard and stay hard. This course covers the operational side first: data ownership per service, polyglot persistence, distributed transactions and their alternatives, eventual consistency as a business conversation, and the data access patterns (replication, views, CQRS read models, data sidecars) that let decomposed systems answer joined-up questions. Students work through the granularity and ownership decisions together with the database decomposition techniques to execute them.
 
-The course is defensive and design-oriented: the deliverables are threat models, trust-boundary diagrams, and security ADRs, not exploits. Cloud provider security primitives (IAM, network segmentation, KMS) are covered at the pattern level so the material transfers across AWS, GCP, and Azure. The closing module positions security as a platform capability — paved-road security, where the platform makes the secure path the easy path — which is a load-bearing pillar of the capstone.
+The second half addresses analytical data in a decentralized world. Traditional warehouse and lake architectures are contrasted with **data mesh**: domain-owned data products, event streams as the transport, federated computational governance, and the self-service data platform that makes decentralized ownership viable. The platform framing is explicit — data mesh is platform architecture applied to analytics, and its self-service platform plane is studied as a direct rehearsal for the capstone. AI workloads appear as a forcing function: feature pipelines and retrieval corpora are downstream consumers that make data quality and contracts non-negotiable.
 
-**Primary sources:** *Building Microservices* ch. 11 (Newman), *Mastering API Architecture* Part III (Gough, Bryant, Auburn), *Building Multi-Tenant SaaS Architectures* ch. 9 (Golding), *Serverless Development on AWS* ch. 4 (Sbarski et al.), plus current NIST zero-trust and OWASP guidance
+**References:** [*Building an Event-Driven Data Mesh*](https://www.oreilly.com/library/view/building-an-event-driven/9781098127596/) (Bellemare), [*Software Architecture: The Hard Parts*](https://www.oreilly.com/library/view/software-architecture-the/9781492086888/) (Ford, Richards, Sadalage, Dehghani), [*Foundations of Scalable Systems*](https://www.oreilly.com/library/view/foundations-of-scalable/9781098106058/) (Gorton)
 
 ## Table of Contents
 
-### Module 1: Thinking Like a Defender
-- Security as an architectural characteristic; CIA triad in trade-off language
-- Threat modeling: STRIDE, attack trees, and lightweight "evil brainstorming"
-- Trust boundaries on C4 diagrams; data classification driving design
-- Risk-based prioritization: what you protect first and why
+### Module 1: Data Ownership in Distributed Systems
+- Data ownership: single, common, and joint-ownership scenarios
+- Polyglot persistence: choosing stores by access pattern
+- Distributed transactions: why 2PC is (almost) always wrong; sagas revisited
+- Eventual consistency patterns: background sync, orchestrated, event-based
 
-### Module 2: Zero Trust and Identity
-- Perimeter security's failure; zero-trust principles (NIST SP 800-207 essentials)
-- Human identity: OIDC, SSO, MFA at the architecture level
-- Workload identity: SPIFFE-style identities, mTLS, service authorization policies
-- Network segmentation: VPCs, private endpoints, egress control
+### Module 2: Distributed Data Access
+- Interservice queries: API composition and its limits
+- Replicated caching, data domains, and data sidecars
+- CQRS read models as integration surfaces
+- Change data capture and the outbox pattern in production
 
-### Module 3: Securing the Stack
-- Secrets management: vaults, rotation, short-lived credentials
-- Data protection: encryption at rest/in transit/in use; key management patterns
-- Supply chain: dependency scanning, image signing, SBOMs, provenance (SLSA)
-- Event and API security: signed events, replay protection, OWASP API Top 10 recap
+### Module 3: Analytical Architectures
+- Warehouse, lake, lakehouse: what each solves and where each strains
+- The centralization failure mode: data team as bottleneck
+- Streaming analytics: real-time pipelines feeding dashboards and models
+- Data contracts: schemas, quality guarantees, and breaking-change discipline
 
-### Module 4: Isolation and Multi-Tenancy
-- Tenant isolation models: silo, pool, bridge — and their blast radii
-- Sandboxing untrusted workloads; AI-era concerns: prompt injection surfaces, model and data exfiltration (bridge to Course 11)
-- Compliance as architecture: audit trails, data residency, least privilege at scale
+### Module 4: Data Mesh
+- The four principles: domain ownership, data as a product, self-service platform, federated computational governance
+- Event streams as the data product transport
+- Designing data products: ports, discoverability, SLOs, lineage
+- Federated governance: policy as code across domains
 
-### Module 5: Security as a Platform Capability
-- Paved-road security: golden paths, policy as code, guardrails not gates
-- Security fitness functions in the pipeline
-- Graded project: full threat model and security architecture (diagrams + ADRs) for the Course 5 case-study system
+### Module 5: The Self-Service Data Platform
+- Platform plane architecture: infrastructure, product developer, and consumer planes
+- Feeding AI: feature pipelines and retrieval corpora as data products (bridge to Course 12)
+- Graded project: data architecture for a case-study company — ownership map, two data products, and a governance policy set

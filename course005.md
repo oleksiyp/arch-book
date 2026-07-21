@@ -6,7 +6,7 @@ This course is an honest, end-to-end treatment of microservices — the dominant
 
 Equally important, the course covers the socio-technical half that decides success: "you build it, you run it" ownership, paved-road enablement, governance without central bottlenecks, and the organizational prerequisites without which microservices reliably fail. This module is a deliberate bridge to the platform capstone — the observation that microservices at scale *require* a platform is one of the specialization's central arguments.
 
-**Primary sources:** *Building Microservices, 2nd ed.* (Newman), *Enabling Microservice Success* (Watt), *Software Architecture: The Hard Parts* (Ford, Richards, Sadalage, Dehghani)
+**References:** [*Building Microservices, 2nd ed.*](https://www.oreilly.com/library/view/building-microservices-2nd/9781492034018/) (Newman), [*Enabling Microservice Success*](https://www.oreilly.com/library/view/enabling-microservice-success/9781098130787/) (Wells), [*Software Architecture: The Hard Parts*](https://www.oreilly.com/library/view/software-architecture-the/9781492086888/) (Ford, Richards, Sadalage, Dehghani)
 
 ## Table of Contents
 
@@ -31,13 +31,13 @@ Equally important, the course covers the socio-technical half that decides succe
 
 ### Module 4: Production Realities
 - Resiliency applied: applying Course 4 patterns to service meshes
-- Securing microservices: service identity, mTLS, secret management (preview of Course 9)
-- Scaling: the four axes; data scaling handoffs to Course 8
-- UI composition: BFFs and micro-frontends in brief
+- Securing microservices: service identity, mTLS, secret management (preview of Course 10)
+- Scaling: the four axes; data scaling handoffs to Course 9
+- UI composition: BFFs and micro-frontends in brief (expanded in Course 8)
 
 ### Module 5: The Organization That Microservices Require
 - "You build it, you run it" and active service ownership
 - Conway's Law in practice: stream-aligned teams and enabling teams
 - Governance and standardization: golden paths instead of review boards
-- Why microservices at scale demand a platform (bridge to Course 13)
+- Why microservices at scale demand a platform (bridge to Course 14)
 - Graded exercise: microservice adoption assessment for a case-study company

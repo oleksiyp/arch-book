@@ -6,7 +6,7 @@ This course is a working catalog of the architecture styles that matter today, t
 
 The through-line is style selection as an economic decision: every style is evaluated by its operational cost profile, its team-topology fit, and its evolvability. Students finish by running structured style-selection exercises on realistic briefs — choosing, justifying, and stress-testing a style against shifting requirements, which prepares them for the decomposition and distributed-systems courses that follow.
 
-**Primary sources:** *Software Architecture Patterns, 2nd ed.* (Richards), *Fundamentals of Software Architecture* Part II (Richards & Ford), *Building Evolutionary Architectures* (Ford, Parsons, Kua, Sadalage)
+**References:** [*Software Architecture Patterns, 2nd ed.*](https://www.oreilly.com/library/view/software-architecture-patterns/9781098134280/) (Richards), [*Fundamentals of Software Architecture*](https://www.oreilly.com/library/view/fundamentals-of-software/9781098175504/) (Richards & Ford), [*Building Evolutionary Architectures*](https://www.oreilly.com/library/view/building-evolutionary-architectures/9781492097532/) (Ford, Parsons, Kua, Sadalage)
 
 ## Table of Contents
 

@@ -6,7 +6,7 @@ Where do service boundaries come from? This course teaches strategic domain-driv
 
 The second half applies decomposition to the hardest real-world case: an existing system. Students learn migration patterns — strangler fig, branch by abstraction, parallel run — and database decomposition techniques, along with the honest economics of when to leave a monolith alone. Conway's Law and team topologies are treated as design inputs, not afterthoughts: boundaries that fight the organization lose. The course closes by connecting bounded contexts to platform thinking — well-drawn contexts are what make a system *platformizable* later.
 
-**Primary sources:** *Learning Domain-Driven Design* (Khononov), *Monolith to Microservices* (Newman), *Software Architecture: The Hard Parts* Part I (Ford, Richards, Sadalage, Dehghani)
+**References:** [*Learning Domain-Driven Design*](https://www.oreilly.com/library/view/learning-domain-driven-design/9781098100124/) (Khononov), [*Monolith to Microservices*](https://www.oreilly.com/library/view/monolith-to-microservices/9781492047834/) (Newman), [*Software Architecture: The Hard Parts*](https://www.oreilly.com/library/view/software-architecture-the/9781492086888/) (Ford, Richards, Sadalage, Dehghani)
 
 ## Table of Contents
 

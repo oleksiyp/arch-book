@@ -1,42 +1,41 @@
-# Course 12: Multi-Tenant SaaS Architecture
+# Course 12: Architecting AI Systems: LLMs, RAG, and Agents
 
 ## Description
 
-Software-as-a-Service is where most modern architectures ultimately earn revenue, and multi-tenancy is its defining constraint: one system, many customers, with isolation, fairness, and per-tenant economics designed in rather than bolted on. This course gives the full treatment of multi-tenant architecture: the SaaS mindset and the control plane / application plane split, deployment models (silo, pool, bridge) and how to mix them per tier, tenant onboarding and identity, tenant-aware routing, data partitioning, and — the topic that decides whether a SaaS business survives its first enterprise customer — tenant isolation and noisy-neighbor management.
+AI workloads are now a standard part of the architect's portfolio, and they bend every rule learned so far: non-deterministic components, quality measured statistically rather than with pass/fail tests, latency and cost profiles dominated by model inference, and new security surfaces like prompt injection. This course teaches the architecture of AI-infused systems: where models sit in a system topology, retrieval-augmented generation as the workhorse pattern for grounding LLMs in private data, agentic architectures with tool use and orchestration loops, and the evaluation-driven development loop that replaces traditional QA for probabilistic components. Classic ML serving (feature pipelines, model registries, online/offline skew) is covered as the foundation that GenAI systems still rest on.
 
-The course is deliberately placed just before the platform capstone because a SaaS product *is* a platform with billing attached: the control plane, self-service onboarding, and tenant-aware operations built here are the same machinery the capstone generalizes to internal platforms. Concrete architectures are studied on both Kubernetes and serverless stacks, and the course closes with the commercial realities — tiering strategies, per-tenant cost visibility, migrating an existing single-tenant product to SaaS, and multi-tenant GenAI features where prompts, corpora, and spend must all be isolated per tenant.
+The treatment is deliberately vendor-neutral and trade-off driven: buy vs. host, model routing across capability tiers, caching and batching for cost control, guardrails and human-in-the-loop patterns for risk control, and observability for token-level economics. The course connects backward to earlier material — RAG corpora are data products (Course 9), AI security extends zero trust (Course 10), inference is a capacity problem (Course 11) — and forward to the capstone, where AI capabilities become another paved-road service the platform offers to product teams.
 
-**Primary sources:** *Building Multi-Tenant SaaS Architectures* (Golding), *Enabling Microservice Success* (Watt) for operational practices
+**References:** current practitioner literature and provider architecture guidance (this domain moves faster than books); [*Building Multi-Tenant SaaS Architectures*](https://www.oreilly.com/library/view/building-multi-tenant-saas/9781098140632/) (Golding)
 
 ## Table of Contents
 
-### Module 1: The SaaS Mindset
-- What makes SaaS different: one system, many customers, continuous operation
-- Control plane vs. application plane — the fundamental split
-- Multi-tenant fundamentals: what "tenant" touches (identity, data, compute, cost)
-- Deployment models: silo, pool, bridge — trade-offs and mixing per tier
+### Module 1: AI in the System Topology
+- The AI-infused system: models as components with probabilistic contracts
+- Classic ML serving: feature pipelines, registries, online/offline skew, drift
+- LLM integration patterns: direct call, gateway, router across model tiers
+- Build vs. buy vs. host: capability, cost, latency, and data-governance trade-offs
 
-### Module 2: Tenant Lifecycle
-- Onboarding as architecture: frictionless, automated, observable
-- Tenant identity and authentication; mapping tenants into tokens
-- Tenant management and configuration; tenant context propagation
-- Tenant-aware routing: subdomain, path, and claim-based strategies
+### Module 2: Retrieval-Augmented Generation
+- Why RAG: grounding, freshness, and access control vs. fine-tuning
+- Ingestion architecture: chunking, embeddings, vector and hybrid search
+- Retrieval quality: reranking, query rewriting, metadata filtering
+- The RAG corpus as a data product: contracts, lineage, permissions
 
-### Module 3: Building Multi-Tenant Services
-- Designing services that are tenant-aware without tenant-riddled code
-- Data partitioning: pooled tables, schema-per-tenant, database-per-tenant
-- Tenant isolation: runtime enforcement, scoped credentials, blast-radius thinking
-- Noisy neighbors: throttling, fairness, and workload partitioning
+### Module 3: Agentic Architectures
+- Tool use and function calling; the agent loop as an orchestration problem
+- Single agent vs. multi-agent topologies; workflow engines vs. free-running loops
+- State, memory, and context management as architectural concerns
+- Failure containment: timeouts, budgets, sandboxing, human-in-the-loop gates
 
-### Module 4: SaaS on Real Stacks
-- Kubernetes SaaS: namespaces, quotas, and isolation patterns on EKS-class platforms
-- Serverless SaaS: per-function isolation, concurrency limits, cost attribution
-- Tenant-aware operations: per-tenant health, metrics, and support tooling
-- Per-tenant cost: measuring, attributing, and acting on unit economics
+### Module 4: Quality, Safety, and Security
+- Evaluation-driven development: golden sets, LLM-as-judge, regression evals in CI
+- Guardrails: input/output filtering, structured outputs, policy enforcement
+- AI security: prompt injection, data exfiltration, model misuse — threat modeling AI features
+- Responsible deployment: monitoring for drift, bias, and degraded behavior
 
-### Module 5: The Business of Multi-Tenancy
-- Tiering strategies: mapping business tiers to architecture (silo premium, pooled standard)
-- Migration: taking a single-tenant product to multi-tenant SaaS without stopping the world
-- SaaS anywhere: extending SaaS into customer environments
-- GenAI and multi-tenancy: isolating prompts, retrieval corpora, and AI spend per tenant
-- Graded project: multi-tenant architecture for a case-study product — deployment model per tier, isolation design, onboarding flow, and cost-attribution plan
+### Module 5: Operating AI at Scale
+- Inference economics: token costs, caching, batching, model routing
+- Latency architecture: streaming responses, speculative and parallel calls
+- Multi-tenant AI: isolation of prompts, corpora, and spend per tenant
+- Graded project: architecture for an AI assistant over private enterprise data — topology, RAG design, eval plan, threat model, and cost model

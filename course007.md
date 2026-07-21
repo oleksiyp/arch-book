@@ -6,7 +6,7 @@ APIs are the connective tissue of every architecture in this specialization — 
 
 The second half treats APIs as operated infrastructure: gateways and traffic management (rate limiting, authentication offload, canary routing), service mesh vs. gateway responsibilities, API security (OAuth 2.x/OIDC, token handling, the OWASP API Top 10), and running an API program — developer experience, documentation, discoverability, and lifecycle management. The framing throughout is platform-oriented: an API is a promise to other teams, and API management is an early, concrete form of platform thinking.
 
-**Primary sources:** *Mastering API Architecture* (Gough, Bryant, Auburn), *RESTful Web API Patterns and Practices Cookbook* (Amundsen)
+**References:** [*Mastering API Architecture*](https://www.oreilly.com/library/view/mastering-api-architecture/9781492090625/) (Gough, Bryant, Auburn), [*RESTful Web API Patterns and Practices Cookbook*](https://www.oreilly.com/library/view/restful-web-api/9781098106737/) (Amundsen)
 
 ## Table of Contents
 
@@ -33,7 +33,7 @@ The second half treats APIs as operated infrastructure: gateways and traffic man
 - OAuth 2.x and OpenID Connect flows for services, SPAs, and machines
 - Token formats and handling: JWT pitfalls, opaque tokens, rotation
 - The OWASP API Security Top 10, with worked exploits and mitigations
-- Zero-trust posture for APIs (bridge to Course 9)
+- Zero-trust posture for APIs (bridge to Course 10)
 
 ### Module 5: Running an API Program
 - APIs as products: developer experience, docs, portals, discoverability

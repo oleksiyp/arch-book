@@ -1,40 +1,41 @@
-# Course 8: Data Architecture: From Distributed Data to Data Mesh
+# Course 8: UI and Frontend Architecture
 
 ## Description
 
-Data is where distributed architectures get hard and stay hard. This course covers the operational side first: data ownership per service, polyglot persistence, distributed transactions and their alternatives, eventual consistency as a business conversation, and the data access patterns (replication, views, CQRS read models, data sidecars) that let decomposed systems answer joined-up questions. Students work through the granularity and ownership decisions from *The Hard Parts* with the database decomposition techniques to execute them.
+The user interface is where architecture meets its users — and over the last decade the frontend has grown an architectural discipline of its own, with rendering strategies, composition models, and performance characteristics that deserve the same trade-off rigor as any backend decision. This course teaches UI architecture at the architect's altitude: choosing rendering models (client-side SPA, server-side rendering, static generation, streaming and islands, edge rendering) per class of page rather than per fashion cycle; treating Core Web Vitals as architectural characteristics with direct business impact; and structuring frontend codebases — design systems, module boundaries, state management — so they scale with the number of teams, not just the number of components.
 
-The second half addresses analytical data in a decentralized world. Traditional warehouse and lake architectures are contrasted with **data mesh**: domain-owned data products, event streams as the transport, federated computational governance, and the self-service data platform that makes decentralized ownership viable. The platform framing is explicit — data mesh is platform architecture applied to analytics, and its self-service platform plane is studied as a direct rehearsal for the capstone. AI workloads appear as a forcing function: feature pipelines and retrieval corpora are downstream consumers that make data quality and contracts non-negotiable.
+The second half covers composition at scale and the frontend–backend seam. Micro-frontends get the honest treatment: when team scale genuinely demands runtime composition, and when the pattern is a distributed monolith in the browser. The backend-for-frontend pattern connects this course to the API material of Course 7, browser security (XSS, CSP, token handling) previews Course 10, and a closing module addresses the AI-era interface: conversational UIs, streaming model responses, and generative interface patterns that Course 12 systems require. Throughout, the platform lens applies — design systems and frontend golden paths are among the first platform products most organizations build.
 
-**Primary sources:** *Building an Event-Driven Data Mesh* (Bellemare), *Software Architecture: The Hard Parts* Part II (Ford, Richards, Sadalage, Dehghani), *Foundations of Scalable Systems* Part III (Gorton)
+**References:** [*Building Microservices*](https://www.oreilly.com/library/view/building-microservices-2nd/9781492034018/) (Newman), [*Mastering API Architecture*](https://www.oreilly.com/library/view/mastering-api-architecture/9781492090625/) (Gough, Bryant, Auburn), plus current frontend practitioner literature (rendering patterns, micro-frontends, design systems)
 
 ## Table of Contents
 
-### Module 1: Data Ownership in Distributed Systems
-- Data ownership: single, common, and joint-ownership scenarios
-- Polyglot persistence: choosing stores by access pattern
-- Distributed transactions: why 2PC is (almost) always wrong; sagas revisited
-- Eventual consistency patterns: background sync, orchestrated, event-based
+### Module 1: Rendering Architectures
+- The rendering spectrum: CSR/SPA, SSR, static generation, incremental regeneration
+- Streaming SSR, islands, and partial hydration; edge rendering
+- Choosing per page class: content, dashboard, transactional flow, real-time view
+- Core Web Vitals as architectural characteristics; performance budgets
 
-### Module 2: Distributed Data Access
-- Interservice queries: API composition and its limits
-- Replicated caching, data domains, and data sidecars
-- CQRS read models as integration surfaces
-- Change data capture and the outbox pattern in production
+### Module 2: Structuring the Frontend
+- Design systems and component libraries: the frontend's shared kernel
+- Module boundaries in frontend code; monorepo strategies and build tooling
+- State management architecture: local state, server cache, global state — and why the distinctions matter
+- Data fetching patterns: waterfalls, prefetching, suspense-style loading
 
-### Module 3: Analytical Architectures
-- Warehouse, lake, lakehouse: what each solves and where each strains
-- The centralization failure mode: data team as bottleneck
-- Streaming analytics: real-time pipelines feeding dashboards and models
-- Data contracts: schemas, quality guarantees, and breaking-change discipline
+### Module 3: Micro-Frontends and Composition
+- When team scale demands independent frontend deployability — and when it doesn't
+- Composition options: build-time packages, runtime module federation, iframes, edge-side includes
+- The shell: routing, shared dependencies, design-system versioning
+- Honest costs: payload duplication, UX consistency, the distributed monolith in the browser
 
-### Module 4: Data Mesh
-- The four principles: domain ownership, data as a product, self-service platform, federated computational governance
-- Event streams as the data product transport
-- Designing data products: ports, discoverability, SLOs, lineage
-- Federated governance: policy as code across domains
+### Module 4: The Frontend–Backend Seam
+- Backend-for-frontend: one experience, one aggregation layer
+- GraphQL for UIs: federation, persisted queries, cache normalization
+- Real-time UIs: WebSockets, server-sent events, optimistic updates, offline-first
+- Multi-platform reality: web, native mobile, and shared contract strategies
 
-### Module 5: The Self-Service Data Platform
-- Platform plane architecture: infrastructure, product developer, and consumer planes
-- Feeding AI: feature pipelines and retrieval corpora as data products (bridge to Course 11)
-- Graded project: data architecture for a case-study company — ownership map, two data products, and a governance policy set
+### Module 5: Security, Accessibility, and AI Interfaces
+- The browser security model: XSS, CSP, token handling (cookies vs. storage), OAuth in SPAs
+- Accessibility as an architectural characteristic, not a retrofit
+- Conversational and generative UI: streaming AI responses, progressive rendering of model output, human-in-the-loop controls
+- Graded project: frontend architecture for the case-study product — rendering matrix per page class, BFF design, composition strategy, and team-scaling plan

@@ -1,41 +1,39 @@
-# Course 10: Cloud-Native Operations: Serverless, Kubernetes, and SRE
+# Course 10: Security Architecture and Zero Trust
 
 ## Description
 
-Architecture that can't be operated is fiction. This course covers the operational half of modern architecture: the cloud execution models (containers and Kubernetes, serverless functions and managed services) and their trade-offs in cost, elasticity, and operational burden; infrastructure as code and GitOps as the delivery substrate; and observability and SRE practice — SLIs, SLOs, error budgets — as the feedback loop that keeps architecture honest. Serverless receives a full treatment as an architectural approach: event-driven function composition, enterprise readiness, testing, cost modeling (the "pay-per-use changes your architecture" argument), and its operational model where most traditional ops work disappears into the provider.
+In the cloud era, security is an architectural characteristic, not a compliance checkbox — and the architect, not a downstream security team, makes most of the decisions that determine whether a system is defensible. This course teaches secure-by-design thinking: threat modeling as a routine design activity, trust boundaries as first-class architectural elements, and the zero-trust model — never trust the network, always verify identity — as the organizing principle for modern system security. Students learn workload identity, mTLS and service-to-service authorization, secret management, supply-chain integrity (dependencies, images, provenance), and multi-tenant isolation models, all applied to the microservice, API, and event-driven architectures from earlier courses.
 
-Students also learn evolutionary operations: deployment topologies, progressive delivery at the infrastructure level, capacity and cost architecture (FinOps for architects), and sustainability as an emerging characteristic. The course keeps score with the four key metrics (deployment frequency, lead time, MTTR, change fail rate) and architecture fitness functions, teaching students to treat operability as a designed property. It closes with the question that leads to the capstone: once you can operate one system well, how do you make operability a self-service capability for every team — that is, a platform?
+The course is defensive and design-oriented: the deliverables are threat models, trust-boundary diagrams, and security ADRs, not exploits. Cloud provider security primitives (IAM, network segmentation, KMS) are covered at the pattern level so the material transfers across AWS, GCP, and Azure. The closing module positions security as a platform capability — paved-road security, where the platform makes the secure path the easy path — which is a load-bearing pillar of the capstone.
 
-**Primary sources:** *Serverless Development on AWS* (Sbarski, Katzef et al.), *Building Microservices* chs. 8–10 (Newman), *Enabling Microservice Success* Part III (Watt), *Software Architecture Metrics* (Ciceri, Farley et al.), *Designing Distributed Systems* (Burns)
+**References:** [*Building Microservices*](https://www.oreilly.com/library/view/building-microservices-2nd/9781492034018/) (Newman), [*Mastering API Architecture*](https://www.oreilly.com/library/view/mastering-api-architecture/9781492090625/) (Gough, Bryant, Auburn), [*Building Multi-Tenant SaaS Architectures*](https://www.oreilly.com/library/view/building-multi-tenant-saas/9781098140632/) (Golding), [*Serverless Development on AWS*](https://www.oreilly.com/library/view/serverless-development-on/9781098141929/) (Brisals & Hedger), plus current NIST zero-trust and OWASP guidance
 
 ## Table of Contents
 
-### Module 1: Cloud Execution Models
-- The spectrum: VMs → containers → Kubernetes → serverless → fully managed
-- Kubernetes for architects: what the scheduler gives you and what it costs
-- Serverless architecture: functions, managed services, event composition
-- Choosing an execution model per workload: latency, burst, cost, team maturity
+### Module 1: Thinking Like a Defender
+- Security as an architectural characteristic; CIA triad in trade-off language
+- Threat modeling: STRIDE, attack trees, and lightweight "evil brainstorming"
+- Trust boundaries on C4 diagrams; data classification driving design
+- Risk-based prioritization: what you protect first and why
 
-### Module 2: Delivery Infrastructure
-- Infrastructure as code; immutable infrastructure; GitOps
-- Environments, ephemeral previews, and configuration architecture
-- Progressive delivery: canary, blue-green, feature flags at infra level
-- The four key metrics as an architecture scorecard
+### Module 2: Zero Trust and Identity
+- Perimeter security's failure; zero-trust principles (NIST SP 800-207 essentials)
+- Human identity: OIDC, SSO, MFA at the architecture level
+- Workload identity: SPIFFE-style identities, mTLS, service authorization policies
+- Network segmentation: VPCs, private endpoints, egress control
 
-### Module 3: Observability and SRE
-- Logs, metrics, traces; wide events and high-cardinality debugging
-- SLIs, SLOs, and error budgets: turning reliability into a decision framework
-- Alerting philosophy: symptoms over causes; on-call that doesn't burn people
-- Incident response and blameless postmortems as architectural feedback
+### Module 3: Securing the Stack
+- Secrets management: vaults, rotation, short-lived credentials
+- Data protection: encryption at rest/in transit/in use; key management patterns
+- Supply chain: dependency scanning, image signing, SBOMs, provenance (SLSA)
+- Event and API security: signed events, replay protection, OWASP API Top 10 recap
 
-### Module 4: Cost, Capacity, and Sustainability
-- FinOps for architects: unit economics, cost as a fitness function
-- Serverless cost modeling: when pay-per-use wins and when it bankrupts you
-- Capacity planning and autoscaling architecture
-- Sustainability: carbon-aware and efficiency-driven design choices
+### Module 4: Isolation and Multi-Tenancy
+- Tenant isolation models: silo, pool, bridge — and their blast radii
+- Sandboxing untrusted workloads; AI-era concerns: prompt injection surfaces, model and data exfiltration (bridge to Course 12)
+- Compliance as architecture: audit trails, data residency, least privilege at scale
 
-### Module 5: Operability by Design
-- Operational fitness functions and production readiness reviews
-- Testing serverless and distributed systems: local reality vs. cloud reality
-- Keeping things up to date: dependency, runtime, and platform lifecycle
-- Graded project: operations architecture (deployment, observability, SLOs, cost model) for the Course 5 case-study system
+### Module 5: Security as a Platform Capability
+- Paved-road security: golden paths, policy as code, guardrails not gates
+- Security fitness functions in the pipeline
+- Graded project: full threat model and security architecture (diagrams + ADRs) for the Course 5 case-study system
