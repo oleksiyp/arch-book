@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Share banner — screenshot the stage below at 1200×630</title>
+<style>
+    body { margin: 0; background: #2a2f45; font-family: "Open Sans", "Helvetica Neue", Arial, sans-serif;
+           display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 24px; }
+    .hint { color: #9aa3b5; font-size: 13px; }
+    #stage { width: 1200px; height: 630px; position: relative; overflow: hidden; flex: none; }
+    #stage .content { position: absolute; inset: 0; color: #fff; }
+    .title { position: absolute; left: 72px; top: 150px; font-size: 76px; font-weight: 800;
+             line-height: 1.14; letter-spacing: -0.01em; text-shadow: 0 2px 18px rgba(0,0,0,0.25); }
+    .tagline { position: absolute; left: 76px; top: 356px; font-size: 30px; font-weight: 400;
+               color: rgba(255,255,255,0.92); }
+    .chips { position: absolute; left: 76px; top: 430px; display: flex; gap: 12px; }
+    .chip { border: 1.5px solid rgba(255,255,255,0.55); border-radius: 999px; padding: 8px 18px;
+            font-size: 20px; color: #fff; background: rgba(0,0,0,0.12); }
+    .url { position: absolute; left: 76px; bottom: 44px; font-size: 24px; font-weight: 700;
+           color: rgba(255,255,255,0.95); }
+    .glyph { position: absolute; right: 64px; bottom: 48px; opacity: 0.95; }
+</style>
+</head>
+<body>
+<div class="hint">Screenshot the stage below at exactly 1200×630 → save as <code>assets/og-banner.png</code>. Tweak the CONFIG in the source.</div>
+
+<div id="stage">
+    <canvas id="bg" width="1200" height="630"></canvas>
+    <div class="content">
+        <div class="title">Software Architecture<br>in the AI &amp; Cloud Era</div>
+        <div class="tagline">the road to platform architecture — a free online book</div>
+        <div class="chips">
+            <span class="chip">14 chapters</span>
+            <span class="chip">diagrams as code</span>
+            <span class="chip">katas</span>
+            <span class="chip">one running example</span>
+        </div>
+        <div class="url">oleksiyp.github.io/arch-book</div>
+        <svg class="glyph" width="240" height="160" viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="10,40 150,8 150,190 10,222" fill="#fff"/>
+            <polygon points="310,40 170,8 170,190 310,222" fill="#fff"/>
+            <g stroke="#d97706" stroke-width="7">
+                <line x1="26" y1="62" x2="138" y2="42"/><line x1="26" y1="106" x2="138" y2="86"/><line x1="26" y1="150" x2="138" y2="130"/>
+                <line x1="182" y1="42" x2="294" y2="62"/><line x1="182" y1="86" x2="294" y2="106"/><line x1="182" y1="130" x2="294" y2="150"/>
+            </g>
+        </svg>
+    </div>
+</div>
+
+<script>
+// ---------------- CONFIG: tune the slash gradient here ----------------
+var CONFIG = {
+    angleSkew: 0.27,   // horizontal tilt of the slash (0 = vertical break)
+    stops: [
+        [0.00, [27, 31, 59]],    // dark navy
+        [0.30, [243, 139, 28]],  // mockk orange
+        [0.52, [243, 139, 28]],  // hold orange until the slash...
+        [0.60, [0, 201, 255]],   // ...rapid break to cyan
+        [1.00, [0, 201, 255]]
+    ]
+};
+// ----------------------------------------------------------------------
+
+var c = document.getElementById('bg'), x = c.getContext('2d');
+var W = c.width, H = c.height, img = x.createImageData(W, H), d = img.data;
+
+function color(t) {
+    var s = CONFIG.stops;
+    for (var i = 0; i < s.length - 1; i++) {
+        if (t <= s[i + 1][0]) {
+            var f = (t - s[i][0]) / (s[i + 1][0] - s[i][0]);
+            return [0, 1, 2].map(function (k) { return s[i][1][k] + (s[i + 1][1][k] - s[i][1][k]) * f; });
+        }
+    }
+    return s[s.length - 1][1];
+}
+
+for (var y = 0; y < H; y++) {
+    for (var xx = 0; xx < W; xx++) {
+        var t = (xx + CONFIG.angleSkew * (H - y)) / (W + CONFIG.angleSkew * H);
+        var rgb = color(Math.min(Math.max(t, 0), 1));
+        var i = (y * W + xx) * 4;
+        d[i] = rgb[0]; d[i + 1] = rgb[1]; d[i + 2] = rgb[2]; d[i + 3] = 255;
+    }
+}
+x.putImageData(img, 0, 0);
+</script>
+</body>
+</html>
