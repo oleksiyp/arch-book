@@ -155,7 +155,7 @@ flowchart LR
 
 #### The architect, then and now
 
-The architect of the old caricature sat above the team, produced documents, and departed before the consequences arrived. The modern architect is embedded — close enough to the code to feel their decisions, senior enough to own trade-offs that span teams — and increasingly thinks in *platforms*: systems whose users are other engineering teams. That idea is this book's destination; keep it in peripheral vision.
+The architect of the old caricature sat above the team, produced documents, and departed before the consequences arrived. The modern architect is embedded — close enough to the code to feel their decisions, senior enough to own trade-offs that span teams — and increasingly thinks in *platforms*: systems whose users are other engineering teams. That idea is this book's destination; keep it in peripheral vision. And keep one conviction closer still: software is a deeply human endeavor. Systems are built by people, out of decisions, and both outlive the code.
 
 **Recap.** Architecture = characteristics + decisions + components + style. Architecture and design differ by degree (strategy, reversibility, significance of trade-offs), not kind. Everything is a trade-off; the *why* outlives the *how*.
 
@@ -683,7 +683,7 @@ Watch the table settle an Encore argument. Someone proposes splitting Seat Inven
 
 #### First, the economics
 
-Encore, remember, is lucky — it is young. The system you will actually be asked to decompose is nine years old, profitable, and load-bearing. Before any technique: *should* you? The honest checklist is short. Decompose when the monolith measurably blocks the business — deploys collide weekly, one component's scale needs starve the rest, teams idle in merge queues. Do **not** decompose because the code is ugly (refactor it), because hiring slides say "microservices," or because the monolith is merely old. A tangled monolith becomes tangled services with a network inside the tangle — you keep every problem and add latency, partial failure, and an ops bill.
+Encore, remember, is lucky — it is young. The system you will actually be asked to decompose is nine years old, profitable, and load-bearing. Before any technique: *should* you? The honest checklist is short. Decompose when the monolith measurably blocks the business — deploys collide weekly, one component's scale needs starve the rest, teams idle in merge queues. Do **not** decompose because the code is ugly (refactor it), because hiring slides say "microservices," or because the monolith is merely old. I have sat in more than one meeting where a rewrite was pitched as a migration; the tell is that nobody can state the coordination pain in minutes per week. A tangled monolith becomes tangled services with a network inside the tangle — you keep every problem and add latency, partial failure, and an ops bill.
 
 #### The strangler fig and its supporting cast
 
@@ -763,7 +763,7 @@ This chapter is the physics, and the engineering that survives it. You will not 
 
 #### The eight famous lies
 
-The eight fallacies of distributed computing are assumptions every engineer makes until production removes them. Read them as a bill of costs:
+The eight fallacies of distributed computing were written down at Sun Microsystems in 1994 — Peter Deutsch and colleagues, tired of watching the same surprises claim another generation — and not one entry has aged a day. They are assumptions every engineer makes until production removes them. Read them as a bill of costs:
 
 | The lie | The truth's bill for Encore |
 |---|---|
@@ -841,7 +841,7 @@ What vendors bury in appendices, architects must read as a menu with prices:
 
 *Figure 4.2 — The consistency spectrum. The senior move is refusing to buy one level for the whole system: seat allocation is linearizable; ticket lists are read-your-writes; view counters are eventual. Consistency is purchased per invariant, not per company.*
 
-CAP, correctly read, says only this: when a partition happens (and it will), each *operation* chooses: refuse to answer (consistency), or answer possibly-stale (availability). PACELC adds the everyday clause: even without partitions, stronger consistency costs latency, always. Seat-sale: choose C, proudly show "high demand, retrying." Catalog browse: choose A, always. The database serving both must let you choose *per operation*. My advice is to write that sentence into the first line of any storage evaluation; it disqualifies half the candidates before the demos start, which is precisely its value.
+CAP — Eric Brewer's turn-of-the-millennium conjecture, later a proven theorem — says, correctly read, only this: when a partition happens (and it will), each *operation* chooses: refuse to answer (consistency), or answer possibly-stale (availability). PACELC adds the everyday clause: even without partitions, stronger consistency costs latency, always. Seat-sale: choose C, proudly show "high demand, retrying." Catalog browse: choose A, always. The database serving both must let you choose *per operation*. My advice is to write that sentence into the first line of any storage evaluation; it disqualifies half the candidates before the demos start, which is precisely its value.
 
 Underneath the strong end sits consensus (Raft and kin): machines voting on one truth, majorities required. Architect-level takeaways only: odd cluster sizes, a leader's failover pause is your write downtime, and quorums across regions pay intercontinental round-trips *per write*, which is why "global strongly-consistent and fast" appears only in marketing.
 
@@ -974,7 +974,7 @@ This chapter is the honest, end-to-end treatment: how to cut services so indepen
 
 A microservice is an independently deployable unit of business capability. Every word is load-bearing, but *independently* most of all — and independence is decided at modeling time, not deployment time. Services cut along Chapter 3's bounded contexts can change alone because the business seams they follow are real. Services cut by entity ("User service," "Ticket service" — Chapter 1's entity trap at fleet scale) or by layer put every business change on a tour through three repos and two teams' sprint plannings.
 
-Encore's cut therefore reads like its context map: On-Sale Admission, Seat Inventory & Ticketing, Catalog, Orders & Payments, Support, Notifications, plus Bot Screening. (Chapter 1's eight components have now been remapped twice — into Chapter 3's bounded contexts, and here into services. The renames are the point, not an accident: boundaries got truer as the business taught us its seams.) Seven services, nine teams — some teams own two small ones, none share one. **Information hiding** completes the modeling rule: a service's database is private the way a class's fields are private; the moment two services share tables, they deploy together forever.
+Encore's cut therefore reads like its context map: On-Sale Admission, Seat Inventory & Ticketing, Catalog, Orders & Payments, Support, Notifications, plus Bot Screening. (Chapter 1's eight components have now been remapped twice — into Chapter 3's bounded contexts, and here into services. The renames are the point, not an accident: boundaries got truer as the business taught us its seams.) Seven services, nine teams — some teams own two small ones, none share one. **Information hiding** completes the modeling rule. David Parnas gave the idea its name in 1972, and half a century has only raised its stakes: a service's database is private the way a class's fields are private, and the moment two services share tables, they deploy together forever.
 
 #### The communication decision
 
@@ -996,7 +996,7 @@ Every inter-service link picks a row of this table, and the rows have owners fro
 
 #### The saga: transactions without the transaction
 
-Buying a ticket spans three services: reserve (Inventory), charge (Payments), issue (Ticketing). No database transaction will span them for you. The distributed answer is the **saga**: a sequence of local transactions, each with a *compensating* action for when a later step fails.
+Buying a ticket spans three services: reserve (Inventory), charge (Payments), issue (Ticketing). No database transaction will span them for you. The distributed answer is the **saga**, an idea Hector Garcia-Molina and Kenneth Salem published in 1987 for long-lived database transactions, where it waited patiently for microservices to make it famous: a sequence of local transactions, each with a *compensating* action for when a later step fails.
 
 <pre class="mermaid">
 sequenceDiagram
@@ -1064,7 +1064,7 @@ Four topics decide whether the fleet survives contact with reality; each gets a 
 
 #### Conway's law is a design tool
 
-Team boundaries and service boundaries are the same drawing viewed twice; fight that and the org chart wins every time. The workable topology: what Skelton and Pais call **stream-aligned teams**, owning services end to end (build it, run it, carry its pager) because ownership without operations is authorship, and authorship doesn't wake up at 3 a.m. and therefore never learns. Around them, a **platform** (Chapters 11 and 14) turns the fleet's shared burdens (pipelines, observability, mesh, golden-path templates) into paved roads, so each stream team's cognitive load stays inside a human skull.
+Mel Conway noticed it in 1968: organizations ship their own communication structures. Team boundaries and service boundaries are the same drawing viewed twice, and if you fight that, the org chart wins every time. The workable topology: what Skelton and Pais call **stream-aligned teams**, owning services end to end (build it, run it, carry its pager) because ownership without operations is authorship, and authorship doesn't wake up at 3 a.m. and therefore never learns. Around them, a **platform** (Chapters 11 and 14) turns the fleet's shared burdens (pipelines, observability, mesh, golden-path templates) into paved roads, so each stream team's cognitive load stays inside a human skull.
 
 **Governance without a review board.** Central approval boards recreate the coordination the whole style exists to remove. The replacement is *paved roads plus fitness functions*: the golden-path template makes the right thing the easy thing; automated checks (Chapter 1's governance, now fleet-wide) catch the drift; deviation is allowed, priced, and owned by the deviator. Encore's rule of thumb: you may leave the paved road whenever you're prepared to build your own.
 
@@ -1312,7 +1312,7 @@ Contract-first is the working method regardless of protocol: the OpenAPI (or Asy
 
 #### Breaking changes are a tax on strangers
 
-Chapter 5's expand–contract discipline returns with higher stakes: internal consumers redeploy weekly; the festival app ships through app-store review and may pin your API for a year. The constitution:
+Chapter 5's expand–contract discipline returns with higher stakes: internal consumers redeploy weekly; the festival app ships through app-store review and may pin your API for a year. In my experience, the year is optimistic. The constitution:
 
 - **Additive forever.** New optional fields, new endpoints, new enum values (announced as open sets) — free.
 - **Never repurpose.** Changing a field's meaning is worse than removing it: removal fails loudly, repurposing corrupts quietly.
