@@ -382,3 +382,65 @@
         }
     }
 }
+
+/* Theme toggle icons */
+html:not([data-theme="dark"]) .icon-sun { display: none; }
+html[data-theme="dark"] .icon-moon { display: none; }
+
+/* Dark theme */
+html[data-theme="dark"] {
+    background: #121623;
+
+    body { background: #121623; color: #c6cdd6; }
+
+    .main-content {
+        color: #c6cdd6;
+
+        h1, h2, h3, h4, h5, h6 { color: #f0a32c; }
+        a { color: #58b7ff; }
+
+        blockquote {
+            background: #1c2336;
+            border-left-color: #f38b1c;
+            color: #c2cad6;
+        }
+
+        h2 + blockquote {
+            background: none;
+            color: #8a94a3;
+        }
+
+        pre.mermaid + p, svg + p { color: #8a94a3; }
+
+        table {
+            th { background: #1c2338; }
+            th, td { border-color: #333c58; }
+        }
+
+        code {
+            background: #1b2237;
+            color: #cdd5e0;
+        }
+
+        pre {
+            background: #161c2e;
+            border-color: #2a3148;
+            code { background: transparent; }
+        }
+
+        /* Diagrams keep their light palette — present them on light plates */
+        pre.mermaid, > svg {
+            background: #eef1f6;
+            border-radius: 0.5rem;
+            padding: 0.6rem;
+        }
+    }
+
+    .action-bar {
+        background: #1b2237;
+        border-color: #2e3650;
+
+        button, .bar-presence { color: #9aa3b2; }
+        button:hover, button:active { color: #f0a32c; }
+    }
+}

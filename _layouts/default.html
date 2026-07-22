@@ -25,6 +25,15 @@
     <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
     {% endif %}
 </head>
+<script>
+(function () {
+    try {
+        var t = localStorage.getItem('book-theme');
+        if (!t && window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches) t = 'dark';
+        if (t === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+    } catch (e) {}
+})();
+</script>
 <body>
 <section class="page-header">
     <h1 class="project-name"><a href="{{ '/' | relative_url }}">{{ site.title }}</a></h1>
@@ -36,9 +45,10 @@
 </section>
 
 <div class="action-bar" id="action-bar" role="toolbar" aria-label="Quick actions">
+    <span class="bar-presence" id="presence-part" hidden title="readers online right now"><svg class="presence-icon" width="12" height="12" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><path d="M2 14c0-3 2.7-5 6-5s6 2 6 5v1H2v-1z"/></svg> <span id="presence-count"></span></span>
     <button type="button" id="bar-share"><svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 .8l3.2 3.2-.75.75L8.5 2.8V10h-1V2.8L5.55 4.75 4.8 4 8 .8z"/><path d="M3 6.5h2.5v1H4v6.5h8V7.5h-1.5v-1H13v8.5H3V6.5z"/></svg> share</button>
     <button type="button" id="bar-contents">&#9776; contents</button>
-    <span class="bar-presence" id="presence-part" hidden title="readers online right now"><svg class="presence-icon" width="12" height="12" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><path d="M2 14c0-3 2.7-5 6-5s6 2 6 5v1H2v-1z"/></svg> <span id="presence-count"></span></span>
+    <button type="button" id="bar-theme" aria-label="Toggle dark mode"><svg class="icon-moon" width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8.4 1a6.7 6.7 0 1 0 6.6 8.6A5.6 5.6 0 0 1 8.4 1z"/></svg><svg class="icon-sun" width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><circle cx="8" cy="8" r="3.2"/><path d="M8 0h1v2.4H7.5L8 0zM8 13.6h1V16H7.5l.5-2.4zM0 7.5h2.4v1H0v-1zM13.6 7.5H16v1h-2.4v-1zM2.3 3.1l1.7 1.7-.8.8-1.7-1.7.8-.8zM12 12.8l1.7 1.7-.8.8-1.7-1.7.8-.8zM13.7 2.3l.8.8-1.7 1.7-.8-.8 1.7-1.7zM4 12l.8.8-1.7 1.7-.8-.8L4 12z"/></svg></button>
 </div>
 
 <footer class="book-footer">
@@ -173,6 +183,14 @@
         var el = document.getElementById('contents');
         if (el) el.scrollIntoView({ behavior: 'smooth' });
         else location.href = '{{ "/" | relative_url }}#contents';
+    });
+    document.getElementById('bar-theme').addEventListener('click', function () {
+        var root = document.documentElement;
+        var dark = root.getAttribute('data-theme') === 'dark';
+        if (dark) root.removeAttribute('data-theme');
+        else root.setAttribute('data-theme', 'dark');
+        try { localStorage.setItem('book-theme', dark ? 'light' : 'dark'); } catch (e) {}
+        if (window.gtag) window.gtag('event', dark ? 'theme_light' : 'theme_dark');
     });
 
     // PWA: offline reading + installability
