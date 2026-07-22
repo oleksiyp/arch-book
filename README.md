@@ -23,10 +23,13 @@ Each chapter closes with a **kata**: a practice brief for a *different* company,
 **Foundations (Chapters 1–3):** how architects think — trade-offs, characteristics, modern styles, domain-driven boundaries.
 
 **The distributed core (Chapters 4–9):** the technical backbone — distributed systems, microservices, events and streaming, APIs, user interfaces, data.
+{: .flush}
 
 **The modern era (Chapters 10–12):** security and zero trust, cloud-native operations and SRE, AI systems.
+{: .flush}
 
 **The destination (Chapters 13–14):** multi-tenant SaaS, and platform engineering — where everything converges, and where the capstone awaits.
+{: .flush}
 
 ## Contents
 

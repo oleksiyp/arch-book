@@ -77,6 +77,11 @@
         text-indent: 1.5em;
     }
 
+    /* Display paragraphs (labeled lists like the Arc) opt out via {: .flush} */
+    p.flush {
+        text-indent: 0;
+    }
+
     /* Figure captions (the paragraph directly under a diagram): smaller, muted, unindented */
     pre.mermaid + p, svg + p {
         text-align: left;
