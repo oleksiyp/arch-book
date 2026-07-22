@@ -4,8 +4,8 @@
 @import "{{ site.theme }}";
 
 .page-header {
-    background-image: linear-gradient(120deg, #1b1f3b, #6c2bd9 45%, #00c9ff);
-    background-color: #6c2bd9;
+    background-image: linear-gradient(120deg, #1b1f3b, #f38b1c 45%, #00c9ff);
+    background-color: #f38b1c;
     padding-bottom: 1.2rem;
 }
 
@@ -20,7 +20,7 @@
 
 .main-content {
     h1, h2, h3, h4, h5, h6 {
-        color: #5a23c8;
+        color: #d97706;
     }
 
     a {
