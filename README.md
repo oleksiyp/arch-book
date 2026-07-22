@@ -18,6 +18,10 @@ This book teaches a canon, and the canon has authors. The method backbone of Cha
 
 Some terms used here as common vocabulary have specific coiners: architectural katas (Ted Neward), golden path (Spotify), paved road (Netflix), STRIDE (Microsoft), ATAM (the SEI), PACELC (Daniel Abadi), sagas (Garcia-Molina and Salem), backend-for-frontend (SoundCloud, popularized by Sam Newman), prompt injection (Simon Willison), shuffle sharding (AWS).
 
+### Authorship & Disclaimer
+
+Written and directed by Oleksiy Pylypenko, with AI assistance (Anthropic's Claude). The author chose the thesis, the structure, the examples, and the trade-offs; edited every chapter; and takes responsibility for every claim — errors included. The content is provided as-is, without warranty of any kind: educational material, not professional advice for any specific system. The license's full disclaimer of warranties applies.
+
 ## How to Read This Book
 
 One company accompanies you through all fourteen chapters: **Encore**, a startup selling concert tickets — small enough to hold in your head, treacherous enough to be interesting. Encore begins with nine engineers and a terrifying traffic spike, and ends, four hundred engineers later, running its own platform. Every concept lands on Encore before it is generalized.
