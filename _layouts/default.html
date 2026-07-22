@@ -35,7 +35,11 @@
     {{ content }}
 </section>
 
-<a href="#contents" class="toc-fab" id="toc-fab" aria-label="Return to table of contents">&#9776; Contents<span id="presence-part" hidden title="readers online right now"> &middot; <svg class="presence-icon" width="11" height="11" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><path d="M2 14c0-3 2.7-5 6-5s6 2 6 5v1H2v-1z"/></svg> <span id="presence-count"></span></span></a>
+<div class="action-bar" id="action-bar" role="toolbar" aria-label="Quick actions">
+    <button type="button" id="bar-share"><svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 .8l3.2 3.2-.75.75L8.5 2.8V10h-1V2.8L5.55 4.75 4.8 4 8 .8z"/><path d="M3 6.5h2.5v1H4v6.5h8V7.5h-1.5v-1H13v8.5H3V6.5z"/></svg> share</button>
+    <button type="button" id="bar-contents">&#9776; contents</button>
+    <span class="bar-presence" id="presence-part" hidden title="readers online right now"><svg class="presence-icon" width="12" height="12" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><path d="M2 14c0-3 2.7-5 6-5s6 2 6 5v1H2v-1z"/></svg> <span id="presence-count"></span></span>
+</div>
 
 <footer class="book-footer">
     <div class="footer-content">
@@ -138,22 +142,15 @@
         }, { passive: true });
     }
 
-    // Floating TOC button: appears once the reader is past the contents
-    var fab = document.getElementById('toc-fab');
+    // Floating action bar: appears once the reader is past the contents
+    var bar = document.getElementById('action-bar');
     window.addEventListener('scroll', function () {
-        fab.classList.toggle('visible', window.scrollY > 800);
+        bar.classList.toggle('visible', window.scrollY > 800);
     }, { passive: true });
 
-    // PWA: offline reading + installability
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('{{ "/sw.js" | relative_url }}');
-    }
-
-    // Share: native share sheet where available (installed PWAs have no browser chrome), copy-link fallback
-    var shareBtn = document.getElementById('share-book');
-    if (shareBtn) shareBtn.addEventListener('click', function (e) {
-        e.preventDefault();
-        if (window.gtag) gtag('event', 'share_click');
+    // Share: native sheet where available (installed PWAs have no browser chrome)
+    function shareBook(feedbackEl) {
+        if (window.gtag) window.gtag('event', 'share_click');
         var data = {
             title: 'Software Architecture in the AI & Cloud Era',
             text: 'A free online book on modern software architecture — the road to platform engineering.',
@@ -163,10 +160,31 @@
             navigator.share(data).catch(function () {});
         } else if (navigator.clipboard) {
             navigator.clipboard.writeText(data.url).then(function () {
-                shareBtn.textContent = 'Link copied!';
-                setTimeout(function () { shareBtn.textContent = 'Share This Book'; }, 2000);
+                if (!feedbackEl) return;
+                var orig = feedbackEl.textContent;
+                feedbackEl.textContent = 'link copied!';
+                setTimeout(function () { feedbackEl.textContent = orig; }, 2000);
             });
         }
+    }
+    window._shareBook = shareBook;
+    document.getElementById('bar-share').addEventListener('click', function () { shareBook(this); });
+    document.getElementById('bar-contents').addEventListener('click', function () {
+        var el = document.getElementById('contents');
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+        else location.href = '{{ "/" | relative_url }}#contents';
+    });
+
+    // PWA: offline reading + installability
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('{{ "/sw.js" | relative_url }}');
+    }
+
+    // Footer share link: same action as the floating bar
+    var shareBtn = document.getElementById('share-book');
+    if (shareBtn) shareBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        window._shareBook(shareBtn);
     });
 })();
 </script>
