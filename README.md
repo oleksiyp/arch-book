@@ -188,7 +188,7 @@ One preview: in later chapters these characteristics stop being adjectives and b
 
 **Recap.** Characteristics are the system's *be*, not its *do*. They hide in business sentences; translation is a skill. Security and cost are first-class. Choose ≤ 7 drivers and name what you're *not* optimizing for.
 
-**Exercise 2.1.** Interview a colleague about their product for ten minutes. Extract five candidate characteristics from what they say — then cut two, and defend the cuts.
+**Exercise 1.2.** Interview a colleague about their product for ten minutes. Extract five candidate characteristics from what they say — then cut two, and defend the cuts.
 
 ---
 
@@ -245,7 +245,7 @@ Finally, keep logical and physical architecture distinct in your mind. These eig
 
 **Recap.** Components are found through workflows and actor/actions, shaped by characteristics, and named for behavior, not data. Judge boundaries by the shape of change. Logical structure and physical deployment are different decisions.
 
-**Exercise 3.1.** Encore adds gift cards. Which components change? If your answer exceeds two, propose a better boundary.
+**Exercise 1.3.** Encore adds gift cards. Which components change? If your answer exceeds two, propose a better boundary.
 
 ---
 
@@ -295,11 +295,11 @@ One audience note, in the spirit of the architect elevator: the same decision re
 
 **Recap.** C4 gives four zoom levels; power comes from what each omits. Diagrams live in the repo as code, titled with questions, arrows labeled. ADRs preserve the why, admit their losses, and are superseded rather than rewritten.
 
-**Exercise 4.1.** Write the ADR for a decision your team made and never recorded. Show it to whoever argued the other side — the consequences row isn't done until they agree it's fair.
+**Exercise 1.4.** Write the ADR for a decision your team made and never recorded. Show it to whoever argued the other side — the consequences row isn't done until they agree it's fair.
 
 ---
 
-### 1.5 Trade-Off Analysis and Your First Kata
+### 1.5 Trade-Off Analysis in Practice
 
 #### Anatomy of a trade-off
 
@@ -340,9 +340,9 @@ sequenceDiagram
 
 Now — and this is the heart of the method — *return to Section 1.2's characteristics and let them arbitrate*. Encore expects new consumers soon (organizer payouts, a recommendation engine): that favors B. But fairness data in Bot Screening's payload is sensitive, and B shows it to every subscriber: that favors A. A defensible resolution: topic for the broad `OrderPlaced` fact, one dedicated queue for the sensitive risk payload — and an ADR recording exactly why, with the losses in ink. The generic answer does not exist; the *Encore* answer does. Trade-off analysis is not a table of pros and cons — it is pros and cons *weighed by the characteristics you committed to*.
 
-#### The kata
+### Kata: Curtain Call
 
-An architectural kata is practice under realistic constraints: a business brief, a time box, and defense of your choices before peers — the tradition Section 1.5 of every chapter in this book builds on.
+An architectural kata is practice under realistic constraints: a business brief, a time box, and defense of your choices before peers — the closing-kata tradition every chapter of this book follows.
 
 > **Your brief: "Curtain Call."** A regional theater chain (12 venues) wants season subscriptions, seat selection, member presales, and a waitlist for sold-out shows. Two-person engineering team. Modest but loyal traffic — except the annual holiday show, which sells out in an hour. The CFO's phrase: "we cannot afford drama, in either sense."
 
@@ -423,7 +423,7 @@ Each style in this chapter comes with characteristic ratings — one to five sta
 
 **Recap.** Two axes — partitioning and deployment — generate the catalog. Domain partitioning is the great lesson of the SOA failure. Ratings are relative prices, priced in your characteristics.
 
-**Exercise 1.1.** Place the last three systems you worked on in Figure 2.1's quadrants. If any sat in the top-left, estimate what it cost.
+**Exercise 2.1.** Place the last three systems you worked on in Figure 2.1's quadrants. If any sat in the top-left, estimate what it cost.
 
 ### 2.2 Monolithic Styles Done Right
 
@@ -452,7 +452,7 @@ Two more monolithic styles earn their keep in narrower niches. The **microkernel
 
 **Recap.** Layered is a fine start and a poor destiny; watch for sinkholes. The modular monolith gives domain partitioning without distribution — if and only if boundaries are enforced by machines, not intentions. Microkernel and pipeline are precision tools.
 
-**Exercise 2.1.** Sketch Encore's eight components (Chapter 1, Section 2.3) as modules of a modular monolith. Which two module boundaries would you enforce first, and with what check?
+**Exercise 2.2.** Sketch Encore's eight components (Section 1.3) as modules of a modular monolith. Which two module boundaries would you enforce first, and with what check?
 
 ### 2.3 Distributed Styles
 
@@ -485,9 +485,9 @@ Space-based architecture attacks the database bottleneck directly: processing un
 
 **Recap.** Service-based is the balanced middle; microservices buy team-scale independence at maximum operational price; event-driven buys decoupling at the price of visibility; space-based buys spike survival at the price of consistency reasoning.
 
-**Exercise 3.1.** Using Figure 2.2 and Encore's seven characteristics from Chapter 1, eliminate three styles for Encore *before* reading Section 2.4. Write one sentence per elimination.
+**Exercise 2.3.** Using Figure 2.2 and Encore's seven characteristics from Chapter 1, eliminate three styles for Encore *before* reading Section 2.4. Write one sentence per elimination.
 
-### 2.4 Choosing and Evolving a Style
+### 2.4 Choosing a Style
 
 #### The decision, worked honestly
 
@@ -515,7 +515,7 @@ flowchart LR
 
 The ADR almost writes itself, and its consequences row is honest: Encore accepts a network boundary (and its fallacies) in exactly one place, in exchange for scaling one component 500× without paying to scale eight.
 
-#### Styles are bets; hedge them
+### 2.5 Styles Are Bets — Hedge Them
 
 Every style is a bet about which changes will come. Bets should be hedged: keep domain boundaries clean *inside* whatever you build (a modular monolith decomposes into services along its module seams in months; a tangled one, in years); automate the boundary checks so the option stays open; and re-run the style decision when its inputs change — team count doubling, an outlier characteristic appearing, an acquisition. The migration path monolith → modular monolith → service-based → (maybe) microservices exists precisely so that each step is paid for by the pressure that demands it.
 
@@ -523,11 +523,11 @@ Every style is a bet about which changes will come. Bets should be hedged: keep 
 
 **Recap.** Drivers: domain shape, team topology, ops maturity, outliers, cost. Style is chosen per deployment quantum — extract the outlier, not the org chart. Keep boundaries clean so today's style doesn't foreclose tomorrow's.
 
-**Exercise 4.1.** Write Encore's style ADR (Figure 2.3) in the Chapter 1 format. The consequences row must name at least two real losses.
+**Exercise 2.4.** Write Encore's style ADR (Figure 2.3) in the Chapter 1 format. The consequences row must name at least two real losses.
 
-### 2.5 Style Selection Katas
+### Kata: Style Selection — Three Briefs
 
-Three briefs, three different correct answers — that is the point. For each: driving characteristics (≤ 7), chosen style(s) per quantum, a Figure 2.2.3-grade diagram, and one ADR.
+Three briefs, three different correct answers — that is the point. For each: driving characteristics (≤ 7), chosen style(s) per quantum, a Figure 2.3-grade diagram, and one ADR.
 
 > **Kata A: "Ledgerline."** B2B invoicing SaaS. 40,000 small-business customers, steady daytime load, five-person team, revenue depends on being *boringly* reliable. Finance-grade consistency. The CTO's phrase: "we sell trust, not fireworks."
 
@@ -617,7 +617,7 @@ The map itself is discovered, not designed at a desk. The workshop format that w
 
 **Recap.** Classify subdomains to allocate investment. Bounded contexts are language boundaries — one word, one meaning, one model. Context maps make inter-boundary politics explicit; the ACL is your standing defense against foreign models.
 
-**Exercise 1.1.** Find a word in your current company that means different things to two departments. Sketch the two models it implies. Where is the boundary?
+**Exercise 3.1.** Find a word in your current company that means different things to two departments. Sketch the two models it implies. Where is the boundary?
 
 ### 3.2 Tactical Design for Architects
 
@@ -637,7 +637,7 @@ Tactical DDD — aggregates, entities, value objects, domain services, ports-and
 
 **Recap.** The aggregate is the smallest cluster guarding a real invariant — it sizes your transactions, locks, and eventually your service boundaries. Between aggregates: domain events and eventual consistency, blessed by the business. Tactical patterns are for core complexity only.
 
-**Exercise 2.1.** Name the strongest invariant in a system you know. What is the *smallest* aggregate that can guard it? What currently guards it — and is that thing bigger?
+**Exercise 3.2.** Name the strongest invariant in a system you know. What is the *smallest* aggregate that can guard it? What currently guards it — and is that thing bigger?
 
 ### 3.3 Granularity — Forces That Split and Forces That Bind
 
@@ -658,7 +658,7 @@ Watch the table settle an Encore argument. Someone proposes splitting Seat Inven
 
 **Recap.** Granularity is a force balance, not an aesthetic. Every split must name its disintegrator and survive the integrators — and the org chart votes last.
 
-**Exercise 3.1.** Take the most recently split (or proposed-split) service at your work. Which disintegrator justified it? Which integrators were ignored, and what did that cost?
+**Exercise 3.3.** Take the most recently split (or proposed-split) service at your work. Which disintegrator justified it? Which integrators were ignored, and what did that cost?
 
 ### 3.4 Decomposing Existing Systems
 
@@ -686,15 +686,15 @@ flowchart LR
 
 Around the fig, a supporting cast for the risky middle period: **branch by abstraction** (an interface inside the monolith with old and new implementations behind a toggle) when you cannot intercept at the edge; **parallel run** (both implementations execute, results compared, old one still authoritative) when correctness matters more than speed — run the new seat-allocation beside the old for two weeks of real on-sales before trusting it.
 
-#### The database is the boss fight
+### 3.5 The Database Is the Boss Fight
 
 Code splits are the easy half. The shared database is where migrations go to die, and it yields only to a sequence: give each context its own *schema* first (ownership on paper), replace cross-context joins with API calls or replicated read models, then move data with **change data capture** streaming writes from old to new store while reads migrate gradually. Expect the grief stages: reports that joined everything, hidden consumers nobody declared, "temporary" direct-table access from 2019. Every one is an integrator you are paying down with interest. This is why Section 3.3 told you to check the data column *before* splitting.
 
 **Recap.** Decompose for measured business pain, never aesthetics. Strangler fig + routing facade makes migration incremental and reversible; branch-by-abstraction and parallel run de-risk the middle; the database splits last, by schema → API → CDC.
 
-**Exercise 4.1.** For a monolith you know: name the one capability you would extract first. Why that one — which disintegrator, and why is its data seam shallow?
+**Exercise 3.4.** For a monolith you know: name the one capability you would extract first. Why that one — which disintegrator, and why is its data seam shallow?
 
-### 3.5 Decomposition Kata
+### Kata: Harvest
 
 > **Your brief: "Harvest."** A farm-to-restaurant marketplace, eight years old, one Rails monolith, 26 engineers in four teams. Farmers list weekly harvests; restaurants order by Thursday; routes are planned Friday; trucks roll Saturday 4 a.m. Deploys are frozen Wednesday–Saturday because *nobody is sure what touches routing*. The delivery-routing team wants to rewrite in-place; the CTO wants "microservices like Uber"; the CFO wants neither to cost anything. Logistics is the differentiator; listings are commodity; payments are Stripe.
 
@@ -770,7 +770,7 @@ The last physics lesson is statistical. Users do not experience your average lat
 
 **Recap.** The network lies eight ways; timeouts, retries, and bandwidth discipline are the tax. Order is designed, not assumed. Everything retryable must be idempotent. Latency lives in the tail, and fan-out multiplies it.
 
-**Exercise 1.1.** Find one non-idempotent network operation in a system you know (payment, email, counter). Describe the double-fire scenario and the smallest fix.
+**Exercise 4.1.** Find one non-idempotent network operation in a system you know (payment, email, counter). Describe the double-fire scenario and the smallest fix.
 
 ### 4.2 State — Replication, Partitioning, Consistency
 
@@ -812,7 +812,7 @@ Underneath the strong end sits consensus (Raft and kin): machines voting on one 
 
 **Recap.** Replicate for reads and survival; partition for writes; choose keys for spread and single-shard flows. Consistency is a per-invariant purchase — pin your invariants to levels before choosing storage.
 
-**Exercise 2.1.** List four data items in a system you know. Assign each the weakest consistency level the business genuinely tolerates — then name which your current database actually delivers.
+**Exercise 4.2.** List four data items in a system you know. Assign each the weakest consistency level the business genuinely tolerates — then name which your current database actually delivers.
 
 ### 4.3 Scalable Service Architectures
 
@@ -842,7 +842,7 @@ One naming ritual completes the vocabulary: **scatter/gather** (fan out, assembl
 
 **Recap.** Stateless tier + cache + queue is the reference silhouette. Staleness is declared per item; queues convert spikes into schedules; the async boundary is an architectural decision, not an optimization.
 
-**Exercise 3.1.** Redraw Figure 4.3 for Encore's purchase flow, marking exactly which arrow is the synchronous "moment of truth" and why everything else can queue.
+**Exercise 4.3.** Redraw Figure 4.3 for Encore's purchase flow, marking exactly which arrow is the synchronous "moment of truth" and why everything else can queue.
 
 ### 4.4 Resilience Engineering
 
@@ -873,20 +873,22 @@ stateDiagram-v2
 
 *Figure 4.5 — The circuit breaker's three states. Its gift is twofold: your threads stop dying in queues, and the struggling dependency gets the quiet it needs to recover.*
 
-Two closing disciplines make resilience real rather than aspirational. **Graceful degradation** is designed beforehand: PSP down → accept orders, hold seats, charge when it recovers ("your card will be charged shortly" kept Encore's rival selling through their PSP's outage; nobody remembers, which is the point). And **chaos testing** turns all of it into Chapter 1 fitness functions: kill an instance, inject 5 s of PSP latency in staging, assert the breakers open and the queues drain. A resilience pattern you have never watched fire is a rumor.
+### 4.5 Degradation and Chaos
+
+Two disciplines make resilience real rather than aspirational. **Graceful degradation** is designed beforehand: PSP down → accept orders, hold seats, charge when it recovers ("your card will be charged shortly" kept Encore's rival selling through their PSP's outage; nobody remembers, which is the point). And **chaos testing** turns all of it into Chapter 1 fitness functions: kill an instance, inject 5 s of PSP latency in staging, assert the breakers open and the queues drain. A resilience pattern you have never watched fire is a rumor.
 
 **Recap.** Cascades are chains of naive best-effort; break every link — timeouts, budgeted retries, bulkheads, breakers, shedding. Degradation is designed in advance. Chaos experiments make resilience a tested property, not a hope.
 
-**Exercise 4.1.** Trace your system's most important synchronous dependency. Answer in writing: timeout? retry budget? separate pool? breaker? what do users see when it's down? Any blank answer is your next sprint.
+**Exercise 4.4.** Trace your system's most important synchronous dependency. Answer in writing: timeout? retry budget? separate pool? breaker? what do users see when it's down? Any blank answer is your next sprint.
 
-### 4.5 Scale Design Kata
+### Kata: Beacon
 
 > **Your brief: "Beacon."** Live-score platform for a football league. 2 M concurrent fans on match days (35 M peak during cup finals), each expecting score updates within 2 seconds of the referee's whistle. Between matches: near-zero traffic. Also: a betting-partner API with a *hard* requirement — odds-relevant events (goals, red cards) must be delivered in order, exactly-once-in-effect, with p99 < 500 ms. Fifteen engineers. Cloud budget: "startup, not sovereign wealth fund."
 
 **Deliverables:**
 
 1. **Capacity model** — a table: reads/sec and writes/sec at match-peak and final-peak, fan-out factor per score update, and the arithmetic that sizes the fan-facing tier.
-2. **Topology** — Figure 4.4.3-grade diagram; mark the synchronous moment(s) of truth, every queue, every cache with its declared staleness.
+2. **Topology** — Figure 4.3-grade diagram; mark the synchronous moment(s) of truth, every queue, every cache with its declared staleness.
 3. **Consistency ledger** — for fan scores vs. betting events: consistency level, ordering strategy, idempotency mechanism.
 4. **Failure-mode analysis** — three failures (instance death, stats-provider stall, region loss): the designed behavior of each, plus the chaos experiment that proves it.
 5. **Two ADRs** — the load-shedding policy for final-day overload, and the betting-API delivery design.
@@ -946,7 +948,7 @@ Every inter-service link picks a row of this table, and the rows have owners fro
 
 **Recap.** Services are bounded contexts made deployable; independence is won at modeling time. Databases are private. Communication mode is chosen per link, and most links carry facts, not questions.
 
-**Exercise 1.1.** Take two services (real or from Encore) and list every way a change in one forces a deploy of the other. Each item is a coupling with a name — schema, timing, shared library. Which would you sever first?
+**Exercise 5.1.** Take two services (real or from Encore) and list every way a change in one forces a deploy of the other. Each item is a coupling with a name — schema, timing, shared library. Which would you sever first?
 
 ### 5.2 Workflow, Transactions, and Contracts
 
@@ -978,7 +980,7 @@ Independent deployment dies the day service A's release breaks service B. The de
 
 **Recap.** Sagas replace distributed transactions with compensation designed alongside the business. Orchestrate accountable processes; choreograph fact propagation. Expand–contract plus consumer contracts in CI make "independently deployable" true rather than aspirational.
 
-**Exercise 2.1.** Design the saga for Encore's *refund* (payment reversal, seat re-listing if >48 h to showtime, ticket invalidation). Which step is the point of no return? What compensates a failure after it?
+**Exercise 5.2.** Design the saga for Encore's *refund* (payment reversal, seat re-listing if >48 h to showtime, ticket invalidation). Which step is the point of no return? What compensates a failure after it?
 
 ### 5.3 Delivery — Build, Test, Observe
 
@@ -996,7 +998,7 @@ Monitoring asks known questions ("is CPU high?"). Observability answers unknown 
 
 **Recap.** One pipeline per service; canaries plus flags make deploys boring and reversible. Confidence lives in service and contract tests; e2e is a few journeys; production is a test environment with dignity. Traces + correlation IDs are non-negotiable fleet equipment.
 
-**Exercise 3.1.** For your current system: how long from merged commit to production, and how many humans touch it? If >1 hour or >1 human, name the single constraint you'd remove first.
+**Exercise 5.3.** For your current system: how long from merged commit to production, and how many humans touch it? If >1 hour or >1 human, name the single constraint you'd remove first.
 
 ### 5.4 Production Realities
 
@@ -1012,7 +1014,7 @@ Four topics decide whether the fleet survives contact with reality; each gets a 
 
 **Recap.** Uniformity is the production theme: mesh-enforced resilience, identity everywhere, per-service scaling, BFFs guarding the UI seam. Fleet properties must be infrastructural, not voluntary.
 
-**Exercise 4.1.** Pick any two services in your organization. Are their timeout, retry, and TLS behaviors the same? If not, you have found policy-by-diligence; sketch what moving it to infrastructure would take.
+**Exercise 5.4.** Pick any two services in your organization. Are their timeout, retry, and TLS behaviors the same? If not, you have found policy-by-diligence; sketch what moving it to infrastructure would take.
 
 ### 5.5 The Organization That Microservices Require
 
@@ -1028,7 +1030,7 @@ Team boundaries and service boundaries are the same drawing viewed twice; fight 
 
 **Recap.** Stream-aligned teams own services cradle-to-pager; a platform absorbs the shared burden; governance rides paved roads and fitness functions instead of meetings. Adoption is gated on coordination pain, stable boundaries, operational capability, and cultural consent.
 
-**Exercise 5.1.** Answer the four adoption questions for your organization, in writing, with evidence. Which "yes" is really a "hope"?
+**Exercise 5.5.** Answer the four adoption questions for your organization, in writing, with evidence. Which "yes" is really a "hope"?
 
 ### Kata: The Adoption Verdict
 
@@ -1090,7 +1092,7 @@ Add the producer's golden rule — events describe *the domain*, never the produ
 
 **Recap.** Commands request, events declare; authority moves to consumers. Payload choice is a coupling decision; event-carried state with curated fields is the default. Event schemas are APIs with the same evolution constitution.
 
-**Exercise 1.1.** Take one message flowing in a system you know. Is it a command in event clothing ("SendEmailRequested")? If so, who is *actually* in charge, and what would the honest event be?
+**Exercise 6.1.** Take one message flowing in a system you know. Is it a command in event clothing ("SendEmailRequested")? If so, who is *actually* in charge, and what would the honest event be?
 
 ### 6.2 Event Streams as State
 
@@ -1124,7 +1126,7 @@ For integrating the legacy and the ordinary, one bridge pattern carries most tra
 
 **Recap.** Logs remember; queues forget. Event sourcing makes the ledger the truth — for domains that are ledgers at heart. CQRS shapes projections per question and makes them disposable. Outbox/CDC keep state changes and event publishing atomic.
 
-**Exercise 2.1.** Name one entity in your world whose *history* answers questions its current state cannot. What would its event ledger contain?
+**Exercise 6.2.** Name one entity in your world whose *history* answers questions its current state cannot. What would its event ledger contain?
 
 ### 6.3 Stream Processing
 
@@ -1140,7 +1142,7 @@ Stream processors compute *while data flows* — fraud scores during the on-sale
 
 **Recap.** Partition key = ordering scope = a domain decision. Exactly-once is effect, not delivery: at-least-once + idempotency. Event-time needs watermarks; stateful streaming needs rebuildable state; replay turns reprocessing into a feature.
 
-**Exercise 3.1.** Your busiest data flow: what is its natural partition key, and what ordering does the business actually require? Are those two answers compatible today?
+**Exercise 6.3.** Your busiest data flow: what is its natural partition key, and what ordering does the business actually require? Are those two answers compatible today?
 
 ### 6.4 Workflows and Process Automation
 
@@ -1169,7 +1171,7 @@ The dividing line, restated as doctrine: **choreograph the propagation of facts;
 
 **Recap.** Folklore workflows fail the "where is it stuck?" test. Engines make processes explicit, waitable, and versioned. Hybrid is the end state: orchestrated cores, event-driven edges, and a catalog so the topology is knowable.
 
-**Exercise 4.1.** Name one process at your work that has a business name ("onboarding," "settlement") but no explicit model — only code reacting to code. What would its Figure 6.6.3 diagram reveal?
+**Exercise 6.4.** Name one process at your work that has a business name ("onboarding," "settlement") but no explicit model — only code reacting to code. What would its Figure 6.3 diagram reveal?
 
 ### 6.5 Flow — Streams as Products
 
@@ -1177,7 +1179,7 @@ The last move is a promotion: from events as integration plumbing to **streams a
 
 **Recap.** Streams with owners, contracts, and SLOs are products; subscription replaces coordination. This is the seed of data mesh and a core platform service.
 
-**Exercise 5.1.** If your most valuable internal data flowed as a product-grade stream tomorrow, which team would subscribe first, and what would they stop asking you for?
+**Exercise 6.5.** If your most valuable internal data flowed as a product-grade stream tomorrow, which team would subscribe first, and what would they stop asking you for?
 
 ### Kata: The Event Backbone
 
@@ -1187,7 +1189,7 @@ The last move is a promotion: from events as integration plumbing to **streams a
 
 1. **Event catalog** — the domain events with payload philosophy per event (Figure 6.1) and schema-evolution rules.
 2. **Topology** — brokers/logs, partition keys with ordering rationale, consumer groups; where CQRS projections serve the tracking screens.
-3. **Process model** — the refund workflow, Figure 6.6.3 grade, orchestration engine at the core, events at the edges.
+3. **Process model** — the refund workflow, Figure 6.3 grade, orchestration engine at the core, events at the edges.
 4. **Delivery honesty** — for courier assignment: the at-least-once story, the idempotency mechanism, and what the courier sees on a duplicate.
 5. **One ADR** — polling → push migration for courier apps, losses included.
 
@@ -1254,7 +1256,7 @@ Contract-first is the working method regardless of protocol: the OpenAPI (or Asy
 
 **Recap.** APIs model affordances, not tables; workflows get resources; errors and idempotency are contract, not garnish. Protocol choice is a characteristics decision, and the contract document precedes the code.
 
-**Exercise 1.1.** Design the resource and verb set for Encore's seat hold → purchase flow, including the 402-decline and hold-expiry errors. Whose move is it after each?
+**Exercise 7.1.** Design the resource and verb set for Encore's seat hold → purchase flow, including the 402-decline and hold-expiry errors. Whose move is it after each?
 
 ### 7.2 Evolution and Compatibility
 
@@ -1273,7 +1275,7 @@ Hypermedia earns its pragmatic mention here: links in responses (`"cancel": {"hr
 
 **Recap.** Additive-only is the default physics; repurposing is the cardinal sin; v2 is a confession with a funnel and a sunset date. Links buy workflow evolvability; contract tests turn breakage into CI signal.
 
-**Exercise 2.1.** Encore must split `price` into `base_price` + `fees` (regulatory). Design the no-break migration: field strategy, timeline, and what the last unmigrated partner experiences at sunset.
+**Exercise 7.2.** Encore must split `price` into `base_price` + `fees` (regulatory). Design the no-break migration: field strategy, timeline, and what the last unmigrated partner experiences at sunset.
 
 ### 7.3 API Traffic Management
 
@@ -1306,7 +1308,7 @@ flowchart LR
 
 **Recap.** Gateways own cross-cutting edge concerns and must be defended against becoming ESBs; mesh owns the interior. Rate limits are contracts with headers. Canary and shadow traffic make API releases observable experiments.
 
-**Exercise 3.1.** List everything your current edge (gateway, LB, nginx) does. Sort into "cross-cutting" and "knows the domain." The second column is your leak inventory.
+**Exercise 7.3.** List everything your current edge (gateway, LB, nginx) does. Sort into "cross-cutting" and "knows the domain." The second column is your leak inventory.
 
 ### 7.4 API Security
 
@@ -1322,7 +1324,7 @@ Encore's API now fronts money and scarce inventory — precisely what OWASP's AP
 
 **Recap.** Right OAuth flow per audience; scopes model affordances; JWTs short, bound, and pinned. Object-level authorization is the service's burden and the auditor's first question. Abuse resistance is load-tested, not assumed.
 
-**Exercise 4.1.** For `GET /holds/{id}`: enumerate every caller class (fan, partner, support tool) and write the object-level rule each must satisfy. Now check — where in your design is that rule *enforced*?
+**Exercise 7.4.** For `GET /holds/{id}`: enumerate every caller class (fan, partner, support tool) and write the object-level rule each must satisfy. Now check — where in your design is that rule *enforced*?
 
 ### 7.5 Running an API Program
 
@@ -1330,7 +1332,7 @@ An API with users is a product with a roadmap, whether staffed as one or not. Th
 
 **Recap.** DX is measured in minutes-to-first-call; governance ships as lint rules; every endpoint is born with owner, SLO, and an exit policy. The API program is platform thinking in miniature.
 
-**Exercise 5.1.** Time a colleague (or yourself, honestly) from zero to first successful call against your team's API. Every minute past ten, name the friction that spent it.
+**Exercise 7.5.** Time a colleague (or yourself, honestly) from zero to first successful call against your team's API. Every minute past ten, name the friction that spent it.
 
 ### Kata: The Public API
 
@@ -1340,7 +1342,7 @@ An API with users is a product with a roadmap, whether staffed as one or not. Th
 
 1. **Contract** — OpenAPI sketch: resources for shipments, positions, customs events, ETAs; error catalog with whose-move-is-it semantics; webhook or stream design for push consumers.
 2. **Evolution policy** — additive rules, the ETA-model-v2 migration plan, sunset mechanics.
-3. **Edge design** — Figure 7.7.2-grade diagram; per-tier quotas including the retailer problem; canary strategy.
+3. **Edge design** — Figure 7.2-grade diagram; per-tier quotas including the retailer problem; canary strategy.
 4. **Security architecture** — flows per consumer class, scope model, the object-level rule for per-country customs data, and its enforcement point.
 5. **Program sheet** — DX funnel targets, three lint rules you'd enforce from day one, and each endpoint's tier/SLO.
 
@@ -1400,7 +1402,7 @@ Core Web Vitals (loading, interactivity, visual stability) are Chapter 1 charact
 
 **Recap.** Rendering is chosen per page class from a priced menu; Encore uses three strategies on one product. Web vitals are architectural characteristics; budgets in CI are their fitness functions.
 
-**Exercise 1.1.** Classify five screens of a product you know into Figure 8.1's rows. Which screen is currently bought from the wrong row, and what is it costing?
+**Exercise 8.1.** Classify five screens of a product you know into Figure 8.1's rows. Which screen is currently bought from the wrong row, and what is it costing?
 
 ### 8.2 Structuring the Frontend
 
@@ -1424,7 +1426,7 @@ Data fetching completes the module: request **waterfalls** (component renders �
 
 **Recap.** Design system as thin shared kernel; module boundaries along contexts with enforced rules; state sorted into three kinds with server-cache treated as caching, not global state. Waterfalls are sequential calls wearing JSX.
 
-**Exercise 2.1.** Open your product's slowest screen and trace its requests. Draw the waterfall. Which fetches could be parallel or prefetched, and what route-level declaration would do it?
+**Exercise 8.2.** Open your product's slowest screen and trace its requests. Draw the waterfall. Which fetches could be parallel or prefetched, and what route-level declaration would do it?
 
 ### 8.3 Micro-Frontends and Composition
 
@@ -1438,7 +1440,7 @@ For organizations that do need runtime composition, the menu with prices: **buil
 
 **Recap.** Micro-frontends are bought with team-scale coordination pain, split along experience seams. Runtime composition taxes payload, consistency, and demands an owned shell. Most products deserve a modular monolith frontend and one honest exception.
 
-**Exercise 3.1.** Count the frontend teams touching your main app and their release collisions last quarter. Verdict: modular monolith, one split, or federation — and which seam?
+**Exercise 8.3.** Count the frontend teams touching your main app and their release collisions last quarter. Verdict: modular monolith, one split, or federation — and which seam?
 
 ### 8.4 The Frontend–Backend Seam
 
@@ -1465,7 +1467,7 @@ GraphQL earns its Chapter 7 rain check here: when many screens need flexible sli
 
 **Recap.** BFFs are per-experience, frontend-owned, waterfall-killing aggregators; GraphQL is a BFF strategy for many-screen scale. Real-time UIs are event subscribers; optimistic UI is eventual consistency with manners.
 
-**Exercise 4.1.** Design the optimistic flow for Encore's seat tap: local effect, reconciliation, and the apology path. What does the fan see at 200 ms, 800 ms, and on conflict?
+**Exercise 8.4.** Design the optimistic flow for Encore's seat tap: local effect, reconciliation, and the apology path. What does the fan see at 200 ms, 800 ms, and on conflict?
 
 ### 8.5 Security, Accessibility, and AI Interfaces
 
@@ -1479,7 +1481,7 @@ Frontend security inverts backend instincts: your code executes beside adversari
 
 **Recap.** BFF-held tokens + CSP + sanitization form the browser perimeter; a11y lives in the design system and CI or nowhere; AI features stream into vetted components with undo as a first-class affordance.
 
-**Exercise 5.1.** Audit any form you own: where do tokens live, what does CSP allow, what renders user input? Three answers, three possible incidents.
+**Exercise 8.5.** Audit any form you own: where do tokens live, what does CSP allow, what renders user input? Three answers, three possible incidents.
 
 ### Kata: The Storefront
 
@@ -1538,7 +1540,7 @@ For workflows spanning owners, Chapter 5's sagas carry the how; this module adds
 
 **Recap.** One writer per table, always; common data gets an owner, joint data gets split by meaning. Sagas, events, and humble batch replace 2PC, which is refused on principle. Staleness is negotiated with the business, per flow.
 
-**Exercise 1.1.** Find a table (or concept) in your world with two writers. Split it by meaning: name the two models, their owners, and the event that connects them.
+**Exercise 9.1.** Find a table (or concept) in your world with two writers. Split it by meaning: name the two models, their owners, and the event that connects them.
 
 ### 9.2 Distributed Data Access
 
@@ -1559,7 +1561,7 @@ The load-bearing idea is the middle rows: **the query moves to a copy shaped for
 
 **Recap.** Cross-owner questions get copies fed by contracts: composition for shallow joins, projections for deep ones, CDC for legacy. Direct foreign reads are the coupling you'll regret at the next schema change.
 
-**Exercise 2.1.** Take your product's heaviest cross-domain screen. Which row of Figure 9.1 serves it today? Which *should* — and what contract would feed the copy?
+**Exercise 9.2.** Take your product's heaviest cross-domain screen. Which row of Figure 9.1 serves it today? Which *should* — and what contract would feed the copy?
 
 ### 9.3 Analytical Architectures
 
@@ -1569,13 +1571,13 @@ Analytics has its own architectural lineage: the **warehouse** (structured, gove
 
 **Recap.** Lakehouse is the storage default; the real failure is organizational — central pipelines coupling to schemas they don't own. Streaming feeds and producer-side contracts are the repairs that scale.
 
-**Exercise 3.1.** Trace one dashboard at your work back to its sources. How many schema changes away is its breakage, and who finds out first — the changer or the dashboard's owner?
+**Exercise 9.3.** Trace one dashboard at your work back to its sources. How many schema changes away is its breakage, and who finds out first — the changer or the dashboard's owner?
 
 ### 9.4 Data Mesh
 
 #### The book's own logic, applied to analytics
 
-Read the mesh's four principles as this chapter's greatest hits reassembled: **domain ownership** (the ticketing team owns ticketing's analytical data — Conway, Chapter 3); **data as a product** (streams with owners, contracts, SLOs — Chapter 6, Section 9.5, now with discoverability and documentation); **self-service platform** (domains can't each build lakehouse plumbing — a platform makes publishing a data product as easy as deploying a service; Chapter 14's thesis, arriving early); **federated computational governance** (global rules — privacy, identifiers, quality metadata — enforced *as code in the platform*, not as a committee's memos; Chapter 5's paved road, data edition).
+Read the mesh's four principles as this chapter's greatest hits reassembled: **domain ownership** (the ticketing team owns ticketing's analytical data — Conway, Chapter 3); **data as a product** (streams with owners, contracts, SLOs — Section 6.5, now with discoverability and documentation); **self-service platform** (domains can't each build lakehouse plumbing — a platform makes publishing a data product as easy as deploying a service; Chapter 14's thesis, arriving early); **federated computational governance** (global rules — privacy, identifiers, quality metadata — enforced *as code in the platform*, not as a committee's memos; Chapter 5's paved road, data edition).
 
 A data product, concretely, is not a table with good intentions:
 
@@ -1603,7 +1605,7 @@ Honesty clause, as always: the mesh is an org-scale answer to an org-scale probl
 
 **Recap.** Mesh = ownership + product discipline + platform + governance-as-code — decomposition's logic reaching analytics. The data product (code + ports + contract, one owner) is the new unit. Adopt principles at any scale; buy machinery with pain.
 
-**Exercise 4.1.** Sketch Figure 9.2 for the most-asked-about data in your company: owner, ports, contract, first three subscribers. What committee does this diagram dissolve?
+**Exercise 9.4.** Sketch Figure 9.2 for the most-asked-about data in your company: owner, ports, contract, first three subscribers. What committee does this diagram dissolve?
 
 ### 9.5 The Self-Service Data Platform
 
@@ -1613,7 +1615,7 @@ The closing bridge is the reason this module exists: **AI eats from here.** Chap
 
 **Recap.** The platform makes the right data behavior the cheap behavior: declare, publish, inherit, observe. AI systems are data-product consumers; their quality is bounded by this module.
 
-**Exercise 5.1.** List the manual steps between "team has valuable data" and "another team uses it safely" at your company. Each step is either platform backlog or permanent tax.
+**Exercise 9.5.** List the manual steps between "team has valuable data" and "another team uses it safely" at your company. Each step is either platform backlog or permanent tax.
 
 ### Kata: The Freight Ledger
 
@@ -1623,7 +1625,7 @@ The closing bridge is the reason this module exists: **AI eats from here.** Chap
 
 1. **Ownership map** — the four domains' data, three joint-ownership conflicts resolved by split-by-meaning.
 2. **Operational access design** — the dispute screen served by Figure 9.1's menu, with declared staleness and its business sign-off.
-3. **Two data products** — Figure 9.9.2 anatomy for `shipment-movements` and `customs-status`, including the per-country access rule *as platform-enforced policy*.
+3. **Two data products** — Figure 9.2 anatomy for `shipment-movements` and `customs-status`, including the per-country access rule *as platform-enforced policy*.
 4. **Migration path** — from 400 ETL jobs toward contracts and products without a big bang: first two pipelines strangled, producer-side CI contracts introduced where.
 5. **One ADR** — "why the central data team becomes a platform team," losses included.
 
@@ -1681,7 +1683,7 @@ Threat modeling is done *at design time, by the designing team, on the C4 diagra
 
 **Recap.** Four questions, STRIDE for the second, run by builders on existing diagrams. Trust boundaries concentrate the questions; classification allocates the armor; the best control is not holding the data at all.
 
-**Exercise 1.1.** Draw your system's context diagram and add the trust boundaries. At each crossing, ask one STRIDE letter's question. Which crossing has no answer today?
+**Exercise 10.1.** Draw your system's context diagram and add the trust boundaries. At each crossing, ask one STRIDE letter's question. Which crossing has no answer today?
 
 ### 10.2 Zero Trust and Identity
 
@@ -1711,7 +1713,7 @@ flowchart LR
 
 **Recap.** Trust attaches to verified identity, never to network position. Humans get SSO+MFA with domain-modeled roles; workloads get cryptographic identity, mesh-enforced mTLS, and explicit call policies; networks stay as depth, with egress control as the sleeper hit.
 
-**Exercise 2.1.** Pick two services you run. Write the call-policy sentence for each ("X accepts A from B and C"). Is that sentence enforced anywhere, or is it currently a hope?
+**Exercise 10.2.** Pick two services you run. Write the call-policy sentence for each ("X accepts A from B and C"). Is that sentence enforced anywhere, or is it currently a hope?
 
 ### 10.3 Securing the Stack
 
@@ -1727,7 +1729,7 @@ Four disciplines cover the stack's remaining altitude, each with one architectur
 
 **Recap.** Prefer expiring credentials to hidden ones; architect keys, not just ciphers; treat the build pipeline as production and dependencies as code; keep the seams sealed with the disciplines earlier chapters installed.
 
-**Exercise 3.1.** Inventory your three longest-lived credentials (age, blast radius, rotation story). Design the short-lived replacement for the worst one.
+**Exercise 10.3.** Inventory your three longest-lived credentials (age, blast radius, rotation story). Design the short-lived replacement for the worst one.
 
 ### 10.4 Isolation and Multi-Tenancy
 
@@ -1741,7 +1743,7 @@ Two modern isolation frontiers: **sandboxing untrusted execution** (webhooks, pa
 
 **Recap.** Choose silo/pool/bridge per data classification, centralize tenant predicates, sandbox anything that executes strangers' intent — models included. Compliance stops being paperwork exactly when its evidence is emitted by the architecture.
 
-**Exercise 4.1.** For one shared (pooled) store you operate: where does the tenant/user scoping predicate live? Count the code paths that must remember it. Design the version where one layer remembers for everyone.
+**Exercise 10.4.** For one shared (pooled) store you operate: where does the tenant/user scoping predicate live? Count the code paths that must remember it. Design the version where one layer remembers for everyone.
 
 ### 10.5 Security as a Platform Capability
 
@@ -1749,7 +1751,7 @@ The fleet-scale truth, one last time: seventy teams cannot each be excellent at 
 
 **Recap.** Paved roads, admission-time policy, and fitness functions make security ambient; the security team paves and audits exceptions instead of gating everything; Friday-afternoon behavior is the metric.
 
-**Exercise 5.1.** Name the last security requirement your org delivered by memo. Sketch its paved-road version: template default + policy check + the priced exception path.
+**Exercise 10.5.** Name the last security requirement your org delivered by memo. Sketch its paved-road version: template default + policy check + the priced exception path.
 
 ### Kata: The Threat Model
 
@@ -1817,7 +1819,7 @@ Kubernetes, seen from the architect's altitude, is a declarative reconciliation 
 
 **Recap.** Own less by default; buy managed for generic, functions for spiky, containers for steady. Kubernetes is a reconciliation model with a platform-sized bill; serverless is a cost curve with fine print. Match per workload, not per fashion.
 
-**Exercise 1.1.** Take three workloads you know. For each: traffic shape (steady/spiky/scheduled), latency tolerance, and the Figure 11.11.1 row it *should* occupy. Note any current mismatch and its monthly cost in idle capacity or ops effort.
+**Exercise 11.1.** Take three workloads you know. For each: traffic shape (steady/spiky/scheduled), latency tolerance, and the Figure 11.1 row it *should* occupy. Note any current mismatch and its monthly cost in idle capacity or ops effort.
 
 ### 11.2 Delivery Infrastructure
 
@@ -1829,7 +1831,7 @@ On this substrate, Chapter 5's progressive delivery gets its infrastructure teet
 
 **Recap.** IaC makes environments reproducible; GitOps makes git the control plane and revert the rollback; previews replace staging queues; canaries answer to error budgets. The four key metrics are the delivery scoreboard and an architectural early-warning system.
 
-**Exercise 2.1.** Measure your four key metrics for last month, however roughly. Which is worst, and is its cause operational (pipeline, approvals) or architectural (coupling, test depth)?
+**Exercise 11.2.** Measure your four key metrics for last month, however roughly. Which is worst, and is its cause operational (pipeline, approvals) or architectural (coupling, test depth)?
 
 ### 11.3 Observability and SRE
 
@@ -1852,7 +1854,7 @@ Alerting inherits the philosophy: page on *symptoms* (SLO burn rate — users ar
 
 **Recap.** SLIs measure experience, SLOs promise it, error budgets arbitrate speed vs. stability automatically. Page on symptoms, dashboard the causes, runbook every page. Postmortems convert incidents into architecture.
 
-**Exercise 3.1.** Write the SLI/SLO/budget triple for your product's most user-visible operation. Then check last month's alerts: how many were symptoms vs. causes?
+**Exercise 11.3.** Write the SLI/SLO/budget triple for your product's most user-visible operation. Then check last month's alerts: how many were symptoms vs. causes?
 
 ### 11.4 Cost, Capacity, and Sustainability
 
@@ -1864,7 +1866,7 @@ Serverless gets the sharp version of the lesson: per-invocation pricing means th
 
 **Recap.** Track cost per business unit and alert on drift; estimate cost at review time like any other characteristic. Autoscaling needs known ceilings and a calendar. Serverless-vs-container is arithmetic on traffic shape; sustainability mostly is efficiency.
 
-**Exercise 4.1.** Define your product's unit cost (per order, per user-day, per API call). Pull two months of data and compute it. What architectural event explains the biggest wiggle?
+**Exercise 11.4.** Define your product's unit cost (per order, per user-day, per API call). Pull two months of data and compute it. What architectural event explains the biggest wiggle?
 
 ### 11.5 Operability by Design
 
@@ -1872,7 +1874,7 @@ The closing move gathers the chapter into a design-time discipline. **Production
 
 **Recap.** Readiness is a pre-deploy worksheet; restores are tested, not assumed; canaries examine what local tests cannot; upgrades are owned work. Operability is a designed, verified characteristic.
 
-**Exercise 5.1.** Run the readiness checklist against a service you own today. Every "no" is either this sprint's work or an accepted risk — write down which.
+**Exercise 11.5.** Run the readiness checklist against a service you own today. Every "no" is either this sprint's work or an accepted risk — write down which.
 
 ### Kata: The Locker Network
 
@@ -1880,7 +1882,7 @@ The closing move gathers the chapter into a design-time discipline. **Production
 
 **Deliverables:**
 
-1. **Execution-model map** — Figure 11.11.1 rows for: locker ingestion, courier/consumer APIs, carrier batch jobs, alarm processing. The reconnection-storm design named explicitly.
+1. **Execution-model map** — Figure 11.1 rows for: locker ingestion, courier/consumer APIs, carrier batch jobs, alarm processing. The reconnection-storm design named explicitly.
 2. **Delivery design** — GitOps layout, preview-environment story, and the canary policy for firmware-adjacent services where rollback is slow.
 3. **SRE pack** — SLI/SLO/budget for pickup availability; the symptom alert set; the runbook skeleton for "regional cellular outage."
 4. **Cost intervention** — define Relay's unit cost; three hypotheses for the 8%-vs-3% divergence and the telemetry that would confirm each.
@@ -1936,7 +1938,7 @@ Classic ML keeps its seat: forecasting, ranking, and fraud scoring remain traine
 
 **Recap.** The model is a component with an honest, unusual contract. Centralize provider concerns in a gateway (never prompts); route by capability tier; keep classic ML's feature discipline — one definition across offline and online.
 
-**Exercise 1.1.** For an AI feature you know (or Encore's support assistant): write its contract as Chapter 7 would — inputs, outputs, latency, cost per call, and the three failure modes a caller must handle.
+**Exercise 12.1.** For an AI feature you know (or Encore's support assistant): write its contract as Chapter 7 would — inputs, outputs, latency, cost per call, and the three failure modes a caller must handle.
 
 ### 12.2 Retrieval-Augmented Generation
 
@@ -1964,7 +1966,7 @@ Why RAG before fine-tuning: retrieval updates in minutes, cites its sources, res
 
 **Recap.** RAG is a data pipeline with a model at the end: hybrid retrieval + reranking decide quality; the corpus is an owned data product; permissions are enforced in the query, structurally. Fine-tune for tone, retrieve for truth.
 
-**Exercise 2.1.** Design the corpus for Encore's support assistant: which three data products feed it, each one's freshness SLO, and the permission metadata a chunk of order history must carry.
+**Exercise 12.2.** Design the corpus for Encore's support assistant: which three data products feed it, each one's freshness SLO, and the permission metadata a chunk of order history must carry.
 
 ### 12.3 Agentic Architectures
 
@@ -1986,7 +1988,7 @@ Encore's rebooking agent, designed by the table: tools are the *existing* APIs (
 
 **Recap.** Agents are orchestration with runtime-chosen steps: real engines, real budgets, tool contracts as carefully written as APIs. Authority is scoped and escalation is designed. Split into multiple agents for the reasons you'd split services — never for spectacle.
 
-**Exercise 3.1.** Specify the rebooking agent's tool list: name, scope, read-or-write class, and the policy line above which each write escalates to a human.
+**Exercise 12.3.** Specify the rebooking agent's tool list: name, scope, read-or-write class, and the policy line above which each write escalates to a human.
 
 ### 12.4 Quality, Safety, and Security
 
@@ -1998,7 +2000,7 @@ Guardrails wrap the runtime in layers, none sufficient alone: **structured outpu
 
 **Recap.** Golden sets + calibrated judges + CI gates make quality a regression-tested property. Guardrails layer: schemas first, filters and grounding checks after. Injection is defeated by privilege separation, not prompt courtesy. Production quality is monitored like latency.
 
-**Exercise 4.1.** Draft ten golden cases for the support assistant, including two adversarial ones (an injection attempt; a question whose correct answer is "I can't help with that"). Define pass criteria for each.
+**Exercise 12.4.** Draft ten golden cases for the support assistant, including two adversarial ones (an injection attempt; a question whose correct answer is "I can't help with that"). Define pass criteria for each.
 
 ### 12.5 Operating AI at Scale
 
@@ -2006,7 +2008,7 @@ The invoice arrives token-denominated, and Chapter 11's disciplines apply with n
 
 **Recap.** Track cost per resolved outcome; route by tier, cache by meaning, budget with graceful degradation. Stream for perceived latency. Tenant boundaries cover prompts, corpora, and spend.
 
-**Exercise 5.1.** Estimate the support assistant's economics: turns per conversation, tokens per turn, tier mix, cost per resolution — then compute what the routing layer is worth per month at 50,000 conversations.
+**Exercise 12.5.** Estimate the support assistant's economics: turns per conversation, tokens per turn, tier mix, cost per resolution — then compute what the routing layer is worth per month at 50,000 conversations.
 
 ### Kata: The Firm's Memory
 
@@ -2015,7 +2017,7 @@ The invoice arrives token-denominated, and Chapter 11's disciplines apply with n
 **Deliverables:**
 
 1. **Topology** — gateway/router design, tier strategy, and the on-prem vs. API model decision as an ADR with data-governance losses in ink.
-2. **RAG design** — Figure 12.12.1 pipeline with matter-scoping and ethical walls as *structural* retrieval filters; corpus-as-data-product sheet with freshness SLOs.
+2. **RAG design** — Figure 12.1 pipeline with matter-scoping and ethical walls as *structural* retrieval filters; corpus-as-data-product sheet with freshness SLOs.
 3. **Agent spec** — the deadline agent's tools, scopes, budgets, and escalation lines (what may it write to a partner's calendar unasked?).
 4. **Eval pack** — fifteen golden cases including two ethical-wall probes and one injection attempt hidden in a document; CI gate policy.
 5. **Economics sheet** — cost per matter instrumentation and the router's projected savings.
@@ -2079,7 +2081,7 @@ Within the application plane, tenants deploy on a spectrum of three models: **si
 
 **Recap.** Control plane manages tenants; application plane serves them; the control plane is the new crown jewel. Silo, pool, and bridge are a menu, chosen per tier — not an identity.
 
-**Exercise 1.1.** Inventory what your company would need in a control plane today: how many of Figure 13.1's five boxes currently exist as software, and how many as Dana?
+**Exercise 13.1.** Inventory what your company would need in a control plane today: how many of Figure 13.1's five boxes currently exist as software, and how many as Dana?
 
 ### 13.2 Tenant Lifecycle
 
@@ -2091,7 +2093,7 @@ Identity does the daily work. The rule that prevents a category of catastrophe: 
 
 **Recap.** Onboarding is a compensating workflow measured in minutes-to-first-value, identical across tiers. Tenancy lives in the token from authentication onward and propagates like a correlation ID — making the rest of this chapter queryable.
 
-**Exercise 2.1.** Sketch Encore's self-service onboarding as a Chapter 6 process model: steps, compensations, and the verification that flips a tenant to "live."
+**Exercise 13.2.** Sketch Encore's self-service onboarding as a Chapter 6 process model: steps, compensations, and the verification that flips a tenant to "live."
 
 ### 13.3 Building Multi-Tenant Services
 
@@ -2113,7 +2115,7 @@ Isolation must then survive *runtime*: tenant-scoped credentials (the request's 
 
 **Recap.** Resolve tenancy once, enforce it in layers, express it as config. Choose partitioning per blast-radius budget; centralize the predicate; scope runtime credentials. Fairness is engineered with quotas and fair queues — and priced when quotas aren't enough.
 
-**Exercise 3.1.** Grep (mentally or actually) a codebase you know for tier/tenant conditionals in business logic. Redesign the worst one as configuration.
+**Exercise 13.3.** Grep (mentally or actually) a codebase you know for tier/tenant conditionals in business logic. Redesign the worst one as configuration.
 
 ### 13.4 SaaS on Real Stacks
 
@@ -2123,7 +2125,7 @@ Operations gains a dimension: dashboards, alerts, and SLOs all grow a *tenant ax
 
 **Recap.** Kubernetes buys isolation with namespaces and schedulers; serverless buys it per-invocation with exact cost attribution. Mixed substrates per tier is the mature answer. Every operational artifact — dashboard, SLO, alert — grows a tenant dimension, or incidents hide inside averages.
 
-**Exercise 4.1.** Take one alert your team owns. Rewrite it tenant-sliced: what threshold, per whom, and what would last month have shown that the averaged version hid?
+**Exercise 13.4.** Take one alert your team owns. Rewrite it tenant-sliced: what threshold, per whom, and what would last month have shown that the averaged version hid?
 
 ### 13.5 The Business of Multi-Tenancy
 
@@ -2143,7 +2145,7 @@ Two closing motions complete the chapter. **Migration** — taking single-tenant
 
 **Recap.** Tiers map deployment models to price points, and metering makes the mapping honest. Migrate by strangling tenancy inward from the edge. AI features inherit tenant boundaries across prompts, corpora, and spend — structurally, like everything else in this chapter.
 
-**Exercise 5.1.** Draft your product's Figure 13.13.3 sheet, real or hypothetical. Which cell can you not fill because the metering doesn't exist? That cell is control-plane backlog.
+**Exercise 13.5.** Draft your product's Figure 13.3 sheet, real or hypothetical. Which cell can you not fill because the metering doesn't exist? That cell is control-plane backlog.
 
 ### Kata: The Studio Suite
 
@@ -2151,8 +2153,8 @@ Two closing motions complete the chapter. **Migration** — taking single-tenant
 
 **Deliverables:**
 
-1. **Two-plane design** — Figure 13.13.1 control plane scoped to twelve engineers: which boxes are built, bought, or Dana-for-now (explicitly).
-2. **Tier sheet** — Figure 13.13.3 for self-service, standard, Allegro, and the legacy on-prem tail; deployment model and metering per tier.
+1. **Two-plane design** — Figure 13.1 control plane scoped to twelve engineers: which boxes are built, bought, or Dana-for-now (explicitly).
+2. **Tier sheet** — Figure 13.3 for self-service, standard, Allegro, and the legacy on-prem tail; deployment model and metering per tier.
 3. **Migration plan** — from 180 snowflakes to tenancy: edge-tagging first, predicate centralization, data consolidation order, and what "reversible" means at each step.
 4. **Fairness & isolation** — the September-enrollment spike (every school's on-sale, same week): quotas, fair queues, and Allegro's contractual protection.
 5. **One ADR** — "Allegro: silo or bridge?" — with the margin math and the ops bill in ink.
@@ -2207,7 +2209,7 @@ The operating model matters more than the software: **platform as a product**. P
 
 **Recap.** Platforms exist to return cognitive load to the business. Platform-as-product — voluntary customers, measured adoption, thinnest-viable start — is the operating model; the anti-patterns are what happens without it.
 
-**Exercise 1.1.** List everything a new service at your company needs before it serves production traffic safely. Time-estimate the list for a team doing it alone. That number is the platform's business case, or its absence.
+**Exercise 14.1.** List everything a new service at your company needs before it serves production traffic safely. Time-estimate the list for a team doing it alone. That number is the platform's business case, or its absence.
 
 ### 14.2 Platform Anatomy
 
@@ -2230,7 +2232,7 @@ Team topology follows Chapter 5's physics: a platform group sized honestly (the 
 
 **Recap.** Golden paths are the product: template + workflow + registry + scorecard. The platform is a control plane over the planes of Chapters 6–12, run by a right-sized product organization that paves roads and refuses to drive.
 
-**Exercise 2.1.** Design the golden path for the need Exercise 1.1 surfaced: what does the template contain, what does provisioning create, and what one command runs it?
+**Exercise 14.2.** Design the golden path for the need Exercise 14.1 surfaced: what does the template contain, what does provisioning create, and what one command runs it?
 
 ### 14.3 Governance as Code
 
@@ -2242,7 +2244,7 @@ Governance includes governing *the platform itself*: platform APIs are Chapter 7
 
 **Recap.** Scorecards + policy-as-code + a priced exception path replace review boards. The platform's own APIs live under the strictest contract discipline in the company, and deprecation campaigns — tooling, funnels, dates — are how it stays alive.
 
-**Exercise 3.1.** Write three policy-as-code rules your organization would enforce at admission today if it could, and one current rule you would *demote* to advisory. Defend the demotion.
+**Exercise 14.3.** Write three policy-as-code rules your organization would enforce at admission today if it could, and one current rule you would *demote* to advisory. Defend the demotion.
 
 ### 14.4 Platform Strategy and the Elevator
 
@@ -2260,7 +2262,7 @@ And beneath all three, systems thinking: adoption is a feedback loop (good paths
 
 **Recap.** Map capabilities to buy/build postures; fund the platform with before/after numbers, not vibes; speak every floor's language without forking the truth. Adoption is a loop — fix the listening before the features.
 
-**Exercise 4.1.** Take one internal capability your company hand-rolls. Place it on the evolution axis, then write its two-sentence justification — or its two-sentence migration plan to a commodity.
+**Exercise 14.4.** Take one internal capability your company hand-rolls. Place it on the evolution axis, then write its two-sentence justification — or its two-sentence migration plan to a commodity.
 
 ### 14.5 The Capstone
 
@@ -2271,7 +2273,7 @@ Everything since Chapter 1 was practice for this.
 **Deliverables — the full architect's dossier:**
 
 1. **Platform strategy** — Wardley-postured capability map; the thinnest viable platform chosen from Meridian's pains, with the first three golden paths sequenced by measured pain.
-2. **Platform architecture** — Figure 14.14.2-grade design: control plane, planes, registry, scorecards; C4 diagrams with trust boundaries (Chapter 10 is watching).
+2. **Platform architecture** — Figure 14.2-grade design: control plane, planes, registry, scorecards; C4 diagrams with trust boundaries (Chapter 10 is watching).
 3. **Golden-path specifications** — the "new service" and "new data product" paths end to end: template contents, provisioning workflow, guardrails inherited, one-command experience.
 4. **Governance design** — the fitness-function catalog, three admission policies, the priced exception path, and the deprecation playbook for the 190-service long tail.
 5. **Migration roadmap** — monolith strategy (Chapter 3's honesty: what strangles, what stays), shadow-AI-gateway consolidation, and the carrier-product's tenancy machinery converging with the internal control plane.
