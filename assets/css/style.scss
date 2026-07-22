@@ -3,6 +3,22 @@
 
 @import "{{ site.theme }}";
 
+@font-face {
+    font-family: "Open Sans";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("{{ '/assets/fonts/open-sans-400.woff2' | relative_url }}") format("woff2");
+}
+
+@font-face {
+    font-family: "Open Sans";
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url("{{ '/assets/fonts/open-sans-700.woff2' | relative_url }}") format("woff2");
+}
+
 .page-header {
     /* The "slash": a rapid color break aligned with "the" in the centered title.
        Tune here: position of the break, its sharpness, and the slash tilt. */
@@ -31,22 +47,19 @@
 }
 
 .main-content {
-    max-width: 49rem;
+    max-width: 54rem;
+    font-family: Charter, "Bitstream Charter", "Sitka Text", Cambria, Georgia, serif;
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: #2b3138;
 
     h1, h2, h3, h4, h5, h6 {
         color: #d97706;
+        font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
     }
 
     a {
         color: #0b7ecb;
-    }
-
-    /* Book body: serif reading face, justified with hyphenation */
-    p, li, blockquote {
-        font-family: Charter, "Bitstream Charter", "Sitka Text", Cambria, Georgia, serif;
-        font-size: 1.05rem;
-        line-height: 1.68;
-        color: #2b3138;
     }
 
     p {
@@ -102,13 +115,18 @@
         font-weight: 600;
     }
 
-    /* Compact tables so most fit the reading column without scrolling */
+    /* Tables: compact, and allowed to bleed wider than the prose column */
     table {
-        font-size: 0.86rem;
+        font-size: 0.92rem;
         line-height: 1.45;
+        width: max-content;
+        max-width: min(94vw, 66rem);
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
 
         th, td {
-            padding: 0.35rem 0.55rem;
+            padding: 0.35rem 0.6rem;
         }
     }
 
