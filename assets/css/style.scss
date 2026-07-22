@@ -102,6 +102,16 @@
         font-weight: 600;
     }
 
+    /* Compact tables so most fit the reading column without scrolling */
+    table {
+        font-size: 0.86rem;
+        line-height: 1.45;
+
+        th, td {
+            padding: 0.35rem 0.55rem;
+        }
+    }
+
     /* Chapter separators as ornaments */
     hr {
         border: 0;
