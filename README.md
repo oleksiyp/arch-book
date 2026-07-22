@@ -2386,6 +2386,8 @@ The platform consumes real budget in service of indirect value, which makes stra
 
 **The message.** The architect-elevator skill: the same platform decision must be spoken at every floor — to engineers as golden paths and guardrails, to directors as delivery predictability, to the CFO as unit economics, to the board as "we ship in days what peers ship in quarters." Riding the elevator — engine room to penthouse and back, translating without distorting — is not a soft skill appended to the technical ones; at platform scale it *is* the deciding skill.
 
+And one of the floors is a classroom. The gateway migration above became real only when I turned teacher: twenty short sessions over two weeks, a dozen hands-on exercises, and by the end the team ran the new platform without me. I no longer consider teaching optional equipment for an architect. An architecture nobody has been taught is a diagram, not a capability — and the architect who cannot teach a decision will forever remain its only operator.
+
 And beneath all three, systems thinking: adoption is a feedback loop (good paths → users → feedback → better paths), and stalls are diagnosed at the loop's weakest arc — usually feedback, which is why the platform team's calendar contains more user interviews than the product teams'. The leverage point is rarely more features; it is more listening.
 
 #### The craft: reviews without theater
