@@ -12,6 +12,12 @@ This is a book of decisions, not technologies. Frameworks age like fish; the dec
 
 One deliberate omission: you will find no UML here, no enterprise service buses, and no pretense that architecture is a phase that ends. Diagrams are code, decisions are records, and architecture is a stream of trade-offs made under uncertainty, recorded honestly, and revisited without shame.
 
+### Influences & Attribution
+
+This book teaches a canon, and the canon has authors. The method backbone of Chapters 1–2 — the two laws, the characteristics taxonomy, the style ratings, katas as practice — follows Mark Richards and Neal Ford's *Fundamentals of Software Architecture*. The granularity forces of Chapter 3 follow *Software Architecture: The Hard Parts*. Chapter 13 follows Tod Golding's multi-tenant model. Other load-bearing debts: Eric Evans (domain-driven design), Sam Newman (microservices), Martin Kleppmann (data-intensive systems), Michael Nygard (architecture decision records), Simon Brown (the C4 model), Matthew Skelton and Manuel Pais (team topologies), Zhamak Dehghani (data mesh), Google's SRE books, and Martin Fowler's pattern vocabulary throughout. Where this book compresses their work, the per-chapter references carry the full weight.
+
+Some terms used here as common vocabulary have specific coiners: architectural katas (Ted Neward), golden path (Spotify), paved road (Netflix), STRIDE (Microsoft), ATAM (the SEI), PACELC (Daniel Abadi), sagas (Garcia-Molina and Salem), backend-for-frontend (SoundCloud, popularized by Sam Newman), prompt injection (Simon Willison), shuffle sharding (AWS).
+
 ## How to Read This Book
 
 One company accompanies you through all fourteen chapters: **Encore**, a startup selling concert tickets — small enough to hold in your head, treacherous enough to be interesting. Encore begins with nine engineers and a terrifying traffic spike, and ends, four hundred engineers later, running its own platform. Every concept lands on Encore before it is generalized.
@@ -112,9 +118,9 @@ Choosing between a queue and a topic for Encore's order events? Strategic, hard 
 
 Everything in this book rests on two laws, and the first is the closest thing our field has to physics:
 
-> **First Law of Software Architecture.** Everything in software architecture is a trade-off. If you think you have found something that isn't, you haven't yet identified the trade-off.
+> **First Law of Software Architecture** (Richards & Ford). Everything in software architecture is a trade-off. If you think you have found something that isn't, you haven't yet identified the trade-off.
 
-> **Second Law of Software Architecture.** *Why* a decision was made is more important than *how* it was implemented. The code shows the how; only you can preserve the why.
+> **Second Law of Software Architecture** (Richards & Ford). *Why* a decision was made is more important than *how* it was implemented. The code shows the how; only you can preserve the why.
 
 The first law is why this chapter teaches analysis rather than answers: any book that tells you "microservices are better" (or worse) is selling you half a trade-off. The second law is why Section 1.4 makes you write things down: six months from now, the cleverest design with a forgotten rationale is indistinguishable from a mistake.
 
@@ -258,7 +264,7 @@ Finally, keep logical and physical architecture distinct in your mind. These eig
 
 #### Diagrams that respect their readers
 
-An architecture that lives in your head is a rumor. The modern standard for drawing systems is the **C4 model** — four zoom levels, each answering one question for one audience:
+An architecture that lives in your head is a rumor. The modern standard for drawing systems is Simon Brown's **C4 model** — four zoom levels, each answering one question for one audience:
 
 | Level | Name | Answers | Audience |
 |---|---|---|---|
@@ -273,7 +279,7 @@ Three habits separate diagrams that communicate from diagrams that decorate. **T
 
 #### Decisions that survive their authors
 
-The second law says the *why* is the most valuable artifact. The **Architecture Decision Record** is how you keep it — a one-page document, numbered and immutable:
+The second law says the *why* is the most valuable artifact. The **Architecture Decision Record** — Michael Nygard's format — is how you keep it: a one-page document, numbered and immutable:
 
 | Section | Encore's ADR-007 |
 |---|---|
@@ -382,6 +388,7 @@ You can hear characteristics inside business sentences, shape components around 
 - Gregor Hohpe — [*The Software Architect Elevator*](https://www.oreilly.com/library/view/the-software-architect/9781492077534/). O'Reilly, 2020.
 - Titus Winters, Tom Manshreck, Hyrum Wright — [*Software Engineering at Google*](https://abseil.io/resources/swe-book). O'Reilly, 2020 — free online.
 - David Thomas, Andrew Hunt — [*The Pragmatic Programmer*, 20th Anniversary ed.](https://pragprog.com/titles/tpp20/the-pragmatic-programmer-20th-anniversary-edition/) Addison-Wesley, 2019.
+- Simon Brown — [*Software Architecture for Developers*](https://c4model.com/). Leanpub; the C4 model — free online.
 
 ---
 
@@ -418,7 +425,7 @@ quadrantChart
     Space-based: [0.55, 0.78]
 </pre>
 
-*Figure 2.1 — The style catalog on its two generating axes. Notice the crowded and lonely corners: distributed-but-technically-partitioned (top left) is nearly empty because it is nearly always a mistake — services sliced by layer must all change together, giving you distribution's costs with none of its benefits.*
+*Figure 2.1 — The style catalog on its two generating axes. Notice the crowded and lonely corners: distributed-but-technically-partitioned (top left) is nearly empty because it is nearly always a mistake — services sliced by layer must all change together, giving you distribution's costs with none of its benefits. Axes after Richards & Ford.*
 
 That empty quadrant is not hypothetical; the industry built it at scale in the 2000s and named it Service-Oriented Architecture. Orchestration-driven SOA sliced systems into technical strata — service buses, orchestration engines, "business services" shared by everything — and produced systems where changing one business feature meant coordinating five teams and a middleware committee. We will not study SOA; we will remember it, the way sailors remember a reef. Its lesson survives in one sentence: *partition by domain, or every change becomes a negotiation.*
 
@@ -486,7 +493,7 @@ Space-based architecture attacks the database bottleneck directly: processing un
 | Cost | ★★★★★ | ★★★★★ | ★★★★ | ★ | ★★★ | ★★ |
 | Data consistency | ★★★★★ | ★★★★★ | ★★★★★ | ★★ | ★★ | ★★ |
 
-*Figure 2.2 — Relative ratings. Read columns, not cells: no column is all stars, which is the first law wearing a table.*
+*Figure 2.2 — Relative ratings. Read columns, not cells: no column is all stars, which is the first law wearing a table. Ratings after Richards & Ford.*
 
 **Recap.** Service-based is the balanced middle; microservices buy team-scale independence at maximum operational price; event-driven buys decoupling at the price of visibility; space-based buys spike survival at the price of consistency reasoning.
 
@@ -646,7 +653,7 @@ Tactical DDD — aggregates, entities, value objects, domain services, ports-and
 
 ### 3.3 Granularity — Forces That Split and Forces That Bind
 
-Contexts give candidate boundaries; granularity forces decide how far to actually split. Six **disintegrators** push pieces apart; five **integrators** pull them together. Architecture happens where they collide:
+Contexts give candidate boundaries; granularity forces decide how far to actually split. Six **disintegrators** push pieces apart; five **integrators** pull them together — the force catalog of *Software Architecture: The Hard Parts*. Architecture happens where they collide:
 
 | Disintegrators (split when...) | Integrators (merge when...) |
 |---|---|
@@ -1048,7 +1055,7 @@ Four topics decide whether the fleet survives contact with reality; each gets a 
 
 #### Conway's law is a design tool
 
-Team boundaries and service boundaries are the same drawing viewed twice; fight that and the org chart wins every time. The workable topology: **stream-aligned teams** owning services end to end — build it, run it, carry its pager — because ownership without operations is authorship, and authorship doesn't wake up at 3 a.m. and therefore never learns. Around them, a **platform** (Chapters 11 and 14) turns the fleet's shared burdens — pipelines, observability, mesh, golden-path templates — into paved roads, so each stream team's cognitive load stays inside a human skull.
+Team boundaries and service boundaries are the same drawing viewed twice; fight that and the org chart wins every time. The workable topology: what Skelton and Pais call **stream-aligned teams**, owning services end to end — build it, run it, carry its pager — because ownership without operations is authorship, and authorship doesn't wake up at 3 a.m. and therefore never learns. Around them, a **platform** (Chapters 11 and 14) turns the fleet's shared burdens — pipelines, observability, mesh, golden-path templates — into paved roads, so each stream team's cognitive load stays inside a human skull.
 
 **Governance without a review board.** Central approval boards recreate the coordination the whole style exists to remove. The replacement is *paved roads plus fitness functions*: the golden-path template makes the right thing the easy thing; automated checks (Chapter 1's governance, now fleet-wide) catch the drift; deviation is allowed, priced, and owned by the deviator. Encore's rule of thumb: you may leave the paved road whenever you're prepared to build your own.
 
@@ -1086,6 +1093,7 @@ You can cut, contract, deliver, observe, and organizationally sustain a service 
 - Sam Newman — [*Building Microservices*, 2nd ed.](https://www.oreilly.com/library/view/building-microservices-2nd/9781492034018/) O'Reilly, 2021.
 - Nicole Forsgren, Jez Humble, Gene Kim — [*Accelerate*](https://itrevolution.com/product/accelerate/). IT Revolution, 2018.
 - Jez Humble, David Farley — [*Continuous Delivery*](https://www.informit.com/store/continuous-delivery-reliable-software-releases-through-9780321601919). Addison-Wesley, 2010.
+- Matthew Skelton, Manuel Pais — [*Team Topologies*, 2nd ed.](https://itrevolution.com/product/team-topologies-second-edition/) IT Revolution.
 
 ---
 
@@ -1106,7 +1114,7 @@ The vocabulary must be sharp, because everything downstream depends on it. A **c
 
 #### What rides inside the event
 
-The most consequential small decision in the style:
+The most consequential small decision in the style — the taxonomy is Martin Fowler's, "event-carried state transfer" included:
 
 | Pattern | Payload | Buys you | Bills you |
 |---|---|---|---|
@@ -1126,7 +1134,7 @@ Add the producer's golden rule — events describe *the domain*, never the produ
 
 #### The log: a database turned inside out
 
-A queue forgets a message once consumed. A **log** (the Kafka-class abstraction) remembers: an append-only, ordered, replayable record where consumers hold cursors. This single upgrade — from postal service to ledger — changes what events are *for*: a new consumer can arrive years later and replay history; analytics can reprocess with better logic; the stream stops being plumbing and becomes a record.
+A queue forgets a message once consumed. A **log** (the Kafka-class abstraction) remembers: an append-only, ordered, replayable record where consumers hold cursors — the "database turned inside out" of Jay Kreps's and Martin Kleppmann's framing. This single upgrade — from postal service to ledger — changes what events are *for*: a new consumer can arrive years later and replay history; analytics can reprocess with better logic; the stream stops being plumbing and becomes a record.
 
 Push the idea to its limit and you reach **event sourcing**: the events *are* the state. Encore's Seat Inventory stops storing "14B: sold" and stores the ledger — `Reserved(14B)`, `Expired(14B)`, `Sold(14B)` — deriving current truth by replay (plus snapshots for speed). For an auditable, dispute-heavy domain like ticket sales, the ledger answers questions a state table cannot: *when* did it sell, after how many failed holds, in what order during the rush? The price is real: append-only thinking, upcasting old events as schemas evolve, and answering "current state" queries — which brings its natural partner.
 
@@ -1245,6 +1253,8 @@ You can design facts, own truths in logs, process them in motion, and give proce
 - James Urquhart — [*Flow Architectures*](https://www.oreilly.com/library/view/flow-architectures/9781492075882/). O'Reilly, 2021.
 - Tyler Akidau, Slava Chernyak, Reuven Lax — [*Streaming Systems*](https://www.oreilly.com/library/view/streaming-systems/9781491983867/). O'Reilly, 2018.
 - Ben Stopford — [*Designing Event-Driven Systems*](https://www.confluent.io/resources/ebook/designing-event-driven-systems/). Confluent/O'Reilly, 2018 — free ebook.
+- Martin Fowler — ["What do you mean by 'Event-Driven'?"](https://martinfowler.com/articles/201701-event-driven.html) martinfowler.com, 2017 — free online.
+- Jay Kreps — ["The Log: What every software engineer should know about real-time data's unifying abstraction"](https://engineering.linkedin.com/distributed-systems/log-what-every-software-engineer-should-know-about-real-time-datas-unifying). LinkedIn Engineering, 2013 — free online.
 - Gregor Hohpe, Bobby Woolf — [*Enterprise Integration Patterns*](https://www.enterpriseintegrationpatterns.com/). Addison-Wesley, 2003.
 
 ---
@@ -1562,7 +1572,7 @@ This chapter rebuilds data architecture for the decomposed world, in two movemen
 
 #### One writer per table, and the three hard cases
 
-The baseline rule is Chapter 3's aggregate discipline at fleet scale: **every table has exactly one owning service; only the owner writes.** Reads are negotiable (Section 9.2); writes never are — a table with two writers is two services sharing one undeclared contract, deployable only together. Real domains produce three ownership shapes: **single** (Catalog owns events — trivial, and most of your data), **common** (everyone "needs" audit records — solve with one owning service and an API, or events into an owned store; never a shared table), and **joint** — two services legitimately claiming one concept, the genuinely hard case. Encore's: who owns a *sale*? Orders (the workflow) and Finance (the ledger) both have claims. The senior resolution is usually a **split by meaning**: the *sale-as-process* belongs to Orders; the *sale-as-accounting-fact* belongs to Finance, populated by `SaleCompleted` events. One word, two models, two owners — Chapter 3's bounded-context lesson, now applied to storage.
+The baseline rule is Chapter 3's aggregate discipline at fleet scale: **every table has exactly one owning service; only the owner writes.** Reads are negotiable (Section 9.2); writes never are — a table with two writers is two services sharing one undeclared contract, deployable only together. Real domains produce three ownership shapes — *The Hard Parts*' taxonomy: **single** (Catalog owns events — trivial, and most of your data), **common** (everyone "needs" audit records — solve with one owning service and an API, or events into an owned store; never a shared table), and **joint** — two services legitimately claiming one concept, the genuinely hard case. Encore's: who owns a *sale*? Orders (the workflow) and Finance (the ledger) both have claims. The senior resolution is usually a **split by meaning**: the *sale-as-process* belongs to Orders; the *sale-as-accounting-fact* belongs to Finance, populated by `SaleCompleted` events. One word, two models, two owners — Chapter 3's bounded-context lesson, now applied to storage.
 
 Ownership settled, each owner still chooses its store — an access-pattern decision, not a fashion one:
 
@@ -1623,7 +1633,7 @@ Analytics has its own architectural lineage: the **warehouse** (structured, gove
 
 #### The book's own logic, applied to analytics
 
-Read the mesh's four principles as this chapter's greatest hits reassembled: **domain ownership** (the ticketing team owns ticketing's analytical data — Conway, Chapter 3); **data as a product** (streams with owners, contracts, SLOs — Section 6.5, now with discoverability and documentation); **self-service platform** (domains can't each build lakehouse plumbing — a platform makes publishing a data product as easy as deploying a service; Chapter 14's thesis, arriving early); **federated computational governance** (global rules — privacy, identifiers, quality metadata — enforced *as code in the platform*, not as a committee's memos; Chapter 5's paved road, data edition).
+Read the four principles of Zhamak Dehghani's data mesh as this chapter's greatest hits reassembled: **domain ownership** (the ticketing team owns ticketing's analytical data — Conway, Chapter 3); **data as a product** (streams with owners, contracts, SLOs — Section 6.5, now with discoverability and documentation); **self-service platform** (domains can't each build lakehouse plumbing — a platform makes publishing a data product as easy as deploying a service; Chapter 14's thesis, arriving early); **federated computational governance** (global rules — privacy, identifiers, quality metadata — enforced *as code in the platform*, not as a committee's memos; Chapter 5's paved road, data edition).
 
 A data product, concretely, is not a table with good intentions:
 
@@ -1712,7 +1722,7 @@ Two convictions organize everything. First: **the architect is a defender**, bec
 
 #### Threat modeling: engineering, not paranoia
 
-The core practice fits in four questions asked of any design: *What are we building? What can go wrong? What are we doing about it? Did it work?* The middle two get method. STRIDE gives "what can go wrong" a checklist — Spoofing, Tampering, Repudiation, Information disclosure, Denial of service, Elevation of privilege — walked over a data-flow diagram. Run it on Encore's crown jewel, the on-sale:
+The core practice fits in Adam Shostack's four questions, asked of any design: *What are we building? What can go wrong? What are we doing about it? Did it work?* The middle two get method. Microsoft's STRIDE gives "what can go wrong" a checklist — Spoofing, Tampering, Repudiation, Information disclosure, Denial of service, Elevation of privilege — walked over a data-flow diagram. Run it on Encore's crown jewel, the on-sale:
 
 | STRIDE | On-sale threat | Design answer (not a product name) |
 |---|---|---|
@@ -1735,7 +1745,7 @@ Threat modeling is done *at design time, by the designing team, on the C4 diagra
 
 #### Identity is the new perimeter
 
-The castle model — hard shell, soft interior — died of its own success condition: one phished credential inside the wall and the attacker walks laterally through implicit trust. Zero trust's tenets, distilled from NIST SP 800-207 into architecture: **verify explicitly** (every request, from anywhere), **least privilege** (access to the resource, not the network), **assume breach** (design blast radii, not just walls). Concretely, three identity planes:
+The castle model — hard shell, soft interior — died of its own success condition: one phished credential inside the wall and the attacker walks laterally through implicit trust. Zero trust's working tenets — Microsoft's distillation, aligned with NIST SP 800-207: **verify explicitly** (every request, from anywhere), **least privilege** (access to the resource, not the network), **assume breach** (design blast radii, not just walls). Concretely, three identity planes:
 
 **Humans.** OIDC/SSO with MFA, short sessions, and — the architectural part — *roles modeled on the domain*: Chapter 7's scopes (`holds:write`) and Chapter 13's tenant claims are authorization vocabulary designed alongside the API, not bolted on by an admin console.
 
@@ -1781,7 +1791,7 @@ Four disciplines cover the stack's remaining altitude, each with one architectur
 
 #### Blast radius is a design variable
 
-Assume-breach thinking asks of every component: *when* this is compromised, what does the attacker hold? Isolation is the discipline of making that answer small. Tenant isolation models (Chapter 13 will build on these): **silo** (per-tenant stacks — smallest blast radius, largest bill), **pool** (shared everything, isolation by row-level policy and tenant-scoped tokens — efficient, and one missing `WHERE tenant_id` from disaster; the mitigation is *centralizing* that predicate in the platform layer, never per-query diligence), **bridge** (pooled compute, siloed data — the common compromise). Encore runs pooled with two silo exceptions demanded by classification: the ledger and Bot Screening's risk data.
+Assume-breach thinking asks of every component: *when* this is compromised, what does the attacker hold? Isolation is the discipline of making that answer small. Tenant isolation models — Tod Golding's taxonomy, which Chapter 13 builds on: **silo** (per-tenant stacks — smallest blast radius, largest bill), **pool** (shared everything, isolation by row-level policy and tenant-scoped tokens — efficient, and one missing `WHERE tenant_id` from disaster; the mitigation is *centralizing* that predicate in the platform layer, never per-query diligence), **bridge** (pooled compute, siloed data — the common compromise). Encore runs pooled with two silo exceptions demanded by classification: the ledger and Bot Screening's risk data.
 
 Two modern isolation frontiers: **sandboxing untrusted execution** (webhooks, partners' code, and — arriving with Chapter 12 — AI-generated actions: gVisor/Firecracker-class boundaries, egress-controlled, because "it's just a webhook handler" is how supply chains fall), and **the AI-era surfaces** previewed now so Chapter 12 inherits vocabulary: prompt injection (untrusted text steering a model that holds credentials), retrieval leakage (RAG answering across permission boundaries — Chapter 9's access rules must survive *inside* the corpus), and model exfiltration. The pattern that governs all three: the model is an *untrusted execution environment fed by untrusted input* — sandbox its tools, scope its retrieval, filter its output.
 
@@ -1873,7 +1883,7 @@ Kubernetes, seen from the architect's altitude, is a declarative reconciliation 
 
 Two disciplines turn infrastructure from artisanal to industrial. **Infrastructure as code**: every cluster, queue, and permission declared in versioned files — reviewable, diffable, reproducible; the console is for looking, never for changing (the 2 a.m. console fix that saves the night and haunts the quarter is how snowflakes are born). **GitOps** closes the loop: agents continuously reconcile the cluster to the repository, so git *is* the deployment mechanism, the audit log, and — via `git revert` — the rollback story. Drift becomes visible instead of legendary.
 
-On this substrate, Chapter 5's progressive delivery gets its infrastructure teeth: canaries promoted automatically on SLO health (Section 11.3's error budgets doing the judging), feature flags separating deploy from release, and ephemeral preview environments per pull request — the pattern that quietly kills both "works on my machine" and the shared-staging queue. The scoreboard for all of it is the **four key metrics** — deployment frequency, lead time, change-failure rate, time-to-restore — which measure the *system's* delivery health, not any team's virtue, and which correlate with business outcomes better than any architecture diagram ever has. Encore's dashboard shows them per service; when lead time creeps up, that is architectural feedback (coupling returning, tests slowing) wearing an operational costume.
+On this substrate, Chapter 5's progressive delivery gets its infrastructure teeth: canaries promoted automatically on SLO health (Section 11.3's error budgets doing the judging), feature flags separating deploy from release, and ephemeral preview environments per pull request — the pattern that quietly kills both "works on my machine" and the shared-staging queue. The scoreboard for all of it is the **four DORA metrics** (from *Accelerate*) — deployment frequency, lead time, change-failure rate, time-to-restore — which measure the *system's* delivery health, not any team's virtue, and which correlate with business outcomes better than any architecture diagram ever has. Encore's dashboard shows them per service; when lead time creeps up, that is architectural feedback (coupling returning, tests slowing) wearing an operational costume.
 
 **Recap.** IaC makes environments reproducible; GitOps makes git the control plane and revert the rollback; previews replace staging queues; canaries answer to error budgets. The four key metrics are the delivery scoreboard and an architectural early-warning system.
 
@@ -1959,6 +1969,7 @@ You can place workloads, industrialize delivery, promise reliability arithmetica
 - Christian Ciceri, Dave Farley, et al. — [*Software Architecture Metrics*](https://www.oreilly.com/library/view/software-architecture-metrics/9781098112226/). O'Reilly, 2022.
 - Gene Kim, Jez Humble, Patrick Debois, John Willis — [*The DevOps Handbook*, 2nd ed.](https://itrevolution.com/product/the-devops-handbook-second-edition/) IT Revolution, 2021.
 - Sam Newman — [*Building Microservices*, 2nd ed.](https://www.oreilly.com/library/view/building-microservices-2nd/9781492034018/) O'Reilly, 2021.
+- Nicole Forsgren, Jez Humble, Gene Kim — [*Accelerate*](https://itrevolution.com/product/accelerate/). IT Revolution, 2018.
 - Betsy Beyer, Chris Jones, Jennifer Petoff, Niall Richard Murphy (eds.) — [*Site Reliability Engineering*](https://sre.google/sre-book/table-of-contents/). O'Reilly/Google, 2016 — free online.
 - Gene Kim, Kevin Behr, George Spafford — [*The Phoenix Project*](https://itrevolution.com/product/the-phoenix-project/). IT Revolution, 2013.
 - Charity Majors, Liz Fong-Jones, George Miranda — [*Observability Engineering*, 2nd ed.](https://www.oreilly.com/library/view/observability-engineering-2nd/9781098179915/) O'Reilly.
@@ -2118,7 +2129,7 @@ This chapter is the full treatment, and it is deliberately the penultimate chapt
 
 #### Two planes, three models
 
-The foundational split — the one that organizes everything after it — is between the **application plane** (the ticketing machinery tenants use) and the **control plane** (the machinery that *manages tenants*: onboarding, identity, configuration, billing, per-tenant operations). The control plane is where SaaS-ness lives; it has no tenant-facing features and it is the most load-bearing software the company will now write.
+The foundational split — Tod Golding's, and the one that organizes everything after it — is between the **application plane** (the ticketing machinery tenants use) and the **control plane** (the machinery that *manages tenants*: onboarding, identity, configuration, billing, per-tenant operations). The control plane is where SaaS-ness lives; it has no tenant-facing features and it is the most load-bearing software the company will now write.
 
 <pre class="mermaid">
 flowchart TB
@@ -2135,7 +2146,7 @@ flowchart TB
 
 *Figure 13.1 — The two planes. Everything the next four modules build is one of these boxes. Companies that skip the control plane still have one — made of runbooks, spreadsheets, and a heroic ops engineer named something like Dana.*
 
-Within the application plane, tenants deploy on a spectrum of three models: **silo** (each tenant their own stack — maximum isolation, maximum cost, compliance's darling), **pool** (shared everything, tenancy by scoping — one deployment, ruthless efficiency, Chapter 10's isolation stakes), and **bridge** (pooled compute, siloed data — the workhorse compromise). The senior insight: this is a *per-tenant, per-tier* decision, not a company decision — and Section 13.5 will price it accordingly.
+Within the application plane, tenants deploy on a spectrum of three models — Golding's taxonomy again: **silo** (each tenant their own stack — maximum isolation, maximum cost, compliance's darling), **pool** (shared everything, tenancy by scoping — one deployment, ruthless efficiency, Chapter 10's isolation stakes), and **bridge** (pooled compute, siloed data — the workhorse compromise). The senior insight: this is a *per-tenant, per-tier* decision, not a company decision — and Section 13.5 will price it accordingly.
 
 **Recap.** Control plane manages tenants; application plane serves them; the control plane is the new crown jewel. Silo, pool, and bridge are a menu, chosen per tier — not an identity.
 
@@ -2171,7 +2182,7 @@ Data partitioning applies Chapter 4's machinery with a tenant key:
 
 Isolation must then survive *runtime*: tenant-scoped credentials (the request's DB session can only see its tenant's rows — defense below the application), and **noisy-neighbor fairness**, which for Encore is existential: one tenant's on-sale *is* a Chapter 4 spike aimed at shared infrastructure. The answer stack: per-tenant rate limits and concurrency quotas at the edge, fair queueing in shared workers, and the Gate's admission control now *tenant-aware* — plus the bridge-model escape hatch of moving a chronically hot tenant to dedicated capacity, at a price Section 13.5 will name.
 
-At scale the isolation instruments consolidate into the **cell**: a complete, self-contained instance of the application plane — its own compute, stores, queues — serving a fixed subset of tenants, the control plane routing each tenant to exactly one. Cells are Chapter 4's bulkhead grown to full size: the unit of blast radius (a bad deploy or poison-pill tenant takes down one cell, not the product), of scale (add cells, not heroics), and of operations (canary a cell, drain a cell, game-day a cell). **Shuffle sharding** sharpens the fairness story: assign each tenant to a small random *combination* of resources, and two tenants rarely share their whole footprint — a noisy neighbor degrades slivers of many tenants' capacity instead of everything for a few. The menu, complete:
+At scale the isolation instruments consolidate into the **cell**: a complete, self-contained instance of the application plane — its own compute, stores, queues — serving a fixed subset of tenants, the control plane routing each tenant to exactly one. Cells are Chapter 4's bulkhead grown to full size: the unit of blast radius (a bad deploy or poison-pill tenant takes down one cell, not the product), of scale (add cells, not heroics), and of operations (canary a cell, drain a cell, game-day a cell). **Shuffle sharding** — AWS's technique, via Colm MacCárthaigh — sharpens the fairness story: assign each tenant to a small random *combination* of resources, and two tenants rarely share their whole footprint — a noisy neighbor degrades slivers of many tenants' capacity instead of everything for a few. The menu, complete:
 
 | Model | Blast radius | Cost efficiency | Fits |
 |---|---|---|---|
@@ -2249,6 +2260,7 @@ You can serve many masters from one system: planes split, tenants tokenized, fai
 - Sarah Wells — [*Enabling Microservice Success*](https://www.oreilly.com/library/view/enabling-microservice-success/9781098130787/). O'Reilly, 2024.
 - Gregor Hohpe — [*Cloud Strategy*](https://leanpub.com/cloudstrategy). Leanpub, 2020.
 - Martin L. Abbott, Michael T. Fisher — [*The Art of Scalability*, 2nd ed.](https://www.informit.com/store/art-of-scalability-scalable-web-architecture-processes-9780134032801) Addison-Wesley, 2015.
+- Amazon — [*The Amazon Builders' Library*](https://aws.amazon.com/builders-library/). Free online.
 
 ---
 
@@ -2267,7 +2279,7 @@ Why is platform architecture the *destination*? Because it is architecture appli
 
 The problem statement is arithmetic. A stream-aligned team shipping ticketing features must, without a platform, *also* master: cluster config, pipeline plumbing, observability wiring, secret rotation, schema registries, cost dashboards, threat models, AI gateways. That stack exceeds any team's cognitive budget — so teams either sink into it (velocity dies), skip it (Chapter 10 shudders), or solve it forty divergent ways (both, plus an audit). An **internal developer platform** is the deliberate answer: a curated product that absorbs the undifferentiated stack behind self-service interfaces, so product teams spend their cognition on the business.
 
-The operating model matters more than the software: **platform as a product**. Product teams are *customers* — voluntary users to be won, not conscripts to be mandated. That single stance generates the discipline: talk to users, measure adoption, publish a roadmap, start from the **thinnest viable platform** (the paved road for the most painful mile — at Encore, "new service to production": template, pipeline, observability, identity, one command) and earn the right to grow. The anti-patterns are all failures of this stance:
+The operating model matters more than the software: **platform as a product**. Product teams are *customers* — voluntary users to be won, not conscripts to be mandated. That single stance generates the discipline: talk to users, measure adoption, publish a roadmap, start from what Skelton and Pais call the **thinnest viable platform** (the paved road for the most painful mile — at Encore, "new service to production": template, pipeline, observability, identity, one command) and earn the right to grow. The anti-patterns are all failures of this stance:
 
 | Anti-pattern | Mechanism of failure |
 |---|---|
@@ -2357,7 +2369,7 @@ And beneath all three, systems thinking: adoption is a feedback loop (good paths
 
 #### The craft: reviews without theater
 
-The last instrument in the kit: the lightweight design review. The format that survives real calendars is the **RFC loop** — a one-to-three-page written proposal (context, options, chosen trade-offs, ADR-ready), circulated asynchronously, commented in writing, decided visibly, archived forever. No committee, no slideware; the document *is* the meeting, and the archive becomes Section 14.4's agent context for free. For bigger decisions, borrow ATAM's spine without its ceremony — walk the design against the driving characteristics, one probing question each:
+The last instrument in the kit: the lightweight design review. The format that survives real calendars is the **RFC loop** — a one-to-three-page written proposal (context, options, chosen trade-offs, ADR-ready), circulated asynchronously, commented in writing, decided visibly, archived forever. No committee, no slideware; the document *is* the meeting, and the archive becomes Section 14.4's agent context for free. For bigger decisions, borrow the spine of SEI's ATAM without its ceremony — walk the design against the driving characteristics, one probing question each:
 
 | Characteristic | The reviewer's question |
 |---|---|
