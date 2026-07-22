@@ -126,14 +126,14 @@ Security is now a designed property with drawings, policies, and tests. What rem
 
 ## References
 
-- Sam Newman — [*Building Microservices*, 2nd ed.](https://www.oreilly.com/library/view/building-microservices-2nd/9781492034018/) O'Reilly, 2021.
-- James Gough, Daniel Bryant, Matthew Auburn — [*Mastering API Architecture*](https://www.oreilly.com/library/view/mastering-api-architecture/9781492090625/). O'Reilly, 2022.
-- Tod Golding — [*Building Multi-Tenant SaaS Architectures*](https://www.oreilly.com/library/view/building-multi-tenant-saas/9781098140632/). O'Reilly, 2024.
 - Sheen Brisals, Luke Hedger — [*Serverless Development on AWS*](https://www.oreilly.com/library/view/serverless-development-on/9781098141929/). O'Reilly, 2024.
+- Tod Golding — [*Building Multi-Tenant SaaS Architectures*](https://www.oreilly.com/library/view/building-multi-tenant-saas/9781098140632/). O'Reilly, 2024.
+- James Gough, Daniel Bryant, Matthew Auburn — [*Mastering API Architecture*](https://www.oreilly.com/library/view/mastering-api-architecture/9781492090625/). O'Reilly, 2022.
+- Sam Newman — [*Building Microservices*, 2nd ed.](https://www.oreilly.com/library/view/building-microservices-2nd/9781492034018/) O'Reilly, 2021.
 
 **Further reading:**
 
-- Adam Shostack — [*Threat Modeling: Designing for Security*](https://www.wiley.com/en-us/Threat+Modeling:+Designing+for+Security-p-9781118809990). Wiley, 2014.
 - Razi Rais, Christina Morillo, Evan Gilman, Doug Barth — [*Zero Trust Networks*, 2nd ed.](https://www.oreilly.com/library/view/zero-trust-networks/9781492096580/) O'Reilly, 2024.
 - Heather Adkins, Betsy Beyer, et al. — [*Building Secure and Reliable Systems*](https://sre.google/books/). O'Reilly/Google, 2020 — free online.
 - Tanya Janca — [*Alice and Bob Learn Application Security*](https://www.wiley.com/en-us/Alice+and+Bob+Learn+Application+Security-p-9781119687405). Wiley, 2020.
+- Adam Shostack — [*Threat Modeling: Designing for Security*](https://www.wiley.com/en-us/Threat+Modeling:+Designing+for+Security-p-9781118809990). Wiley, 2014.

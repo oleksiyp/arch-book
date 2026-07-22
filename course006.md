@@ -147,13 +147,13 @@ You can design facts, own truths in logs, process them in motion, and give proce
 ## References
 
 - Adam Bellemare — [*Building Event-Driven Microservices*, 2nd ed.](https://www.oreilly.com/library/view/building-event-driven-microservices/9798341622180/) O'Reilly, 2025.
+- Mark Richards, Neal Ford — [*Fundamentals of Software Architecture*, 2nd ed.](https://www.oreilly.com/library/view/fundamentals-of-software/9781098175504/) O'Reilly, 2025.
 - Bernd Rücker — [*Practical Process Automation*](https://www.oreilly.com/library/view/practical-process-automation/9781492061441/). O'Reilly, 2021.
 - James Urquhart — [*Flow Architectures*](https://www.oreilly.com/library/view/flow-architectures/9781492075882/). O'Reilly, 2021.
-- Mark Richards, Neal Ford — [*Fundamentals of Software Architecture*, 2nd ed.](https://www.oreilly.com/library/view/fundamentals-of-software/9781098175504/) O'Reilly, 2025.
 
 **Further reading:**
 
-- Gregor Hohpe, Bobby Woolf — [*Enterprise Integration Patterns*](https://www.enterpriseintegrationpatterns.com/). Addison-Wesley, 2003.
-- Ben Stopford — [*Designing Event-Driven Systems*](https://www.confluent.io/resources/ebook/designing-event-driven-systems/). Confluent/O'Reilly, 2018 — free ebook.
 - Gwen Shapira, Todd Palino, Rajini Sivaram, Krit Petty — [*Kafka: The Definitive Guide*, 2nd ed.](https://www.oreilly.com/library/view/kafka-the-definitive/9781492043072/) O'Reilly, 2021.
 - Tyler Akidau, Slava Chernyak, Reuven Lax — [*Streaming Systems*](https://www.oreilly.com/library/view/streaming-systems/9781491983867/). O'Reilly, 2018.
+- Ben Stopford — [*Designing Event-Driven Systems*](https://www.confluent.io/resources/ebook/designing-event-driven-systems/). Confluent/O'Reilly, 2018 — free ebook.
+- Gregor Hohpe, Bobby Woolf — [*Enterprise Integration Patterns*](https://www.enterpriseintegrationpatterns.com/). Addison-Wesley, 2003.

@@ -118,17 +118,17 @@ Go draw good boundaries. And write down why.
 
 ## References
 
-- Neal Ford, Rebecca Parsons, Patrick Kua, Pramod Sadalage — [*Building Evolutionary Architectures*, 2nd ed.](https://www.oreilly.com/library/view/building-evolutionary-architectures/9781492097532/) O'Reilly, 2022.
+- Diana Montalion — [*Learning Systems Thinking*](https://www.oreilly.com/library/view/learning-systems-thinking/9781098151324/). O'Reilly, 2024.
+- Sarah Wells — [*Enabling Microservice Success*](https://www.oreilly.com/library/view/enabling-microservice-success/9781098130787/). O'Reilly, 2024.
 - Christian Ciceri, Dave Farley, et al. — [*Software Architecture Metrics*](https://www.oreilly.com/library/view/software-architecture-metrics/9781098112226/). O'Reilly, 2022.
+- Neal Ford, Rebecca Parsons, Patrick Kua, Pramod Sadalage — [*Building Evolutionary Architectures*, 2nd ed.](https://www.oreilly.com/library/view/building-evolutionary-architectures/9781492097532/) O'Reilly, 2022.
 - Gregor Hohpe — [*The Software Architect Elevator*](https://www.oreilly.com/library/view/the-software-architect/9781492077534/). O'Reilly, 2020.
 - Eben Hewitt — [*Technology Strategy Patterns*](https://www.oreilly.com/library/view/technology-strategy-patterns/9781492040866/). O'Reilly, 2018.
-- Sarah Wells — [*Enabling Microservice Success*](https://www.oreilly.com/library/view/enabling-microservice-success/9781098130787/). O'Reilly, 2024.
-- Diana Montalion — [*Learning Systems Thinking*](https://www.oreilly.com/library/view/learning-systems-thinking/9781098151324/). O'Reilly, 2024.
 
 **Further reading:**
 
 - Camille Fournier, Ian Nowland — [*Platform Engineering*](https://www.oreilly.com/library/view/platform-engineering/9781098153632/). O'Reilly, 2024.
+- Will Larson — [*Staff Engineer: Leadership Beyond the Management Track*](https://staffeng.com/book/). 2021 — largely free online.
+- Donella H. Meadows — [*Thinking in Systems: A Primer*](https://www.chelseagreen.com/product/thinking-in-systems/). Chelsea Green, 2008.
 - Matthew Skelton, Manuel Pais — [*Team Topologies*, 2nd ed.](https://itrevolution.com/product/team-topologies-second-edition/) IT Revolution.
 - Simon Wardley — [*Wardley Maps*](https://learnwardleymapping.com/book/). Free online, CC BY-SA.
-- Donella H. Meadows — [*Thinking in Systems: A Primer*](https://www.chelseagreen.com/product/thinking-in-systems/). Chelsea Green, 2008.
-- Will Larson — [*Staff Engineer: Leadership Beyond the Management Track*](https://staffeng.com/book/). 2021 — largely free online.

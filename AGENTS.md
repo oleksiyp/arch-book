@@ -14,7 +14,7 @@ This repo is a 14-course Coursera specialization on software architecture ("Soft
 - **No legacy-era material**: no UML, no orchestration-driven SOA/ESB except as brief cautionary history. Diagrams are C4-style, expressed as diagrams-as-code.
 - The curriculum arc converges on **platform architecture** (Course 14). Keep forward references ("bridge to Course N") accurate when renumbering.
 - Every course file: title, 2-paragraph description, "References" line (TOC-style pages) or closing "References" section (full course texts), 5-module TOC.
-- **References are neutral bibliography entries** — author and *title* (plus publisher/year in full course texts), with the title linked to the book's official web page (publisher or oreilly.com catalog). No chapter/part-to-module mappings.
+- **References are neutral bibliography entries** — author and *title* (plus publisher/year in full course texts), with the title linked to the book's official web page (publisher or oreilly.com catalog). No chapter/part-to-module mappings. Both the References list and the Further-reading list are **sorted by publication year descending (newest first), then by first author's surname**; entries without a confirmed year go last — never invent a year.
 - Security, cloud, and AI concerns are woven throughout, not siloed.
 
 ## Course text style (canonical exemplar: course001.md)

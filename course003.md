@@ -162,13 +162,13 @@ You can find boundaries the business will respect, size the pieces by real force
 
 ## References
 
+- Neal Ford, Mark Richards, Pramod Sadalage, Zhamak Dehghani — [*Software Architecture: The Hard Parts*](https://www.oreilly.com/library/view/software-architecture-the/9781492086888/). O'Reilly, 2021.
 - Vlad Khononov — [*Learning Domain-Driven Design*](https://www.oreilly.com/library/view/learning-domain-driven-design/9781098100124/). O'Reilly, 2021.
 - Sam Newman — [*Monolith to Microservices*](https://www.oreilly.com/library/view/monolith-to-microservices/9781492047834/). O'Reilly, 2019.
-- Neal Ford, Mark Richards, Pramod Sadalage, Zhamak Dehghani — [*Software Architecture: The Hard Parts*](https://www.oreilly.com/library/view/software-architecture-the/9781492086888/). O'Reilly, 2021.
 
 **Further reading:**
 
-- Eric Evans — [*Domain-Driven Design: Tackling Complexity in the Heart of Software*](https://www.informit.com/store/domain-driven-design-tackling-complexity-in-the-heart-9780321125217). Addison-Wesley, 2003.
+- Martin Fowler — [*Refactoring*, 2nd ed.](https://www.informit.com/store/refactoring-improving-the-design-of-existing-code-9780134757599) Addison-Wesley, 2018.
 - Vaughn Vernon — [*Implementing Domain-Driven Design*](https://www.informit.com/store/implementing-domain-driven-design-9780133039894). Addison-Wesley, 2013.
 - Michael Feathers — [*Working Effectively with Legacy Code*](https://www.informit.com/store/working-effectively-with-legacy-code-9780131177055). Prentice Hall, 2004.
-- Martin Fowler — [*Refactoring*, 2nd ed.](https://www.informit.com/store/refactoring-improving-the-design-of-existing-code-9780134757599) Addison-Wesley, 2018.
+- Eric Evans — [*Domain-Driven Design: Tackling Complexity in the Heart of Software*](https://www.informit.com/store/domain-driven-design-tackling-complexity-in-the-heart-9780321125217). Addison-Wesley, 2003.

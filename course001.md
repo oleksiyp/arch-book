@@ -332,5 +332,5 @@ You can hear characteristics inside business sentences, shape components around 
 **Further reading:**
 
 - John Ousterhout — [*A Philosophy of Software Design*](https://web.stanford.edu/~ouster/cgi-bin/aposd.php). Yaknyam Press, 2021.
-- David Thomas, Andrew Hunt — [*The Pragmatic Programmer*, 20th Anniversary ed.](https://pragprog.com/titles/tpp20/the-pragmatic-programmer-20th-anniversary-edition/) Addison-Wesley, 2019.
 - Titus Winters, Tom Manshreck, Hyrum Wright — [*Software Engineering at Google*](https://abseil.io/resources/swe-book). O'Reilly, 2020 — free online.
+- David Thomas, Andrew Hunt — [*The Pragmatic Programmer*, 20th Anniversary ed.](https://pragprog.com/titles/tpp20/the-pragmatic-programmer-20th-anniversary-edition/) Addison-Wesley, 2019.

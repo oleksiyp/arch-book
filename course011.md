@@ -112,16 +112,16 @@ You can place workloads, industrialize delivery, promise reliability arithmetica
 ## References
 
 - Sheen Brisals, Luke Hedger — [*Serverless Development on AWS*](https://www.oreilly.com/library/view/serverless-development-on/9781098141929/). O'Reilly, 2024.
-- Sam Newman — [*Building Microservices*, 2nd ed.](https://www.oreilly.com/library/view/building-microservices-2nd/9781492034018/) O'Reilly, 2021.
+- Brendan Burns — [*Designing Distributed Systems*, 2nd ed.](https://www.oreilly.com/library/view/designing-distributed-systems/9781098156343/) O'Reilly, 2024.
 - Sarah Wells — [*Enabling Microservice Success*](https://www.oreilly.com/library/view/enabling-microservice-success/9781098130787/). O'Reilly, 2024.
 - Christian Ciceri, Dave Farley, et al. — [*Software Architecture Metrics*](https://www.oreilly.com/library/view/software-architecture-metrics/9781098112226/). O'Reilly, 2022.
-- Brendan Burns — [*Designing Distributed Systems*, 2nd ed.](https://www.oreilly.com/library/view/designing-distributed-systems/9781098156343/) O'Reilly, 2024.
+- Sam Newman — [*Building Microservices*, 2nd ed.](https://www.oreilly.com/library/view/building-microservices-2nd/9781492034018/) O'Reilly, 2021.
 
 **Further reading:**
 
-- Betsy Beyer, Chris Jones, Jennifer Petoff, Niall Richard Murphy (eds.) — [*Site Reliability Engineering*](https://sre.google/sre-book/table-of-contents/). O'Reilly/Google, 2016 — free online.
-- Charity Majors, Liz Fong-Jones, George Miranda — [*Observability Engineering*, 2nd ed.](https://www.oreilly.com/library/view/observability-engineering-2nd/9781098179915/) O'Reilly.
-- Gene Kim, Jez Humble, Patrick Debois, John Willis — [*The DevOps Handbook*, 2nd ed.](https://itrevolution.com/product/the-devops-handbook-second-edition/) IT Revolution, 2021.
-- Gene Kim, Kevin Behr, George Spafford — [*The Phoenix Project*](https://itrevolution.com/product/the-phoenix-project/). IT Revolution, 2013.
-- Brendan Burns, Joe Beda, Kelsey Hightower, Lachlan Evenson — [*Kubernetes: Up and Running*, 3rd ed.](https://www.oreilly.com/library/view/kubernetes-up-and/9781098110192/) O'Reilly, 2022.
 - J.R. Storment, Mike Fuller — [*Cloud FinOps*, 2nd ed.](https://www.oreilly.com/library/view/cloud-finops-2nd/9781492098348/) O'Reilly, 2023.
+- Brendan Burns, Joe Beda, Kelsey Hightower, Lachlan Evenson — [*Kubernetes: Up and Running*, 3rd ed.](https://www.oreilly.com/library/view/kubernetes-up-and/9781098110192/) O'Reilly, 2022.
+- Gene Kim, Jez Humble, Patrick Debois, John Willis — [*The DevOps Handbook*, 2nd ed.](https://itrevolution.com/product/the-devops-handbook-second-edition/) IT Revolution, 2021.
+- Betsy Beyer, Chris Jones, Jennifer Petoff, Niall Richard Murphy (eds.) — [*Site Reliability Engineering*](https://sre.google/sre-book/table-of-contents/). O'Reilly/Google, 2016 — free online.
+- Gene Kim, Kevin Behr, George Spafford — [*The Phoenix Project*](https://itrevolution.com/product/the-phoenix-project/). IT Revolution, 2013.
+- Charity Majors, Liz Fong-Jones, George Miranda — [*Observability Engineering*, 2nd ed.](https://www.oreilly.com/library/view/observability-engineering-2nd/9781098179915/) O'Reilly.

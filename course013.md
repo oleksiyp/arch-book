@@ -131,5 +131,5 @@ You can serve many masters from one system: planes split, tenants tokenized, fai
 
 **Further reading:**
 
-- Martin L. Abbott, Michael T. Fisher — [*The Art of Scalability*, 2nd ed.](https://www.informit.com/store/art-of-scalability-scalable-web-architecture-processes-9780134032801) Addison-Wesley, 2015.
 - Gregor Hohpe — [*Cloud Strategy*](https://leanpub.com/cloudstrategy). Leanpub, 2020.
+- Martin L. Abbott, Michael T. Fisher — [*The Art of Scalability*, 2nd ed.](https://www.informit.com/store/art-of-scalability-scalable-web-architecture-processes-9780134032801) Addison-Wesley, 2015.
