@@ -130,6 +130,17 @@
         }
     }
 
+    /* Mermaid's base theme overrides classDef label colors; force white text
+       on dark/orange-filled node classes */
+    .mermaid {
+        :is(g.person, g.system, g.hot, g.core, g.supp, g.new, g.ok) {
+            .nodeLabel, .nodeLabel p, .nodeLabel span, tspan {
+                color: #fff !important;
+                fill: #fff !important;
+            }
+        }
+    }
+
     /* Chapter separators as ornaments */
     hr {
         border: 0;
