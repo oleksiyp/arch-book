@@ -54,6 +54,7 @@
                 <a href="#preface" class="footer-link">Preface</a>
                 <a href="#ch14" class="footer-link">The Capstone</a>
                 <a href="https://github.com/oleksiyp/arch-book" class="footer-link" target="_blank" rel="noopener noreferrer">Source on GitHub</a>
+                <a href="#" class="footer-link" id="share-book">Share This Book</a>
             </nav>
         </div>
 
@@ -147,6 +148,26 @@
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('{{ "/sw.js" | relative_url }}');
     }
+
+    // Share: native share sheet where available (installed PWAs have no browser chrome), copy-link fallback
+    var shareBtn = document.getElementById('share-book');
+    if (shareBtn) shareBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (window.gtag) gtag('event', 'share_click');
+        var data = {
+            title: 'Software Architecture in the AI & Cloud Era',
+            text: 'A free online book on modern software architecture — the road to platform engineering.',
+            url: location.origin + location.pathname
+        };
+        if (navigator.share) {
+            navigator.share(data).catch(function () {});
+        } else if (navigator.clipboard) {
+            navigator.clipboard.writeText(data.url).then(function () {
+                shareBtn.textContent = 'Link copied!';
+                setTimeout(function () { shareBtn.textContent = 'Share This Book'; }, 2000);
+            });
+        }
+    });
 })();
 </script>
 
