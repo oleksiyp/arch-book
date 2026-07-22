@@ -2310,7 +2310,31 @@ Governance includes governing *the platform itself*: platform APIs are Chapter 7
 
 **Exercise 14.3.** Write three policy-as-code rules your organization would enforce at admission today if it could, and one current rule you would *demote* to advisory. Defend the demotion.
 
-### 14.4 Platform Strategy and the Elevator
+### 14.4 Architecting When Code Is Cheap
+
+#### The inversion the preface promised
+
+This book opened with a claim it now owes you an answer to: code has never been cheaper to produce, and coherence has never been more expensive. Here is the answer. When an agent can regenerate a service overnight, the scarce artifacts are no longer implementations — they are the *steering* artifacts this book has been accumulating since Chapter 1: the ADRs that say why, the module boundaries that say where, the contracts that say what, and the fitness functions that say *still true*. Architecture stops being the plan for writing code and becomes the interface through which you direct code you will never read line by line.
+
+Encore lived the inversion on a Tuesday. A coding agent, pointed at a well-specified backlog, rebuilt the Notification service overnight — new framework, better retry semantics, forty files nobody hand-typed. It shipped safely not because anyone reviewed forty files, but because everything that mattered was machine-checkable before breakfast: the consumer contracts still passed, the boundary rules still held (no imports into Inventory's internals, no foreign table reads), the security posture scanned clean on the golden path's checks, and the SLO canary promoted it like any other change. The interesting question was never "is this code good?" — it was "do the boundaries, contracts, and evals still hold?", and that question had automated answers.
+
+Three practical shifts follow, each landing on machinery you already own:
+
+**Decision records become agent context.** An ADR corpus was always the team's memory; now it is also the *prompt*. Agents assembling changes read the decisions, the constraints, and the consequences rows — which means writing them clearly is no longer documentation hygiene but direct control input. The second law compounds: the *why*, recorded, now steers the how at generation time. A vague ADR used to cost an argument; it now costs a confidently wrong implementation by Thursday.
+
+**Review economics invert.** When implementation was expensive, review meant reading the code; when implementation is cheap and voluminous, human attention must move up the stack — to the boundary, the contract diff, the eval delta, the ADR the change claims to implement. The Chapter 5 pyramid gets a new layer: humans review *decisions and interfaces*; CI reviews everything else, or nobody does. A team that insists on hand-reading generated volume simply becomes the bottleneck its agents route around — usually by merging tired.
+
+**Governance becomes the load-bearing wall.** Section 14.3's machinery — fitness functions, policy-as-code, scorecards — was built to let forty teams move safely. It turns out to be exactly the machinery that lets forty teams *and their agents* move safely: boundary checks, contract tests, and evals in CI are the only reviewers that scale with generation speed. The paved road stops being a convenience and becomes the thing standing between velocity and entropy.
+
+> **Erosion at generation speed.** The failure mode has a shape: a thousand commits, each locally plausible, each passing its tests, collectively dissolving the architecture — boundaries fuzzed by helpful little imports, contracts widened by accommodating little fields, until the modular monolith is just a monolith again and nobody typed a line of it. Erosion is not new; the *rate* is. The countermeasure stack is this book in miniature: boundaries enforced by machines (Chapter 2), contracts tested per change (Chapter 5), evals gating behavior (Chapter 12), scorecards surfacing drift (Section 14.3) — and an architect who reads trend lines, not diffs.
+
+What does not change matters as much: the trade-offs are still yours. No agent owns the consequences row; no eval decides which characteristics should drive Encore's next year. Cheap code raises the value of exactly the judgment this book trained — which is why this section sits here, at the end, in the platform chapter: the platform is where that judgment gets encoded once and enforced everywhere.
+
+**Recap.** When code is cheap, ADRs, boundaries, contracts, and fitness functions become the steering interface — written for humans and read by machines. Review moves up the stack; governance-as-code becomes the wall that holds at generation speed.
+
+**Exercise 14.4.** Take one recent AI-assisted change in your codebase (or imagine the Notification rebuild). List what was machine-checked before merge and what only a human could have caught. The second list is your erosion surface — name the check that would shrink it.
+
+### 14.5 Platform Strategy and the Elevator
 
 #### The map, the money, and the message
 
@@ -2324,15 +2348,30 @@ The platform consumes real budget in service of indirect value, which makes stra
 
 And beneath all three, systems thinking: adoption is a feedback loop (good paths → users → feedback → better paths), and stalls are diagnosed at the loop's weakest arc — usually feedback, which is why the platform team's calendar contains more user interviews than the product teams'. The leverage point is rarely more features; it is more listening.
 
-**Recap.** Map capabilities to buy/build postures; fund the platform with before/after numbers, not vibes; speak every floor's language without forking the truth. Adoption is a loop — fix the listening before the features.
+#### The craft: reviews without theater
 
-**Exercise 14.4.** Take one internal capability your company hand-rolls. Place it on the evolution axis, then write its two-sentence justification — or its two-sentence migration plan to a commodity.
+One more instrument belongs in the working architect's kit: the lightweight design review. The format that survives contact with real calendars is the **RFC loop** — a one-to-three-page written proposal (context, options, chosen trade-offs, ADR-ready), circulated asynchronously, commented in writing, decided visibly, archived forever. No committee, no slideware; the document *is* the meeting, and the archive becomes Section 14.4's agent context for free. For bigger decisions, borrow ATAM's spine without its ceremony — walk the design against the driving characteristics, one probing question each:
 
-### 14.5 The Capstone
+| Characteristic | The reviewer's question |
+|---|---|
+| The driving "-ilities" | Which decision serves each — and what did it cost? |
+| Failure | What breaks first at 10×, and what does the user see? |
+| Change | Where does next year's most likely change land — one component or five? |
+| Security | Where does trust change hands, and who checked? |
+| Cost | What is the unit economics of this design at success-scale? |
+| Exit | Which decisions are one-way doors, and are they marked? |
+
+An hour, one page, six questions — repeated per significant change, it outperforms the quarterly architecture board it replaces.
+
+**Recap.** Map capabilities to buy/build postures; fund the platform with before/after numbers, not vibes; speak every floor's language without forking the truth. Adoption is a loop — fix the listening before the features. Reviews are one-page RFCs plus six characteristic-driven questions, not theater.
+
+**Exercise 14.5.** Take one internal capability your company hand-rolls. Place it on the evolution axis, then write its two-sentence justification — or its two-sentence migration plan to a commodity.
+
+### Kata: The Capstone — Meridian
 
 Everything since Chapter 1 was practice for this.
 
-> **Your brief: "Meridian."** A B2B logistics company: 40 product teams (520 engineers), one aging monolith carrying 60% of revenue, 190 services of wildly varying vintage carrying the rest. Known pains: four-week lead time for a new service; three security postures discovered in the last audit; every team runs its own CI; data science can't get clean data; two teams have built shadow AI gateways; the CTO has funded a platform organization — you — for 36 engineers, with board attention and eighteen months of patience. Meridian also sells a customer-facing API and is mid-flight on a multi-tenant "Meridian for Carriers" product.
+> **Your brief: "Meridian."** A B2B logistics company: 40 product teams (520 engineers), one aging monolith carrying 60% of revenue, 190 services of wildly varying vintage carrying the rest. Known pains: four-week lead time for a new service; three security postures discovered in the last audit; every team runs its own CI; data science can't get clean data; two teams have built shadow AI gateways; the CTO has funded a platform organization — you — for 36 engineers, with board attention and eighteen months of patience. Meridian also sells a customer-facing API and is mid-flight on a multi-tenant "Meridian for Carriers" product. And two of its recent acquisitions you have already met: **Cargo**, Chapter 9's freight forwarder, and **Relay**, Chapter 11's locker network — their architectures arrive with the deal, incident history and all.
 
 **Deliverables — the full architect's dossier:**
 
@@ -2340,7 +2379,7 @@ Everything since Chapter 1 was practice for this.
 2. **Platform architecture** — Figure 14.2-grade design: control plane, planes, registry, scorecards; C4 diagrams with trust boundaries (Chapter 10 is watching).
 3. **Golden-path specifications** — the "new service" and "new data product" paths end to end: template contents, provisioning workflow, guardrails inherited, one-command experience.
 4. **Governance design** — the fitness-function catalog, three admission policies, the priced exception path, and the deprecation playbook for the 190-service long tail.
-5. **Migration roadmap** — monolith strategy (Chapter 3's honesty: what strangles, what stays), shadow-AI-gateway consolidation, and the carrier-product's tenancy machinery converging with the internal control plane.
+5. **Migration roadmap** — monolith strategy (Chapter 3's honesty: what strangles, what stays), shadow-AI-gateway consolidation, the carrier-product's tenancy machinery converging with the internal control plane, and onboarding plans that bring Cargo's data products and Relay's ingestion fleet onto the platform's paths — your own kata answers from Chapters 9 and 11 are admissible evidence.
 6. **The economics** — platform team structure for 36 engineers, the before/after metrics that renew funding at month 18, and unit-economics instrumentation.
 7. **The elevator narrative** — one page, four floors: the same platform, spoken to engineers, directors, CFO, and board.
 
@@ -2358,7 +2397,7 @@ Everything since Chapter 1 was practice for this.
 
 Fourteen chapters ago, this book began with a claim: architecture is a stream of trade-offs made under uncertainty, recorded honestly. You now hold the full chain — characteristics to styles to boundaries to distribution to fleets to events to promises to pixels to data to defense to operations to intelligence to tenancy to platforms — and the habit that binds it: *name what it costs, in ink.*
 
-That habit is worth naming one last time, because the era you are graduating into runs on generated abundance. Code has never been cheaper to produce, and coherence has never been more expensive. What the tools generate is the *how* — faster than any of us. What they do not generate is the thing this book trained: the *why*, held accountable — which trade-off, for which characteristic, at what cost, written down where the next person can find it. Systems fail at the seams, and seams are drawn by judgment. That judgment is now yours: practiced on Encore, tested on a dozen katas, defended at Meridian.
+That habit is worth naming one last time — Section 14.4 turned it into a working method — because the era you are graduating into runs on generated abundance. Code has never been cheaper to produce, and coherence has never been more expensive. What the tools generate is the *how* — faster than any of us. What they do not generate is the thing this book trained: the *why*, held accountable — which trade-off, for which characteristic, at what cost, written down where the next person can find it. Systems fail at the seams, and seams are drawn by judgment. That judgment is now yours: practiced on Encore, tested on a dozen katas, defended at Meridian.
 
 Go draw good boundaries. And write down why.
 
