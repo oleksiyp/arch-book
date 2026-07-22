@@ -169,6 +169,35 @@
         window.gtag = gtag;
         gtag('js', new Date());
         gtag('config', '{{ site.google_analytics }}', { anonymize_ip: true });
+        addEngagementTracking();
+    }
+
+    function addEngagementTracking() {
+        // Reading-progress milestones: read_25 / read_50 / read_80 / read_100 (bottom)
+        var fired = {};
+        function progress() {
+            var doc = document.documentElement;
+            var max = doc.scrollHeight - window.innerHeight;
+            return max > 0 ? (window.scrollY / max) * 100 : 100;
+        }
+        window.addEventListener('scroll', function () {
+            var pos = progress();
+            [25, 50, 80, 100].forEach(function (m) {
+                if (!fired[m] && pos >= (m === 100 ? 99.5 : m)) {
+                    fired[m] = true;
+                    window.gtag('event', 'read_' + m);
+                }
+            });
+        }, { passive: true });
+
+        // Chapter TOC clicks (chapter_click_N) and Buy-me-a-coffee clicks
+        document.addEventListener('click', function (e) {
+            var a = e.target.closest ? e.target.closest('a') : null;
+            if (!a) return;
+            if (a.classList.contains('buy-button')) window.gtag('event', 'buy_me_coffee_click');
+            var m = (a.getAttribute('href') || '').match(/#ch(\d+)$/);
+            if (m) window.gtag('event', 'chapter_click_' + m[1]);
+        });
     }
 
     window.addEventListener('load', function () {
