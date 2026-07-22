@@ -67,7 +67,7 @@ Each chapter closes with a **kata**: a practice brief for a *different* company,
 
 Every discipline has a moment when it stops being a bag of techniques and becomes a way of seeing. For software architecture, that moment comes when you stop asking *"which technology should I use?"* and start asking *"what am I trading away?"* This chapter is about reaching that moment deliberately rather than by scar tissue.
 
-**Encore**, our companion for all fourteen chapters, sells tickets to live concerts — small enough to hold in your head, treacherous enough to be interesting: when a major artist announces a tour, Encore's traffic multiplies five-hundred-fold in minutes; every seat must be sold exactly once; and the bots arrive before the fans do. By the end of the chapter you will have derived Encore's driving characteristics, drawn its first diagrams, and written the decision records that a real team could pick up and build from. Every later chapter repeats this loop at greater depth; here, we learn the loop.
+**Encore**, our companion for all fourteen chapters, sells tickets to live concerts — small enough to hold in your head, treacherous enough to be interesting: when a major artist announces a tour, Encore's traffic multiplies five-hundred-fold in minutes; every seat must be sold exactly once; and the bots arrive before the fans do. By the end of the chapter you will have derived Encore's driving characteristics, drawn its first diagrams, and written decision records a real team could pick up and build from. Every later chapter repeats this loop at greater depth; here, we learn the loop.
 
 ---
 
