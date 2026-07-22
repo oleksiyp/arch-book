@@ -31,12 +31,92 @@
 }
 
 .main-content {
+    max-width: 49rem;
+
     h1, h2, h3, h4, h5, h6 {
         color: #d97706;
     }
 
     a {
         color: #0b7ecb;
+    }
+
+    /* Book body: serif reading face, justified with hyphenation */
+    p, li, blockquote {
+        font-family: Charter, "Bitstream Charter", "Sitka Text", Cambria, Georgia, serif;
+        font-size: 1.05rem;
+        line-height: 1.68;
+        color: #2b3138;
+    }
+
+    p {
+        text-align: justify;
+        hyphens: auto;
+        -webkit-hyphens: auto;
+    }
+
+    li {
+        text-align: left;
+    }
+
+    /* First-line indent, book convention: only between consecutive paragraphs */
+    p + p {
+        text-indent: 1.5em;
+    }
+
+    /* Figure captions (the paragraph directly under a diagram): smaller, muted, unindented */
+    pre.mermaid + p, svg + p {
+        text-align: left;
+        text-indent: 0;
+        font-size: 0.92rem;
+        color: #6a737d;
+    }
+
+    /* Callout blockquotes: warm card with the brand accent */
+    blockquote {
+        border-left: 3px solid #f38b1c;
+        background: #fff8f0;
+        padding: 0.65rem 1.1rem;
+        color: #3a3f46;
+
+        p { text-align: left; }
+    }
+
+    /* Chapter epigraphs (blockquote right after a chapter heading): quiet italics, no card */
+    h2 + blockquote {
+        border-left: none;
+        background: none;
+        font-style: italic;
+        color: #6a737d;
+        padding-left: 0;
+    }
+
+    /* Drop cap on each chapter's opening paragraph */
+    h2 + blockquote + p::first-letter {
+        float: left;
+        font-family: Charter, "Bitstream Charter", Georgia, serif;
+        font-size: 3.1em;
+        line-height: 0.85;
+        padding: 0.04em 0.08em 0 0;
+        color: #d97706;
+        font-weight: 600;
+    }
+
+    /* Chapter separators as ornaments */
+    hr {
+        border: 0;
+        height: auto;
+        background: none;
+        margin: 3rem auto 2.5rem;
+        text-align: center;
+
+        &::after {
+            content: "✦ ✦ ✦";
+            color: #d97706;
+            letter-spacing: 0.9em;
+            padding-left: 0.9em;
+            font-size: 0.85rem;
+        }
     }
 }
 
