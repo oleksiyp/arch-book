@@ -1,0 +1,14 @@
+{
+  "name": "Software Architecture in the AI & Cloud Era",
+  "short_name": "Arch Book",
+  "description": "A free online book on modern software architecture — from the first trade-off to platform engineering.",
+  "start_url": "/arch-book/",
+  "scope": "/arch-book/",
+  "display": "standalone",
+  "background_color": "#1b1f3b",
+  "theme_color": "#6c2bd9",
+  "icons": [
+    { "src": "/arch-book/assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/arch-book/assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

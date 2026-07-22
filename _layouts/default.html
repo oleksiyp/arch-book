@@ -8,6 +8,12 @@
           content="{{ page.description | default: site.description }}"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#6c2bd9">
+    <link rel="manifest" href="{{ '/site.webmanifest' | relative_url }}">
+    <link rel="icon" type="image/png" sizes="192x192" href="{{ '/assets/icons/icon-192.png' | relative_url }}">
+    <link rel="apple-touch-icon" href="{{ '/assets/icons/apple-touch-icon.png' | relative_url }}">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Arch Book">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
 </head>
@@ -109,6 +115,11 @@
     window.addEventListener('scroll', function () {
         fab.classList.toggle('visible', window.scrollY > 800);
     }, { passive: true });
+
+    // PWA: offline reading + installability
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('{{ "/sw.js" | relative_url }}');
+    }
 })();
 </script>
 </body>
