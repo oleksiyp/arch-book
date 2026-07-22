@@ -6,3 +6,4 @@ theme: jekyll-theme-cayman
 google_analytics: "G-N146BPW9JR"
 # Firebase Realtime Database URL for the live reader counter; empty hides the badge
 presence_database_url: ""
+exclude: [scripts, venv, README.md.bak]

@@ -1,0 +1,7 @@
+# Software Architecture in the AI & Cloud Era
+
+> A free online book on modern software architecture — trade-offs, distributed systems, events, APIs, data, security, operations, AI systems — converging on platform architecture. 14 chapters, one running example (Encore, a concert-ticketing startup), a kata per chapter.
+
+- [Full book, single page](https://oleksiyp.github.io/arch-book/)
+- [Full book as raw markdown](https://oleksiyp.github.io/arch-book/llms-full.txt)
+- Per-chapter pages: https://oleksiyp.github.io/arch-book/ch/1/ through /ch/14/

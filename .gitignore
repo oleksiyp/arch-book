@@ -2,3 +2,7 @@ assessment.md
 _site/
 .jekyll-cache/
 .DS_Store
+
+chapters/
+llms-full.txt
+sitemap.xml
