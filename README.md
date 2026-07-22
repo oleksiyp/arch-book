@@ -392,6 +392,8 @@ You can hear characteristics inside business sentences, shape components around 
 - Gregor Hohpe — [*The Software Architect Elevator*](https://www.oreilly.com/library/view/the-software-architect/9781492077534/). O'Reilly, 2020.
 - Titus Winters, Tom Manshreck, Hyrum Wright — [*Software Engineering at Google*](https://abseil.io/resources/swe-book). O'Reilly, 2020 — free online.
 - David Thomas, Andrew Hunt — [*The Pragmatic Programmer*, 20th Anniversary ed.](https://pragprog.com/titles/tpp20/the-pragmatic-programmer-20th-anniversary-edition/) Addison-Wesley, 2019.
+- Michael Keeling — [*Design It!*](https://pragprog.com/titles/mkdsa/design-it/) Pragmatic Bookshelf, 2017.
+- George Fairbanks — [*Just Enough Software Architecture*](https://www.georgefairbanks.com/book/). Marshall & Brewer, 2010.
 - Simon Brown — [*Software Architecture for Developers*](https://c4model.com/). Leanpub; the C4 model — free online.
 
 ---
@@ -569,6 +571,7 @@ You can name the shapes, price them, and choose one per quantum with the charact
 - Mark Richards, Neal Ford — [*Fundamentals of Software Architecture*, 2nd ed.](https://www.oreilly.com/library/view/fundamentals-of-software/9781098175504/) O'Reilly, 2025.
 - Neal Ford, Rebecca Parsons, Patrick Kua, Pramod Sadalage — [*Building Evolutionary Architectures*, 2nd ed.](https://www.oreilly.com/library/view/building-evolutionary-architectures/9781492097532/) O'Reilly, 2022.
 - Mark Richards — [*Software Architecture Patterns*, 2nd ed.](https://www.oreilly.com/library/view/software-architecture-patterns/9781098134280/) O'Reilly, 2022.
+- Len Bass, Paul Clements, Rick Kazman — [*Software Architecture in Practice*, 4th ed.](https://www.informit.com/store/software-architecture-in-practice-9780136886099) Addison-Wesley, 2021.
 - Martin Fowler — [*Patterns of Enterprise Application Architecture*](https://www.informit.com/store/patterns-of-enterprise-application-architecture-9780321127426). Addison-Wesley, 2002.
 
 ---
@@ -740,6 +743,7 @@ You can find boundaries the business will respect, size the pieces by real force
 - Vlad Khononov — [*Learning Domain-Driven Design*](https://www.oreilly.com/library/view/learning-domain-driven-design/9781098100124/). O'Reilly, 2021.
 - Sam Newman — [*Monolith to Microservices*](https://www.oreilly.com/library/view/monolith-to-microservices/9781492047834/). O'Reilly, 2019.
 - Martin Fowler — [*Refactoring*, 2nd ed.](https://www.informit.com/store/refactoring-improving-the-design-of-existing-code-9780134757599) Addison-Wesley, 2018.
+- Scott Wlaschin — [*Domain Modeling Made Functional*](https://pragprog.com/titles/swdddf/domain-modeling-made-functional/). Pragmatic Bookshelf, 2018.
 - Vaughn Vernon — [*Implementing Domain-Driven Design*](https://www.informit.com/store/implementing-domain-driven-design-9780133039894). Addison-Wesley, 2013.
 - Michael Feathers — [*Working Effectively with Legacy Code*](https://www.informit.com/store/working-effectively-with-legacy-code-9780131177055). Prentice Hall, 2004.
 - Eric Evans — [*Domain-Driven Design: Tackling Complexity in the Heart of Software*](https://www.informit.com/store/domain-driven-design-tackling-complexity-in-the-heart-9780321125217). Addison-Wesley, 2003.
@@ -947,6 +951,7 @@ You hold the physics: lies of the network, the price list of consistency, the re
 
 - Martin Kleppmann, Chris Riccomini — [*Designing Data-Intensive Applications*, 2nd ed.](https://www.oreilly.com/library/view/designing-data-intensive-applications/9781098119058/) O'Reilly, 2025.
 - Brendan Burns — [*Designing Distributed Systems*, 2nd ed.](https://www.oreilly.com/library/view/designing-distributed-systems/9781098156343/) O'Reilly, 2024.
+- Unmesh Joshi — [*Patterns of Distributed Systems*](https://martinfowler.com/books/patterns-distributed.html). Addison-Wesley, 2023.
 - Ian Gorton — [*Foundations of Scalable Systems*](https://www.oreilly.com/library/view/foundations-of-scalable/9781098106058/). O'Reilly, 2022.
 - Roberto Vitillo — [*Understanding Distributed Systems*, 2nd ed.](https://leanpub.com/understanding-distributed-systems) Leanpub, 2022.
 - Alex Petrov — [*Database Internals*](https://www.oreilly.com/library/view/database-internals/9781492040330/). O'Reilly, 2019.
@@ -1096,6 +1101,7 @@ You can cut, contract, deliver, observe, and organizationally sustain a service 
 - Neal Ford, Mark Richards, Pramod Sadalage, Zhamak Dehghani — [*Software Architecture: The Hard Parts*](https://www.oreilly.com/library/view/software-architecture-the/9781492086888/). O'Reilly, 2021.
 - Sam Newman — [*Building Microservices*, 2nd ed.](https://www.oreilly.com/library/view/building-microservices-2nd/9781492034018/) O'Reilly, 2021.
 - Nicole Forsgren, Jez Humble, Gene Kim — [*Accelerate*](https://itrevolution.com/product/accelerate/). IT Revolution, 2018.
+- Chris Richardson — [*Microservices Patterns*](https://www.manning.com/books/microservices-patterns). Manning, 2018.
 - Jez Humble, David Farley — [*Continuous Delivery*](https://www.informit.com/store/continuous-delivery-reliable-software-releases-through-9780321601919). Addison-Wesley, 2010.
 - Matthew Skelton, Manuel Pais — [*Team Topologies*, 2nd ed.](https://itrevolution.com/product/team-topologies-second-edition/) IT Revolution.
 
@@ -1408,6 +1414,7 @@ You can promise carefully, evolve without breakage, and operate the edge as infr
 - Mike Amundsen — [*RESTful Web API Patterns and Practices Cookbook*](https://www.oreilly.com/library/view/restful-web-api/9781098106737/). O'Reilly, 2022.
 - James Gough, Daniel Bryant, Matthew Auburn — [*Mastering API Architecture*](https://www.oreilly.com/library/view/mastering-api-architecture/9781492090625/). O'Reilly, 2022.
 - JJ Geewax — [*API Design Patterns*](https://www.manning.com/books/api-design-patterns). Manning, 2021.
+- James Higginbotham — [*Principles of Web API Design*](https://www.informit.com/store/principles-of-web-api-design-modernizing-apis-for-9780137355631). Addison-Wesley, 2021.
 - Arnaud Lauret — [*The Design of Web APIs*, 2nd ed.](https://www.manning.com/books/the-design-of-web-apis) Manning.
 
 ---
@@ -1705,6 +1712,7 @@ Data now has owners, contracts, products, and a platform to serve them — and t
 ### References
 
 - Adam Bellemare — [*Building an Event-Driven Data Mesh*](https://www.oreilly.com/library/view/building-an-event-driven/9781098127596/). O'Reilly, 2023.
+- Jacek Majchrzak, Sven Balnojan, Marian Siwiak — [*Data Mesh in Action*](https://www.manning.com/books/data-mesh-in-action). Manning, 2023.
 - Zhamak Dehghani — [*Data Mesh: Delivering Data-Driven Value at Scale*](https://www.oreilly.com/library/view/data-mesh/9781492092384/). O'Reilly, 2022.
 - Ian Gorton — [*Foundations of Scalable Systems*](https://www.oreilly.com/library/view/foundations-of-scalable/9781098106058/). O'Reilly, 2022.
 - Joe Reis, Matt Housley — [*Fundamentals of Data Engineering*](https://www.oreilly.com/library/view/fundamentals-of-data/9781098108298/). O'Reilly, 2022.
@@ -1845,6 +1853,7 @@ Security is now a designed property with drawings, policies, and tests. What rem
 - Razi Rais, Christina Morillo, Evan Gilman, Doug Barth — [*Zero Trust Networks*, 2nd ed.](https://www.oreilly.com/library/view/zero-trust-networks/9781492096580/) O'Reilly, 2024.
 - James Gough, Daniel Bryant, Matthew Auburn — [*Mastering API Architecture*](https://www.oreilly.com/library/view/mastering-api-architecture/9781492090625/). O'Reilly, 2022.
 - Sam Newman — [*Building Microservices*, 2nd ed.](https://www.oreilly.com/library/view/building-microservices-2nd/9781492034018/) O'Reilly, 2021.
+- Ross Anderson — [*Security Engineering*, 3rd ed.](https://www.cl.cam.ac.uk/~rja14/book.html) Wiley, 2020 — chapters free online.
 - Heather Adkins, Betsy Beyer, et al. — [*Building Secure and Reliable Systems*](https://sre.google/books/). O'Reilly/Google, 2020 — free online.
 - Tanya Janca — [*Alice and Bob Learn Application Security*](https://www.wiley.com/en-us/Alice+and+Bob+Learn+Application+Security-p-9781119687405). Wiley, 2020.
 - Adam Shostack — [*Threat Modeling: Designing for Security*](https://www.wiley.com/en-us/Threat+Modeling:+Designing+for+Security-p-9781118809990). Wiley, 2014.
@@ -1973,6 +1982,7 @@ You can place workloads, industrialize delivery, promise reliability arithmetica
 - Christian Ciceri, Dave Farley, et al. — [*Software Architecture Metrics*](https://www.oreilly.com/library/view/software-architecture-metrics/9781098112226/). O'Reilly, 2022.
 - Gene Kim, Jez Humble, Patrick Debois, John Willis — [*The DevOps Handbook*, 2nd ed.](https://itrevolution.com/product/the-devops-handbook-second-edition/) IT Revolution, 2021.
 - Sam Newman — [*Building Microservices*, 2nd ed.](https://www.oreilly.com/library/view/building-microservices-2nd/9781492034018/) O'Reilly, 2021.
+- Brendan Gregg — [*Systems Performance*, 2nd ed.](https://www.brendangregg.com/systems-performance-2nd-edition-book.html) Addison-Wesley, 2020.
 - Nicole Forsgren, Jez Humble, Gene Kim — [*Accelerate*](https://itrevolution.com/product/accelerate/). IT Revolution, 2018.
 - Betsy Beyer, Chris Jones, Jennifer Petoff, Niall Richard Murphy (eds.) — [*Site Reliability Engineering*](https://sre.google/sre-book/table-of-contents/). O'Reilly/Google, 2016 — free online.
 - Gene Kim, Kevin Behr, George Spafford — [*The Phoenix Project*](https://itrevolution.com/product/the-phoenix-project/). IT Revolution, 2013.
@@ -2113,6 +2123,7 @@ You can place a probabilistic component into a deterministic discipline: gateway
 - Chip Huyen — [*AI Engineering*](https://www.oreilly.com/library/view/ai-engineering/9781098166298/). O'Reilly, 2025.
 - Jay Alammar, Maarten Grootendorst — [*Hands-On Large Language Models*](https://www.oreilly.com/library/view/hands-on-large-language/9781098150952/). O'Reilly, 2024.
 - Tod Golding — [*Building Multi-Tenant SaaS Architectures*](https://www.oreilly.com/library/view/building-multi-tenant-saas/9781098140632/). O'Reilly, 2024.
+- Sebastian Raschka — [*Build a Large Language Model (From Scratch)*](https://www.manning.com/books/build-a-large-language-model-from-scratch). Manning, 2024.
 - Adam Bellemare — [*Building an Event-Driven Data Mesh*](https://www.oreilly.com/library/view/building-an-event-driven/9781098127596/). O'Reilly, 2023.
 - Cathy Chen, Niall Richard Murphy, Kranti Parisa, D. Sculley, Todd Underwood — [*Reliable Machine Learning*](https://www.oreilly.com/library/view/reliable-machine-learning/9781098106218/). O'Reilly, 2022.
 - Chip Huyen — [*Designing Machine Learning Systems*](https://www.oreilly.com/library/view/designing-machine-learning/9781098107956/). O'Reilly, 2022.
@@ -2433,6 +2444,7 @@ Go draw good boundaries. And write down why.
 - Neal Ford, Rebecca Parsons, Patrick Kua, Pramod Sadalage — [*Building Evolutionary Architectures*, 2nd ed.](https://www.oreilly.com/library/view/building-evolutionary-architectures/9781492097532/) O'Reilly, 2022.
 - Will Larson — [*Staff Engineer: Leadership Beyond the Management Track*](https://staffeng.com/book/). 2021 — largely free online.
 - Gregor Hohpe — [*The Software Architect Elevator*](https://www.oreilly.com/library/view/the-software-architect/9781492077534/). O'Reilly, 2020.
+- Will Larson — [*An Elegant Puzzle: Systems of Engineering Management*](https://press.stripe.com/an-elegant-puzzle). Stripe Press, 2019.
 - Eben Hewitt — [*Technology Strategy Patterns*](https://www.oreilly.com/library/view/technology-strategy-patterns/9781492040866/). O'Reilly, 2018.
 - Donella H. Meadows — [*Thinking in Systems: A Primer*](https://www.chelseagreen.com/product/thinking-in-systems/). Chelsea Green, 2008.
 - Matthew Skelton, Manuel Pais — [*Team Topologies*, 2nd ed.](https://itrevolution.com/product/team-topologies-second-edition/) IT Revolution.
