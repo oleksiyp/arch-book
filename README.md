@@ -753,13 +753,13 @@ You can find boundaries the business will respect, size the pieces by real force
 
 Encore extracted Sale Gate in Chapter 2 and drew context boundaries in Chapter 3, and in doing so quietly signed a contract with physics. The moment two components speak over a network, a new set of laws applies: messages get lost, arrive twice, or arrive late; clocks disagree; half of a system can die while the other half keeps cheerfully working. No framework repeals these laws. Architects who don't know them design systems that work in demos and fail on Saturdays.
 
-This chapter is the physics and the engineering that survives it, architect-shaped: you will not implement a consensus protocol, but you will predict how a system behaves at 10× load and half a network, read consistency claims with a customs officer's eyes, and design failure behavior instead of discovering it. Encore's first real outage arrives in Section 4.4 — self-inflicted, as most are.
+This chapter is the physics, and the engineering that survives it. You will not implement a consensus protocol. You will, however, learn to predict how a system behaves at 10× load and half a network, to read a vendor's consistency claims with a customs officer's eyes, and to design failure behavior instead of discovering it. Encore's first real outage arrives in Section 4.4. It is self-inflicted, as most are.
 
 ### 4.1 The Physics of Distribution
 
 #### The eight famous lies
 
-The eight fallacies of distributed computing are assumptions every engineer makes until production removes them — read them as a bill of costs:
+The eight fallacies of distributed computing are assumptions every engineer makes until production removes them. Read them as a bill of costs:
 
 | The lie | The truth's bill for Encore |
 |---|---|
@@ -776,15 +776,15 @@ The eight fallacies of distributed computing are assumptions every engineer make
 
 #### Time, ordering, and the duty of idempotency
 
-In one process, "before" and "after" are facts. Across machines they are opinions: clocks drift, messages race, and log timestamps from two servers cannot settle an argument. Two working consequences. First, *order must be designed* where it matters — sequence numbers, versions, single-writer ownership (Chapter 3's aggregates suddenly look prescient: one owner per invariant is an ordering strategy). Second, and non-negotiable:
+In one process, "before" and "after" are facts. Across machines they are opinions: clocks drift, messages race, and log timestamps from two servers cannot settle an argument. Two working consequences. First, *order must be designed* where it matters: sequence numbers, versions, single-writer ownership. (Chapter 3's aggregates suddenly look prescient. One owner per invariant is an ordering strategy.) Second, and non-negotiable:
 
 > **The duty of idempotency.** Any operation that crosses a network will eventually be retried — by your code, a proxy, or a double-clicking fan. Every such operation must be safe to apply twice. "Charge card for order 123" is a bug; "charge order 123's single charge-intent" is engineering. Idempotency is not a pattern you add later; it is a property you owe from day one.
 
 #### Tails, not averages
 
-The last physics lesson is statistical. Users do not experience your average latency; they experience the tail — and tails compound viciously: a page fanning out to 10 services, each with a modest 1-in-100 chance of a 2-second stall, stalls for roughly one page-load in ten. At Encore's on-sale rates, "p99 = 2s" means thousands of fans in molasses at the worst possible minute. Architects budget latency at p99, and treat every fan-out as tail multiplication.
+The last physics lesson is statistical. Users do not experience your average latency; they experience the tail. Tails compound viciously: a page fanning out to ten services, each with a modest 1-in-100 chance of a 2-second stall, stalls for roughly one page-load in ten. At Encore's on-sale rates, "p99 = 2s" means thousands of fans in molasses at the worst possible minute. Architects budget latency at p99, and treat every fan-out as tail multiplication.
 
-Budgets need prices. Commit these orders of magnitude to memory — they cost every arrow you will ever draw:
+Budgets need prices. Commit these orders of magnitude to memory. They put a price on every arrow you will ever draw:
 
 | Operation (2026) | Order of magnitude |
 |---|---|
@@ -795,7 +795,7 @@ Budgets need prices. Commit these orders of magnitude to memory — they cost ev
 | Object-store read (first byte) | 20–100 ms |
 | LLM inference — first token / each token | 200–2,000 ms / 10–50 ms |
 
-A seat-map render may spend a few same-AZ round trips — never a cross-region one, and never a wait on a model. The table is why.
+A seat-map render may spend a few same-AZ round trips, never a cross-region one, and never a wait on a model. The table is why.
 
 **Recap.** The network lies eight ways; timeouts, retries, and bandwidth discipline are the tax. Order is designed, not assumed. Everything retryable must be idempotent. Latency lives in the tail, and fan-out multiplies it.
 
@@ -805,9 +805,9 @@ A seat-map render may spend a few same-AZ round trips — never a cross-region o
 
 #### Copies and slices
 
-State scales along exactly two axes. **Replication** makes copies — for surviving machine death and for serving hot reads (Encore's catalog: written weekly, read millions of times an hour on tour-announcement day). **Partitioning (sharding)** makes slices — when writes outgrow one machine, data splits by key. Choose keys for even spread and single-shard access: Encore partitioning seats by `event_id` keeps each on-sale on one shard's fast path — and concentrates each on-sale's fury on one shard, a trade-off we accept knowingly (the Gate meters it) rather than discover in an incident review.
+State scales along exactly two axes. **Replication** makes copies, for surviving machine death and for serving hot reads; Encore's catalog is the textbook case, written weekly and read millions of times an hour on tour-announcement day. **Partitioning (sharding)** makes slices: when writes outgrow one machine, data splits by key. Choose keys for even spread and single-shard access: Encore partitioning seats by `event_id` keeps each on-sale on one shard's fast path. It also concentrates that on-sale's fury on one shard — a trade-off we accept knowingly, because the Gate meters admission, rather than discover in an incident review.
 
-Replication's price is the gap between copies. The leader acknowledges a write; a follower answers the next read; the fan who just bought a ticket asks "my tickets?" and sees none. Nothing crashed — the system is merely being honest about light-speed and buffers.
+Replication's price is the gap between copies. The leader acknowledges a write; a follower answers the next read; the fan who just bought a ticket asks "my tickets?" and sees none. Nothing crashed. The system is merely being honest about light-speed and buffers.
 
 #### The consistency menu
 
@@ -837,13 +837,13 @@ What vendors bury in appendices, architects must read as a menu with prices:
 
 *Figure 4.2 — The consistency spectrum. The senior move is refusing to buy one level for the whole system: seat allocation is linearizable; ticket lists are read-your-writes; view counters are eventual. Consistency is purchased per invariant, not per company.*
 
-CAP, correctly read, says only this: when a partition happens (and it will), each *operation* chooses — refuse to answer (consistency) or answer possibly-stale (availability). PACELC adds the everyday clause: even without partitions, stronger consistency costs latency, always. Seat-sale: choose C, proudly show "high demand, retrying." Catalog browse: choose A, always. The database serving both must let you choose *per operation* — that sentence disqualifies half the candidates in any vendor bake-off, which is precisely its value.
+CAP, correctly read, says only this: when a partition happens (and it will), each *operation* chooses: refuse to answer (consistency), or answer possibly-stale (availability). PACELC adds the everyday clause: even without partitions, stronger consistency costs latency, always. Seat-sale: choose C, proudly show "high demand, retrying." Catalog browse: choose A, always. The database serving both must let you choose *per operation*. My advice is to write that sentence into the first line of any storage evaluation; it disqualifies half the candidates before the demos start, which is precisely its value.
 
-Underneath the strong end sits consensus (Raft and kin): machines voting on one truth, majorities required. Architect-level takeaways only: odd cluster sizes, a leader's failover pause is your write downtime, and quorums across regions pay intercontinental round-trips *per write* — which is why "global strongly-consistent and fast" appears only in marketing.
+Underneath the strong end sits consensus (Raft and kin): machines voting on one truth, majorities required. Architect-level takeaways only: odd cluster sizes, a leader's failover pause is your write downtime, and quorums across regions pay intercontinental round-trips *per write*, which is why "global strongly-consistent and fast" appears only in marketing.
 
-One further caveat earns its place: leadership itself expires. A leader that stalls — GC pause, VM migration, network blip — can keep *believing* it leads while a successor is elected, and a stale leader that still writes corrupts data politely. The defenses are **leases** (leadership with an expiry that must be re-earned) and **fencing tokens** (every write carries the leader's term; storage rejects any term older than the newest it has seen). Encore's seat shards write with fenced terms, so a zombie leader's late writes bounce harmlessly. No protocol internals required — just the architect's question: *what stops yesterday's leader from writing today?*
+One further caveat earns its place: leadership itself expires. A leader that stalls (a GC pause, a VM migration, a network blip) can keep *believing* it leads while a successor is elected, and a stale leader that still writes corrupts data politely. The defenses are **leases** (leadership with an expiry that must be re-earned) and **fencing tokens** (every write carries the leader's term; storage rejects any term older than the newest it has seen). Encore's seat shards write with fenced terms, so a zombie leader's late writes bounce harmlessly. No protocol internals required. The architect's question is enough: *what stops yesterday's leader from writing today?*
 
-**Recap.** Replicate for reads and survival; partition for writes; choose keys for spread and single-shard flows. Consistency is a per-invariant purchase — pin your invariants to levels before choosing storage.
+**Recap.** Replicate for reads and survival; partition for writes; choose keys for spread and single-shard flows. Consistency is a per-invariant purchase; pin your invariants to levels before you go shopping for storage. I have watched the reverse order play out, and the marketing always wins.
 
 **Exercise 4.2.** List four data items in a system you know. Assign each the weakest consistency level the business genuinely tolerates — then name which your current database actually delivers.
 
@@ -869,9 +869,9 @@ flowchart LR
 
 *Figure 4.3 — The workhorse topology. Its two load-bearing ideas are highlighted: statelessness at the balancer (any instance can serve anyone) and the queue (turning spikes into schedules).*
 
-**Statelessness** is what makes the left half elastic: session state lives in the cache or a token, never in instance memory, so scaling is "add instances" and failure is "who cares." **Caching** buys read scale at a known price — staleness and invalidation. Cache-aside with TTLs covers most needs; the discipline is declaring *per item* how stale is acceptable (catalog: minutes; seat availability: never — cache the map's geometry, never its truth). **The queue** is the deepest idea on the diagram: a synchronous call demands the callee be alive *now*; a queued message asks only that it be alive *eventually*. Ticket-issuance behind a queue turns Encore's spike into a backlog that drains in minutes — invisible, because fans got "purchase confirmed" from the only part that had to be synchronous.
+**Statelessness** is what makes the left half elastic: session state lives in the cache or a token, never in instance memory, so scaling is "add instances" and failure is "who cares." **Caching** buys read scale at a known price — staleness and invalidation. Cache-aside with TTLs covers most needs; the discipline is declaring *per item* how stale is acceptable (catalog: minutes; seat availability: never — cache the map's geometry, never its truth). **The queue** is the deepest idea on the diagram: a synchronous call demands the callee be alive *now*; a queued message asks only that it be alive *eventually*. Ticket-issuance behind a queue turns Encore's spike into a backlog that drains in minutes, invisibly, because fans already got "purchase confirmed" from the only part that had to be synchronous.
 
-Here is the arithmetic the kata will demand, worked once. Encore's worst on-sale: the Gate admits 2,000 fans/sec; each admitted fan drives ~3 seat-map reads and ~1 reservation attempt — 6,000 reads/sec and 2,000 serialized writes/sec against Seat Inventory. A partition sustains ~10,000 reads but only ~1,500 ordered reservations, so *writes* size the system: two shards minimum, four for headroom, keyed by `event_id` (Section 4.2) so each on-sale stays on one ordered path. Three lines of multiplication, and the design review moves from adjectives to numbers.
+Here is the arithmetic the kata will demand, worked once. Encore's worst on-sale: the Gate admits 2,000 fans/sec; each admitted fan drives ~3 seat-map reads and ~1 reservation attempt: 6,000 reads/sec and 2,000 serialized writes/sec against Seat Inventory. A partition sustains ~10,000 reads but only ~1,500 ordered reservations, so *writes* size the system: two shards minimum, four for headroom, keyed by `event_id` (Section 4.2) so each on-sale stays on one ordered path. Three lines of multiplication, and the design review moves from adjectives to numbers.
 
 > **Queueing intuition.** Little's law — items in system = arrival rate × time in system — has one corollary every architect needs: response time explodes as utilization nears 100%. At 50% load, queues are short; at 80% they lengthen; past ~85% they grow without bound. That knee is why Section 4.4's load shedding is doctrine, not cowardice: refusing work above the knee is the only way to keep serving the work below it.
 
