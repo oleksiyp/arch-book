@@ -1,4 +1,4 @@
-# Software Architecture in the AI & Cloud Era
+# Software Architecture in <span class="slashed">the</span> AI & Cloud Era
 
 *The road to platform architecture.*
 

@@ -23,7 +23,7 @@
 </head>
 <body>
 <section class="page-header">
-    <h1 class="project-name"><a href="{{ '/' | relative_url }}">{{ site.title }}</a></h1>
+    <h1 class="project-name"><a href="{{ '/' | relative_url }}">{{ site.title | replace: ' the ', ' <span class="slashed">the</span> ' }}</a></h1>
     <h2 class="project-tagline">{{ site.tag_line | default: site.description }}</h2>
 </section>
 

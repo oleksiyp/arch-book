@@ -32,6 +32,24 @@
     border-radius: 0.4rem;
 }
 
+/* Editorial slash over "the" in the title */
+.slashed {
+    position: relative;
+    text-decoration: none;
+}
+
+.slashed::after {
+    content: '';
+    position: absolute;
+    left: -8%;
+    right: -8%;
+    top: 50%;
+    height: 0.085em;
+    background: currentColor;
+    transform: rotate(-14deg);
+    border-radius: 0.05em;
+}
+
 /* Floating return-to-contents button */
 .toc-fab {
     position: fixed;
