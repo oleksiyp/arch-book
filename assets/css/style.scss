@@ -88,6 +88,11 @@
     filter: drop-shadow(0 0 3px rgba(34, 197, 94, 0.7));
 }
 
+/* cookieconsent's revoke tab must never exist visually, whatever the law module thinks */
+.cc-revoke {
+    display: none !important;
+}
+
 /* Book footer */
 .book-footer {
     background: linear-gradient(135deg, #14172e 0%, #1b1f3b 100%);
