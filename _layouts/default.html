@@ -16,6 +16,10 @@
     <meta name="apple-mobile-web-app-title" content="Arch Book">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
+    {% if site.google_analytics != "" %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
+    {% endif %}
 </head>
 <body>
 <section class="page-header">
@@ -28,6 +32,7 @@
 </section>
 
 <a href="#contents" class="toc-fab" id="toc-fab" aria-label="Return to table of contents">&#9776; Contents</a>
+<div class="presence-badge" id="presence-badge" hidden><span class="presence-dot"></span><span id="presence-count"></span>&nbsp;reading now</div>
 
 <footer class="book-footer">
     <div class="footer-content">
@@ -122,5 +127,75 @@
     }
 })();
 </script>
+
+{% if site.google_analytics != "" %}
+<script>
+(function () {
+    function getCookie(name) {
+        var b = document.cookie.match('(^|[^;]+)\\s*' + name + '\\s*=\\s*([^;]+)');
+        return b ? b.pop() : '';
+    }
+
+    function addAnalytics() {
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id={{ site.google_analytics }}';
+        document.head.appendChild(s);
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        window.gtag = gtag;
+        gtag('js', new Date());
+        gtag('config', '{{ site.google_analytics }}', { anonymize_ip: true });
+    }
+
+    window.addEventListener('load', function () {
+        if (getCookie('cookieconsent_status') === 'allow') addAnalytics();
+
+        window.cookieconsent.initialise({
+            palette: {
+                popup: { background: '#14172e', text: '#e2e8f0' },
+                button: { background: '#00c9ff', text: '#14172e' }
+            },
+            type: 'opt-out',
+            content: {
+                message: 'This site uses cookies for anonymous usage statistics.',
+                allow: 'Approve',
+                dismiss: 'Approve',
+                deny: 'Reject'
+            },
+            onStatusChange: function () { location.reload(); }
+        });
+    });
+})();
+</script>
+{% endif %}
+
+{% if site.presence_database_url != "" %}
+<script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+    import { getDatabase, ref, push, set, remove, onValue, onDisconnect, serverTimestamp }
+        from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js';
+
+    const db = getDatabase(initializeApp({ databaseURL: '{{ site.presence_database_url }}' }));
+    const all = ref(db, 'presence');
+    const me = push(all);
+
+    function beat() { set(me, serverTimestamp()); }
+    beat();
+    onDisconnect(me).remove();
+    const heartbeat = setInterval(beat, 60000);
+    window.addEventListener('pagehide', () => { clearInterval(heartbeat); remove(me); });
+
+    const badge = document.getElementById('presence-badge');
+    const label = document.getElementById('presence-count');
+    onValue(all, (snap) => {
+        // count only peers with a heartbeat in the last 5 minutes (survives stale entries)
+        const cutoff = Date.now() - 5 * 60 * 1000;
+        let n = 0;
+        snap.forEach((child) => { if ((child.val() || 0) > cutoff) n++; });
+        if (n > 0) { label.textContent = n; badge.hidden = false; }
+    });
+</script>
+{% endif %}
 </body>
 </html>
