@@ -189,6 +189,33 @@
             });
         }, { passive: true });
 
+        // Per-chapter reading time: chapter_read_N fires after 90s of active,
+        // visible time inside chapter N's region (tab focused + recent input)
+        var readAcc = {}, readFired = {}, lastActivity = Date.now();
+        ['scroll', 'mousemove', 'keydown', 'touchstart'].forEach(function (ev) {
+            window.addEventListener(ev, function () { lastActivity = Date.now(); }, { passive: true });
+        });
+        function currentChapter() {
+            var heads = document.querySelectorAll('h2[id^="ch"]');
+            var mid = window.innerHeight / 2, cur = null;
+            for (var i = 0; i < heads.length; i++) {
+                if (heads[i].getBoundingClientRect().top <= mid) cur = heads[i].id;
+            }
+            return cur;
+        }
+        var TICK = 5000, THRESHOLD = 90000, IDLE = 60000;
+        setInterval(function () {
+            if (document.visibilityState !== 'visible') return;
+            if (Date.now() - lastActivity > IDLE) return;
+            var ch = currentChapter();
+            if (!ch) return;
+            readAcc[ch] = (readAcc[ch] || 0) + TICK;
+            if (!readFired[ch] && readAcc[ch] >= THRESHOLD) {
+                readFired[ch] = true;
+                window.gtag('event', 'chapter_read_' + ch.replace('ch', ''));
+            }
+        }, TICK);
+
         // Chapter TOC clicks (chapter_click_N) and Buy-me-a-coffee clicks
         document.addEventListener('click', function (e) {
             var a = e.target.closest ? e.target.closest('a') : null;
