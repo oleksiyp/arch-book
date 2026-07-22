@@ -328,3 +328,9 @@ You can hear characteristics inside business sentences, shape components around 
 - Raju Gandhi, Mark Richards, Neal Ford — [*Head First Software Architecture*](https://www.oreilly.com/library/view/head-first-software/9781098134341/). O'Reilly, 2024.
 - Jacqui Read — [*Communication Patterns*](https://www.oreilly.com/library/view/communication-patterns/9781098140533/). O'Reilly, 2023.
 - Gregor Hohpe — [*The Software Architect Elevator*](https://www.oreilly.com/library/view/the-software-architect/9781492077534/). O'Reilly, 2020.
+
+**Further reading:**
+
+- John Ousterhout — [*A Philosophy of Software Design*](https://web.stanford.edu/~ouster/cgi-bin/aposd.php). Yaknyam Press, 2021.
+- David Thomas, Andrew Hunt — [*The Pragmatic Programmer*, 20th Anniversary ed.](https://pragprog.com/titles/tpp20/the-pragmatic-programmer-20th-anniversary-edition/) Addison-Wesley, 2019.
+- Titus Winters, Tom Manshreck, Hyrum Wright — [*Software Engineering at Google*](https://abseil.io/resources/swe-book). O'Reilly, 2020 — free online.

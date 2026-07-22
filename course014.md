@@ -124,3 +124,11 @@ Go draw good boundaries. And write down why.
 - Eben Hewitt — [*Technology Strategy Patterns*](https://www.oreilly.com/library/view/technology-strategy-patterns/9781492040866/). O'Reilly, 2018.
 - Sarah Wells — [*Enabling Microservice Success*](https://www.oreilly.com/library/view/enabling-microservice-success/9781098130787/). O'Reilly, 2024.
 - Diana Montalion — [*Learning Systems Thinking*](https://www.oreilly.com/library/view/learning-systems-thinking/9781098151324/). O'Reilly, 2024.
+
+**Further reading:**
+
+- Camille Fournier, Ian Nowland — [*Platform Engineering*](https://www.oreilly.com/library/view/platform-engineering/9781098153632/). O'Reilly, 2024.
+- Matthew Skelton, Manuel Pais — [*Team Topologies*, 2nd ed.](https://itrevolution.com/product/team-topologies-second-edition/) IT Revolution.
+- Simon Wardley — [*Wardley Maps*](https://learnwardleymapping.com/book/). Free online, CC BY-SA.
+- Donella H. Meadows — [*Thinking in Systems: A Primer*](https://www.chelseagreen.com/product/thinking-in-systems/). Chelsea Green, 2008.
+- Will Larson — [*Staff Engineer: Leadership Beyond the Management Track*](https://staffeng.com/book/). 2021 — largely free online.
