@@ -3,6 +3,6 @@ tag_line: "the road to platform architecture"
 description: "A book on modern software architecture: trade-offs, distributed systems, events, APIs, data, security, operations, AI systems — converging on platform architecture."
 theme: jekyll-theme-cayman
 # GA4 measurement ID (G-XXXXXXXXXX); empty disables analytics entirely
-google_analytics: ""
+google_analytics: "G-N146BPW9JR"
 # Firebase Realtime Database URL for the live reader counter; empty hides the badge
 presence_database_url: ""
