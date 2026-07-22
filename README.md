@@ -140,7 +140,7 @@ flowchart LR
 
 #### The architect, then and now
 
-One more recalibration before we begin working. The architect of the old caricature sat above the team, produced documents, and departed before the consequences arrived. The modern architect is embedded: close enough to the code to feel the consequences of their decisions, senior enough to own trade-offs that span teams. And increasingly, the modern architect thinks in *platforms* — systems whose users are other engineering teams. That idea is the destination of this entire book; keep it in peripheral vision throughout.
+The architect of the old caricature sat above the team, produced documents, and departed before the consequences arrived. The modern architect is embedded — close enough to the code to feel their decisions, senior enough to own trade-offs that span teams — and increasingly thinks in *platforms*: systems whose users are other engineering teams. That idea is this book's destination; keep it in peripheral vision.
 
 **Recap.** Architecture = characteristics + decisions + components + style. Architecture and design differ by degree (strategy, reversibility, significance of trade-offs), not kind. Everything is a trade-off; the *why* outlives the *how*.
 
@@ -291,7 +291,7 @@ stateDiagram-v2
 
 *Figure 1.4 — An ADR's life. Even rejected records earn their keep: "we considered sharding and declined, here's why" saves the next person a week.*
 
-One audience note, in the spirit of the architect elevator: the same decision reads differently on different floors. Engineers get the ADR; executives get one sentence of outcome and risk ("fans will queue briefly so the site cannot crash during our biggest sales moments"). Writing both versions is not spin — it is translation, and it is the architect's job.
+And the same decision reads differently on different floors: engineers get the ADR; executives get one sentence of outcome and risk ("fans will queue briefly so the site cannot crash during our biggest sales moments"). Writing both is not spin; it is translation, and it is the architect's job.
 
 **Recap.** C4 gives four zoom levels; power comes from what each omits. Diagrams live in the repo as code, titled with questions, arrows labeled. ADRs preserve the why, admit their losses, and are superseded rather than rewritten.
 
@@ -768,6 +768,19 @@ In one process, "before" and "after" are facts. Across machines they are opinion
 
 The last physics lesson is statistical. Users do not experience your average latency; they experience the tail — and tails compound viciously: a page fanning out to 10 services, each with a modest 1-in-100 chance of a 2-second stall, stalls for roughly one page-load in ten. At Encore's on-sale rates, "p99 = 2s" means thousands of fans in molasses at the worst possible minute. Architects budget latency at p99, and treat every fan-out as tail multiplication.
 
+Budgets need prices. Commit these orders of magnitude to memory — they cost every arrow you will ever draw:
+
+| Operation (2026) | Order of magnitude |
+|---|---|
+| Function call, same process | ~10 ns |
+| Local SSD read | ~100 µs |
+| Round trip, same availability zone | 0.5–1 ms |
+| Round trip, cross-region | 30–100 ms |
+| Object-store read (first byte) | 20–100 ms |
+| LLM inference — first token / each token | 200–2,000 ms / 10–50 ms |
+
+A seat-map render is allowed a few same-AZ round trips; it is not allowed a cross-region one, and it is certainly not allowed to wait on a model. The table is why.
+
 **Recap.** The network lies eight ways; timeouts, retries, and bandwidth discipline are the tax. Order is designed, not assumed. Everything retryable must be idempotent. Latency lives in the tail, and fan-out multiplies it.
 
 **Exercise 4.1.** Find one non-idempotent network operation in a system you know (payment, email, counter). Describe the double-fire scenario and the smallest fix.
@@ -810,6 +823,8 @@ CAP, correctly read, says only this: when a partition happens (and it will), eac
 
 Underneath the strong end sits consensus (Raft and kin): machines voting on one truth, majorities required. Architect-level takeaways only: odd cluster sizes, a leader's failover pause is your write downtime, and quorums across regions pay intercontinental round-trips *per write* — which is why "global strongly-consistent and fast" appears only in marketing.
 
+One further caveat earns its place: leadership itself expires. A leader that stalls — GC pause, VM migration, network blip — can keep *believing* it leads while a successor is elected, and a stale leader that still writes corrupts data politely. The defenses are **leases** (leadership with an expiry that must be re-earned) and **fencing tokens** (every write carries the leader's term; storage rejects any term older than the newest it has seen). Encore's seat shards write with fenced terms, so a zombie leader's late writes bounce harmlessly. No protocol internals required — just the architect's question: *what stops yesterday's leader from writing today?*
+
 **Recap.** Replicate for reads and survival; partition for writes; choose keys for spread and single-shard flows. Consistency is a per-invariant purchase — pin your invariants to levels before choosing storage.
 
 **Exercise 4.2.** List four data items in a system you know. Assign each the weakest consistency level the business genuinely tolerates — then name which your current database actually delivers.
@@ -837,6 +852,10 @@ flowchart LR
 *Figure 4.3 — The workhorse topology. Its two load-bearing ideas are highlighted: statelessness at the balancer (any instance can serve anyone) and the queue (turning spikes into schedules).*
 
 **Statelessness** is what makes the left half elastic: session state lives in the cache or a token, never in instance memory, so scaling is "add instances" and failure is "who cares." **Caching** buys read scale at a known price — staleness and invalidation. Cache-aside with TTLs covers most needs; the discipline is declaring *per item* how stale is acceptable (catalog: minutes; seat availability: never — cache the map's geometry, never its truth). **The queue** is the deepest idea on the diagram: a synchronous call demands the callee be alive *now*; a queued message asks only that it be alive *eventually*. Ticket-issuance behind a queue turns Encore's spike into a backlog that drains in minutes — invisible, because fans got "purchase confirmed" from the only part that had to be synchronous.
+
+Here is the arithmetic the kata will demand, worked once. Encore's worst on-sale: the Gate admits 2,000 fans/sec; each admitted fan drives ~3 seat-map reads and ~1 reservation attempt — 6,000 reads/sec and 2,000 serialized writes/sec against Seat Inventory. A partition sustains ~10,000 reads but only ~1,500 ordered reservations, so *writes* size the system: two shards minimum, four for headroom, keyed by `event_id` (Section 4.2) so each on-sale stays on one ordered path. Three lines of multiplication, and the design review moves from adjectives to numbers.
+
+> **Queueing intuition.** Little's law — items in system = arrival rate × time in system — has one corollary every architect needs: response time explodes as utilization nears 100%. At 50% load, queues are short; at 80% they lengthen; past ~85% they grow without bound. That knee is why Section 4.4's load shedding is doctrine, not cowardice: refusing work above the knee is the only way to keep serving the work below it.
 
 One naming ritual completes the vocabulary: **scatter/gather** (fan out, assemble answers — ruled by the slowest shard, Section 4.1's tail math), and the Kubernetes-native trio — **sidecar** (per-instance helper for TLS/telemetry), **ambassador** (local proxy for remote things), **adapter** (uniform faces on diverse services). You will meet them wearing a "service mesh" badge in Chapter 5.
 
@@ -924,7 +943,7 @@ You hold the physics: lies of the network, the price list of consistency, the re
 
 Encore has grown. Three years after Chapter 1, it is 70 engineers in nine teams, and the modular monolith that served nine people beautifully has become a coordination machine: deploy trains, freeze windows, teams waiting on teams. This — not request volume, not résumé fashion — is the problem microservices exist to solve: letting many teams change one product *without asking each other's permission*.
 
-This chapter is the honest, end-to-end treatment: how to cut services so independence is real, how to run workflows when no transaction spans them, how to build, test, deploy, and watch a fleet — and the organizational contract without which all of it curdles. The first law rules throughout: every microservices benefit is purchased with operational complexity, and this chapter is about making sure you receive what you pay for. Many teams pay full price for the distributed monolith — services coupled so tightly they deploy in lockstep — which is every cost and no benefit; this chapter is also about not being them.
+This chapter is the honest, end-to-end treatment: how to cut services so independence is real, how to run workflows when no transaction spans them, how to build, test, deploy, and watch a fleet — and the organizational contract without which all of it curdles. Every benefit here is purchased with operational complexity (the first law, at fleet prices), and many teams pay full price for the distributed monolith — services so coupled they deploy in lockstep: every cost, no benefit. This chapter is about receiving what you pay for.
 
 ### 5.1 Modeling and Communication
 
@@ -932,7 +951,7 @@ This chapter is the honest, end-to-end treatment: how to cut services so indepen
 
 A microservice is an independently deployable unit of business capability. Every word is load-bearing, but *independently* most of all — and independence is decided at modeling time, not deployment time. Services cut along Chapter 3's bounded contexts can change alone because the business seams they follow are real. Services cut by entity ("User service," "Ticket service" — Chapter 1's entity trap at fleet scale) or by layer put every business change on a tour through three repos and two teams' sprint plannings.
 
-Encore's cut therefore reads like its context map: On-Sale Admission, Seat Inventory & Ticketing, Catalog, Orders & Payments, Support, Notifications, plus Bot Screening. Seven services, nine teams — some teams own two small ones, none share one. **Information hiding** completes the modeling rule: a service's database is private the way a class's fields are private; the moment two services share tables, they deploy together forever.
+Encore's cut therefore reads like its context map: On-Sale Admission, Seat Inventory & Ticketing, Catalog, Orders & Payments, Support, Notifications, plus Bot Screening. (Chapter 1's eight components have now been remapped twice — into Chapter 3's bounded contexts, and here into services. The renames are the point, not an accident: boundaries got truer as the business taught us its seams.) Seven services, nine teams — some teams own two small ones, none share one. **Information hiding** completes the modeling rule: a service's database is private the way a class's fields are private; the moment two services share tables, they deploy together forever.
 
 #### The communication decision
 
@@ -971,6 +990,8 @@ sequenceDiagram
 </pre>
 
 *Figure 5.2 — An orchestrated saga compensating a declined card. Note what compensation is: not "undo" (the decline already happened) but a forward action restoring business sense. Sagas are business processes wearing engineering clothes — which is why the compensations must be designed with the business, not invented in code review.*
+
+Sagas also leak. Between local commits there is no isolation — the world sees intermediate state: the fan whose card was declined watches seat 14B sit "held" by nobody until the compensation lands. The countermeasures are design moves, not settings: a **semantic lock** (an explicit pending status downstream readers must honor — the map shows "being purchased," honestly), **commutative updates** (steps safe in any order, so interleaving cannot corrupt), and **re-read-and-verify** (the final step re-checks its assumptions, treating the saga's earlier reads as stale by default). Choose per step; the seat map uses all three.
 
 Orchestration (an owner drives the steps — visible, debuggable, one accountable place) versus choreography (each service reacts to the previous event — decoupled, no bottleneck, but the workflow exists only as folklore): for money-touching flows with deadlines and dunning, Encore orchestrates; for propagation of facts, it choreographs. Chapter 6 gives both their full machinery.
 
@@ -1101,6 +1122,8 @@ Add the producer's golden rule — events describe *the domain*, never the produ
 A queue forgets a message once consumed. A **log** (the Kafka-class abstraction) remembers: an append-only, ordered, replayable record where consumers hold cursors. This single upgrade — from postal service to ledger — changes what events are *for*: a new consumer can arrive years later and replay history; analytics can reprocess with better logic; the stream stops being plumbing and becomes a record.
 
 Push the idea to its limit and you reach **event sourcing**: the events *are* the state. Encore's Seat Inventory stops storing "14B: sold" and stores the ledger — `Reserved(14B)`, `Expired(14B)`, `Sold(14B)` — deriving current truth by replay (plus snapshots for speed). For an auditable, dispute-heavy domain like ticket sales, the ledger answers questions a state table cannot: *when* did it sell, after how many failed holds, in what order during the rush? The price is real: append-only thinking, upcasting old events as schemas evolve, and answering "current state" queries — which brings its natural partner.
+
+> **The right to be forgotten vs. the ledger.** Privacy law meets an append-only log head-on: the fan demands erasure (GDPR-style); the ledger's whole value is never forgetting. Three design moves resolve the collision. **Crypto-shredding** — encrypt each person's fields with a per-subject key; erasure is deleting the key, leaving tombstoned ciphertext in an intact log. **PII-out-of-payload** — events carry stable pseudonymous IDs while personal data lives in one mutable, erasable store: the ledger records that `fan-8812` bought seat 14B forever; who `fan-8812` *is* remains deletable. **Retention windows** for streams that never needed forever. Encore combines the first two: the audit ledger survives disputes, and the person can still vanish. The trade-off in ink: key management becomes critical infrastructure, and a lost key store is an accidental mass erasure.
 
 #### CQRS: two models, one truth
 
@@ -1396,6 +1419,8 @@ Every page answers one question: is HTML assembled on the client, on a server, o
 
 Run Encore through it. The **event catalog** — read by millions, changed weekly — is ISR: static speed, minutes of staleness the business already accepted in Chapter 4's cache table. The **seat map** during an on-sale — personal, live, interactive — is CSR inside an SSR shell, fed by real-time updates (Section 8.4). **Checkout** — personalized, SEO-irrelevant, correctness-critical — is SSR, minimal JavaScript, no cleverness near money. Three page classes, three rows, one product.
 
+Underneath every row sits the CDN, which deserves a paragraph rather than a footnote. Static acceleration is nearly free performance: the ISR'd catalog and every bundle live at the edge, so a global tour announcement is served meters from the fan, not continents. Dynamic acceleration — running rendering or personalization itself at the edge — earns its keep only when the data it needs is *also* edge-readable; an edge function that phones home per request has merely moved the latency, with a markup. Encore's rule: cache at the edge aggressively, compute at the edge sparingly, and keep the seat map's truth at home.
+
 #### Performance is a characteristic with a name
 
 Core Web Vitals (loading, interactivity, visual stability) are Chapter 1 characteristics wearing Google's naming: measurable, business-correlated (conversion drops per 100 ms are the most replicated result in web commerce), and budgetable. The discipline is **performance budgets as fitness functions**: the CI fails when the checkout bundle exceeds 150 KB or LCP regresses past 2 s on a mid-tier phone profile — because entropy always wins against intentions, and never against a red build.
@@ -1408,7 +1433,7 @@ Core Web Vitals (loading, interactivity, visual stability) are Chapter 1 charact
 
 #### Team-scale, not component-scale
 
-Frontend codebases fail at the same scale backends do: the moment several teams share one. The structural toolkit mirrors Chapter 2's, one level down. The **design system** — tokens, components, patterns with an owner and a versioning policy — is the frontend's shared kernel: the one dependency every team accepts in exchange for coherence (and, like every shared kernel from Chapter 3, it must stay *thin*; a design system that absorbs business components becomes a coordination chokepoint with a style guide). **Module boundaries** inside the app follow bounded contexts, not technical layers — `catalog/`, `checkout/`, `organizer/`, each owning its routes, state, and API calls, with the same cycle-detection fitness functions the Chapter 2 monolith ran. The monorepo makes boundaries cheap to enforce and refactors atomic; its price is build tooling that someone must own.
+Frontend codebases fail at the same scale backends do: the moment several teams share one. The structural toolkit mirrors Chapter 2's, one level down. The **design system** — tokens, components, patterns with an owner and a versioning policy — is the frontend's shared kernel: the one dependency every team accepts in exchange for coherence (kept *thin*, per Chapter 3's shared-kernel rule — absorb business components and it becomes a coordination chokepoint). **Module boundaries** inside the app follow bounded contexts, not technical layers — `catalog/`, `checkout/`, `organizer/` — each owning its routes, state, and API calls, enforced by the cycle-detection fitness functions the Chapter 2 monolith ran; a monorepo makes enforcement cheap, at the price of build tooling someone must own.
 
 #### State: the frontend's hardest problem, demystified
 
@@ -1434,7 +1459,7 @@ Data fetching completes the module: request **waterfalls** (component renders �
 
 Micro-frontends promise team-independent frontend deployment — Chapter 5's argument, one layer up. The honest prerequisite is also the same: a *team-coordination problem, measured in waiting*. One team? The pattern is pure cost. Encore's nine teams with two frontend-heavy ones? A modular monolith frontend (Section 8.2 boundaries, one deploy) serves fine, with one exception worth its price: the **organizer portal** — different users, different release cadence, different risk tolerance than the fan storefront — ships as a separate application behind the same design system. That is micro-frontends at its most defensible: split along *experience* seams, not component seams.
 
-For organizations that do need runtime composition, the menu with prices: **build-time packages** (simple, but re-couples deploys — a library, not a micro-frontend), **runtime module federation** (true independent deploys; shared-dependency version discipline required), **iframes** (bulletproof isolation, miserable UX seams), **edge-side composition** (assemble at the CDN; strong for content, weak for rich interaction). Every runtime option pays three taxes the monolith frontend never sees: payload duplication (N teams' frameworks unless federated carefully), UX consistency drift (the design system becomes load-bearing), and a *shell* — the router/auth/composition layer that is now a product needing an owner (Chapter 14 will recognize it as platform).
+For organizations that do need runtime composition, the menu with prices: **build-time packages** (a library wearing the name — re-couples deploys), **runtime module federation** (true independence; version discipline required), **iframes** (bulletproof isolation, miserable seams), **edge-side composition** (strong for content, weak for rich interaction). Every runtime option pays three taxes the monolith frontend never sees: payload duplication, UX consistency drift, and a *shell* — the router/auth/composition layer, now a product needing an owner (Chapter 14 will name it: platform).
 
 > **The distributed monolith, browser edition.** If your micro-frontends must release together because they share state shape, route contracts, or a redux store — you have the deployment independence of a monolith plus the payload of a federation. The Chapter 5 test applies verbatim: can this piece ship alone, unannounced?
 
@@ -1463,7 +1488,7 @@ flowchart LR
 
 GraphQL earns its Chapter 7 rain check here: when many screens need flexible slices of many services, a federated graph *is* a BFF strategy — typed, client-driven, cache-normalized — at the price of per-field authorization and an owned graph. Encore's two experiences don't justify it; forty screens across six teams would.
 
-**Real-time and the optimistic contract.** The seat map wants server push: SSE for one-way streams (seat availability — Encore's choice: HTTP-native, proxy-friendly, auto-reconnecting), WebSockets when the client talks back. Behind both stands Chapter 6's event backbone — the browser is simply the last subscriber. And because Chapter 4's physics reaches fingertips: **optimistic UI** applies local effect immediately, reconciles on the server's answer, and must *design the apology* — the fan who tapped a seat that was gone gets an instant, graceful "taken — here are three nearby," not a spinner and a shrug.
+**Real-time and the optimistic contract.** The seat map wants server push: SSE for one-way streams (seat availability — Encore's choice: HTTP-native, proxy-friendly, auto-reconnecting), WebSockets when the client talks back. Behind both stands Chapter 6's event backbone — the browser is simply the last subscriber. One honesty note: every open connection is *state*, so the socket-holding tier is not Section 4.3's stateless fleet — keep it thin, separate, and reconnect-tolerant, and the stateless rules still govern everything behind it. And because Chapter 4's physics reaches fingertips: **optimistic UI** applies local effect immediately, reconciles on the server's answer, and must *design the apology* — the fan who tapped a seat that was gone gets an instant, graceful "taken — here are three nearby," not a spinner and a shrug.
 
 **Recap.** BFFs are per-experience, frontend-owned, waterfall-killing aggregators; GraphQL is a BFF strategy for many-screen scale. Real-time UIs are event subscribers; optimistic UI is eventual consistency with manners.
 
@@ -1532,6 +1557,18 @@ This chapter rebuilds data architecture for the decomposed world, in two movemen
 
 The baseline rule is Chapter 3's aggregate discipline at fleet scale: **every table has exactly one owning service; only the owner writes.** Reads are negotiable (Section 9.2); writes never are — a table with two writers is two services sharing one undeclared contract, deployable only together. Real domains produce three ownership shapes: **single** (Catalog owns events — trivial, and most of your data), **common** (everyone "needs" audit records — solve with one owning service and an API, or events into an owned store; never a shared table), and **joint** — two services legitimately claiming one concept, the genuinely hard case. Encore's: who owns a *sale*? Orders (the workflow) and Finance (the ledger) both have claims. The senior resolution is usually a **split by meaning**: the *sale-as-process* belongs to Orders; the *sale-as-accounting-fact* belongs to Finance, populated by `SaleCompleted` events. One word, two models, two owners — Chapter 3's bounded-context lesson, now applied to storage.
 
+Ownership settled, each owner still chooses its store — an access-pattern decision, not a fashion one:
+
+| Store family | Buy it for | It punishes |
+|---|---|---|
+| Relational | invariants, joins, transactions — the default until proven otherwise | massive write fan-out |
+| Document | read-mostly aggregates fetched whole | cross-document invariants, ad-hoc joins |
+| Key-value | extreme simple-op throughput (sessions, holds) | any query beyond the key |
+| Column-family | append-heavy volume with known query paths | flexible queries, transactions |
+| Graph | relationship-first questions (fraud rings) | everything else |
+
+Encore runs relational for Orders and the ledger (the invariants live there), key-value for the Gate's holds, and resists a fifth engine until a real query demands it. The senior failure is rarely the wrong row; it is five different rows for one team's whims.
+
 #### What replaced the transaction
 
 For workflows spanning owners, Chapter 5's sagas carry the how; this module adds the *consistency patterns* underneath, in rising order of decoupling: **background sync** (batch reconciliation — Encore's nightly finance close; embarrassingly effective), **orchestrated** (the saga's explicit process), and **event-based** (owners react to facts — the default for propagation). And one pattern to refuse: two-phase commit across services. 2PC buys atomicity by making every participant hostage to the slowest and the deadest; in a world of independent deploys and Chapter 4 physics, it converts partial failure into total unavailability — the trade running exactly backward.
@@ -1558,6 +1595,8 @@ The fan's account page needs orders + tickets + refund status: three owners, one
 *Figure 9.1 — The access menu. Composition for screens, replicated read models for query-heavy needs, CDC for eventifying the reluctant. The pattern that is missing is the point: reaching into another service's tables — reads today become joins tomorrow become "why can't they change their schema" forever.*
 
 The load-bearing idea is the middle rows: **the query moves to a copy shaped for it, and the copy is fed by contracts** (events, CDC-with-published-schema), never by trespass. Encore's account page: a replicated read model in the Fan-BFF's keeping, subscribed to three owners' streams — page loads in one query, owners evolve freely, staleness declared at "seconds," signed off by product.
+
+One unglamorous discipline completes the module, because every owner eventually changes its own schema *under traffic*. Zero-downtime migration is expand–contract wearing database clothes, four phases, each reversible until the last: **expand** (add the new shape; old code ignores it), **dual-write** (new code writes both; old readers undisturbed), **backfill** (migrate history in throttled, verified batches), **contract** (switch reads, watch a full business cycle, then drop the old shape — the only irreversible rung, climbed last). Encore's `price` → `base_price` + `fees` split (Chapter 7's regulatory change) ran this ladder over three weeks: boring, observable, reversible at every step but the final one. The boringness is the achievement.
 
 **Recap.** Cross-owner questions get copies fed by contracts: composition for shallow joins, projections for deep ones, CDC for legacy. Direct foreign reads are the coupling you'll regret at the next schema change.
 
