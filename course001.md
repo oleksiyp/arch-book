@@ -4,7 +4,7 @@
 
 ## Welcome
 
-Every discipline has a moment when it stops being a bag of techniques and becomes a way of seeing. For software architecture, that moment comes when you stop asking *"which technology should I use?"* and start asking *"what am I trading away?"* This course is about reaching that moment deliberately, rather than after your third production incident.
+Every discipline has a moment when it stops being a bag of techniques and becomes a way of seeing. For software architecture, that moment comes when you stop asking *"which technology should I use?"* and start asking *"what am I trading away?"* This course is about reaching that moment by design rather than by scar tissue.
 
 We will follow one company from its first architectural sketch to its first defensible design: **Encore**, a startup selling tickets to live concerts. Encore is small enough to hold in your head and treacherous enough to be interesting — when a major artist announces a tour, Encore's traffic multiplies five-hundred-fold in minutes; every seat must be sold exactly once; and the bots arrive before the fans do. By the end of the course you will have derived Encore's driving characteristics, drawn its first diagrams, and written the decision records that a real team could pick up and build from. Every later course in this specialization repeats this loop at greater depth; here, we learn the loop itself.
 
