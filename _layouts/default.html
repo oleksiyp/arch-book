@@ -36,8 +36,7 @@
     {{ content }}
 </section>
 
-<a href="#contents" class="toc-fab" id="toc-fab" aria-label="Return to table of contents">&#9776; Contents</a>
-<div class="presence-badge" id="presence-badge" hidden><span class="presence-dot"></span><span id="presence-count"></span>&nbsp;reading now</div>
+<a href="#contents" class="toc-fab" id="toc-fab" aria-label="Return to table of contents">&#9776; Contents<span id="presence-part" hidden> &middot; <span class="presence-dot"></span> <span id="presence-count"></span> reading</span></a>
 
 <footer class="book-footer">
     <div class="footer-content">
@@ -63,6 +62,9 @@
             <h4 class="footer-title">Support</h4>
             <nav class="footer-nav">
                 <a href="mailto:oleksiy.pylypenko@gmail.com" class="footer-link">Send Feedback</a>
+                {% if site.google_analytics != "" %}
+                <a href="#" class="footer-link" id="cookie-settings">Cookie Settings</a>
+                {% endif %}
                 <a class="buy-button" href="https://buymeacoffee.com/oleksiyp.dev" target="_blank" rel="noopener noreferrer">
                     <img src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg" alt="" width="20" height="20">
                     <span>Buy me a coffee</span>
@@ -185,6 +187,12 @@
                 deny: 'Reject'
             },
             onStatusChange: function () { location.reload(); }
+        }, function (popup) {
+            var link = document.getElementById('cookie-settings');
+            if (link) link.addEventListener('click', function (e) {
+                e.preventDefault();
+                popup.revokeChoice();
+            });
         });
     });
 })();
@@ -207,14 +215,14 @@
     const heartbeat = setInterval(beat, 60000);
     window.addEventListener('pagehide', () => { clearInterval(heartbeat); remove(me); });
 
-    const badge = document.getElementById('presence-badge');
+    const part = document.getElementById('presence-part');
     const label = document.getElementById('presence-count');
     onValue(all, (snap) => {
         // count only peers with a heartbeat in the last 5 minutes (survives stale entries)
         const cutoff = Date.now() - 5 * 60 * 1000;
         let n = 0;
         snap.forEach((child) => { if ((child.val() || 0) > cutoff) n++; });
-        if (n > 0) { label.textContent = n; badge.hidden = false; }
+        if (n > 0) { label.textContent = n; part.hidden = false; }
     });
 </script>
 {% endif %}

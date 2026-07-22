@@ -77,29 +77,13 @@
     }
 }
 
-/* Live reader counter */
-.presence-badge[hidden] {
+/* Live reader counter (inside the floating pill) */
+#presence-part[hidden] {
     display: none;
 }
 
-.presence-badge {
-    position: fixed;
-    right: 1rem;
-    bottom: 4rem;
-    z-index: 50;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.45rem;
-    background: #14172e;
-    color: #cbd5e1;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 2rem;
-    padding: 0.4rem 0.85rem;
-    font-size: 0.78rem;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
-}
-
 .presence-dot {
+    display: inline-block;
     width: 0.5rem;
     height: 0.5rem;
     border-radius: 50%;
