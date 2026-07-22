@@ -2,6 +2,8 @@
 
 *The road to platform architecture.*
 
+<small>© 2026 Oleksiy Pylypenko · Licensed under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) — share and adapt freely, non-commercially, with attribution. Source on [GitHub](https://github.com/oleksiyp/arch-book).</small>
+
 ## Preface
 
 Code has never been cheaper to produce, and coherence has never been more expensive. The tools of our era generate implementations faster than any of us can type — and in doing so they quietly raise the price of the one thing they cannot generate: judgment. Which trade-off, for which quality, at what cost, written down where the next person can find it. Systems fail at the seams, and seams are drawn by judgment. That judgment — the working knowledge of a senior architect, from first sketch to company-wide platform — is what this book sets out to teach.

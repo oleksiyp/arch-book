@@ -5,3 +5,4 @@
 - [Full book, single page](https://oleksiyp.github.io/arch-book/)
 - [Full book as raw markdown](https://oleksiyp.github.io/arch-book/llms-full.txt)
 - Per-chapter pages: https://oleksiyp.github.io/arch-book/ch/1/ through /ch/14/
+- License: [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) — free to share and adapt non-commercially, with attribution
