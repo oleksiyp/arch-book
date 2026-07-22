@@ -399,8 +399,8 @@ Styles look like a zoo until you see the two axes that generate them. First: is 
 quadrantChart
     x-axis Technical partitioning --> Domain partitioning
     y-axis Monolithic deployment --> Distributed deployment
-    quadrant-1 Distributed and domain-partitioned
-    quadrant-2 Distributed but technically partitioned
+    quadrant-1 Domain + distributed
+    quadrant-2 Technical + distributed
     quadrant-3 Classic monoliths
     quadrant-4 Domain-partitioned monoliths
     Layered: [0.2, 0.25]
@@ -410,7 +410,7 @@ quadrantChart
     Service-based: [0.7, 0.65]
     Microservices: [0.85, 0.9]
     Event-driven: [0.6, 0.85]
-    Space-based: [0.4, 0.8]
+    Space-based: [0.55, 0.78]
 </pre>
 
 *Figure 2.1 — The style catalog on its two generating axes. Notice the crowded and lonely corners: distributed-but-technically-partitioned (top left) is nearly empty because it is nearly always a mistake — services sliced by layer must all change together, giving you distribution's costs with none of its benefits.*
