@@ -1,4 +1,4 @@
-# Software Architecture in <span class="slashed">the</span> AI & Cloud Era
+# Software Architecture in the AI & Cloud Era
 
 *The road to platform architecture.*
 
@@ -130,7 +130,7 @@ flowchart LR
     encore -- issues tickets --> wallet
     classDef person fill:#1b1f3b,stroke:#1b1f3b,color:#fff
     classDef system fill:#f38b1c,stroke:#f38b1c,color:#fff
-    classDef external fill:#e8e8ee,stroke:#9aa,color:#333
+    classDef external fill:#eaf2f8,stroke:#7a93a8,color:#1b1f3b
     class fan,org person
     class encore system
     class psp,wallet external
@@ -603,7 +603,7 @@ flowchart TB
     pay -- "anticorruption layer<br/><small>(PSP's model kept outside)</small>" --> inv
     classDef core fill:#f38b1c,stroke:#f38b1c,color:#fff
     classDef supp fill:#1b1f3b,stroke:#1b1f3b,color:#fff
-    classDef gen fill:#e8e8ee,stroke:#99a,color:#333
+    classDef gen fill:#eaf2f8,stroke:#7a93a8,color:#1b1f3b
     class onsale,inv core
     class cat,sup supp
     class pay gen
@@ -677,7 +677,7 @@ flowchart LR
     proxy -- "everything else" --> old["Legacy monolith"]
     new -. "reads/writes via ACL" .-> old
     classDef new fill:#f38b1c,stroke:#f38b1c,color:#fff
-    classDef old fill:#e8e8ee,stroke:#99a,color:#333
+    classDef old fill:#eaf2f8,stroke:#7a93a8,color:#1b1f3b
     class new new
     class old old
 </pre>
@@ -830,6 +830,8 @@ flowchart LR
     q --> w1["Workers (scale independently)"]
     classDef hot fill:#f38b1c,stroke:#f38b1c,color:#fff
     class lb,q hot
+    classDef store fill:#d9f6ff,stroke:#0b7ecb,color:#1b1f3b
+    class cache,db store
 </pre>
 
 *Figure 4.3 — The workhorse topology. Its two load-bearing ideas are highlighted: statelessness at the balancer (any instance can serve anyone) and the queue (turning spikes into schedules).*
@@ -1579,19 +1581,20 @@ A data product, concretely, is not a table with good intentions:
 
 <pre class="mermaid">
 flowchart LR
+    src[["Operational events<br/>(Chapter 6 backbone)"]] --> code
     subgraph dp["Data product: ticket-sales (owner: Ticketing team)"]
         direction TB
-        code["Transformation code"] --> ports
-        subgraph ports["Output ports"]
-            s["stream: sales events"]
-            t["table: daily aggregates"]
-        end
+        code["Transformation code"] --> s[("port — stream:<br/>sales events")] & t[("port — table:<br/>daily aggregates")]
         meta["Contract · SLOs · lineage · docs"]
     end
-    src[["Operational events<br/>(Chapter 6 backbone)"]] --> code
-    ports --> bi([Dashboards]) & ds([Data science]) & fin([Finance close])
+    s --> bi([Dashboards]) & ds([Data science])
+    t --> fin([Finance close])
     classDef hot fill:#f38b1c,stroke:#f38b1c,color:#fff
-    class dp hot
+    class code hot
+    classDef store fill:#d9f6ff,stroke:#0b7ecb,color:#1b1f3b
+    class s,t store
+    classDef meta fill:#f6f8fb,stroke:#c6cdd6,stroke-dasharray:4 3,color:#1b1f3b
+    class meta meta
 </pre>
 
 *Figure 9.2 — Anatomy of a data product: code, ports, and contract travel together under one owner. Consumers subscribe to ports; nobody subscribes to somebody's tables. The unit of analytical architecture stops being "the warehouse" and becomes this.*
@@ -1699,7 +1702,7 @@ flowchart LR
     bot["Bot Screening"] -- "policy: may query risk only" --> inv
     ana["Analytics"] -. "policy: no path to Inventory<br/><small>(reads events instead)</small>" .-> inv
     classDef ok fill:#f38b1c,stroke:#f38b1c,color:#fff
-    classDef deny fill:#e8e8ee,stroke:#c66,color:#933
+    classDef deny fill:#fdeef2,stroke:#c66,color:#933
     class gw,ord,inv,bot ok
     class ana deny
 </pre>
@@ -2066,8 +2069,8 @@ flowchart TB
         t1["Venue-chain tenant"] --- t2["Festival tenant"] --- t3["500 self-service venues"]
     end
     cp -- "provisions · configures · observes" --> ap
-    classDef hot fill:#f38b1c,stroke:#f38b1c,color:#fff
-    class cp hot
+    classDef plane fill:#fff4e6,stroke:#f38b1c,stroke-width:2px,color:#1b1f3b
+    class cp plane
 </pre>
 
 *Figure 13.1 — The two planes. Everything the next four modules build is one of these boxes. Companies that skip the control plane still have one — made of runbooks, spreadsheets, and a heroic ops engineer named something like Dana.*

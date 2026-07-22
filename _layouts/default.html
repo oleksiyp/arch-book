@@ -23,7 +23,7 @@
 </head>
 <body>
 <section class="page-header">
-    <h1 class="project-name"><a href="{{ '/' | relative_url }}">{{ site.title | replace: ' the ', ' <span class="slashed">the</span> ' }}</a></h1>
+    <h1 class="project-name"><a href="{{ '/' | relative_url }}">{{ site.title }}</a></h1>
     <h2 class="project-tagline">{{ site.tag_line | default: site.description }}</h2>
 </section>
 
@@ -74,7 +74,22 @@
 
 <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
-    mermaid.initialize({ startOnLoad: false, theme: 'neutral' });
+    mermaid.initialize({
+        startOnLoad: false,
+        theme: 'base',
+        themeVariables: {
+            primaryColor: '#fff4e6',
+            primaryBorderColor: '#d97706',
+            primaryTextColor: '#1b1f3b',
+            secondaryColor: '#d9f6ff',
+            tertiaryColor: '#f8f9fb',
+            lineColor: '#5b6472',
+            clusterBkg: '#f6f8fb',
+            clusterBorder: '#c6cdd6',
+            edgeLabelBackground: '#ffffff',
+            fontFamily: '"Open Sans", "Helvetica Neue", sans-serif'
+        }
+    });
     await mermaid.run();
     window.dispatchEvent(new Event('mermaid-done'));
 </script>
