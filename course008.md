@@ -143,8 +143,5 @@ The pixels now have an architecture: rendering bought per page, state sorted, se
 
 - James Gough, Daniel Bryant, Matthew Auburn — [*Mastering API Architecture*](https://www.oreilly.com/library/view/mastering-api-architecture/9781492090625/). O'Reilly, 2022.
 - Sam Newman — [*Building Microservices*, 2nd ed.](https://www.oreilly.com/library/view/building-microservices-2nd/9781492034018/) O'Reilly, 2021.
-
-**Further reading:**
-
 - Michael Geers — [*Micro Frontends in Action*](https://www.manning.com/books/micro-frontends-in-action). Manning, 2020.
 - Ilya Grigorik — [*High Performance Browser Networking*](https://hpbn.co/). O'Reilly, 2013 — free online.
