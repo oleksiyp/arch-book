@@ -82,13 +82,10 @@
     display: none;
 }
 
-.presence-dot {
-    display: inline-block;
-    width: 0.5rem;
-    height: 0.5rem;
-    border-radius: 50%;
-    background: #22c55e;
-    box-shadow: 0 0 6px rgba(34, 197, 94, 0.8);
+.presence-icon {
+    fill: #22c55e;
+    vertical-align: -1px;
+    filter: drop-shadow(0 0 3px rgba(34, 197, 94, 0.7));
 }
 
 /* Book footer */

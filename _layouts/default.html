@@ -36,7 +36,7 @@
     {{ content }}
 </section>
 
-<a href="#contents" class="toc-fab" id="toc-fab" aria-label="Return to table of contents">&#9776; Contents<span id="presence-part" hidden> &middot; <span class="presence-dot"></span> <span id="presence-count"></span> reading</span></a>
+<a href="#contents" class="toc-fab" id="toc-fab" aria-label="Return to table of contents">&#9776; Contents<span id="presence-part" hidden title="readers on this page right now"> &middot; <svg class="presence-icon" width="11" height="11" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><path d="M2 14c0-3 2.7-5 6-5s6 2 6 5v1H2v-1z"/></svg> <span id="presence-count"></span></span></a>
 
 <footer class="book-footer">
     <div class="footer-content">
@@ -180,6 +180,7 @@
                 button: { background: '#00c9ff', text: '#14172e' }
             },
             type: 'opt-out',
+            revokable: false,
             content: {
                 message: 'This site uses cookies for anonymous usage statistics.',
                 allow: 'Approve',
