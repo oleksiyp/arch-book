@@ -20,7 +20,7 @@ Some terms used here as common vocabulary have specific coiners: architectural k
 
 ### Authorship & Disclaimer
 
-Written and directed by Oleksiy Pylypenko, with AI assistance (Anthropic's Claude). The author chose the thesis, the structure, the examples, and the trade-offs; edited every chapter; and takes responsibility for every claim — errors included. The content is provided as-is, without warranty of any kind: educational material, not professional advice for any specific system. The license's full disclaimer of warranties applies.
+Written and directed by Oleksiy Pylypenko, with AI assistance (Anthropic's Claude). The judgment in it comes from twenty-plus years of practice: platform engineering inside a large bank, API architecture in fintech, and a decade of maintaining a widely used open-source library. The author chose the thesis, the structure, the examples, and the trade-offs; edited every chapter; and takes responsibility for every claim — errors included. The content is provided as-is, without warranty of any kind: educational material, not professional advice for any specific system. The license's full disclaimer of warranties applies.
 
 ## How to Read This Book
 
@@ -1312,7 +1312,7 @@ Contract-first is the working method regardless of protocol: the OpenAPI (or Asy
 
 #### Breaking changes are a tax on strangers
 
-Chapter 5's expand–contract discipline returns with higher stakes: internal consumers redeploy weekly; the festival app ships through app-store review and may pin your API for a year. In my experience, the year is optimistic. The constitution:
+Chapter 5's expand–contract discipline returns with higher stakes: internal consumers redeploy weekly; the festival app ships through app-store review and may pin your API for a year. In my experience, the year is optimistic. I maintain MockK, an open-source mocking library for Kotlin that a million-odd builds pull every month, and nothing in my career has taught API discipline more brutally: delete one convenience overload and the issue tracker fills with strangers' broken Tuesdays. Every public symbol is a promise. The constitution below is what keeping promises looks like:
 
 - **Additive forever.** New optional fields, new endpoints, new enum values (announced as open sets) — free.
 - **Never repurpose.** Changing a field's meaning is worse than removing it: removal fails loudly, repurposing corrupts quietly.
@@ -1379,6 +1379,8 @@ Encore's API now fronts money and scarce inventory — precisely what OWASP's AP
 ### 7.5 Running an API Program
 
 An API with users is a product with a roadmap, whether staffed as one or not. The program disciplines: **developer experience** as conversion funnel (time-to-first-successful-call under ten minutes: instant sandbox keys, copy-paste quickstarts, docs generated from the OpenAPI contract so they cannot drift); **governance as linting** — style rules (naming, pagination, error shape) enforced by spectral-style checks in CI, so consistency across teams' APIs comes from tooling, not review meetings (Chapter 5's paved road, applied to contracts); and **lifecycle honesty** — every endpoint has an owner, a tier, an SLO, and a deprecation policy from birth. Encore's API portal is, quietly, its first platform product: self-service onboarding, golden-path contracts, guardrails in CI. Chapters 13 and 14 will scale that pattern from one surface to the whole company.
+
+This program model is not theory for me. At a treasury-software company I led exactly this turn, API-first run as an internal startup: I wrote the first guidelines — eighty-nine rules, RFC-style, argued line by line — the linting behind them, and a fair share of the early contracts, then spent as much time pitching as coding. Adoption came the way it always comes, slowly and then culturally: a thousand-plus pull requests and two hundred-odd contracts later, contract-first was simply how the company built software. The lesson I keep from it: an API program is won in review comments and lunch conversations, not in the style guide itself.
 
 **Recap.** DX is measured in minutes-to-first-call; governance ships as lint rules; every endpoint is born with owner, SLO, and an exit policy. The API program is platform thinking in miniature.
 
@@ -1867,7 +1869,7 @@ Security is now a designed property with drawings, policies, and tests. What rem
 
 Every chapter so far has ended where the interesting part begins for someone else: the system, designed, must now run — at 3 a.m., during the on-sale, within a budget someone signs. This chapter is about that someone being you. Operations is not what happens after architecture; it is architecture's feedback loop, the place where trade-offs stop being tables and start being invoices and pages.
 
-Three questions organize the chapter. *Where should each workload run* — the container/serverless decision, made per workload like every other choice in this book? *How does change reach production safely* — infrastructure as code, GitOps, progressive delivery? And *how do we know it's working* — observability grown into SRE practice, with cost as a first-class signal rather than finance's problem. Encore, as ever, supplies the worked examples, including one uncomfortable bill.
+Three questions organize the chapter. *Where should each workload run* — the container/serverless decision, made per workload like every other choice in this book? *How does change reach production safely* — infrastructure as code, GitOps, progressive delivery? And *how do we know it's working* — observability grown into SRE practice, with cost as a first-class signal rather than finance's problem. Encore, as ever, supplies the worked examples, including one uncomfortable bill. I bring scars of my own to this chapter: years as a platform tech lead in a large bank, moving a platform with over a million users toward the cloud. The migrations that worked were never lift-and-shift — the cloud version had to solve problems the on-prem version could not, or it had no reason to exist. That test, *what does the new runtime actually fix?*, is worth more than any capacity spreadsheet.
 
 ### 11.1 Cloud Execution Models
 
@@ -2294,7 +2296,11 @@ Why is platform architecture the *destination*? Because it is architecture appli
 
 The problem statement is arithmetic. A stream-aligned team shipping ticketing features must, without a platform, *also* master: cluster config, pipeline plumbing, observability wiring, secret rotation, schema registries, cost dashboards, threat models, AI gateways. That stack exceeds any team's cognitive budget — so teams either sink into it (velocity dies), skip it (Chapter 10 shudders), or solve it forty divergent ways (both, plus an audit). An **internal developer platform** is the deliberate answer: a curated product that absorbs the undifferentiated stack behind self-service interfaces, so product teams spend their cognition on the business.
 
-The operating model matters more than the software: **platform as a product**. Product teams are *customers* — voluntary users to be won, not conscripts to be mandated. That single stance generates the discipline: talk to users, measure adoption, publish a roadmap, start from what Skelton and Pais call the **thinnest viable platform** (the paved road for the most painful mile — at Encore, "new service to production": template, pipeline, observability, identity, one command) and earn the right to grow. The anti-patterns are all failures of this stance:
+The operating model matters more than the software: **platform as a product**. Product teams are *customers* — voluntary users to be won, not conscripts to be mandated. That single stance generates the discipline: talk to users, measure adoption, publish a roadmap, start from what Skelton and Pais call the **thinnest viable platform** (the paved road for the most painful mile — at Encore, "new service to production": template, pipeline, observability, identity, one command) and earn the right to grow.
+
+The cleanest demonstration of voluntary adoption I own is a small one. At a bank hackathon I built a retrospective tool in a few days; nobody mandated it, and it spread team by team until ten thousand employees had used it — then outlived my tenure by years on a trickle of maintenance. Tools that win users on merit survive their authors. Platforms are the same product discipline at a hundred times the stakes.
+
+The anti-patterns are all failures of this stance:
 
 | Anti-pattern | Mechanism of failure |
 |---|---|
@@ -2374,7 +2380,7 @@ What does not change matters as much: the trade-offs are still yours. No agent o
 
 The platform consumes real budget in service of indirect value, which makes strategy and communication survival skills. Three instruments:
 
-**The map.** Wardley-style situational awareness in one habit: place each capability on an evolution axis — genesis, custom, product, commodity — and let position dictate posture. Commodities (clusters, queues, registries): *buy or adopt*, differentiate never. Encore's genuine customs: the Gate's fairness engineering, ticketing's domain paths. The classic failure is inverted posture — hand-rolling a commodity (artisanal Kubernetes) while buying the differentiator — Chapter 3's investment table, drawn at company scale.
+**The map.** Wardley-style situational awareness in one habit: place each capability on an evolution axis — genesis, custom, product, commodity — and let position dictate posture. Commodities (clusters, queues, registries): *buy or adopt*, differentiate never. Encore's genuine customs: the Gate's fairness engineering, ticketing's domain paths. The classic failure is inverted posture — hand-rolling a commodity (artisanal Kubernetes) while buying the differentiator — Chapter 3's investment table, drawn at company scale. And running the correction is slower than drawing it: I once led the retirement of a home-built API gateway in favor of a market one, and while the map made the call obvious in an afternoon, making it real took a chief product and technology officer's sign-off, four architecture-board sessions, and a year of engineering beside the teams — tens of thousands of lines of integration and Kubernetes-operator code before the old gateway could die. Commodity does not mean effortless; it means the effort buys you out of undifferentiated maintenance forever.
 
 **The money.** The platform's business case is Chapter 11's arithmetic applied to itself: lead-time deltas, incident deltas, unit-cost deltas, onboarding time — measured before and after each path ships. "Developer experience" is the feeling; the *numbers* are what renew funding.
 
