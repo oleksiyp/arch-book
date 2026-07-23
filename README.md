@@ -513,7 +513,7 @@ Style selection is Chapter 1's method at maximum stakes. Line up the drivers: **
 
 Run Encore through them. Encore has nine engineers on one team, so microservices solve a problem it does not have. Its steady traffic is modest, so space-based architecture is a mortgage on a house it doesn't own. But one characteristic outlier glares: the on-sale spike. Sale Gate needs elasticity ★★★★★ while the rest of the system needs ★★.
 
-And here is the insight that makes this module worth its tuition: *a style decision need not be singular.* The unit of style is the deployment quantum, not the company. Encore's defensible answer:
+And here is the insight that makes this section worth its tuition: *a style decision need not be singular.* The unit of style is the **architecture quantum** — a term *Building Evolutionary Architectures* coined and *The Hard Parts* sharpened: the smallest piece of a system that deploys independently and still functions, carrying everything it needs — code, data, and its own set of characteristics — with high cohesion inside and no synchronous dependence outside. The quantum is where characteristics actually live. Asking "how elastic is Encore?" is a malformed question; the honest answer is *"which quantum?"* The catalog's ratings, the drivers above, the whole selection method — all of it applies per quantum, not per company. One system may legitimately contain a modular-monolith quantum and a serverless quantum, each rated on its own card. Encore's defensible answer:
 
 <pre class="mermaid">
 flowchart LR
@@ -572,6 +572,7 @@ You can name the shapes, price them, and choose one per quantum with the charact
 - Neal Ford, Rebecca Parsons, Patrick Kua, Pramod Sadalage — [*Building Evolutionary Architectures*, 2nd ed.](https://www.oreilly.com/library/view/building-evolutionary-architectures/9781492097532/) O'Reilly, 2022.
 - Mark Richards — [*Software Architecture Patterns*, 2nd ed.](https://www.oreilly.com/library/view/software-architecture-patterns/9781098134280/) O'Reilly, 2022.
 - Len Bass, Paul Clements, Rick Kazman — [*Software Architecture in Practice*, 4th ed.](https://www.informit.com/store/software-architecture-in-practice-9780136886099) Addison-Wesley, 2021.
+- Neal Ford, Mark Richards, Pramod Sadalage, Zhamak Dehghani — [*Software Architecture: The Hard Parts*](https://www.oreilly.com/library/view/software-architecture-the/9781492086888/). O'Reilly, 2021.
 - Martin Fowler — [*Patterns of Enterprise Application Architecture*](https://www.informit.com/store/patterns-of-enterprise-application-architecture-9780321127426). Addison-Wesley, 2002.
 
 ---
@@ -630,7 +631,7 @@ flowchart TB
 
 *Figure 3.2 — Encore's context map. The anticorruption layer around Payments is the map's most load-bearing label: the payment provider's model of the world stops at that line and is translated into Encore's own terms, so a PSP migration touches one translator, not every context.*
 
-Three relationships to internalize: **partnership** (two contexts succeed or fail together — expensive, reserve it for core-to-core), **customer–supplier** (downstream's needs discipline upstream's roadmap), and the **anticorruption layer** (a translation shim that keeps someone else's model — a vendor's, a legacy system's — from colonizing yours). The ACL is the single most reusable idea in this module; you will build one every year of your career.
+Three relationships to internalize: **partnership** (two contexts succeed or fail together — expensive, reserve it for core-to-core), **customer–supplier** (downstream's needs discipline upstream's roadmap), and the **anticorruption layer** (a translation shim that keeps someone else's model — a vendor's, a legacy system's — from colonizing yours). The ACL is the single most reusable idea in this section; you will build one every year of your career.
 
 The map itself is discovered, not designed at a desk. The workshop format that works is **EventStorming**: business people and engineers, a long wall, orange stickies for domain events ("SeatReserved," "PaymentFailed," "TicketIssued"), arranged in time order until clusters and language shifts reveal the boundaries. It is cheap, it is fast, and it surfaces in an afternoon what requirement documents hide for months.
 
@@ -1134,7 +1135,7 @@ The most consequential small decision in the style — the taxonomy is Martin Fo
 
 *Figure 6.1 — Three payload philosophies. Default to event-carried state with a curated payload: the fields consumers legitimately need, not the producer's whole table — an event schema is an API, and Chapter 5's expand–contract rules apply verbatim.*
 
-Add the producer's golden rule — events describe *the domain*, never the producer's implementation (`SeatSold`, not `SeatRowUpdated`) — and schema evolution discipline (additive changes; a registry enforcing compatibility in CI), and you have event design as contract design. This is the least glamorous and most valuable module in the chapter.
+Add the producer's golden rule — events describe *the domain*, never the producer's implementation (`SeatSold`, not `SeatRowUpdated`) — and schema evolution discipline (additive changes; a registry enforcing compatibility in CI), and you have event design as contract design. This is the least glamorous and most valuable section in the chapter.
 
 **Recap.** Commands request, events declare; authority moves to consumers. Payload choice is a coupling decision; event-carried state with curated fields is the default. Event schemas are APIs with the same evolution constitution.
 
@@ -1477,7 +1478,7 @@ Most frontend complexity is state handled without a taxonomy. There are only thr
 
 *Figure 8.2 — The state taxonomy. The classic disaster is one global store holding all three: server truth goes stale in it, UI trivia churns it, and every component couples to everything. Most "global state" is server cache in denial — treat it as the caching problem Chapter 4 already taught, staleness policy and all.*
 
-Data fetching completes the module: request **waterfalls** (component renders → fetches → child renders → fetches...) are the frontend's sequential-call latency sin from Chapter 4, and the cures rhyme — declare data needs at the route level, fetch in parallel, prefetch on intent (hover, viewport). The seat map that took four seconds? Three sequential waterfalls and an unbudgeted bundle. Now you know the audit.
+Data fetching completes the section: request **waterfalls** (component renders → fetches → child renders → fetches...) are the frontend's sequential-call latency sin from Chapter 4, and the cures rhyme — declare data needs at the route level, fetch in parallel, prefetch on intent (hover, viewport). The seat map that took four seconds? Three sequential waterfalls and an unbudgeted bundle. Now you know the audit.
 
 **Recap.** Design system as thin shared kernel; module boundaries along contexts with enforced rules; state sorted into three kinds with server-cache treated as caching, not global state. Waterfalls are sequential calls wearing JSX.
 
@@ -1601,9 +1602,9 @@ Encore runs relational for Orders and the ledger (the invariants live there), ke
 
 #### What replaced the transaction
 
-For workflows spanning owners, Chapter 5's sagas carry the how; this module adds the *consistency patterns* underneath, in rising order of decoupling: **background sync** (batch reconciliation — Encore's nightly finance close; embarrassingly effective), **orchestrated** (the saga's explicit process), and **event-based** (owners react to facts — the default for propagation). And one pattern to refuse: two-phase commit across services. 2PC buys atomicity by making every participant hostage to the slowest and the deadest; in a world of independent deploys and Chapter 4 physics, it converts partial failure into total unavailability — the trade running exactly backward.
+For workflows spanning owners, Chapter 5's sagas carry the how; this section adds the *consistency patterns* underneath, in rising order of decoupling: **background sync** (batch reconciliation — Encore's nightly finance close; embarrassingly effective), **orchestrated** (the saga's explicit process), and **event-based** (owners react to facts — the default for propagation). And one pattern to refuse: two-phase commit across services. 2PC buys atomicity by making every participant hostage to the slowest and the deadest; in a world of independent deploys and Chapter 4 physics, it converts partial failure into total unavailability — the trade running exactly backward.
 
-> **Eventual consistency is a business conversation, not an apology.** "The dashboard trails reality by up to a minute" is a *requirement statement* the business can price. Chapter 4 taught the spectrum; this module's job is pinning each cross-owner flow to a rung — with the stakeholder's signature, not the engineer's guess.
+> **Eventual consistency is a business conversation, not an apology.** "The dashboard trails reality by up to a minute" is a *requirement statement* the business can price. Chapter 4 taught the spectrum; this section's job is pinning each cross-owner flow to a rung — with the stakeholder's signature, not the engineer's guess.
 
 **Recap.** Every table has exactly one writer, always; common data gets an owner, and joint data gets split by meaning. Sagas, events, and humble batch replace 2PC, which is refused on principle. Staleness is negotiated with the business, per flow.
 
@@ -1626,7 +1627,7 @@ The fan's account page needs orders + tickets + refund status: three owners, one
 
 The load-bearing idea is the middle rows: **the query moves to a copy shaped for it, and the copy is fed by contracts** (events, CDC-with-published-schema), never by trespass. Encore's account page: a replicated read model in the Fan-BFF's keeping, subscribed to three owners' streams — page loads in one query, owners evolve freely, staleness declared at "seconds," signed off by product.
 
-One unglamorous discipline completes the module, because every owner eventually changes its own schema *under traffic*. Zero-downtime migration is expand–contract wearing database clothes, four phases, each reversible until the last: **expand** (add the new shape; old code ignores it), **dual-write** (new code writes both; old readers undisturbed), **backfill** (migrate history in throttled, verified batches), **contract** (switch reads, watch a full business cycle, then drop the old shape — the only irreversible rung, climbed last). Encore's `price` → `base_price` + `fees` split (Chapter 7's regulatory change) ran this ladder over three weeks — boring, observable, reversible until the last rung. The boringness is the achievement.
+One unglamorous discipline completes the section, because every owner eventually changes its own schema *under traffic*. Zero-downtime migration is expand–contract wearing database clothes, four phases, each reversible until the last: **expand** (add the new shape; old code ignores it), **dual-write** (new code writes both; old readers undisturbed), **backfill** (migrate history in throttled, verified batches), **contract** (switch reads, watch a full business cycle, then drop the old shape — the only irreversible rung, climbed last). Encore's `price` → `base_price` + `fees` split (Chapter 7's regulatory change) ran this ladder over three weeks — boring, observable, reversible until the last rung. The boringness is the achievement.
 
 **Recap.** Cross-owner questions get copies fed by contracts: composition for shallow joins, projections for deep ones, CDC for legacy. Direct foreign reads are the coupling you'll regret at the next schema change.
 
@@ -1680,9 +1681,9 @@ Honesty clause, as always: the mesh is an org-scale answer to an org-scale probl
 
 The mesh stands or falls on its platform plane — and so does Chapter 12. What domains must be able to do *without tickets*: declare a product (scaffold, registry entry, catalog listing), publish ports (stream + table from one definition), inherit governance (PII detection, retention, access policies applied by the platform, not by memory), and observe (freshness, quality, lineage dashboards for free). This is Chapter 14's golden-path pattern with data-shaped paving stones — build it once, and the third data product costs a sprint instead of a quarter.
 
-The closing bridge is the reason this module exists: **AI eats from here.** Chapter 12's feature pipelines and retrieval corpora are *consumers of data products* — demand forecasting subscribes to `ticket-sales`; the support assistant's RAG corpus is built from the `support-cases` product, inheriting its contract, lineage, and access rules. Teams that skipped this chapter's discipline meet it again as "why does the model train on stale, unowned, permission-less data" — the same lesson at a higher invoice.
+The closing bridge is the reason this section exists: **AI eats from here.** Chapter 12's feature pipelines and retrieval corpora are *consumers of data products* — demand forecasting subscribes to `ticket-sales`; the support assistant's RAG corpus is built from the `support-cases` product, inheriting its contract, lineage, and access rules. Teams that skipped this chapter's discipline meet it again as "why does the model train on stale, unowned, permission-less data" — the same lesson at a higher invoice.
 
-**Recap.** The platform makes the right data behavior the cheap behavior: declare, publish, inherit, observe. AI systems are data-product consumers; their quality is bounded by this module.
+**Recap.** The platform makes the right data behavior the cheap behavior: declare, publish, inherit, observe. AI systems are data-product consumers; their quality is bounded by this section.
 
 **Exercise 9.5.** List the manual steps between "team has valuable data" and "another team uses it safely" at your company. Each step is either platform backlog or permanent tax.
 
