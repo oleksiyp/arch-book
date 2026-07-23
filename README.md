@@ -1370,7 +1370,7 @@ Encore's API now fronts money and scarce inventory — precisely what OWASP's AP
 
 **Tokens without folklore.** JWTs: short-lived, audience-bound, algorithm-pinned, verified at the gateway *and* relied upon downstream via the mesh's identity (defense in depth, Chapter 10's zero-trust preview). Opaque tokens + introspection where revocation latency matters more than validation cost.
 
-**The Top-10 habits.** The two that eat ticketing companies: *broken object-level authorization* — `GET /orders/{id}` must check the caller owns order `{id}`, on every object, every time (the gateway cannot do this; only the service knows) — and *unrestricted resource consumption* — which for Encore includes bots enumerating seat holds to lock inventory, why Bot Screening (Chapter 2) sits in front of exactly this API. Both become fitness functions: authorization tests per endpoint in CI, abuse scenarios in the load suite.
+**The Top-10 habits.** The two that eat ticketing companies: *broken object-level authorization* — `GET /orders/{id}` must check the caller owns order `{id}`, on every object, every time (the gateway cannot do this; only the service knows) — and *unrestricted resource consumption* — which for Encore includes bots enumerating seat holds to lock inventory, which is why Bot Screening (Chapter 2) sits in front of exactly this API. Both become fitness functions: authorization tests per endpoint in CI, abuse scenarios in the load suite.
 
 **Recap.** Right OAuth flow per audience; scopes model affordances; JWTs short, bound, and pinned. Object-level authorization is the service's burden and the auditor's first question. Abuse resistance is load-tested, not assumed.
 
@@ -1493,7 +1493,7 @@ For organizations that do need runtime composition, the menu with prices: **buil
 
 > **The distributed monolith, browser edition.** If your micro-frontends must release together because they share state shape, route contracts, or a redux store — you have the deployment independence of a monolith plus the payload of a federation. The Chapter 5 test applies verbatim: can this piece ship alone, unannounced?
 
-**Recap.** Micro-frontends are bought with team-scale coordination pain, split along experience seams. Runtime composition taxes payload, consistency, and demands an owned shell. Most products deserve a modular monolith frontend and one honest exception.
+**Recap.** Micro-frontends are bought with team-scale coordination pain, split along experience seams. Runtime composition taxes payload and consistency, and demands an owned shell. Most products deserve a modular monolith frontend and one honest exception.
 
 **Exercise 8.3.** Count the frontend teams touching your main app and their release collisions last quarter. Verdict: modular monolith, one split, or federation — and which seam?
 
@@ -1921,7 +1921,7 @@ flowchart LR
 
 *Figure 11.2 — The error budget as automatic policy. Nobody argues about whether to ship; the budget already decided. Product and reliability stop being departments and become two hands on one dial.*
 
-Alerting inherits the philosophy: page on *symptoms* (SLO burn rate — users are hurting) and never on causes (CPU is high — maybe fine, maybe Tuesday); everything else is a dashboard for business hours. An on-call rotation paged only when users hurt, with a runbook per alert, is sustainable; one paged on causes burns out precisely the engineers who wrote the most instrumentation. And when things break anyway: **blameless postmortems** whose real product is architectural feedback — Encore's retry-storm outage (Chapter 4) produced not "be more careful" but retry budgets in the mesh defaults, a Chapter-1-style fitness function, and a better Tuesday. Incidents are the system tuition; postmortems are collecting the education.
+Alerting inherits the philosophy: page on *symptoms* (SLO burn rate — users are hurting) and never on causes (CPU is high — maybe fine, maybe Tuesday); everything else is a dashboard for business hours. An on-call rotation paged only when users hurt, with a runbook per alert, is sustainable; one paged on causes burns out precisely the engineers who wrote the most instrumentation. And when things break anyway: **blameless postmortems** whose real product is architectural feedback — Encore's retry-storm outage (Chapter 4) produced not "be more careful" but retry budgets in the mesh defaults, a Chapter-1-style fitness function, and a better Tuesday. Incidents are the system's tuition; postmortems are collecting the education.
 
 **Recap.** SLIs measure experience, SLOs promise it, error budgets arbitrate speed vs. stability automatically. Page on symptoms, dashboard the causes, runbook every page. Postmortems convert incidents into architecture.
 
