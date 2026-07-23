@@ -116,7 +116,7 @@ Where does architecture end and design begin? Nowhere — there is only a spectr
 
 *Figure 1.1 — The architecture–design spectrum. Ask three questions of any decision: how strategic is it, how costly to reverse, how significant are its trade-offs? The higher the answers, the further left it sits — and the more it deserves analysis and a written record.*
 
-Choosing between a queue and a topic for Encore's order events? Strategic, hard to reverse once ten consumers depend on it, heavy trade-offs — architectural. Naming the `OrderPlaced` class? Move on with your life.
+Choosing between a queue and a topic for Encore's order events? That decision is strategic, hard to reverse once ten consumers depend on it, and heavy with trade-offs — architectural. Naming the `OrderPlaced` class? Move on with your life.
 
 #### The two laws
 
@@ -197,7 +197,7 @@ Notice what did *not* make the list. Nobody asked for "portability across cloud 
 
 Here is the uncomfortable arithmetic: every characteristic you commit to trades against the others. Optimize for elasticity and you complicate testability. Chase five nines and cost explodes. A system designed to exhibit twenty characteristics exhibits none of them well — this is the first law compounding.
 
-The working discipline: **pick the seven or fewer that would sink the business if missed**, and let the rest be merely adequate. For Encore: elasticity, availability-under-peak, data integrity, security/fairness, deployability, cost, observability. Everything else — internationalization, portability, offline support — is explicitly *not driving* the architecture, and writing that down is as valuable as the list itself.
+The working discipline: **pick the seven or fewer that would sink the business if missed**, and let the rest be merely adequate. For Encore, the seven are elasticity, availability-under-peak, data integrity, security and fairness, deployability, cost, and observability. Everything else — internationalization, portability, offline support — is explicitly *not driving* the architecture, and writing that down is as valuable as the list itself.
 
 One preview: in later chapters these characteristics stop being adjectives and become *fitness functions* — automated checks that continuously verify the architecture still exhibits them. "Survives a 500× spike" will become a load test that runs before every release. Hold that thought; Chapter 14 turns it into a way of governing whole platforms.
 
@@ -468,7 +468,7 @@ The hard question is enforcement, because a monolith's modules are one careless 
 
 Two more monolithic styles earn their keep in narrower niches. The **microkernel** — a minimal core plus plug-ins — fits products whose essence is extension: IDEs, browsers, payment processors with per-country rules, anything with a marketplace of add-ons. The **pipeline** — filters connected by pipes — fits transformation-shaped work: ETL, media processing, compiler-like flows. Recognize the shape of your problem in the shape of the style; forcing a marketplace product into layers, or a workflow product into plug-ins, is how architectures fight their own domains.
 
-**Recap.** Layered is a fine start and a poor destiny; watch for sinkholes. The modular monolith gives domain partitioning without distribution — if and only if boundaries are enforced by machines, not intentions. Microkernel and pipeline are precision tools.
+**Recap.** The layered style is a fine start and a poor destiny; watch for sinkholes. The modular monolith gives domain partitioning without distribution — if and only if boundaries are enforced by machines, not intentions. Microkernel and pipeline are precision tools.
 
 **Exercise 2.2.** Sketch Encore's eight components (Section 1.3) as modules of a modular monolith. Which two module boundaries would you enforce first, and with what check?
 
@@ -476,7 +476,7 @@ Two more monolithic styles earn their keep in narrower niches. The **microkernel
 
 #### Service-based: the pragmatic middle
 
-Service-based architecture splits the system into a handful of coarse domain services — typically four to twelve — usually sharing one database. It is the most underrated style in the catalog: you gain independent deployment of major domains and meaningful fault isolation while keeping one database's consistency and one ops team's sanity. Elasticity ★★★, deployability ★★★★, cost ★★★★, data consistency ★★★★★ — a remarkably balanced card, and very often the *correct* first distributed step.
+Service-based architecture splits the system into a handful of coarse domain services — typically four to twelve — usually sharing one database. It is the most underrated style in the catalog: you gain independent deployment of major domains and meaningful fault isolation while keeping one database's consistency and one ops team's sanity. Its card reads elasticity ★★★, deployability ★★★★, cost ★★★★, data consistency ★★★★★ — remarkably balanced, and very often the *correct* first distributed step.
 
 #### Microservices: maximum decoupling, maximum invoice
 
@@ -501,7 +501,7 @@ Space-based architecture attacks the database bottleneck directly: processing un
 
 *Figure 2.2 — Relative ratings. Read columns, not cells: no column is all stars, which is the first law wearing a table. Ratings after Richards & Ford.*
 
-**Recap.** Service-based is the balanced middle; microservices buy team-scale independence at maximum operational price; event-driven buys decoupling at the price of visibility; space-based buys spike survival at the price of consistency reasoning.
+**Recap.** The service-based style is the balanced middle; microservices buy team-scale independence at the maximum operational price; the event-driven style buys decoupling at the price of visibility; and the space-based style buys spike survival at the price of consistency reasoning.
 
 **Exercise 2.3.** Using Figure 2.2 and Encore's seven characteristics from Chapter 1, eliminate three styles for Encore *before* reading Section 2.4. Write one sentence per elimination.
 
@@ -511,7 +511,7 @@ Space-based architecture attacks the database bottleneck directly: processing un
 
 Style selection is Chapter 1's method at maximum stakes. Line up the drivers: **domain shape** (how many naturally separate capabilities?), **team topology** (how many teams must move independently?), **operational maturity** (who carries the pager, and how good are they?), **characteristic outliers** (which components need radically different ratings?), and **cost ceiling**.
 
-Run Encore through them. Nine engineers — one team, so microservices solve a problem Encore does not have. Modest steady traffic — so space-based is a mortgage on a house Encore doesn't own. But one characteristic outlier glares: the on-sale spike. Sale Gate needs elasticity ★★★★★ while the rest of the system needs ★★.
+Run Encore through them. Encore has nine engineers on one team, so microservices solve a problem it does not have. Its steady traffic is modest, so space-based architecture is a mortgage on a house it doesn't own. But one characteristic outlier glares: the on-sale spike. Sale Gate needs elasticity ★★★★★ while the rest of the system needs ★★.
 
 And here is the insight that makes this module worth its tuition: *a style decision need not be singular.* The unit of style is the deployment quantum, not the company. Encore's defensible answer:
 
@@ -539,7 +539,7 @@ Every style is a bet about which changes will come. Bets should be hedged: keep 
 
 > **The résumé trap.** The most common style-selection error is optimizing for the architect's next job instead of the business's next year. If your justification cites companies a thousand times your size, you are not doing architecture; you are doing cosplay.
 
-**Recap.** Drivers: domain shape, team topology, ops maturity, outliers, cost. Style is chosen per deployment quantum — extract the outlier, not the org chart. Keep boundaries clean so today's style doesn't foreclose tomorrow's.
+**Recap.** The drivers are domain shape, team topology, operational maturity, characteristic outliers, and cost. Style is chosen per deployment quantum — extract the outlier, not the org chart. Keep boundaries clean so today's style doesn't foreclose tomorrow's.
 
 **Exercise 2.4.** Write Encore's style ADR (Figure 2.3) in the Chapter 1 format. The consequences row must name at least two real losses.
 
@@ -881,7 +881,7 @@ Here is the arithmetic the kata will demand, worked once. Encore's worst on-sale
 
 One naming ritual completes the vocabulary: **scatter/gather** (fan out, assemble answers — ruled by the slowest shard, Section 4.1's tail math), and the Kubernetes-native trio — **sidecar** (per-instance helper for TLS/telemetry), **ambassador** (local proxy for remote things), **adapter** (uniform faces on diverse services). You will meet them wearing a "service mesh" badge in Chapter 5.
 
-**Recap.** Stateless tier + cache + queue is the reference silhouette. Staleness is declared per item; queues convert spikes into schedules; the async boundary is an architectural decision, not an optimization.
+**Recap.** A stateless tier, a cache, and a queue form the reference silhouette. Staleness is declared per item; queues convert spikes into schedules; the async boundary is an architectural decision, not an optimization.
 
 **Exercise 4.3.** Redraw Figure 4.3 for Encore's purchase flow, marking exactly which arrow is the synchronous "moment of truth" and why everything else can queue.
 
@@ -1188,7 +1188,7 @@ Then the truth about delivery, which every architect must be able to recite: *ex
 
 Stream processors compute *while data flows* — fraud scores during the on-sale, not after it. Two hard problems define the craft. **Time**: event-time vs. arrival-time diverge (stadium Wi-Fi, mobile retries), so windows need watermarks — a declared patience for stragglers — and a policy for the too-late. **State**: "bot check: >5 purchases in 10 min" requires remembering, so stateful processors keep local, changelogged, partitioned state — which must be rebuilt on failover and reprocessed on logic changes. Replayability (Section 6.2's gift) is what makes *reprocessing* — running v2 of the fraud logic over last month — a routine operation instead of a data-science archaeology project.
 
-**Recap.** Partition key = ordering scope = a domain decision. Exactly-once is effect, not delivery: at-least-once + idempotency. Event-time needs watermarks; stateful streaming needs rebuildable state; replay turns reprocessing into a feature.
+**Recap.** The partition key defines the ordering scope, and choosing it is a domain decision. Exactly-once is effect, not delivery: at-least-once + idempotency. Event-time needs watermarks; stateful streaming needs rebuildable state; replay turns reprocessing into a feature.
 
 **Exercise 6.3.** Your busiest data flow: what is its natural partition key, and what ordering does the business actually require? Are those two answers compatible today?
 
@@ -1605,7 +1605,7 @@ For workflows spanning owners, Chapter 5's sagas carry the how; this module adds
 
 > **Eventual consistency is a business conversation, not an apology.** "The dashboard trails reality by up to a minute" is a *requirement statement* the business can price. Chapter 4 taught the spectrum; this module's job is pinning each cross-owner flow to a rung — with the stakeholder's signature, not the engineer's guess.
 
-**Recap.** One writer per table, always; common data gets an owner, joint data gets split by meaning. Sagas, events, and humble batch replace 2PC, which is refused on principle. Staleness is negotiated with the business, per flow.
+**Recap.** Every table has exactly one writer, always; common data gets an owner, and joint data gets split by meaning. Sagas, events, and humble batch replace 2PC, which is refused on principle. Staleness is negotiated with the business, per flow.
 
 **Exercise 9.1.** Find a table (or concept) in your world with two writers. Split it by meaning: name the two models, their owners, and the event that connects them.
 
@@ -1805,7 +1805,7 @@ Four disciplines cover the stack's remaining altitude, each with one architectur
 
 #### Blast radius is a design variable
 
-Assume-breach thinking asks of every component: *when* this is compromised, what does the attacker hold? Isolation is the discipline of making that answer small. Tenant isolation models — Tod Golding's taxonomy, which Chapter 13 builds on: **silo** (per-tenant stacks — smallest blast radius, largest bill), **pool** (shared everything, isolation by row-level policy and tenant-scoped tokens — efficient, and one missing `WHERE tenant_id` from disaster; the mitigation is *centralizing* that predicate in the platform layer, never per-query diligence), **bridge** (pooled compute, siloed data — the common compromise). Encore runs pooled with two silo exceptions demanded by classification: the ledger and Bot Screening's risk data.
+Assume-breach thinking asks of every component: *when* this is compromised, what does the attacker hold? Isolation is the discipline of making that answer small. Tenant isolation models — Tod Golding's taxonomy, which Chapter 13 builds on: **silo** (per-tenant stacks — smallest blast radius, largest bill), **pool** (shared everything, isolation by row-level policy and tenant-scoped tokens — efficient, and one missing `WHERE tenant_id` from disaster; the mitigation is *centralizing* that predicate in the platform layer, never per-query diligence), **bridge** (pooled compute, siloed data — the common compromise). Encore runs the pooled model with two silo exceptions demanded by classification: the ledger and Bot Screening's risk data.
 
 Two modern isolation frontiers: **sandboxing untrusted execution** (webhooks, partners' code, and — arriving with Chapter 12 — AI-generated actions: gVisor/Firecracker-class boundaries, egress-controlled, because "it's just a webhook handler" is how supply chains fall), and **the AI-era surfaces** previewed now so Chapter 12 inherits vocabulary: prompt injection (untrusted text steering a model that holds credentials), retrieval leakage (RAG answering across permission boundaries — Chapter 9's access rules must survive *inside* the corpus), and model exfiltration. The pattern that governs all three: the model is an *untrusted execution environment fed by untrusted input* — sandbox its tools, scope its retrieval, filter its output.
 
@@ -2208,7 +2208,7 @@ At scale the isolation instruments consolidate into the **cell**: a complete, se
 | Cell | one cell's tenants | good at scale | pooled tiers past the first serious incident |
 | Silo | one tenant | worst | compliance-bound enterprise |
 
-Encore's endgame runs pooled cells of ~50 venues each, silo'd stacks for the chain — and the control plane, which was always the tenants' map, becomes the cell router too.
+Encore's endgame runs pooled cells of ~50 venues each and siloed stacks for the chain — and the control plane, which was always the tenants' map, becomes the cell router too.
 
 **Recap.** Resolve tenancy once, enforce it in layers, express it as config. Choose partitioning per blast-radius budget; centralize the predicate; scope runtime credentials. Fairness is engineered with quotas and fair queues — and priced when quotas aren't enough.
 
@@ -2216,11 +2216,11 @@ Encore's endgame runs pooled cells of ~50 venues each, silo'd stacks for the cha
 
 ### 13.4 SaaS on Real Stacks
 
-The models of Section 13.1 land differently on the two dominant substrates. **Kubernetes SaaS**: namespace-per-tenant with quotas and network policies gives bridge-grade isolation in one cluster; silo tiers get dedicated node pools or clusters; the noisy-neighbor tools are the scheduler's (requests/limits, priority classes). **Serverless SaaS**: per-invocation isolation comes free, making pooled compute safer by default; concurrency limits per tenant become the fairness lever; and per-invocation billing makes *cost attribution nearly exact* — the property Chapter 11's FinOps discipline now depends on. Encore runs the pattern this chapter has been converging on: pooled serverless for the self-service five hundred, bridge on Kubernetes for mid-tier, silo'd stacks for the venue chain whose auditors require it.
+The models of Section 13.1 land differently on the two dominant substrates. **Kubernetes SaaS**: namespace-per-tenant with quotas and network policies gives bridge-grade isolation in one cluster; silo tiers get dedicated node pools or clusters; the noisy-neighbor tools are the scheduler's (requests/limits, priority classes). **Serverless SaaS**: per-invocation isolation comes free, making pooled compute safer by default; concurrency limits per tenant become the fairness lever; and per-invocation billing makes *cost attribution nearly exact* — the property Chapter 11's FinOps discipline now depends on. Encore runs the pattern this chapter has been converging on: pooled serverless deployments for the self-service five hundred, the bridge model on Kubernetes for the mid-tier, and siloed stacks for the venue chain whose auditors require it.
 
 Operations gains a dimension: dashboards, alerts, and SLOs all grow a *tenant axis* (Section 13.2's propagated context paying out). The on-call question stops being "is the system up?" and becomes "is it up *for whom*?" — because a pooled system at 99.99% can be serving one tenant pure errors, invisibly, if nobody slices by tenant. Per-tenant health, per-tenant error budgets for the paying tiers, and support tooling that reconstructs *this tenant's* experience are what "tenant-aware operations" means when the pager goes off.
 
-**Recap.** Kubernetes buys isolation with namespaces and schedulers; serverless buys it per-invocation with exact cost attribution. Mixed substrates per tier is the mature answer. Every operational artifact — dashboard, SLO, alert — grows a tenant dimension, or incidents hide inside averages.
+**Recap.** Kubernetes buys isolation with namespaces and schedulers; serverless buys it per-invocation with exact cost attribution. A mix of substrates across tiers is the mature answer. Every operational artifact — dashboard, SLO, alert — grows a tenant dimension, or incidents hide inside averages.
 
 **Exercise 13.4.** Take one alert your team owns. Rewrite it tenant-sliced: what threshold, per whom, and what would last month have shown that the averaged version hid?
 
