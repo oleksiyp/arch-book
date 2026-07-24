@@ -433,11 +433,11 @@ quadrantChart
 
 *Figure 2.1 — The style catalog on its two generating axes. Notice the crowded and lonely corners: distributed-but-technically-partitioned (top left) is nearly empty because it is nearly always a mistake — services sliced by layer must all change together, giving you distribution's costs with none of its benefits. Axes after Richards & Ford.*
 
-That empty quadrant is not hypothetical; the industry built it at scale in the 2000s and named it Service-Oriented Architecture. Orchestration-driven SOA sliced systems into technical strata — service buses, orchestration engines, "business services" shared by everything — and produced systems where changing one business feature meant coordinating five teams and a middleware committee. We will not study SOA; we will remember it, the way sailors remember a reef. Its lesson survives in one sentence: *partition by domain, or every change becomes a negotiation.*
+That empty quadrant is not hypothetical; the industry built it at scale in the 2000s and named it Service-Oriented Architecture. Orchestration-driven SOA sliced systems into technical strata — service buses, orchestration engines, "business services" shared by everything — and produced systems where changing one business feature meant coordinating five teams and a middleware committee. We will not study SOA; we will remember it, as a warning. Its lesson survives in one sentence: *partition by domain, or every change becomes a negotiation.*
 
 #### Reading a style's price tag
 
-Each style in this chapter comes with characteristic ratings — one to five stars for deployability, elasticity, fault tolerance, simplicity, cost, and evolvability. Treat the stars the way you treat a used-car listing: honest about relative differences, silent about your particular situation. The ratings become decisions only when joined to *your* driving characteristics from Chapter 1. And underneath every distributed rating lurk the eight fallacies of distributed computing — the network is *not* reliable, latency is *not* zero, bandwidth is *not* infinite — which we will meet properly in Chapter 4. For now, one rule: every arrow that crosses a process boundary in your diagrams is a place where physics collects rent.
+Each style in this chapter comes with characteristic ratings — one to five stars for deployability, elasticity, fault tolerance, simplicity, cost, and evolvability. Treat the stars the way you treat a used-car listing: honest about relative differences, silent about your particular situation. The ratings become decisions only when joined to *your* driving characteristics from Chapter 1. And underneath every distributed rating lurk the eight fallacies of distributed computing — the network is *not* reliable, latency is *not* zero, bandwidth is *not* infinite — which we will meet properly in Chapter 4. For now, one rule: every arrow that crosses a process boundary in your diagrams carries a standing cost in latency and failure.
 
 **Recap.** Two axes — partitioning and deployment — generate the catalog. Domain partitioning is the great lesson of the SOA failure. Ratings are relative prices, priced in your characteristics.
 
@@ -499,7 +499,7 @@ Space-based architecture attacks the database bottleneck directly: processing un
 | Cost | ★★★★★ | ★★★★★ | ★★★★ | ★ | ★★★ | ★★ |
 | Data consistency | ★★★★★ | ★★★★★ | ★★★★★ | ★★ | ★★ | ★★ |
 
-*Figure 2.2 — Relative ratings. Read columns, not cells: no column is all stars, which is the first law wearing a table. Ratings after Richards & Ford.*
+*Figure 2.2 — Relative ratings. Read columns, not cells: no column is all stars — the first law, in table form. Ratings after Richards & Ford.*
 
 **Recap.** The service-based style is the balanced middle; microservices buy team-scale independence at the maximum operational price; the event-driven style buys decoupling at the price of visibility; and the space-based style buys spike survival at the price of consistency reasoning.
 
@@ -511,7 +511,7 @@ Space-based architecture attacks the database bottleneck directly: processing un
 
 Style selection is Chapter 1's method at maximum stakes. Line up the drivers: **domain shape** (how many naturally separate capabilities?), **team topology** (how many teams must move independently?), **operational maturity** (who carries the pager, and how good are they?), **characteristic outliers** (which components need radically different ratings?), and **cost ceiling**.
 
-Run Encore through them. Encore has nine engineers on one team, so microservices solve a problem it does not have. Its steady traffic is modest, so space-based architecture is a mortgage on a house it doesn't own. But one characteristic outlier glares: the on-sale spike. Sale Gate needs elasticity ★★★★★ while the rest of the system needs ★★.
+Run Encore through them. Encore has nine engineers on one team, so microservices solve a problem it does not have. Its steady traffic is modest, so space-based architecture would cost it every day and pay off never. But one characteristic outlier glares: the on-sale spike. Sale Gate needs elasticity ★★★★★ while the rest of the system needs ★★.
 
 And here is the insight that makes this section worth its tuition: *a style decision need not be singular.* The unit of style is the **architecture quantum** — a term the book *Building Evolutionary Architectures* coined and *The Hard Parts* sharpened: the smallest piece of a system that deploys independently and still functions, carrying everything it needs — code, data, and its own set of characteristics — with high cohesion inside and no synchronous dependence outside. The quantum is where characteristics actually live. Asking "how elastic is Encore?" is a malformed question; the honest answer is *"which quantum?"* The catalog's ratings, the drivers above, the whole selection method — all of it applies per quantum, not per company. One system may legitimately contain a modular-monolith quantum and a serverless quantum, each rated on its own card. Encore's defensible answer:
 
@@ -537,7 +537,7 @@ The ADR almost writes itself, and its consequences row is honest: Encore accepts
 
 Every style is a bet about which changes will come. Bets should be hedged: keep domain boundaries clean *inside* whatever you build (a modular monolith decomposes into services along its module seams in months; a tangled one, in years); automate the boundary checks so the option stays open; and re-run the style decision when its inputs change — team count doubling, an outlier characteristic appearing, an acquisition. The migration path monolith → modular monolith → service-based → (maybe) microservices exists precisely so that each step is paid for by the pressure that demands it.
 
-> **The résumé trap.** The most common style-selection error is optimizing for the architect's next job instead of the business's next year. If your justification cites companies a thousand times your size, you are not doing architecture; you are doing cosplay.
+> **The résumé trap.** The most common style-selection error is optimizing for the architect's next job instead of the business's next year. If your justification cites companies a thousand times your size, you are not doing architecture; you are imitating companies whose problems you do not have.
 
 **Recap.** The drivers are domain shape, team topology, operational maturity, characteristic outliers, and cost. Style is chosen per deployment quantum — extract the outlier, not the org chart. Keep boundaries clean so today's style doesn't foreclose tomorrow's.
 
@@ -762,7 +762,7 @@ You can find boundaries the business will respect, size the pieces by real force
 
 Encore extracted Sale Gate in Chapter 2 and drew context boundaries in Chapter 3, and in doing so quietly signed a contract with physics. The moment two components speak over a network, a new set of laws applies: messages get lost, arrive twice, or arrive late; clocks disagree; half of a system can die while the other half keeps cheerfully working. No framework repeals these laws. Architects who don't know them design systems that work in demos and fail on Saturdays.
 
-This chapter is the physics, and the engineering that survives it. You will not implement a consensus protocol. You will, however, learn to predict how a system behaves at 10× load and half a network, to read a vendor's consistency claims with a customs officer's eyes, and to design failure behavior instead of discovering it. Encore's first real outage arrives in Section 4.4. It is self-inflicted, as most are.
+This chapter is the physics, and the engineering that survives it. You will not implement a consensus protocol. You will, however, learn to predict how a system behaves at 10× load and half a network, to read a vendor's consistency claims with informed skepticism, and to design failure behavior instead of discovering it. Encore's first real outage arrives in Section 4.4. It is self-inflicted, as most are.
 
 ### 4.1 The Physics of Distribution
 
@@ -884,7 +884,7 @@ Here is the arithmetic the kata will demand, worked once. Encore's worst on-sale
 
 > **Queueing intuition.** Little's law — items in system = arrival rate × time in system — has one corollary every architect needs: response time explodes as utilization nears 100%. At 50% load, queues are short; at 80% they lengthen; past ~85% they grow without bound. That knee is why Section 4.4's load shedding is doctrine, not cowardice: refusing work above the knee is the only way to keep serving the work below it.
 
-One naming ritual completes the vocabulary: **scatter/gather** (fan out, assemble answers — ruled by the slowest shard, Section 4.1's tail math), and the Kubernetes-native trio — **sidecar** (per-instance helper for TLS/telemetry), **ambassador** (local proxy for remote things), **adapter** (uniform faces on diverse services). You will meet them wearing a "service mesh" badge in Chapter 5.
+One naming ritual completes the vocabulary: **scatter/gather** (fan out, assemble answers — ruled by the slowest shard, Section 4.1's tail math), and the Kubernetes-native trio — **sidecar** (per-instance helper for TLS/telemetry), **ambassador** (local proxy for remote things), **adapter** (uniform faces on diverse services). You will meet them again in Chapter 5, packaged as the "service mesh."
 
 **Recap.** A stateless tier, a cache, and a queue form the reference silhouette. Staleness is declared per item; queues convert spikes into schedules; the async boundary is an architectural decision, not an optimization.
 
@@ -1017,7 +1017,7 @@ sequenceDiagram
     O-->>O: order failed, seat back on sale
 </pre>
 
-*Figure 5.2 — An orchestrated saga compensating a declined card. Note what compensation is: not "undo" (the decline already happened) but a forward action restoring business sense. Sagas are business processes wearing engineering clothes — which is why the compensations must be designed with the business, not invented in code review.*
+*Figure 5.2 — An orchestrated saga compensating a declined card. Note what compensation is: not "undo" (the decline already happened) but a forward action restoring business sense. Sagas are business processes expressed as engineering — which is why the compensations must be designed with the business, not invented in code review.*
 
 Sagas also leak. Between local commits there is no isolation — the world sees intermediate state: the fan whose card was declined watches seat 14B sit "held" by nobody until the compensation lands. The countermeasures are design moves, not settings: a **semantic lock** (an explicit pending status downstream readers must honor — the map shows "being purchased," honestly), **commutative updates** (steps safe in any order, so interleaving cannot corrupt), and **re-read-and-verify** (the final step re-checks its assumptions, treating the saga's earlier reads as stale by default). Choose per step; the seat map uses all three.
 
@@ -1250,7 +1250,7 @@ The last move is a promotion: from events as integration plumbing to **streams a
 
 | Criterion | The question to ask yourself |
 |---|---|
-| Fact vs. command | Are events past-tense facts, or RPC wearing a costume? |
+| Fact vs. command | Are events past-tense facts, or remote calls in disguise? |
 | Ordering by design | Does every ordering guarantee trace to a partition key choice? |
 | Effect honesty | Is exactly-once claimed anywhere delivery crosses a system boundary? |
 | Named processes | Does everything with a business name have an explicit, ownable model? |
@@ -2072,7 +2072,7 @@ An agent is a model in a loop with tools: observe, decide, call a tool, read the
 | Loop control | workflow engine (Chapter 6) | steps are proposed, not scripted — so bound them |
 | State/memory | context + stores | the context window is a budget, curated not accumulated |
 | Failure containment | timeouts, budgets (Chapter 4) | step caps, token budgets, spend ceilings |
-| Authority | authorization (Chapter 10) | *the agent's identity, not the user's God-token* |
+| Authority | authorization (Chapter 10) | *the agent's own identity, never the user's full-powered token* |
 
 *Figure 12.2 — Agents as distributed systems with a probabilistic scheduler. Every row is an old discipline with a new clause; teams that skip the left column rediscover it in incident reviews.*
 
