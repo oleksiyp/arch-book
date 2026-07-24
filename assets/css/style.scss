@@ -180,7 +180,7 @@
     background: #ffffff;
     border: 1px solid #d7dce3;
     border-radius: 2rem;
-    padding: 0.1rem 0.45rem;
+    padding: 0.1rem 0.3rem;
     box-shadow: 0 4px 16px rgba(15, 23, 42, 0.18);
     opacity: 0;
     pointer-events: none;
@@ -203,13 +203,13 @@
         cursor: pointer;
         display: inline-flex;
         align-items: center;
-        gap: 0.35rem;
+        gap: 0.25rem;
         font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
         font-size: 0.95rem;
         font-weight: 600;
         letter-spacing: 0.01em;
         color: #6b7280;
-        padding: 0.5rem 0.6rem;
+        padding: 0.5rem 0.38rem;
         touch-action: manipulation;
 
         &:hover, &:active {
@@ -220,12 +220,12 @@
     .bar-presence {
         display: inline-flex;
         align-items: center;
-        gap: 0.3rem;
+        gap: 0.25rem;
         font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
         font-size: 0.95rem;
         font-weight: 600;
         color: #6b7280;
-        padding: 0.5rem 0.6rem 0.5rem 0.2rem;
+        padding: 0.5rem 0.38rem 0.5rem 0.15rem;
     }
 
     .bar-presence[hidden] {
