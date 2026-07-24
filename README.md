@@ -411,7 +411,7 @@ Be warned about how this catalog is taught. Every style here is presented with i
 
 #### Two axes that generate the catalog
 
-Styles look like a zoo until you see the two axes that generate them. First: is the code partitioned *technically* (by layer: presentation, business, persistence) or *by domain* (by business capability: orders, inventory, payments)? Second: does the system deploy as *one unit* or *many*? Cross them and the whole catalog falls into four quadrants:
+The catalog of styles looks arbitrary until you see the two axes that generate it. First: is the code partitioned *technically* (by layer: presentation, business, persistence) or *by domain* (by business capability: orders, inventory, payments)? Second: does the system deploy as *one unit* or *many*? Cross them and the whole catalog falls into four quadrants:
 
 <pre class="mermaid">
 quadrantChart
