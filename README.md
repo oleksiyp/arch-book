@@ -268,7 +268,7 @@ Finally, keep logical and physical architecture distinct in your mind. These eig
 
 #### Diagrams that respect their readers
 
-An architecture that lives in your head is a rumor. The modern standard for drawing systems is Simon Brown's **C4 model** — four zoom levels, each answering one question for one audience:
+An architecture that lives only in your head is hearsay: every teammate carries a slightly different version, and none of them can be checked. The modern standard for drawing systems is Simon Brown's **C4 model** — four zoom levels, each answering one question for one audience:
 
 | Level | Name | Answers | Audience |
 |---|---|---|---|
@@ -921,7 +921,7 @@ stateDiagram-v2
 
 ### 4.5 Degradation and Chaos
 
-Two disciplines make resilience real rather than aspirational. **Graceful degradation** is designed beforehand: PSP down → accept orders, hold seats, charge when it recovers ("your card will be charged shortly" kept Encore's rival selling through their PSP's outage; nobody remembers, which is the point). And **chaos testing** turns all of it into Chapter 1 fitness functions: kill an instance, inject 5 s of PSP latency in staging, assert the breakers open and the queues drain. A resilience pattern you have never watched fire is a rumor.
+Two disciplines make resilience real rather than aspirational. **Graceful degradation** is designed beforehand: PSP down → accept orders, hold seats, charge when it recovers ("your card will be charged shortly" kept Encore's rival selling through their PSP's outage; nobody remembers, which is the point). And **chaos testing** turns all of it into Chapter 1 fitness functions: kill an instance, inject 5 s of PSP latency in staging, assert the breakers open and the queues drain. A resilience pattern you have never watched fire is a guess.
 
 **Recap.** Cascades are chains of naive best-effort; break every link — timeouts, budgeted retries, bulkheads, breakers, shedding. Degradation is designed in advance. Chaos experiments make resilience a tested property, not a hope.
 
