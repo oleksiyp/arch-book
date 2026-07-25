@@ -339,11 +339,18 @@
 
     const part = document.getElementById('presence-part');
     const label = document.getElementById('presence-count');
+    let janitorDone = false;
     onValue(all, (snap) => {
         // count only peers with a heartbeat in the last 5 minutes (survives stale entries)
         const cutoff = Date.now() - 5 * 60 * 1000;
+        const junkCutoff = Date.now() - 10 * 60 * 1000;
         let n = 0;
-        snap.forEach((child) => { if ((child.val() || 0) > cutoff) n++; });
+        snap.forEach((child) => {
+            const v = child.val() || 0;
+            if (v > cutoff) n++;
+            else if (!janitorDone && v < junkCutoff) remove(child.ref); // clean up dead entries
+        });
+        janitorDone = true;
         if (n > 0) { label.textContent = n; part.hidden = false; }
     });
 </script>
