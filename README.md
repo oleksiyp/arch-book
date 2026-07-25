@@ -14,7 +14,7 @@ One deliberate omission: you will find no UML here, no enterprise service buses,
 
 ### Influences & Attribution
 
-This book teaches a canon, and the canon has authors. The method backbone of Chapters 1–2 — the two laws, the characteristics taxonomy, the style ratings, katas as practice — follows Mark Richards and Neal Ford's *Fundamentals of Software Architecture*. The granularity forces of Chapter 3 follow *Software Architecture: The Hard Parts*. Chapter 13 follows Tod Golding's multi-tenant model. Other load-bearing debts: Eric Evans (domain-driven design), Sam Newman (microservices), Martin Kleppmann (data-intensive systems), Michael Nygard (architecture decision records), Simon Brown (the C4 model), Matthew Skelton and Manuel Pais (team topologies), Zhamak Dehghani (data mesh), Google's SRE books, and Martin Fowler's pattern vocabulary throughout. Where this book compresses their work, the per-chapter references carry the full weight.
+This book teaches a canon, and the canon has authors. The method backbone of Chapters 1–2 — the two laws, the characteristics taxonomy, the style ratings, katas as practice — follows Mark Richards and Neal Ford's *Fundamentals of Software Architecture*. The granularity forces of Chapter 3 follow *Software Architecture: The Hard Parts*. Chapter 14 follows Tod Golding's multi-tenant model. Other load-bearing debts: Eric Evans (domain-driven design), Sam Newman (microservices), Martin Kleppmann (data-intensive systems), Michael Nygard (architecture decision records), Simon Brown (the C4 model), Matthew Skelton and Manuel Pais (team topologies), Zhamak Dehghani (data mesh), Simon Wardley (evolution mapping), Google's SRE books, and Martin Fowler's pattern vocabulary throughout. Where this book compresses their work, the per-chapter references carry the full weight.
 
 Some terms used here as common vocabulary have specific coiners: architectural katas (Ted Neward), golden path (Spotify), paved road (Netflix), STRIDE (Microsoft), ATAM (the SEI), PACELC (Daniel Abadi), sagas (Garcia-Molina and Salem), backend-for-frontend (SoundCloud, popularized by Sam Newman), prompt injection (Simon Willison), shuffle sharding (AWS).
 
@@ -24,7 +24,7 @@ Written and directed by Oleksiy Pylypenko, with AI assistance (Anthropic's Claud
 
 ## How to Read This Book
 
-One company accompanies you through all fourteen chapters: **Encore**, a startup selling concert tickets — small enough to hold in your head, treacherous enough to be interesting. Encore begins with nine engineers and a terrifying traffic spike, and ends, four hundred engineers later, running its own platform. Every concept lands on Encore before it is generalized.
+One company accompanies you through all fifteen chapters: **Encore**, a startup selling concert tickets — small enough to hold in your head, treacherous enough to be interesting. Encore begins with nine engineers and a terrifying traffic spike, and ends, four hundred engineers later, running its own platform. Every concept lands on Encore before it is generalized.
 
 Each chapter closes with a **kata**: a practice brief for a *different* company, deliberately smaller than Encore, with a rubric of questions to ask yourself. Exercises punctuate every section: short, concrete, best done against a system you actually know. References at each chapter's end point to the books this field considers canonical; entries marked *free online* cost only attention.
 
@@ -38,7 +38,7 @@ Each chapter closes with a **kata**: a practice brief for a *different* company,
 **The modern era (Chapters 10–12):** security and zero trust, cloud-native operations and SRE, AI systems.
 {: .flush}
 
-**The destination (Chapters 13–14):** multi-tenant SaaS, and platform engineering — where everything converges, and where the capstone awaits.
+**The destination (Chapters 13–15):** the economics of buy versus build, multi-tenant SaaS, and platform engineering — where everything converges, and where the capstone awaits.
 {: .flush}
 
 ## Contents
@@ -55,8 +55,9 @@ Each chapter closes with a **kata**: a practice brief for a *different* company,
 10. [Security Architecture and Zero Trust](#ch10)
 11. [Cloud-Native Operations — Serverless, Kubernetes, and SRE](#ch11)
 12. [Architecting AI Systems — LLMs, RAG, and Agents](#ch12)
-13. [Multi-Tenant SaaS Architecture](#ch13)
-14. [Platform Engineering and the Capstone](#ch14)
+13. [Buy, Build, and the Economics of Dependence](#ch13)
+14. [Multi-Tenant SaaS Architecture](#ch14)
+15. [Platform Engineering and the Capstone](#ch15)
 
 ---
 
@@ -67,7 +68,7 @@ Each chapter closes with a **kata**: a practice brief for a *different* company,
 
 Every discipline has a moment when it stops being a bag of techniques and becomes a way of seeing. For software architecture, that moment comes when you stop asking *"which technology should I use?"* and start asking *"what am I trading away?"* This chapter is about reaching that moment deliberately rather than by scar tissue.
 
-**Encore**, our companion for all fourteen chapters, sells tickets to live concerts — small enough to hold in your head, treacherous enough to be interesting: when a major artist announces a tour, Encore's traffic multiplies five-hundred-fold in minutes; every seat must be sold exactly once; and the bots arrive before the fans do. By the end of the chapter you will have derived Encore's driving characteristics, drawn its first diagrams, and written decision records a real team could pick up and build from. Every later chapter repeats this loop at greater depth; here, we learn the loop.
+**Encore**, our companion for all fifteen chapters, sells tickets to live concerts — small enough to hold in your head, treacherous enough to be interesting: when a major artist announces a tour, Encore's traffic multiplies five-hundred-fold in minutes; every seat must be sold exactly once; and the bots arrive before the fans do. By the end of the chapter you will have derived Encore's driving characteristics, drawn its first diagrams, and written decision records a real team could pick up and build from. Every later chapter repeats this loop at greater depth; here, we learn the loop.
 
 ---
 
@@ -199,7 +200,7 @@ Here is the uncomfortable arithmetic: every characteristic you commit to trades 
 
 The working discipline: **pick the seven or fewer that would sink the business if missed**, and let the rest be merely adequate. For Encore, the seven are elasticity, availability-under-peak, data integrity, security and fairness, deployability, cost, and observability. Everything else — internationalization, portability, offline support — is explicitly *not driving* the architecture, and writing that down is as valuable as the list itself.
 
-One preview: in later chapters these characteristics stop being adjectives and become *fitness functions* — automated checks that continuously verify the architecture still exhibits them. "Survives a 500× spike" will become a load test that runs before every release. Hold that thought; Chapter 14 turns it into a way of governing whole platforms.
+One preview: in later chapters these characteristics stop being adjectives and become *fitness functions* — automated checks that continuously verify the architecture still exhibits them. "Survives a 500× spike" will become a load test that runs before every release. Hold that thought; Chapter 15 turns it into a way of governing whole platforms.
 
 **Recap.** Characteristics are the system's *be*, not its *do*. They hide in business sentences; translation is a skill. Security and cost are first-class. Choose ≤ 7 drivers and name what you're *not* optimizing for.
 
@@ -1228,7 +1229,7 @@ The dividing line, restated as doctrine: **choreograph the propagation of facts;
 
 ### 6.5 Flow — Streams as Products
 
-The last move is a promotion: from events as integration plumbing to **streams as products** — discoverable, documented, schema-governed, SLO-carrying assets that teams *subscribe to* the way they call APIs. Encore's `ticket-sales.v2` stream has an owner, a contract, a lag SLO, and three consumers the producer has never met; when a data-science team builds demand forecasting in Chapter 12, they subscribe — no meetings, no export jobs. This is the bridge this chapter lays toward Chapter 9 (data mesh is this idea at analytical scale) and Chapter 14 (the platform serves streams the way it serves compute). Interoperability standards — CloudEvents for envelopes, AsyncAPI for contracts — keep the product promise portable across brokers and clouds.
+The last move is a promotion: from events as integration plumbing to **streams as products** — discoverable, documented, schema-governed, SLO-carrying assets that teams *subscribe to* the way they call APIs. Encore's `ticket-sales.v2` stream has an owner, a contract, a lag SLO, and three consumers the producer has never met; when a data-science team builds demand forecasting in Chapter 12, they subscribe — no meetings, no export jobs. This is the bridge this chapter lays toward Chapter 9 (data mesh is this idea at analytical scale) and Chapter 15 (the platform serves streams the way it serves compute). Interoperability standards — CloudEvents for envelopes, AsyncAPI for contracts — keep the product promise portable across brokers and clouds.
 
 **Recap.** Streams with owners, contracts, and SLOs are products; subscription replaces coordination. This is the seed of data mesh and a core platform service.
 
@@ -1494,7 +1495,7 @@ Data fetching completes the section: request **waterfalls** (component renders �
 
 Micro-frontends promise team-independent frontend deployment — Chapter 5's argument one layer up, with the same prerequisite: a *team-coordination problem, measured in waiting*. One team? Pure cost. Encore's nine teams with two frontend-heavy ones? A modular monolith frontend (Section 8.2 boundaries, one deploy) serves fine, with one exception worth its price: the **organizer portal** — different users, different release cadence, different risk tolerance than the fan storefront — ships as a separate application behind the same design system. That is micro-frontends at its most defensible: split along *experience* seams, not component seams.
 
-For organizations that do need runtime composition, the menu with prices: **build-time packages** (a library by another name — re-couples deploys), **runtime module federation** (true independence; version discipline required), **iframes** (bulletproof isolation, miserable seams), **edge-side composition** (strong for content, weak for rich interaction). Every runtime option pays three taxes the monolith frontend never sees: payload duplication, UX consistency drift, and a *shell* — the router/auth/composition layer, now a product needing an owner (Chapter 14 will name it: platform).
+For organizations that do need runtime composition, the menu with prices: **build-time packages** (a library by another name — re-couples deploys), **runtime module federation** (true independence; version discipline required), **iframes** (bulletproof isolation, miserable seams), **edge-side composition** (strong for content, weak for rich interaction). Every runtime option pays three taxes the monolith frontend never sees: payload duplication, UX consistency drift, and a *shell* — the router/auth/composition layer, now a product needing an owner (Chapter 15 will name it: platform).
 
 > **The distributed monolith, browser edition.** If your micro-frontends must release together because they share state shape, route contracts, or a redux store — you have the deployment independence of a monolith plus the payload of a federation. The Chapter 5 test applies verbatim: can this piece ship alone, unannounced?
 
@@ -1651,7 +1652,7 @@ Analytics has its own architectural lineage: the **warehouse** (structured, gove
 
 #### The book's own logic, applied to analytics
 
-Read the four principles of Zhamak Dehghani's data mesh as this chapter's greatest hits reassembled. **Domain ownership**: the ticketing team owns ticketing's analytical data — Conway, Chapter 3. **Data as a product**: streams with owners, contracts, and SLOs — Section 6.5, now with discoverability and documentation. **Self-service platform**: domains cannot each build lakehouse plumbing, so a platform makes publishing a data product as easy as deploying a service — Chapter 14's thesis, arriving early. **Federated computational governance**: global rules for privacy, identifiers, and quality metadata, enforced *as code in the platform* rather than as a committee's memos — Chapter 5's paved road, data edition.
+Read the four principles of Zhamak Dehghani's data mesh as this chapter's greatest hits reassembled. **Domain ownership**: the ticketing team owns ticketing's analytical data — Conway, Chapter 3. **Data as a product**: streams with owners, contracts, and SLOs — Section 6.5, now with discoverability and documentation. **Self-service platform**: domains cannot each build lakehouse plumbing, so a platform makes publishing a data product as easy as deploying a service — Chapter 15's thesis, arriving early. **Federated computational governance**: global rules for privacy, identifiers, and quality metadata, enforced *as code in the platform* rather than as a committee's memos — Chapter 5's paved road, data edition.
 
 A data product, concretely, is not a table with good intentions:
 
@@ -1683,7 +1684,7 @@ Honesty clause, as always: the mesh is an org-scale answer to an org-scale probl
 
 ### 9.5 The Self-Service Data Platform
 
-The mesh stands or falls on its platform plane — and so does Chapter 12. What domains must be able to do *without tickets*: declare a product (scaffold, registry entry, catalog listing), publish ports (stream + table from one definition), inherit governance (PII detection, retention, access policies applied by the platform, not by memory), and observe (freshness, quality, lineage dashboards for free). This is Chapter 14's golden-path pattern with data-shaped paving stones — build it once, and the third data product costs a sprint instead of a quarter.
+The mesh stands or falls on its platform plane — and so does Chapter 12. What domains must be able to do *without tickets*: declare a product (scaffold, registry entry, catalog listing), publish ports (stream + table from one definition), inherit governance (PII detection, retention, access policies applied by the platform, not by memory), and observe (freshness, quality, lineage dashboards for free). This is Chapter 15's golden-path pattern with data-shaped paving stones — build it once, and the third data product costs a sprint instead of a quarter.
 
 The closing bridge is the reason this section exists: **AI eats from here.** Chapter 12's feature pipelines and retrieval corpora are *consumers of data products* — demand forecasting subscribes to `ticket-sales`; the support assistant's RAG corpus is built from the `support-cases` product, inheriting its contract, lineage, and access rules. Teams that skipped this chapter's discipline meet it again as "why does the model train on stale, unowned, permission-less data" — the same lesson at a higher invoice.
 
@@ -1766,7 +1767,7 @@ Threat modeling is done *at design time, by the designing team, on the C4 diagra
 
 The castle model — hard shell, soft interior — died of its own success condition: one phished credential inside the wall and the attacker walks laterally through implicit trust. Zero trust's working tenets — Microsoft's distillation, aligned with NIST SP 800-207: **verify explicitly** (every request, from anywhere), **least privilege** (access to the resource, not the network), **assume breach** (design blast radii, not just walls). Concretely, three identity planes:
 
-**Humans.** OIDC/SSO with MFA, short sessions, and — the architectural part — *roles modeled on the domain*: Chapter 7's scopes (`holds:write`) and Chapter 13's tenant claims are authorization vocabulary designed alongside the API, not bolted on by an admin console.
+**Humans.** OIDC/SSO with MFA, short sessions, and — the architectural part — *roles modeled on the domain*: Chapter 7's scopes (`holds:write`) and Chapter 14's tenant claims are authorization vocabulary designed alongside the API, not bolted on by an admin console.
 
 **Workloads.** The under-built plane. Every service gets a cryptographic identity (SPIFFE-style: `spiffe://encore/inventory`), mTLS everywhere (Chapter 5's mesh finally shows its security face — identity and encryption as *infrastructure policy*, not per-team diligence), and authorization between services: Inventory accepts `reserve` calls from Orders and the Gate, and *no one else*, as declared policy. Lateral movement dies in policy, not in hope.
 
@@ -1810,7 +1811,7 @@ Four disciplines cover the stack's remaining altitude, each with one architectur
 
 #### Blast radius is a design variable
 
-Assume-breach thinking asks of every component: *when* this is compromised, what does the attacker hold? Isolation is the discipline of making that answer small. Tenant isolation models — Tod Golding's taxonomy, which Chapter 13 builds on: **silo** (per-tenant stacks — smallest blast radius, largest bill), **pool** (shared everything, isolation by row-level policy and tenant-scoped tokens — efficient, and one missing `WHERE tenant_id` from disaster; the mitigation is *centralizing* that predicate in the platform layer, never per-query diligence), **bridge** (pooled compute, siloed data — the common compromise). Encore runs the pooled model with two silo exceptions demanded by classification: the ledger and Bot Screening's risk data.
+Assume-breach thinking asks of every component: *when* this is compromised, what does the attacker hold? Isolation is the discipline of making that answer small. Tenant isolation models — Tod Golding's taxonomy, which Chapter 14 builds on: **silo** (per-tenant stacks — smallest blast radius, largest bill), **pool** (shared everything, isolation by row-level policy and tenant-scoped tokens — efficient, and one missing `WHERE tenant_id` from disaster; the mitigation is *centralizing* that predicate in the platform layer, never per-query diligence), **bridge** (pooled compute, siloed data — the common compromise). Encore runs the pooled model with two silo exceptions demanded by classification: the ledger and Bot Screening's risk data.
 
 Two isolation frontiers are distinctly modern. The first is **sandboxing untrusted execution** — webhooks, partners' code, and, arriving with Chapter 12, AI-generated actions. These run behind gVisor/Firecracker-class boundaries with controlled egress, because "it's just a webhook handler" is how supply chains fall. The second is **the AI-era attack surface**, previewed now so Chapter 12 inherits the vocabulary: prompt injection (untrusted text steering a model that holds credentials), retrieval leakage (RAG answering across permission boundaries — Chapter 9's access rules must survive *inside* the corpus), and model exfiltration. The pattern that governs all three: the model is an *untrusted execution environment fed by untrusted input* — sandbox its tools, scope its retrieval, filter its output.
 
@@ -1950,7 +1951,7 @@ Serverless gets the sharp version of the lesson: per-invocation pricing means th
 
 The closing move gathers the chapter into a design-time discipline. **Production readiness** becomes a checklist any service answers before first deploy — SLOs declared? runbooks written? scaling ceilings known? dashboards wired? cost budget set? backup *restore* tested (a backup never restored is a hope with storage costs)? — not as bureaucracy but as the operational twin of Chapter 1's characteristics worksheet. **Testing meets cloud reality**: local fidelity has limits, especially serverless — so contract tests around managed services, ephemeral environments for integration, and Section 11.2's canaries as the final examiner. Before the closing thesis, the discipline this chapter cannot skip: **surviving a region**. Two numbers turn disaster recovery from a document into architecture — **RTO** (how long until service returns) and **RPO** (how much data you may lose) — and they are Chapter 1 characteristics with invoices attached: each order of magnitude tighter multiplies cost. Encore's ledger: the catalog tolerates an hour and loses nothing; the seat ledger tolerates minutes and may lose *zero* — the tightest constraint, not the average, sizes the strategy. The strategies are two, priced by Chapter 4's consistency budget. **Active–passive** — one region serves, a replica region follows — is simpler and cheaper, and its RPO is exactly your replication lag; failover is a rehearsed promotion. **Active–active** — both regions serve — buys seconds of RTO at the price Chapter 4 named: cross-region writes are either slow (synchronous) or conflicted (asynchronous), so Encore runs active–active for reads and *pins each event's writes to a home region* — partition keys doing geography. **Data residency** stacks a legal force on top: EU fans' data stays in the EU by law — a context boundary drawn by regulators. None of it is real until practiced: **game days** — deliberate failovers on calm Tuesdays — are DR's fitness function; a failover you have never run is a hope with a runbook. Encore drills quarterly — the drill that went badly taught more than the three that went well.
 
-**Lifecycle honesty**: runtimes, base images, and dependencies age like fruit, not wine; upgrading is scheduled maintenance owned like features (the platform's automation in Chapter 14 will make it ambient). The module's — and chapter's — thesis in one line: *operability is a property you design, then verify with fitness functions, exactly like every other characteristic since Chapter 1.* And with that, a door opens this chapter cannot walk through alone: everything here — golden pipelines, SLO tooling, cost dashboards, readiness checks — wants to be *productized* so seventy teams get it for free. Hold that thought two chapters.
+**Lifecycle honesty**: runtimes, base images, and dependencies age like fruit, not wine; upgrading is scheduled maintenance owned like features (the platform's automation in Chapter 15 will make it ambient). The module's — and chapter's — thesis in one line: *operability is a property you design, then verify with fitness functions, exactly like every other characteristic since Chapter 1.* And with that, a door opens this chapter cannot walk through alone: everything here — golden pipelines, SLO tooling, cost dashboards, readiness checks — wants to be *productized* so seventy teams get it for free. Hold that thought two chapters.
 
 **Recap.** Readiness is a pre-deploy worksheet; restores are tested, not assumed; canaries examine what local tests cannot; upgrades are owned work. Operability is a designed, verified characteristic.
 
@@ -2096,7 +2097,7 @@ Guardrails wrap the runtime in layers, none sufficient alone: **structured outpu
 
 ### 12.5 Operating AI at Scale
 
-The invoice arrives token-denominated, and Chapter 11's disciplines apply with new arithmetic. **Unit economics**: Encore tracks *AI cost per resolved conversation* — model spend ÷ resolutions — and watches the denominator as closely as the numerator (a cheaper model that resolves less is a false economy the ratio catches). The cost levers, in order of leverage: **routing** (the two-tier insight from Section 12.1 — classify-and-route sends 80% of turns to a model a tenth the price), **caching** (semantic caches for repeated questions; prompt-prefix caching for the shared system context — Chapter 4's staleness discipline, token edition), **budgeting** (per-feature spend ceilings with graceful degradation to templated answers — Chapter 4's load shedding, token-priced). **Latency** is perceived through Chapter 8's lens: stream everything, prefetch retrieval while the user types, and measure time-to-first-token, which is the number users feel. **Multi-tenancy** previews Chapter 13 with teeth: per-tenant isolation of prompts, corpora, and *spend* — one tenant's runaway agent must throttle inside its own budget, not everyone's — and tenant data never crosses corpus boundaries, structurally. The through-line of the whole chapter, one last time: nothing here required forgetting the first eleven chapters; every AI-scale problem yielded to an old discipline with new units.
+The invoice arrives token-denominated, and Chapter 11's disciplines apply with new arithmetic. **Unit economics**: Encore tracks *AI cost per resolved conversation* — model spend ÷ resolutions — and watches the denominator as closely as the numerator (a cheaper model that resolves less is a false economy the ratio catches). The cost levers, in order of leverage: **routing** (the two-tier insight from Section 12.1 — classify-and-route sends 80% of turns to a model a tenth the price), **caching** (semantic caches for repeated questions; prompt-prefix caching for the shared system context — Chapter 4's staleness discipline, token edition), **budgeting** (per-feature spend ceilings with graceful degradation to templated answers — Chapter 4's load shedding, token-priced). **Latency** is perceived through Chapter 8's lens: stream everything, prefetch retrieval while the user types, and measure time-to-first-token, which is the number users feel. **Multi-tenancy** previews Chapter 14 with teeth: per-tenant isolation of prompts, corpora, and *spend* — one tenant's runaway agent must throttle inside its own budget, not everyone's — and tenant data never crosses corpus boundaries, structurally. The through-line of the whole chapter, one last time: nothing here required forgetting the first eleven chapters; every AI-scale problem yielded to an old discipline with new units.
 
 **Recap.** Track cost per resolved outcome; route by tier, cache by meaning, budget with graceful degradation. Stream for perceived latency. Tenant boundaries cover prompts, corpora, and spend.
 
@@ -2125,7 +2126,7 @@ The invoice arrives token-denominated, and Chapter 11's disciplines apply with n
 
 #### Where you now stand
 
-You can place a probabilistic component into a deterministic discipline: gateway'd, grounded, budgeted, evaluated, and contained. Encore, meanwhile, has quietly become something more than a product — venues now ask to run *their own* Encore. Selling one system to many customers is its own architecture, with its own physics of isolation, tiering, and cost attribution. Chapter 13: multi-tenant SaaS.
+You can place a probabilistic component into a deterministic discipline: gateway'd, grounded, budgeted, evaluated, and contained. And notice how many of this chapter's choices were really one question in different clothes: host the model or rent the API, build the gateway or buy it, own the vector store or subscribe to one. The book has answered that question in passing since Chapter 3; the AI stack poses it sharply enough to deserve a chapter of its own. Chapter 13: the economics of buy versus build.
 
 ### References
 
@@ -2140,16 +2141,140 @@ You can place a probabilistic component into a deterministic discipline: gateway
 
 ---
 
-## Chapter 13: Multi-Tenant SaaS Architecture {#ch13}
+## Chapter 13: Buy, Build, and the Economics of Dependence {#ch13}
+
+> Build what makes you different; buy what makes you the same.
+
+Every chapter so far has quietly made this chapter's decision at least once. Chapter 1 handed payments to a provider without ceremony. Chapter 3 told you to buy the generic subdomains and pour your best people into the core. Chapter 11 said to own less by default. Chapter 12 weighed hosting a model against renting an API. The decision kept appearing because it is the most consequential recurring decision an architect makes — and the book has so far treated it in asides. This chapter treats it in full.
+
+Encore's queue makes it concrete. On one whiteboard, in one quarter: replace the homegrown catalog search with a search product, or keep tuning it? Adopt a fraud-detection vendor, or keep Bot Screening in-house? Host an open-weights model for the support assistant, or stay on the API? Buy a status page, obviously — but which decisions are "obviously," and why? By the end of this chapter you will have a vocabulary for the options, a map for their timing, an honest ledger for their costs, and a process that turns a hallway argument into a decision that survives its author.
+
+### 13.1 The Decision Space
+
+The first correction is to the question itself: it is not build *versus* buy. There are at least four honest options, and they differ in what you own and what you owe:
+
+| Option | You own | You owe |
+|---|---|---|
+| **Build** | everything: behavior, roadmap, data | everything: maintenance forever, opportunity cost now |
+| **Adopt** (open source) | your deployment, your patches | operations, upgrades, community citizenship |
+| **Buy** (product, self-run) | your configuration and data | licenses, upgrades, integration |
+| **Rent** (SaaS) | your data — if the contract says so | subscription, trust, an exit plan |
+
+The first filter is the one Chapter 3 built: the differentiation test. A capability that makes Encore win — fair on-sale admission, bot resistance — deserves ownership, because owning it is the point. A capability everyone needs and nobody chooses vendors over — auth, email, payments, status pages — deserves the thinnest possible commitment. The middle is where careers are spent: capabilities that matter but do not differentiate, where the four options genuinely compete and the rest of this chapter earns its keep.
+
+Run Encore's queue through the filter. Bot Screening is core: build, keep building. The status page is generic: rent, forget. Catalog search *matters* — fans who cannot find the show cannot buy the ticket — but nobody chooses Encore for its search box: the middle. And the AI stack lands in the middle twice, once for the model and once for everything around it. The filter did not make the decisions; it sorted them by how much deliberation each deserves. That sorting is itself the first saving.
+
+**Recap.** Four options — build, adopt, buy, rent — differing in what you own and what you owe. The differentiation test sorts capabilities into own-it, rent-it, and the deliberation-worthy middle.
+
+**Exercise 13.1.** List the last five capability decisions your organization made (consciously or by default). Which of the four options did each land on, and did anyone apply a differentiation test first?
+
+### 13.2 Evolution and the Map
+
+Capabilities are not fixed points; they move. Simon Wardley's insight, which Chapter 15 will apply to whole platforms, is that every capability travels a predictable road: **genesis** (novel, experimental, nobody sells it), **custom** (understood, hand-built by those who need it), **product** (competing vendors, feature checklists), **commodity** (undifferentiated, priced per unit, boring). The posture that wins at one stage loses at the next:
+
+<pre class="mermaid">
+flowchart LR
+    g["Genesis<br/><small>build — nobody sells it</small>"] --> c["Custom<br/><small>build or adopt — differentiate here?</small>"]
+    c --> pr["Product<br/><small>buy — let vendors compete</small>"]
+    pr --> co["Commodity<br/><small>rent — pay per unit, forget</small>"]
+    classDef hot fill:#f38b1c,stroke:#f38b1c,color:#fff
+    class g hot
+</pre>
+
+*Figure 13.1 — The evolution road and the posture per stage. The failure mode is posture lag: still hand-building what became a product years ago, or renting what should differentiate you.*
+
+Two consequences matter more than the stages themselves. First, **decisions have expiry dates.** The gateway a company built in 2015 was a reasonable custom-stage decision; by the time competing products matured, the same code had become posture lag — undifferentiated maintenance wearing the costume of an asset. Write the expiry into the ADR: "revisit when two credible products exist." Second, **movement cuts both ways.** Today's differentiator commoditizes — and occasionally a commodity un-commoditizes, as model hosting did when AI made inference economics strategic again. The map is not a decision; it is situational awareness that keeps decisions honest as the ground moves.
+
+Encore's search question resolves here: search engines crossed into product territory a decade ago, and a purpose-built search product will beat Encore's tuned-by-two-engineers index on every axis except pride. Buy it, and spend the two engineers on the on-sale.
+
+**Recap.** Capabilities travel genesis → custom → product → commodity, and the winning posture changes at each stage. Decisions need expiry dates; the map is awareness, not an answer.
+
+**Exercise 13.2.** Place your organization's five biggest homegrown systems on the evolution road. For any sitting in product or commodity territory, name what keeping them costs per year.
+
+### 13.3 The Honest Economics
+
+The build-side ledger is systematically underestimated, and the reason is visible in how estimates are made: teams price the *construction* and forget the *ownership*. Across the industry's long experience, maintenance consumes well over half of a system's lifetime cost — often far more — and it arrives exactly when the excitement is gone and the builders have moved on. Add the quieter lines: the opportunity cost of your best engineers doing undifferentiated work, the bus factor of a system three people understand, and the recruiting tax of a stack nobody else runs. The honest question is never "can we build this?" — of course you can — but "should we still be paying for it in year six?"
+
+The buy-side ledger is underestimated differently. Integration is never the demo: it is identity, data flows, failure modes, and the seams where the product's model meets yours. Lock-in compounds quietly — Section 13.4 gives it a taxonomy. Prices rise after you have integrated; vendors get acquired, sunset products, or die. So the buy-side ADR needs a line the enthusiasm usually omits: **the exit plan**. What leaves with you — data, configuration, muscle memory — and how long would leaving take? Chapter 3's anticorruption layer returns here in its most commercial role: the translation seam that keeps a vendor's model out of your core is precisely what makes the vendor replaceable.
+
+Open source is the middle path, and I have spent a decade on its far side. MockK is other people's "adopt" decision: they got a mocking library for free, and they genuinely got it — no license, no vendor, forkable forever. What they also got, without a contract naming it, is a dependency on one maintainer's weekends. Adoption done well budgets for that reality: pin versions, follow the project's health as you would a vendor's balance sheet, and contribute fixes upstream — partly citizenship, partly the cheapest insurance policy in software.
+
+**Recap.** Building is priced at construction but paid in ownership; buying is priced at subscription but paid in integration and exit. Every buy-side ADR carries an exit plan; every adoption budgets for the maintainer's weekends.
+
+**Exercise 13.3.** Take one system your team built more than three years ago. Estimate honestly: what fraction of its lifetime cost was the initial build? Would you build it again today, and if not, what is the exit plan?
+
+### 13.4 Lock-In and the Special Cases
+
+Lock-in is not an argument against buying; it is a cost to be measured, and it comes in kinds worth separating, because they have different escapes:
+
+| Lock-in | Mechanism | Escape |
+|---|---|---|
+| **Data gravity** | your data lives there, and moving it costs money and risk | continuous export, open formats, tested restores |
+| **Interface** | proprietary APIs threaded through your code | the ACL: one translation seam instead of a thousand call sites |
+| **Egress** | leaving is priced per byte | know the number before signing, not after |
+| **Skills** | the team's expertise is vendor-shaped | hire for fundamentals; train for products |
+| **Contract** | terms that punish exactly the growth you want | negotiate exit and price caps while you are small and charming |
+
+When does build win against the current? Three honest cases. When the capability *is* the differentiation — nobody buys their core. When the terms are unacceptable and no vendor will fix them — regulated data with nowhere compliant to put it. And at scale, when the arithmetic inverts: renting is buying someone else's margin, and past a certain volume that margin funds a team of your own. The repatriation stories the industry retells are real, and they are also rare, because most companies never reach the volumes where the inversion happens. Run the numbers; do not run on the folklore.
+
+The AI stack is this chapter's live case, and Chapter 12 already walked its ledger: renting the model API buys frontier quality and zero operations at a per-token price and a data-governance question; hosting open weights buys control and unit economics at the price of an inference platform someone must run. What the evolution map adds is timing — model serving is racing from custom toward commodity faster than any capability in memory, which argues for thin commitments and revisit dates measured in quarters, not years.
+
+**Recap.** Lock-in has kinds — data, interface, egress, skills, contract — each with its own escape. Build wins for differentiators, unacceptable terms, or inverted arithmetic at scale; the AI stack demands thin commitments and short revisit dates.
+
+**Exercise 13.4.** For your most important vendor dependency, write the exit plan that does not exist: what leaves with you, through which seam, in how many weeks — and which of the five lock-ins would hurt most?
+
+### 13.5 Running the Decision
+
+A buy-versus-build decision that lives in a meeting dies in a meeting. The durable form is the one this book has used since Chapter 1: an ADR — with two sections this decision type makes mandatory. The **exit plan**, because dependence chosen without an exit is not a decision but a surrender. And the **expiry date**, because Section 13.2's ground keeps moving. Time-box the evaluation itself: a proof of concept with a calendar and success criteria, not an open-ended spike that becomes a shadow project. Score reversibility explicitly — a rented status page is a revolving door; a data platform is a one-way gate — and spend deliberation in proportion.
+
+Then there is the part the frameworks omit: these decisions are political, because they move budgets, headcount, and pride. I once led the retirement of a home-built API gateway in favor of a market one. The map made the call obvious in an afternoon; making it real took a chief product and technology officer's sign-off, four architecture-board sessions, and a year of engineering beside the teams — tens of thousands of lines of integration and Kubernetes-operator code before the old gateway could die. Nobody defended the old gateway on its merits. People defended what it represented: work they were proud of, expertise they held, a decision that had been right when it was made. The winning argument was never "our gateway is bad" — it was the evolution map plus the maintenance ledger plus an exit plan, presented patiently in every register. Commodity does not mean effortless; it means the effort buys you out of undifferentiated maintenance forever.
+
+**Recap.** The decision's durable form is an ADR with an exit plan and an expiry date, evaluated in a time-boxed proof of concept, deliberated in proportion to reversibility — and won politically with maps and ledgers, not verdicts on people's past work.
+
+**Exercise 13.5.** Draft the one-page ADR for a buy-versus-build decision your organization is currently avoiding. Include the two mandatory sections. Which stakeholder's pride does it threaten, and what does the map say to them?
+
+### Kata: Compass
+
+> **Your brief: "Compass."** A 40-engineer logistics startup routing same-day deliveries in three cities. On the quarter's decision list: authentication (currently homegrown, passwords and all), package search for the support team (currently SQL `LIKE` queries), payments (currently one processor, hardcoded), and route optimization — the thing customers actually pay for (currently the founder's algorithm, which beats every vendor they have benchmarked). The CTO's constraint: "we can staff exactly one build."
+
+**Deliverables:**
+
+1. **Evolution map** — all four capabilities placed on the genesis-to-commodity road, with a posture per position.
+2. **The ledger** — for each capability: honest build cost (construction *and* ownership) against honest buy cost (integration *and* exit), order-of-magnitude numbers.
+3. **Four ADRs** — each with the two mandatory sections: exit plan and expiry date.
+4. **The one build** — which capability gets the staffing, defended against the differentiation test.
+
+**Rubric:**
+
+| Criterion | The question to ask yourself |
+|---|---|
+| Posture honesty | Is anything hand-built in commodity territory, or rented in core territory? |
+| Ledger completeness | Does every build estimate include year-six maintenance; every buy, the exit? |
+| Exit realism | Could the payments exit plan actually execute in the stated weeks? |
+| The one build | Did route optimization get the build — and if not, what beat the differentiator? |
+
+#### Where you now stand
+
+You can sort capabilities by differentiation, time decisions with the map, keep two honest ledgers, and run the decision as a process with an exit and an expiry. Encore, meanwhile, has quietly become something more than a product — venues now ask to run *their own* Encore. Being on the selling side of someone else's buy-versus-build decision is its own architecture, with its own physics of isolation, tiering, and cost attribution. Chapter 14: multi-tenant SaaS.
+
+### References
+
+- Gregor Hohpe — [*Cloud Strategy*](https://leanpub.com/cloudstrategy). Leanpub, 2020.
+- Eben Hewitt — [*Technology Strategy Patterns*](https://www.oreilly.com/library/view/technology-strategy-patterns/9781492040866/). O'Reilly, 2018.
+- Simon Wardley — [*Wardley Maps*](https://learnwardleymapping.com/book/). Free online, CC BY-SA.
+
+---
+
+## Chapter 14: Multi-Tenant SaaS Architecture {#ch14}
 
 > One system, many customers, and every customer convinced it was built for them alone.
 
 
 Encore's inbound email changed the company: a national venue chain wants "Encore, but ours" — their brand, their data, their compliance regime, running on Encore's machinery. This is the SaaS turn, and it is not a deployment detail. Multi-tenancy is a *defining architectural constraint*: one system serving many customers, with isolation, fairness, and per-tenant economics designed in from the first line — because every one of those properties, retrofitted, costs ten times what it costs designed.
 
-This chapter is the full treatment, and it is deliberately the penultimate chapter of the book: a SaaS product is a platform with billing attached, and every mechanism built here — the control plane, self-service onboarding, tenant-aware operations — is the same machinery Chapter 14 generalizes to internal platforms. The word "tenant" touches identity (Chapter 10), partitioning (Chapter 4), cost (Chapter 11), even AI spend (Chapter 12): not a feature — a dimension that runs through everything.
+This chapter is the full treatment, and it is deliberately the penultimate chapter of the book: a SaaS product is a platform with billing attached, and every mechanism built here — the control plane, self-service onboarding, tenant-aware operations — is the same machinery Chapter 15 generalizes to internal platforms. The word "tenant" touches identity (Chapter 10), partitioning (Chapter 4), cost (Chapter 11), even AI spend (Chapter 12): not a feature — a dimension that runs through everything.
 
-### 13.1 The SaaS Mindset
+### 14.1 The SaaS Mindset
 
 #### Two planes, three models
 
@@ -2168,15 +2293,15 @@ flowchart TB
     class cp plane
 </pre>
 
-*Figure 13.1 — The two planes. Everything the next four modules build is one of these boxes. Companies that skip the control plane still have one — made of runbooks, spreadsheets, and a heroic ops engineer named something like Dana.*
+*Figure 14.1 — The two planes. Everything the next four modules build is one of these boxes. Companies that skip the control plane still have one — made of runbooks, spreadsheets, and a heroic ops engineer named something like Dana.*
 
-Within the application plane, tenants deploy on a spectrum of three models — Golding's taxonomy again: **silo** (each tenant their own stack — maximum isolation, maximum cost, compliance's darling), **pool** (shared everything, tenancy by scoping — one deployment, ruthless efficiency, Chapter 10's isolation stakes), and **bridge** (pooled compute, siloed data — the workhorse compromise). The senior insight: this is a *per-tenant, per-tier* decision, not a company decision — and Section 13.5 will price it accordingly.
+Within the application plane, tenants deploy on a spectrum of three models — Golding's taxonomy again: **silo** (each tenant their own stack — maximum isolation, maximum cost, compliance's darling), **pool** (shared everything, tenancy by scoping — one deployment, ruthless efficiency, Chapter 10's isolation stakes), and **bridge** (pooled compute, siloed data — the workhorse compromise). The senior insight: this is a *per-tenant, per-tier* decision, not a company decision — and Section 14.5 will price it accordingly.
 
 **Recap.** Control plane manages tenants; application plane serves them; the control plane is the new crown jewel. Silo, pool, and bridge are a menu, chosen per tier — not an identity.
 
-**Exercise 13.1.** Inventory what your company would need in a control plane today: how many of Figure 13.1's five boxes currently exist as software, and how many as Dana?
+**Exercise 14.1.** Inventory what your company would need in a control plane today: how many of Figure 14.1's five boxes currently exist as software, and how many as Dana?
 
-### 13.2 Tenant Lifecycle
+### 14.2 Tenant Lifecycle
 
 #### Onboarding is architecture, identity is destiny
 
@@ -2186,13 +2311,13 @@ Identity does the daily work. The rule that prevents a category of catastrophe: 
 
 **Recap.** Onboarding is a compensating workflow measured in minutes-to-first-value, identical across tiers. Tenancy lives in the token from authentication onward and propagates like a correlation ID — making the rest of this chapter queryable.
 
-**Exercise 13.2.** Sketch Encore's self-service onboarding as a Chapter 6 process model: steps, compensations, and the verification that flips a tenant to "live."
+**Exercise 14.2.** Sketch Encore's self-service onboarding as a Chapter 6 process model: steps, compensations, and the verification that flips a tenant to "live."
 
-### 13.3 Building Multi-Tenant Services
+### 14.3 Building Multi-Tenant Services
 
 #### Tenant-aware without tenant-riddled
 
-The application plane's code-quality battle is keeping tenancy *ambient* rather than epidemic. The failure mode: `if (tenant.tier == "enterprise")` sprinkled through business logic until no path is testable. The discipline: tenancy is resolved once (Section 13.2's token), enforced in shared infrastructure layers, and expressed in business code as *configuration, not conditionals* — Encore's seat-hold TTL is a per-tenant config value, not a branch.
+The application plane's code-quality battle is keeping tenancy *ambient* rather than epidemic. The failure mode: `if (tenant.tier == "enterprise")` sprinkled through business logic until no path is testable. The discipline: tenancy is resolved once (Section 14.2's token), enforced in shared infrastructure layers, and expressed in business code as *configuration, not conditionals* — Encore's seat-hold TTL is a per-tenant config value, not a branch.
 
 Data partitioning applies Chapter 4's machinery with a tenant key:
 
@@ -2202,15 +2327,15 @@ Data partitioning applies Chapter 4's machinery with a tenant key:
 | Schema-per-tenant | one DB, N schemas | schema drift at N | middling both |
 | Database-per-tenant | full separation | smallest | migrations × N, connection sprawl |
 
-*Figure 13.2 — Partitioning schemes. The pooled row's risk column is why Chapter 10 insisted the tenant predicate be centralized — in the ORM layer, row-level security, or the data-access library — so ten thousand queries rely on one guarded implementation, not ten thousand memories.*
+*Figure 14.2 — Partitioning schemes. The pooled row's risk column is why Chapter 10 insisted the tenant predicate be centralized — in the ORM layer, row-level security, or the data-access library — so ten thousand queries rely on one guarded implementation, not ten thousand memories.*
 
-Isolation must then survive *runtime*: tenant-scoped credentials (the request's DB session can only see its tenant's rows — defense below the application), and **noisy-neighbor fairness**, which for Encore is existential: one tenant's on-sale *is* a Chapter 4 spike aimed at shared infrastructure. The answer stack: per-tenant rate limits and concurrency quotas at the edge, fair queueing in shared workers, and the Gate's admission control now *tenant-aware* — plus the bridge-model escape hatch of moving a chronically hot tenant to dedicated capacity, at a price Section 13.5 will name.
+Isolation must then survive *runtime*: tenant-scoped credentials (the request's DB session can only see its tenant's rows — defense below the application), and **noisy-neighbor fairness**, which for Encore is existential: one tenant's on-sale *is* a Chapter 4 spike aimed at shared infrastructure. The answer stack: per-tenant rate limits and concurrency quotas at the edge, fair queueing in shared workers, and the Gate's admission control now *tenant-aware* — plus the bridge-model escape hatch of moving a chronically hot tenant to dedicated capacity, at a price Section 14.5 will name.
 
 At scale the isolation instruments consolidate into the **cell**: a complete, self-contained instance of the application plane — its own compute, stores, queues — serving a fixed subset of tenants, the control plane routing each tenant to exactly one. Cells are Chapter 4's bulkhead grown to full size: the unit of blast radius (a bad deploy or poison-pill tenant takes down one cell, not the product), of scale (add cells, not heroics), and of operations (canary a cell, drain a cell, game-day a cell). **Shuffle sharding** — AWS's technique, via Colm MacCárthaigh — sharpens the fairness story: assign each tenant to a small random *combination* of resources, and two tenants rarely share their whole footprint — a noisy neighbor degrades slivers of many tenants' capacity instead of everything for a few. The menu, complete:
 
 | Model | Blast radius | Cost efficiency | Fits |
 |---|---|---|---|
-| Pool | everything | best | self-service tiers, with Section 13.3's discipline |
+| Pool | everything | best | self-service tiers, with Section 14.3's discipline |
 | Bridge | shared compute, siloed data | good | mid-tier |
 | Cell | one cell's tenants | good at scale | pooled tiers past the first serious incident |
 | Silo | one tenant | worst | compliance-bound enterprise |
@@ -2219,23 +2344,23 @@ Encore's endgame runs pooled cells of ~50 venues each and siloed stacks for the 
 
 **Recap.** Resolve tenancy once, enforce it in layers, express it as config. Choose partitioning per blast-radius budget; centralize the predicate; scope runtime credentials. Fairness is engineered with quotas and fair queues — and priced when quotas aren't enough.
 
-**Exercise 13.3.** Grep (mentally or actually) a codebase you know for tier/tenant conditionals in business logic. Redesign the worst one as configuration.
+**Exercise 14.3.** Grep (mentally or actually) a codebase you know for tier/tenant conditionals in business logic. Redesign the worst one as configuration.
 
-### 13.4 SaaS on Real Stacks
+### 14.4 SaaS on Real Stacks
 
-The models of Section 13.1 land differently on the two dominant substrates. **Kubernetes SaaS**: namespace-per-tenant with quotas and network policies gives bridge-grade isolation in one cluster; silo tiers get dedicated node pools or clusters; the noisy-neighbor tools are the scheduler's (requests/limits, priority classes). **Serverless SaaS**: per-invocation isolation comes free, making pooled compute safer by default; concurrency limits per tenant become the fairness lever; and per-invocation billing makes *cost attribution nearly exact* — the property Chapter 11's FinOps discipline now depends on. Encore runs the pattern this chapter has been converging on: pooled serverless deployments for the self-service five hundred, the bridge model on Kubernetes for the mid-tier, and siloed stacks for the venue chain whose auditors require it.
+The models of Section 14.1 land differently on the two dominant substrates. **Kubernetes SaaS**: namespace-per-tenant with quotas and network policies gives bridge-grade isolation in one cluster; silo tiers get dedicated node pools or clusters; the noisy-neighbor tools are the scheduler's (requests/limits, priority classes). **Serverless SaaS**: per-invocation isolation comes free, making pooled compute safer by default; concurrency limits per tenant become the fairness lever; and per-invocation billing makes *cost attribution nearly exact* — the property Chapter 11's FinOps discipline now depends on. Encore runs the pattern this chapter has been converging on: pooled serverless deployments for the self-service five hundred, the bridge model on Kubernetes for the mid-tier, and siloed stacks for the venue chain whose auditors require it.
 
-Operations gains a dimension: dashboards, alerts, and SLOs all grow a *tenant axis* (Section 13.2's propagated context paying out). The on-call question stops being "is the system up?" and becomes "is it up *for whom*?" — because a pooled system at 99.99% can be serving one tenant pure errors, invisibly, if nobody slices by tenant. Per-tenant health, per-tenant error budgets for the paying tiers, and support tooling that reconstructs *this tenant's* experience are what "tenant-aware operations" means when the pager goes off.
+Operations gains a dimension: dashboards, alerts, and SLOs all grow a *tenant axis* (Section 14.2's propagated context paying out). The on-call question stops being "is the system up?" and becomes "is it up *for whom*?" — because a pooled system at 99.99% can be serving one tenant pure errors, invisibly, if nobody slices by tenant. Per-tenant health, per-tenant error budgets for the paying tiers, and support tooling that reconstructs *this tenant's* experience are what "tenant-aware operations" means when the pager goes off.
 
 **Recap.** Kubernetes buys isolation with namespaces and schedulers; serverless buys it per-invocation with exact cost attribution. A mix of substrates across tiers is the mature answer. Every operational artifact — dashboard, SLO, alert — grows a tenant dimension, or incidents hide inside averages.
 
-**Exercise 13.4.** Take one alert your team owns. Rewrite it tenant-sliced: what threshold, per whom, and what would last month have shown that the averaged version hid?
+**Exercise 14.4.** Take one alert your team owns. Rewrite it tenant-sliced: what threshold, per whom, and what would last month have shown that the averaged version hid?
 
-### 13.5 The Business of Multi-Tenancy
+### 14.5 The Business of Multi-Tenancy
 
 #### Tiers are architecture with a price list
 
-Tiering is where Section 13.1's menu meets the CFO: architecture and packaging co-designed. Encore's sheet:
+Tiering is where Section 14.1's menu meets the CFO: architecture and packaging co-designed. Encore's sheet:
 
 | Tier | Deployment | Isolation | SLO | AI features | Price logic |
 |---|---|---|---|---|---|
@@ -2243,15 +2368,15 @@ Tiering is where Section 13.1's menu meets the CFO: architecture and packaging c
 | Professional | bridge (pooled compute, own DB) | data silo | 99.95%, own error budget | own AI budget | margin from pooling, comfort from silo |
 | Enterprise | silo | full stack | contractual, tenant-sliced | dedicated corpus + spend | the isolation *is* the product |
 
-*Figure 13.3 — Tiering as co-design. Read it with Chapter 11's eyes: each row is only priceable because per-tenant cost is measurable — metering (requests, storage, AI tokens per tenant) is the control-plane service that keeps margins from being folklore.
+*Figure 14.3 — Tiering as co-design. Read it with Chapter 11's eyes: each row is only priceable because per-tenant cost is measurable — metering (requests, storage, AI tokens per tenant) is the control-plane service that keeps margins from being folklore.
 
-Enterprise tiers gate on a checklist that looks like features and lands like architecture. **SSO** (SAML/OIDC federation) means tenant-configurable identity providers — Section 13.2's identity plane grows per-tenant trust configuration. **SCIM provisioning** means the customer's HR system creates and revokes your users — an inbound API into your identity model, with all of Chapter 7's contract discipline. **Audit logs** become a *product surface*: tenant-visible, exportable, immutable — the Chapter 6 ledger given a customer-facing UI. **Customer-managed keys** (BYOK) push Chapter 10's key hierarchy to its limit: the tenant holds the root, and revoking it must actually render their data unreadable — crypto-shredding as a contractual feature. **Per-tenant rate limits and SLOs** turn Section 13.3's fairness machinery into line items on a contract. Together they make "enterprise-ready" an architecture milestone, not a pricing toggle — the venue chain's security questionnaire arrived before their signature did.*
+Enterprise tiers gate on a checklist that looks like features and lands like architecture. **SSO** (SAML/OIDC federation) means tenant-configurable identity providers — Section 14.2's identity plane grows per-tenant trust configuration. **SCIM provisioning** means the customer's HR system creates and revokes your users — an inbound API into your identity model, with all of Chapter 7's contract discipline. **Audit logs** become a *product surface*: tenant-visible, exportable, immutable — the Chapter 6 ledger given a customer-facing UI. **Customer-managed keys** (BYOK) push Chapter 10's key hierarchy to its limit: the tenant holds the root, and revoking it must actually render their data unreadable — crypto-shredding as a contractual feature. **Per-tenant rate limits and SLOs** turn Section 14.3's fairness machinery into line items on a contract. Together they make "enterprise-ready" an architecture milestone, not a pricing toggle — the venue chain's security questionnaire arrived before their signature did.*
 
 Two closing motions complete the chapter. **Migration** — taking single-tenant software multi-tenant — runs the strangler discipline of Chapter 3: tenant context introduced at the edge first (every request tagged, even with one tenant), the tenant predicate centralized, data consolidated pooled-ward tier by tier, silo customers moved last or never; the big-bang rewrite to multi-tenancy has failed often enough to fill a literature of its own. And **GenAI multi-tenancy** — Chapter 12's preview, now doctrine: tenant boundaries extend through prompts (no cross-tenant context assembly, structurally), corpora (per-tenant indexes or tenant-filtered retrieval — the venue chain's sales data must be unreachable from a rival's assistant, by construction), and spend (per-tenant AI budgets metered like any resource, because an unmetered AI feature is a margin leak that demos well). Tenancy, as promised, turned out to be a dimension of everything.
 
 **Recap.** Tiers map deployment models to price points, and metering makes the mapping honest. Migrate by strangling tenancy inward from the edge. AI features inherit tenant boundaries across prompts, corpora, and spend — structurally, like everything else in this chapter.
 
-**Exercise 13.5.** Draft your product's Figure 13.3 sheet, real or hypothetical. Which cell can you not fill because the metering doesn't exist? That cell is control-plane backlog.
+**Exercise 14.5.** Draft your product's Figure 14.3 sheet, real or hypothetical. Which cell can you not fill because the metering doesn't exist? That cell is control-plane backlog.
 
 ### Kata: The Studio Suite
 
@@ -2259,8 +2384,8 @@ Two closing motions complete the chapter. **Migration** — taking single-tenant
 
 **Deliverables:**
 
-1. **Two-plane design** — Figure 13.1 control plane scoped to twelve engineers: which boxes are built, bought, or Dana-for-now (explicitly).
-2. **Tier sheet** — Figure 13.3 for self-service, standard, Allegro, and the legacy on-prem tail; deployment model and metering per tier.
+1. **Two-plane design** — Figure 14.1 control plane scoped to twelve engineers: which boxes are built, bought, or Dana-for-now (explicitly).
+2. **Tier sheet** — Figure 14.3 for self-service, standard, Allegro, and the legacy on-prem tail; deployment model and metering per tier.
 3. **Migration plan** — from 180 snowflakes to tenancy: edge-tagging first, predicate centralization, data consolidation order, and what "reversible" means at each step.
 4. **Fairness & isolation** — the September-enrollment spike (every school's on-sale, same week): quotas, fair queues, and Allegro's contractual protection.
 5. **One ADR** — "Allegro: silo or bridge?" — with the margin math and the ops bill in ink.
@@ -2276,19 +2401,18 @@ Two closing motions complete the chapter. **Migration** — taking single-tenant
 
 #### Where you now stand
 
-You can serve many masters from one system: planes split, tenants tokenized, fairness engineered, tiers priced. Now step back and look at what Encore has accumulated across thirteen chapters — golden paths, an event backbone, data products, paved-road security, SLO tooling, an AI gateway, a control plane. Some company builds and runs that machinery *for its own teams*. At Encore's size, that company is Encore itself. The final chapter names the discipline: platform engineering — and hands you the capstone.
+You can serve many masters from one system: planes split, tenants tokenized, fairness engineered, tiers priced. Now step back and look at what Encore has accumulated across fourteen chapters — golden paths, an event backbone, data products, paved-road security, SLO tooling, an AI gateway, a control plane. Some company builds and runs that machinery *for its own teams*. At Encore's size, that company is Encore itself. The final chapter names the discipline: platform engineering — and hands you the capstone.
 
 ### References
 
 - Tod Golding — [*Building Multi-Tenant SaaS Architectures*](https://www.oreilly.com/library/view/building-multi-tenant-saas/9781098140632/). O'Reilly, 2024.
 - Sarah Wells — [*Enabling Microservice Success*](https://www.oreilly.com/library/view/enabling-microservice-success/9781098130787/). O'Reilly, 2024.
-- Gregor Hohpe — [*Cloud Strategy*](https://leanpub.com/cloudstrategy). Leanpub, 2020.
 - Martin L. Abbott, Michael T. Fisher — [*The Art of Scalability*, 2nd ed.](https://www.informit.com/store/art-of-scalability-scalable-web-architecture-processes-9780134032801) Addison-Wesley, 2015.
 - Amazon — [*The Amazon Builders' Library*](https://aws.amazon.com/builders-library/). Free online.
 
 ---
 
-## Chapter 14: Platform Engineering and the Capstone {#ch14}
+## Chapter 15: Platform Engineering and the Capstone {#ch15}
 
 > The best architecture is the one other teams build great things on without asking you anything.
 
@@ -2297,7 +2421,7 @@ Encore is now 400 engineers in 40 teams, and its most important customer is one 
 
 Why is platform architecture the *destination*? Because it is architecture applied to architecture: your users are engineers, your product is their velocity, your API is a golden path, and every trade-off you've learned reappears one level up. This chapter teaches the discipline — and then hands you the capstone: a complete platform design, defended the way you have defended everything since Chapter 1, decision by decision, loss by loss.
 
-### 14.1 Why Platforms
+### 15.1 Why Platforms
 
 #### Cognitive load is the resource being architected
 
@@ -2316,17 +2440,17 @@ The anti-patterns are all failures of this stance:
 | Ticket-queue "platform" | absorbs work instead of automating it; becomes the bottleneck it replaced |
 | Kitchen-sink platform | says yes to everything; owned by no coherent thesis; unmaintainable |
 
-*Figure 14.1 — Four ways platforms die. All four are cured by the same medicine: real customers, voluntary adoption, measured value, thin start.*
+*Figure 15.1 — Four ways platforms die. All four are cured by the same medicine: real customers, voluntary adoption, measured value, thin start.*
 
 **Recap.** Platforms exist to return cognitive load to the business. Platform-as-product — voluntary customers, measured adoption, thinnest-viable start — is the operating model; the anti-patterns are what happens without it.
 
-**Exercise 14.1.** List everything a new service at your company needs before it serves production traffic safely. Time-estimate the list for a team doing it alone. That number is the platform's business case, or its absence.
+**Exercise 15.1.** List everything a new service at your company needs before it serves production traffic safely. Time-estimate the list for a team doing it alone. That number is the platform's business case, or its absence.
 
-### 14.2 Platform Anatomy
+### 15.2 Platform Anatomy
 
 #### Golden paths on a self-service control plane
 
-The platform's product surface is the **golden path**: an opinionated, supported, self-service route through a common need. Anatomy of Encore's "new service" path: a template (service skeleton with Chapter 5's contracts, Chapter 10's identity, Chapter 11's observability pre-wired), a provisioning workflow (pipeline, dashboards, on-call rotation, cost budget — created, not documented), a registry entry (ownership, tier, SLOs — the service catalog that answers "who owns this?" at 3 a.m.), and a scorecard (production-readiness, Chapter 11, now continuously graded). Underneath, the platform is *architecturally* Chapter 13's lesson applied inward: a **control plane** managing internal tenants — the teams — over the planes this book built one by one:
+The platform's product surface is the **golden path**: an opinionated, supported, self-service route through a common need. Anatomy of Encore's "new service" path: a template (service skeleton with Chapter 5's contracts, Chapter 10's identity, Chapter 11's observability pre-wired), a provisioning workflow (pipeline, dashboards, on-call rotation, cost budget — created, not documented), a registry entry (ownership, tier, SLOs — the service catalog that answers "who owns this?" at 3 a.m.), and a scorecard (production-readiness, Chapter 11, now continuously graded). Underneath, the platform is *architecturally* Chapter 14's lesson applied inward: a **control plane** managing internal tenants — the teams — over the planes this book built one by one:
 
 <pre class="mermaid">
 flowchart TB
@@ -2337,15 +2461,15 @@ flowchart TB
     class cp hot
 </pre>
 
-*Figure 14.2 — The platform as the book's index page. Nothing in the bottom row is new; the platform's contribution is the middle: one control plane making it all self-service, registered, and metered — Chapter 13's machinery with teams for tenants.*
+*Figure 15.2 — The platform as the book's index page. Nothing in the bottom row is new; the platform's contribution is the middle: one control plane making it all self-service, registered, and metered — Chapter 14's machinery with teams for tenants.*
 
 Team topology follows Chapter 5's physics: a platform group sized honestly (the industry's rough band: 5–10% of engineering), structured as product teams per plane, with *enabling* interactions — embedding with customers to smooth paths — and one bright line: the platform runs the roads; it never takes the wheel of a product team's service. The moment platform engineers operate product services, the pager teaches ownership backward.
 
 **Recap.** Golden paths are the product: template + workflow + registry + scorecard. The platform is a control plane over the planes of Chapters 6–12, run by a right-sized product organization that paves roads and refuses to drive.
 
-**Exercise 14.2.** Design the golden path for the need Exercise 14.1 surfaced: what does the template contain, what does provisioning create, and what one command runs it?
+**Exercise 15.2.** Design the golden path for the need Exercise 15.1 surfaced: what does the template contain, what does provisioning create, and what one command runs it?
 
-### 14.3 Governance as Code
+### 15.3 Governance as Code
 
 #### The paved road patrols itself
 
@@ -2355,9 +2479,9 @@ Governance includes governing *the platform itself*: platform APIs are Chapter 7
 
 **Recap.** Scorecards + policy-as-code + a priced exception path replace review boards. The platform's own APIs live under the strictest contract discipline in the company, and deprecation campaigns — tooling, funnels, dates — are how it stays alive.
 
-**Exercise 14.3.** Write three policy-as-code rules your organization would enforce at admission today if it could, and one current rule you would *demote* to advisory. Defend the demotion.
+**Exercise 15.3.** Write three policy-as-code rules your organization would enforce at admission today if it could, and one current rule you would *demote* to advisory. Defend the demotion.
 
-### 14.4 Architecting When Code Is Cheap
+### 15.4 Architecting When Code Is Cheap
 
 #### The inversion the preface promised
 
@@ -2371,35 +2495,35 @@ Three practical shifts follow, each landing on machinery you already own:
 
 **Review economics invert.** When implementation was expensive, review meant reading the code; when implementation is cheap and voluminous, human attention must move up the stack — to the boundary, the contract diff, the eval delta, the ADR the change claims to implement. The Chapter 5 pyramid gets a new layer: humans review *decisions and interfaces*; CI reviews everything else, or nobody does. A team that insists on hand-reading generated volume simply becomes the bottleneck its agents route around — usually by merging tired.
 
-**Governance becomes the load-bearing wall.** Section 14.3's machinery — fitness functions, policy-as-code, scorecards — was built to let forty teams move safely. It turns out to be exactly the machinery that lets forty teams *and their agents* move safely: boundary checks, contract tests, and evals in CI are the only reviewers that scale with generation speed. The paved road stops being a convenience and becomes the thing standing between velocity and entropy.
+**Governance becomes the load-bearing wall.** Section 15.3's machinery — fitness functions, policy-as-code, scorecards — was built to let forty teams move safely. It turns out to be exactly the machinery that lets forty teams *and their agents* move safely: boundary checks, contract tests, and evals in CI are the only reviewers that scale with generation speed. The paved road stops being a convenience and becomes the thing standing between velocity and entropy.
 
-> **Erosion at generation speed.** The failure mode has a shape: a thousand commits, each locally plausible, each passing its tests, collectively dissolving the architecture — boundaries fuzzed by helpful little imports, contracts widened by accommodating little fields, until the modular monolith is just a monolith again and nobody typed a line of it. Erosion is not new; the *rate* is. The countermeasure stack is this book in miniature: boundaries enforced by machines (Chapter 2), contracts tested per change (Chapter 5), evals gating behavior (Chapter 12), scorecards surfacing drift (Section 14.3) — and an architect who reads trend lines, not diffs.
+> **Erosion at generation speed.** The failure mode has a shape: a thousand commits, each locally plausible, each passing its tests, collectively dissolving the architecture — boundaries fuzzed by helpful little imports, contracts widened by accommodating little fields, until the modular monolith is just a monolith again and nobody typed a line of it. Erosion is not new; the *rate* is. The countermeasure stack is this book in miniature: boundaries enforced by machines (Chapter 2), contracts tested per change (Chapter 5), evals gating behavior (Chapter 12), scorecards surfacing drift (Section 15.3) — and an architect who reads trend lines, not diffs.
 
 What does not change matters as much: the trade-offs are still yours. No agent owns the consequences row; no eval decides which characteristics should drive Encore's next year. Cheap code raises the value of exactly the judgment this book trained — which is why this section lives in the platform chapter: the platform is where judgment is encoded once and enforced everywhere.
 
 **Recap.** When code is cheap, ADRs, boundaries, contracts, and fitness functions become the steering interface — written for humans and read by machines. Review moves up the stack; governance-as-code becomes the wall that holds at generation speed.
 
-**Exercise 14.4.** Take one recent AI-assisted change in your codebase (or imagine the Notification rebuild). List what was machine-checked before merge and what only a human could have caught. The second list is your erosion surface — name the check that would shrink it.
+**Exercise 15.4.** Take one recent AI-assisted change in your codebase (or imagine the Notification rebuild). List what was machine-checked before merge and what only a human could have caught. The second list is your erosion surface — name the check that would shrink it.
 
-### 14.5 Platform Strategy and the Elevator
+### 15.5 Platform Strategy and the Elevator
 
 #### The map, the money, and the message
 
 The platform consumes real budget in service of indirect value, which makes strategy and communication survival skills. Three instruments:
 
-**The map.** Wardley-style situational awareness in one habit: place each capability on an evolution axis — genesis, custom, product, commodity — and let position dictate posture. Commodities (clusters, queues, registries): *buy or adopt*, differentiate never. Encore's genuine customs: the Gate's fairness engineering, ticketing's domain paths. The classic failure is inverted posture — hand-rolling a commodity (artisanal Kubernetes) while buying the differentiator — Chapter 3's investment table, drawn at company scale. And running the correction is slower than drawing it: I once led the retirement of a home-built API gateway in favor of a market one, and while the map made the call obvious in an afternoon, making it real took a chief product and technology officer's sign-off, four architecture-board sessions, and a year of engineering beside the teams — tens of thousands of lines of integration and Kubernetes-operator code before the old gateway could die. Commodity does not mean effortless; it means the effort buys you out of undifferentiated maintenance forever.
+**The map.** Wardley-style situational awareness in one habit: place each capability on an evolution axis — genesis, custom, product, commodity — and let position dictate posture. Commodities (clusters, queues, registries): *buy or adopt*, differentiate never. Encore's genuine customs: the Gate's fairness engineering, ticketing's domain paths. The classic failure is inverted posture — hand-rolling a commodity (artisanal Kubernetes) while buying the differentiator — Chapter 3's investment table, drawn at company scale. Running such corrections is slower than drawing them — Chapter 13 told the story of one gateway retirement in full, sign-offs and all.
 
 **The money.** The platform's business case is Chapter 11's arithmetic applied to itself: lead-time deltas, incident deltas, unit-cost deltas, onboarding time — measured before and after each path ships. "Developer experience" is the feeling; the *numbers* are what renew funding.
 
 **The message.** The architect-elevator skill: the same platform decision must be spoken at every floor — to engineers as golden paths and guardrails, to directors as delivery predictability, to the CFO as unit economics, to the board as "we ship in days what peers ship in quarters." Riding the elevator — engine room to penthouse and back, translating without distorting — is not a soft skill appended to the technical ones; at platform scale it *is* the deciding skill.
 
-And one of the floors is a classroom. The gateway migration above became real only when I turned teacher: twenty short sessions over two weeks, a dozen hands-on exercises, and by the end the team ran the new platform without me. I no longer consider teaching optional equipment for an architect. An architecture nobody has been taught is a diagram, not a capability — and the architect who cannot teach a decision will forever remain its only operator.
+And one of the floors is a classroom. The gateway migration of Chapter 13 became real only when I turned teacher: twenty short sessions over two weeks, a dozen hands-on exercises, and by the end the team ran the new platform without me. I no longer consider teaching optional equipment for an architect. An architecture nobody has been taught is a diagram, not a capability — and the architect who cannot teach a decision will forever remain its only operator.
 
 And beneath all three, systems thinking: adoption is a feedback loop (good paths → users → feedback → better paths), and stalls are diagnosed at the loop's weakest arc — usually feedback, which is why the platform team's calendar contains more user interviews than the product teams'. The leverage point is rarely more features; it is more listening.
 
 #### The craft: reviews without theater
 
-The last instrument in the kit: the lightweight design review. The format that survives real calendars is the **RFC loop** — a one-to-three-page written proposal (context, options, chosen trade-offs, ADR-ready), circulated asynchronously, commented in writing, decided visibly, archived forever. No committee, no slideware; the document *is* the meeting, and the archive becomes Section 14.4's agent context for free. For bigger decisions, borrow the spine of SEI's ATAM without its ceremony — walk the design against the driving characteristics, one probing question each:
+The last instrument in the kit: the lightweight design review. The format that survives real calendars is the **RFC loop** — a one-to-three-page written proposal (context, options, chosen trade-offs, ADR-ready), circulated asynchronously, commented in writing, decided visibly, archived forever. No committee, no slideware; the document *is* the meeting, and the archive becomes Section 15.4's agent context for free. For bigger decisions, borrow the spine of SEI's ATAM without its ceremony — walk the design against the driving characteristics, one probing question each:
 
 | Characteristic | The reviewer's question |
 |---|---|
@@ -2414,7 +2538,7 @@ An hour, one page, six questions — repeated per significant change, it outperf
 
 **Recap.** Map capabilities to buy/build postures; fund the platform with before/after numbers, not vibes; speak every floor's language without forking the truth. Adoption is a loop — fix the listening before the features. Reviews are one-page RFCs plus six characteristic-driven questions, not theater.
 
-**Exercise 14.5.** Take one internal capability your company hand-rolls. Place it on the evolution axis, then write its two-sentence justification — or its two-sentence migration plan to a commodity.
+**Exercise 15.5.** Take one internal capability your company hand-rolls. Place it on the evolution axis, then write its two-sentence justification — or its two-sentence migration plan to a commodity.
 
 ### Kata: The Capstone — Meridian
 
@@ -2425,7 +2549,7 @@ Everything since Chapter 1 was practice for this.
 **Deliverables — the full architect's dossier:**
 
 1. **Platform strategy** — Wardley-postured capability map; the thinnest viable platform chosen from Meridian's pains, with the first three golden paths sequenced by measured pain.
-2. **Platform architecture** — Figure 14.2-grade design: control plane, planes, registry, scorecards; C4 diagrams with trust boundaries (Chapter 10 is watching).
+2. **Platform architecture** — Figure 15.2-grade design: control plane, planes, registry, scorecards; C4 diagrams with trust boundaries (Chapter 10 is watching).
 3. **Golden-path specifications** — the "new service" and "new data product" paths end to end: template contents, provisioning workflow, guardrails inherited, one-command experience.
 4. **Governance design** — the fitness-function catalog, three admission policies, the priced exception path, and the deprecation playbook for the 190-service long tail.
 5. **Migration roadmap** — monolith strategy (Chapter 3's honesty: what strangles, what stays), shadow-AI-gateway consolidation, the carrier-product's tenancy machinery converging with the internal control plane, and onboarding plans that bring Cargo's data products and Relay's ingestion fleet onto the platform's paths — your own kata answers from Chapters 9 and 11 are admissible evidence.
@@ -2438,15 +2562,15 @@ Everything since Chapter 1 was practice for this.
 |---|---|
 | Trade-off provenance | Does every major decision name what it costs, in ink, ADR-style? |
 | Thinness discipline | Does the platform start where Meridian bleeds, or where platforms are fashionable? |
-| Inherited rigor | Do the paths carry Chapters 5–13's disciplines by default — contracts, identity, SLOs, tenancy, eval gates? |
+| Inherited rigor | Do the paths carry Chapters 5–14's disciplines by default — contracts, identity, SLOs, tenancy, eval gates? |
 | Voluntary physics | Would a skeptical team lead adopt path one — and what number convinces their director? |
 | The elevator test | Could the CFO's page and the engineer's page describe the same platform to a stranger? |
 
 #### Where you now stand — a graduation note
 
-Fourteen chapters ago, this book began with a claim: architecture is a stream of trade-offs made under uncertainty, recorded honestly. You now hold the full chain — characteristics to styles to boundaries to distribution to fleets to events to promises to pixels to data to defense to operations to intelligence to tenancy to platforms — and the habit that binds it: *name what it costs, in ink.*
+Fifteen chapters ago, this book began with a claim: architecture is a stream of trade-offs made under uncertainty, recorded honestly. You now hold the full chain — characteristics to styles to boundaries to distribution to fleets to events to promises to pixels to data to defense to operations to intelligence to tenancy to platforms — and the habit that binds it: *name what it costs, in ink.*
 
-That habit is worth naming one last time — Section 14.4 turned it into a working method — because the era you are graduating into runs on generated abundance. Code has never been cheaper to produce, and coherence has never been more expensive. What the tools generate is the *how* — faster than any of us. What they do not generate is the thing this book trained: the *why*, held accountable — which trade-off, for which characteristic, at what cost, written down where the next person can find it. Systems fail at the seams, and seams are drawn by judgment. That judgment is now yours: practiced on Encore, tested on a dozen katas, defended at Meridian.
+That habit is worth naming one last time — Section 15.4 turned it into a working method — because the era you are graduating into runs on generated abundance. Code has never been cheaper to produce, and coherence has never been more expensive. What the tools generate is the *how* — faster than any of us. What they do not generate is the thing this book trained: the *why*, held accountable — which trade-off, for which characteristic, at what cost, written down where the next person can find it. Systems fail at the seams, and seams are drawn by judgment. That judgment is now yours: practiced on Encore, tested on a dozen katas, defended at Meridian.
 
 Go draw good boundaries. And write down why.
 
