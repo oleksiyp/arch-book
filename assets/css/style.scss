@@ -58,6 +58,13 @@
         font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
     }
 
+    /* Headings copy their deep link on click; not links, not selectable */
+    h2[id], h3[id], h4[id] {
+        cursor: pointer;
+        user-select: none;
+        -webkit-user-select: none;
+    }
+
     a {
         color: #0b7ecb;
     }
@@ -235,6 +242,31 @@
     .presence-icon {
         fill: #22c55e;
         filter: drop-shadow(0 0 3px rgba(34, 197, 94, 0.6));
+    }
+}
+
+/* Toast confirming a heading's link was copied */
+.copy-toast {
+    position: fixed;
+    left: 50%;
+    bottom: 1.4rem;
+    transform: translateX(-50%) translateY(0.5rem);
+    background: #1b1f3b;
+    color: #fff;
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.45rem 0.9rem;
+    border-radius: 2rem;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.25);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    z-index: 60;
+
+    &.visible {
+        opacity: 0.95;
+        transform: translateX(-50%) translateY(0);
     }
 }
 
@@ -441,5 +473,10 @@ html[data-theme="dark"] {
 
         button, .bar-presence { color: #9aa3b2; }
         button:hover, button:active { color: #f0a32c; }
+    }
+
+    .copy-toast {
+        background: #2a3148;
+        border: 1px solid #3a4364;
     }
 }

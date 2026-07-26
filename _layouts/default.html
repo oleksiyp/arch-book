@@ -198,6 +198,38 @@
         if (window.gtag) window.gtag('event', dark ? 'theme_light' : 'theme_dark');
     });
 
+    // Chapter/section headings: click copies a deep link (no visible link affordance by design)
+    var copyToast = document.createElement('div');
+    copyToast.className = 'copy-toast';
+    copyToast.textContent = 'Link copied';
+    document.body.appendChild(copyToast);
+    var copyToastTimer;
+    function copiedFeedback(id) {
+        if (history.replaceState) history.replaceState(null, '', '#' + id);
+        copyToast.classList.add('visible');
+        clearTimeout(copyToastTimer);
+        copyToastTimer = setTimeout(function () { copyToast.classList.remove('visible'); }, 1600);
+        if (window.gtag) window.gtag('event', 'heading_link_copy');
+    }
+    var content = document.querySelector('.main-content');
+    if (content) content.addEventListener('click', function (e) {
+        var h = e.target.closest ? e.target.closest('h2[id], h3[id], h4[id]') : null;
+        if (!h || !content.contains(h)) return;
+        var url = location.origin + location.pathname + '#' + h.id;
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(url).then(function () { copiedFeedback(h.id); }, function () {});
+        } else {
+            var ta = document.createElement('textarea');
+            ta.value = url;
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            try { if (document.execCommand('copy')) copiedFeedback(h.id); } catch (err) {}
+            document.body.removeChild(ta);
+        }
+    });
+
     // PWA: offline reading + installability
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('{{ "/sw.js" | relative_url }}');
