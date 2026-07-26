@@ -6,7 +6,7 @@
     <title>{{ page.title | default: site.title }} | {{ site.tag_line }}</title>
     <meta name="description"
           content="{{ page.description | default: site.description }}"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#f38b1c">
     <meta property="og:image" content="{{ '/assets/og-banner.png' | absolute_url }}"/>
     <meta property="og:image:width" content="1200"/>
@@ -151,6 +151,12 @@
                 ticking = false;
             });
         }, { passive: true });
+    }
+
+    // In-app browsers (Reddit, Facebook, Instagram, ...) overlay their own
+    // bottom chrome on the page; lift the action bar clear of it
+    if (/Reddit|FBAN|FBAV|FB_IAB|Instagram|Twitter|LinkedInApp|musical_ly|BytedanceWebview|Snapchat|Line\//i.test(navigator.userAgent)) {
+        document.documentElement.classList.add('in-app-browser');
     }
 
     // Floating action bar: appears once the reader is past the contents

@@ -180,7 +180,7 @@
 .action-bar {
     position: fixed;
     right: 1rem;
-    bottom: 1rem;
+    bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
     z-index: 50;
     display: inline-flex;
     align-items: center;
@@ -243,6 +243,15 @@
         fill: #22c55e;
         filter: drop-shadow(0 0 3px rgba(34, 197, 94, 0.6));
     }
+}
+
+/* In-app browsers pin their own controls to the page bottom; float clear of them */
+html.in-app-browser .action-bar {
+    bottom: calc(4.5rem + env(safe-area-inset-bottom, 0px));
+}
+
+html.in-app-browser .copy-toast {
+    bottom: calc(4.9rem + env(safe-area-inset-bottom, 0px));
 }
 
 /* Toast confirming a heading's link was copied */
