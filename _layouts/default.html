@@ -154,8 +154,16 @@
     }
 
     // In-app browsers (Reddit, Facebook, Instagram, ...) overlay their own
-    // bottom chrome on the page; lift the action bar clear of it
-    if (/Reddit|FBAN|FBAV|FB_IAB|Instagram|Twitter|LinkedInApp|musical_ly|BytedanceWebview|Snapchat|Line\//i.test(navigator.userAgent)) {
+    // bottom chrome on the page; lift the action bar clear of it. Most apps
+    // don't brand their WebView's UA, so detect the WebView itself: on iOS
+    // every real browser carries a "Safari/" token and embedded WKWebViews
+    // don't; on Android embedded WebViews carry a "wv" token.
+    var ua = navigator.userAgent;
+    var inAppBrowser =
+        /Reddit|FBAN|FBAV|FB_IAB|Instagram|Twitter|LinkedInApp|musical_ly|BytedanceWebview|Snapchat|Line\//i.test(ua) ||
+        (/iPhone|iPad|iPod/.test(ua) && !/Safari\//.test(ua) && !navigator.standalone) ||
+        /\bwv\b/.test(ua);
+    if (inAppBrowser) {
         document.documentElement.classList.add('in-app-browser');
     }
 
