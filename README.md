@@ -1415,7 +1415,7 @@ This program model is not theory for me. At a treasury-software company I led ex
 
 #### Where you now stand
 
-You can promise carefully, evolve without breakage, and operate the edge as infrastructure and product. But every response you now serve ends its journey somewhere this book has not yet looked: a browser, a phone, a screen a human is staring at. The frontend has its own architecture — rendering economics, composition at team scale, its own security perimeter — and pretending it is "just the view layer" is how decomposed backends get undone by page one. Chapter 8: UI architecture.
+You can promise carefully, evolve without breakage, and operate the edge as infrastructure and product. But every response you now serve ends its journey somewhere this book has not yet looked: a browser, a phone, a screen a human is staring at. The frontend has its own architecture — rendering economics, composition at team scale, its own security perimeter — and pretending it is "just the view layer" is how decomposed backends get undone by page one. Chapter 8 gives that architecture its due.
 
 ### References
 
@@ -1567,7 +1567,7 @@ Frontend security inverts backend instincts: your code executes beside adversari
 
 #### Where you now stand
 
-The pixels now have an architecture: rendering bought per page, state sorted, seams owned, perimeter drawn. Behind every screen you've built, though, stands a question this book has deferred twice already: who owns the *data*? The answer differs operationally and analytically, and it grows teeth at the scale where every team wants everyone else's tables. Chapter 9: data architecture.
+The pixels now have an architecture: rendering bought per page, state sorted, seams owned, perimeter drawn. Behind every screen you've built, though, stands a question this book has deferred twice already: who owns the *data*? The answer differs operationally and analytically, and it grows teeth at the scale where every team wants everyone else's tables. Chapter 9 answers it, from distributed ownership all the way to the data mesh.
 
 ### References
 
@@ -1852,7 +1852,7 @@ The fleet-scale truth, one last time: seventy teams cannot each be excellent at 
 
 #### Where you now stand
 
-Security is now a designed property with drawings, policies, and tests. What remains conspicuously undrawn is the ground all of it runs on: the clusters, functions, pipelines, and pagers — and the economics of keeping them alive at 3 a.m. and under budget. Chapter 11: cloud-native operations, where architecture meets the invoice and the on-call rotation.
+Security is now a designed property with drawings, policies, and tests. What remains conspicuously undrawn is the ground all of it runs on: the clusters, functions, pipelines, and pagers — and the economics of keeping them alive at 3 a.m. and under budget. Chapter 11 draws it: cloud-native operations, where architecture meets the invoice and the on-call rotation.
 
 ### References
 
@@ -1980,7 +1980,7 @@ The closing move gathers the chapter into a design-time discipline. **Production
 
 #### Where you now stand
 
-You can place workloads, industrialize delivery, promise reliability arithmetically, and read the invoice as telemetry. The next chapter takes the book's boldest turn: systems whose central component is *probabilistic* — where "correct" becomes a distribution, testing becomes evaluation, and a new class of security surface walks in speaking natural language. Chapter 12: architecting AI systems.
+You can place workloads, industrialize delivery, promise reliability arithmetically, and read the invoice as telemetry. The next chapter takes the book's boldest turn: systems whose central component is *probabilistic* — where "correct" becomes a distribution, testing becomes evaluation, and a new class of security surface walks in speaking natural language. Chapter 12 teaches you to architect them.
 
 ### References
 
@@ -2126,7 +2126,7 @@ The invoice arrives token-denominated, and Chapter 11's disciplines apply with n
 
 #### Where you now stand
 
-You can place a probabilistic component into a deterministic discipline: gateway'd, grounded, budgeted, evaluated, and contained. And notice how many of this chapter's choices were really one question in different clothes: host the model or rent the API, build the gateway or buy it, own the vector store or subscribe to one. The book has answered that question in passing since Chapter 3; the AI stack poses it sharply enough to deserve a chapter of its own. Chapter 13: the economics of buy versus build.
+You can place a probabilistic component into a deterministic discipline: gateway'd, grounded, budgeted, evaluated, and contained. And notice how many of this chapter's choices were really one question in different clothes: host the model or rent the API, build the gateway or buy it, own the vector store or subscribe to one. The book has answered that question in passing since Chapter 3; the AI stack poses it sharply enough to deserve a chapter of its own. Chapter 13 gives it one: the economics of buy versus build.
 
 ### References
 
@@ -2255,7 +2255,7 @@ Then there is the part the frameworks omit: these decisions are political, becau
 
 #### Where you now stand
 
-You can sort capabilities by differentiation, time decisions with the map, keep two honest ledgers, and run the decision as a process with an exit and an expiry. Encore, meanwhile, has quietly become something more than a product — venues now ask to run *their own* Encore. Being on the selling side of someone else's buy-versus-build decision is its own architecture, with its own physics of isolation, tiering, and cost attribution. Chapter 14: multi-tenant SaaS.
+You can sort capabilities by differentiation, time decisions with the map, keep two honest ledgers, and run the decision as a process with an exit and an expiry. Encore, meanwhile, has quietly become something more than a product — venues now ask to run *their own* Encore. Being on the selling side of someone else's buy-versus-build decision is its own architecture, with its own physics of isolation, tiering, and cost attribution. Chapter 14 builds it: multi-tenant SaaS.
 
 ### References
 
