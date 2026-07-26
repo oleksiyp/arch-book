@@ -1567,7 +1567,7 @@ Frontend security inverts backend instincts: your code executes beside adversari
 
 #### Where you now stand
 
-The pixels now have an architecture: rendering bought per page, state sorted, seams owned, perimeter drawn. Behind every screen you've built, though, stands the question this book has deferred twice already: who owns the *data* — operationally, analytically, and at the scale where every team wants everyone else's tables. Chapter 9: data architecture, from distributed ownership to the data mesh.
+The pixels now have an architecture: rendering bought per page, state sorted, seams owned, perimeter drawn. Behind every screen you've built, though, stands a question this book has deferred twice already: who owns the *data*? The answer differs operationally and analytically, and it grows teeth at the scale where every team wants everyone else's tables. Chapter 9: data architecture.
 
 ### References
 
