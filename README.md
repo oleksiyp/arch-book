@@ -129,7 +129,7 @@ Everything in this book rests on two laws, and the first is the closest thing ou
 
 The first law is why this chapter teaches analysis rather than answers: any book that tells you "microservices are better" (or worse) is selling you half a trade-off. The second law is why Section 1.4 makes you write things down: six months from now, the cleverest design with a forgotten rationale is indistinguishable from a mistake.
 
-#### Meet Encore
+#### Encore, our running example
 
 Let's establish our running example properly. Encore sells tickets for live events. Fans browse listings, join an on-sale when tickets drop, pick seats, and pay. Event organizers create events and watch sales dashboards. Payments run through an external provider; tickets are delivered to fans' phones.
 
@@ -691,7 +691,7 @@ Conway's Law gets the last word on any split that does go forward. A boundary th
 
 Encore, remember, is lucky — it is young. The system you will actually be asked to decompose is nine years old, profitable, and load-bearing. Before any technique: *should* you? The honest checklist is short. Decompose when the monolith measurably blocks the business — deploys collide weekly, one component's scale needs starve the rest, teams idle in merge queues. Do **not** decompose because the code is ugly (refactor it), because hiring slides say "microservices," or because the monolith is merely old. I have sat in more than one meeting where a rewrite was pitched as a migration; the tell is that nobody can state the coordination pain in minutes per week. A tangled monolith becomes tangled services with a network inside the tangle — you keep every problem and add latency, partial failure, and an ops bill.
 
-#### The strangler fig and its supporting cast
+#### The strangler fig and its companion patterns
 
 When the answer is yes, the master pattern is the **strangler fig**: grow the new system around the old, redirect traffic capability by capability, and let the old code die of irrelevance rather than surgery.
 
@@ -709,7 +709,7 @@ flowchart LR
 
 *Figure 3.4 — The strangler fig. The routing facade is the whole trick: every capability behind it can move without users knowing, and every move is reversible by routing rule — your rollback is a config change, not a war room.*
 
-Around the fig, a supporting cast for the risky middle period: **branch by abstraction** (an interface inside the monolith with old and new implementations behind a toggle) when you cannot intercept at the edge; **parallel run** (both implementations execute, results compared, old one still authoritative) when correctness matters more than speed — run the new seat-allocation beside the old for two weeks of real on-sales before trusting it.
+Around the fig, several companion patterns serve the risky middle period: **branch by abstraction** (an interface inside the monolith with old and new implementations behind a toggle) when you cannot intercept at the edge; **parallel run** (both implementations execute, results compared, old one still authoritative) when correctness matters more than speed — run the new seat-allocation beside the old for two weeks of real on-sales before trusting it.
 
 ### 3.5 The Database Is the Hardest Part
 
@@ -1120,7 +1120,7 @@ You can cut, contract, deliver, observe, and organizationally sustain a service 
 
 Every chapter so far has leaned on a quiet promise: that services can *learn* things without asking. `SeatSold` reached analytics in Chapter 1's trade-off, powered sagas in Chapter 5, carried facts across bounded contexts in Chapter 3. This chapter pays that debt in full. Event-driven architecture is not a messaging library choice; it is a different theory of how software communicates — facts announced rather than questions asked — and it now runs the checkout you used this morning, the fraud check that approved it, and the data pipelines feeding every AI system you will meet in Chapter 12.
 
-The rigor matters because events fail differently than calls. A slow call is visible; a misdesigned event topology fails quietly — duplicated effects, out-of-order truths, workflows that exist only as folklore. By the end you will design events as carefully as you design APIs, wield event sourcing and CQRS where they earn their keep, and know exactly what "exactly-once" actually means (spoiler: less than the brochure says).
+The rigor matters because events fail differently than calls. A slow call is visible; a misdesigned event topology fails quietly — duplicated effects, out-of-order truths, workflows that exist only as folklore. By the end you will design events as carefully as you design APIs, wield event sourcing and CQRS where they earn their keep, and know exactly what "exactly-once" actually means — which is less than the brochure promises.
 
 ### 6.1 Event-Driven Fundamentals
 
