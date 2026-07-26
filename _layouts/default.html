@@ -335,7 +335,11 @@
     }
 
     window.addEventListener('load', function () {
-        if (getCookie('cookieconsent_status') === 'allow') addAnalytics();
+        // Opt-out semantics: analytics runs unless the visitor explicitly rejected.
+        // ('allow' is set by the Approve button in opt-in mode, 'dismiss' by the
+        // banner's dismiss path in opt-out mode, and first-time visitors have no
+        // cookie at all — all of those are consent here; only 'deny' is not.)
+        if (getCookie('cookieconsent_status') !== 'deny') addAnalytics();
 
         window.cookieconsent.initialise({
             palette: {
@@ -344,8 +348,6 @@
             },
             type: 'opt-out',
             revokable: false,
-            law: { regionalLaw: false },
-            location: false,
             law: { regionalLaw: false },
             location: false,
             content: {
