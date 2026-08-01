@@ -554,7 +554,6 @@
         function thresholdFor(key) {
             return Math.max(4, Math.min(15, Math.round((unitWords[key] || 0) / 10)));
         }
-        let lastVisSig = '';
         function unitSpan(i) {
             const top = docTop(units[i].el);
             const next = units[i + 1];
@@ -567,29 +566,17 @@
             const vTop = window.scrollY, vBot = vTop + window.innerHeight;
             const st = readState();
             let changed = false;
-            const visibleNow = [];
             for (let i = 0; i < units.length; i++) {
                 const key = units[i].key;
                 const span = unitSpan(i);
                 const overlap = Math.min(vBot, span[1]) - Math.max(vTop, span[0]);
                 const need = Math.min(span[1] - span[0], vBot - vTop) * 0.3;
                 if (overlap > 0 && overlap >= need) {
-                    visibleNow.push(key);
                     visAcc[key] = (visAcc[key] || 0) + 1;
                     if (!st[key] && visAcc[key] >= thresholdFor(key)) { st[key] = 1; changed = true; }
                 } else {
                     visAcc[key] = 0;
                 }
-            }
-            const sig = visibleNow.join('|');
-            if (sig !== lastVisSig) {
-                lastVisSig = sig;
-                console.log('[read] visible:\n' + visibleNow.map((k) =>
-                    '  ' + k + '  words=' + (unitWords[k] || 0) +
-                    '  raw=' + ((unitWords[k] || 0) / 10).toFixed(1) + 's' +
-                    '  capped=' + thresholdFor(k) + 's' +
-                    '  acc=' + (visAcc[k] || 0) +
-                    (st[k] ? '  READ' : '')).join('\n'));
             }
             if (changed) { saveState(st); renderProgress(); }
         }, 1000);
@@ -644,10 +631,11 @@
             const doneCh = {};
             chapters.forEach((ch) => {
                 const secs = numbered[ch];
-                const ok = secs.length > 0 && secs.every((sk) => sectionComplete(st, sk));
+                const readN = secs.filter((sk) => sectionComplete(st, sk)).length;
+                const ok = secs.length > 0 && readN >= Math.ceil(secs.length * 0.8);
                 doneCh[ch] = ok;
                 if (ok) done++;
-                toggleCheck(headByKey[ch], ok, 'All sections of this chapter read');
+                toggleCheck(headByKey[ch], ok, 'You have read this chapter');
             });
             let total = 0;
             document.querySelectorAll('ol a[href^="#ch"]').forEach((a) => {
