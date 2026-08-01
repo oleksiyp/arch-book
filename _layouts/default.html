@@ -539,9 +539,21 @@
 
         // Read detection over units: every active second, every unit currently
         // in view accumulates one; a unit that leaves the viewport resets to
-        // zero. A unit is read after 15 continuously-visible active seconds.
-        const READ_VIS_S = 15;
+        // zero. A unit is read after enough continuously-visible active seconds,
+        // where "enough" scales with the unit's text length (4s..15s).
         const visAcc = {};
+        const unitWords = {};
+        {
+            const unitByEl = new Map(units.map((u) => [u.el, u.key]));
+            let cu = null;
+            Array.from(content.children).forEach((el) => {
+                if (unitByEl.has(el)) { cu = unitByEl.get(el); unitWords[cu] = 0; }
+                else if (cu) unitWords[cu] += (el.textContent.match(/\S+/g) || []).length;
+            });
+        }
+        function thresholdFor(key) {
+            return Math.max(4, Math.min(15, Math.round((unitWords[key] || 0) / 10)));
+        }
         function unitSpan(i) {
             const top = docTop(units[i].el);
             const next = units[i + 1];
@@ -561,7 +573,7 @@
                 const need = Math.min(span[1] - span[0], vBot - vTop) * 0.3;
                 if (overlap > 0 && overlap >= need) {
                     visAcc[key] = (visAcc[key] || 0) + 1;
-                    if (!st[key] && visAcc[key] >= READ_VIS_S) { st[key] = 1; changed = true; }
+                    if (!st[key] && visAcc[key] >= thresholdFor(key)) { st[key] = 1; changed = true; }
                 } else {
                     visAcc[key] = 0;
                 }
