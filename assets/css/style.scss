@@ -153,6 +153,30 @@
         }
     }
 
+    /* Read rail, pure CSS: every block of a read unit draws a green line
+       just outside the prose column; it reflows with the text for free */
+    .is-read {
+        position: relative;
+
+        &::after {
+            content: "";
+            position: absolute;
+            top: -0.45em;
+            bottom: -0.45em;
+            right: -2rem;
+            width: 4px;
+            border-radius: 2px;
+            background: #bfe8ce;
+            pointer-events: none;
+        }
+    }
+
+    @media (max-width: 42em) {
+        .is-read::after {
+            right: -0.8rem;
+        }
+    }
+
     /* Local reading progress: ToC checkmarks and the chapters-read line */
     .toc-check {
         color: #22c55e;
@@ -274,30 +298,6 @@ html.in-app-browser .action-bar {
 
 html.in-app-browser .copy-toast {
     bottom: calc(4.9rem + env(safe-area-inset-bottom, 0px));
-}
-
-/* Read-section rails: green segments hugging the right screen edge */
-#read-rails {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 0;
-    height: 0;
-    pointer-events: none;
-    z-index: 40;
-}
-
-.read-rail {
-    position: absolute;
-    right: 0;
-    width: 4px;
-    border-radius: 3px 0 0 3px;
-    background: #22c55e;
-    opacity: 0.45;
-}
-
-html[data-theme="dark"] .read-rail {
-    opacity: 0.55;
 }
 
 /* Toast confirming a heading's link was copied */
@@ -533,5 +533,9 @@ html[data-theme="dark"] {
     .copy-toast {
         background: #2a3148;
         border: 1px solid #3a4364;
+    }
+
+    .main-content .is-read::after {
+        background: #2e5a42;
     }
 }

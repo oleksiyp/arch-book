@@ -473,10 +473,6 @@
             return us.length > 0 && us.every((k) => st[k]);
         }
 
-        // Read sections render as green rail segments on the right screen edge
-        const rails = document.createElement('div');
-        rails.id = 'read-rails';
-        document.body.appendChild(rails);
         function docTop(el) { return el.getBoundingClientRect().top + window.scrollY; }
 
         // Current chapter + section: last headings above the viewport midpoint
@@ -563,14 +559,23 @@
         // zero. A unit is read after enough continuously-visible active seconds,
         // where "enough" scales with the unit's text length (4s..15s).
         const visAcc = {};
-        const unitWords = {};
+        const unitWords = {}, unitEls = {};
         {
             const unitByEl = new Map(units.map((u) => [u.el, u.key]));
             let cu = null;
             Array.from(content.children).forEach((el) => {
-                if (unitByEl.has(el)) { cu = unitByEl.get(el); unitWords[cu] = 0; }
-                else if (cu) unitWords[cu] += (el.textContent.match(/\S+/g) || []).length;
+                if (unitByEl.has(el)) { cu = unitByEl.get(el); unitWords[cu] = 0; unitEls[cu] = [el]; }
+                else if (cu) {
+                    unitWords[cu] += (el.textContent.match(/\S+/g) || []).length;
+                    unitEls[cu].push(el);
+                }
             });
+        }
+        // Wide/ornamental blocks bleed past the prose column; they carry no rail
+        function railable(el) {
+            const t = el.tagName.toUpperCase();
+            return t !== 'TABLE' && t !== 'SVG' && t !== 'HR' &&
+                !(t === 'PRE' && el.classList.contains('mermaid'));
         }
         function thresholdFor(key) {
             return Math.max(4, Math.min(15, Math.round((unitWords[key] || 0) / 10)));
@@ -635,22 +640,11 @@
 
         function renderProgress() {
             const st = readState();
-            rails.innerHTML = '';
-            // Hug the text column's right edge; on narrow screens where the
-            // column reaches (almost) to the border, stick to the screen edge
-            const rect = content.getBoundingClientRect();
-            const pad = parseFloat(getComputedStyle(content).paddingRight) || 0;
-            const free = document.documentElement.clientWidth - (rect.right - pad) - 10;
-            rails.style.right = (free < 14 ? 0 : free) + 'px';
-            for (let i = 0; i < units.length; i++) {
-                if (!st[units[i].key]) continue;
-                const span = unitSpan(i);
-                const seg = document.createElement('div');
-                seg.className = 'read-rail';
-                seg.style.top = (span[0] - 2) + 'px';
-                seg.style.height = Math.max(span[1] - span[0] - 8, 10) + 'px';
-                rails.appendChild(seg);
-            }
+            units.forEach((u) => {
+                (unitEls[u.key] || []).forEach((el) => {
+                    if (railable(el)) el.classList.toggle('is-read', !!st[u.key]);
+                });
+            });
             Object.keys(unitsBySection).forEach((sk) => {
                 toggleCheck(headByKey[sk], sectionComplete(st, sk), 'All parts of this section read');
             });
@@ -705,12 +699,6 @@
         }
 
         renderProgress();
-        window.addEventListener('mermaid-done', renderProgress);
-        let railTimer = null;
-        window.addEventListener('resize', () => {
-            clearTimeout(railTimer);
-            railTimer = setTimeout(renderProgress, 250);
-        });
 
         // Footer reset: two taps, no browser dialogs
         const reset = document.getElementById('reset-progress');
