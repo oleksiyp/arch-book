@@ -79,6 +79,7 @@
                 <a href="https://www.linkedin.com/posts/oleksiyp_software-architecture-in-the-ai-cloud-era-activity-7485656040974503940-WGxc?utm_source=share&amp;utm_medium=member_desktop&amp;rcm=ACoAAADNl4kBdvwm9ge7YTU3l6qGKOFHjSeotGU" class="footer-link" target="_blank" rel="noopener noreferrer">Send Feedback</a>
                 {% if site.google_analytics != "" %}
                 <a href="#" class="footer-link" id="cookie-settings">Cookie Settings</a>
+                <a href="#" class="footer-link" id="reset-progress">Reset Reading Progress</a>
                 {% endif %}
                 <a class="buy-button" href="https://buymeacoffee.com/oleksiyp.dev" target="_blank" rel="noopener noreferrer">
                     <img src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg" alt="" width="20" height="20">
@@ -433,19 +434,20 @@
             try { localStorage.setItem('book-read', JSON.stringify(s)); } catch (e) {}
         }
 
-        // A quiet checkmark on headings the device has already read
-        const headByKey = {};
-        marks.forEach((m) => { headByKey[m.key] = m.el; });
-        function markHeading(key) {
-            const el = headByKey[key];
-            if (!el || el.querySelector('.head-check')) return;
-            const tick = document.createElement('span');
-            tick.className = 'head-check';
-            tick.textContent = '✓';
-            tick.title = 'You have read this';
-            el.appendChild(tick);
-        }
-        Object.keys(readState()).forEach(markHeading);
+        // Heading lookup + hierarchy: a chapter counts as read when all its
+        // numbered sections are read (Kata/References don't gate completion)
+        const headByKey = {}, chapters = [], numbered = {};
+        marks.forEach((m) => {
+            headByKey[m.key] = m.el;
+            if (m.key === m.chapter) { chapters.push(m.key); numbered[m.key] = []; }
+            else if (/^\d+\.\d+\s/.test(m.el.textContent)) numbered[m.chapter].push(m.key);
+        });
+
+        // Read sections render as green rail segments on the right screen edge
+        const rails = document.createElement('div');
+        rails.id = 'read-rails';
+        document.body.appendChild(rails);
+        function docTop(el) { return el.getBoundingClientRect().top + window.scrollY; }
 
         // Current chapter + section: last headings above the viewport midpoint
         function current() {
@@ -485,7 +487,7 @@
                     saveState(st);
                     bump(kind + '/' + key + '/uniques', 1);
                 }
-                markHeading(key);
+                renderProgress();
             }
             if (kind === 'chapters' && counted[key] !== 'done' && acc[key] >= COMPLETE_MS) {
                 counted[key] = 'done';
@@ -520,32 +522,102 @@
             if (document.visibilityState === 'hidden') flush();
         });
 
-        // ToC checkmarks from the local read-state (completed chapters only)
-        const st = readState();
-        const done = Object.keys(st).filter((k) => st[k] === 2 && /^ch\d+$/.test(k)).length;
-        let total = 0;
-        document.querySelectorAll('#contents ~ ol a[href^="#ch"], ol a[href^="#ch"]').forEach((a) => {
-            const m = a.getAttribute('href').match(/^#(ch\d+)$/);
-            if (!m || a.closest('.book-footer')) return;
-            total++;
-            if (st[m[1]] === 2 && !a.parentElement.querySelector('.toc-check')) {
-                const tick = document.createElement('span');
-                tick.className = 'toc-check';
-                tick.textContent = '✓';
-                tick.title = 'You have read this chapter';
-                a.parentElement.appendChild(tick);
+        // Render everything the read-state implies: rail segments per read
+        // section, checkmarks on fully-read chapters (heading + ToC), and the
+        // chapters-read line. Idempotent; re-run on state change and relayout.
+        function renderProgress() {
+            const st = readState();
+            rails.innerHTML = '';
+            for (let i = 0; i < marks.length; i++) {
+                const m = marks[i];
+                if (m.key === m.chapter || !st[m.key]) continue;
+                const top = docTop(m.el) - 4;
+                const next = marks[i + 1];
+                const end = next ? docTop(next.el) - 16 : docTop(content) + content.offsetHeight;
+                const seg = document.createElement('div');
+                seg.className = 'read-rail';
+                seg.style.top = top + 'px';
+                seg.style.height = Math.max(end - top, 14) + 'px';
+                rails.appendChild(seg);
             }
-        });
-        if (done > 0 && total > 0) {
+            let done = 0;
+            const doneCh = {};
+            chapters.forEach((ch) => {
+                const secs = numbered[ch];
+                const ok = secs.length > 0 && secs.every((k) => st[k]);
+                doneCh[ch] = ok;
+                if (ok) done++;
+                const head = headByKey[ch];
+                const had = head.querySelector('.head-check');
+                if (ok && !had) {
+                    const tick = document.createElement('span');
+                    tick.className = 'head-check';
+                    tick.textContent = '✓';
+                    tick.title = 'All sections of this chapter read';
+                    head.appendChild(tick);
+                } else if (!ok && had) {
+                    had.remove();
+                }
+            });
+            let total = 0;
+            document.querySelectorAll('ol a[href^="#ch"]').forEach((a) => {
+                const m2 = a.getAttribute('href').match(/^#(ch\d+)$/);
+                if (!m2 || a.closest('.book-footer')) return;
+                total++;
+                const had = a.parentElement.querySelector('.toc-check');
+                if (doneCh[m2[1]] && !had) {
+                    const tick = document.createElement('span');
+                    tick.className = 'toc-check';
+                    tick.textContent = '✓';
+                    tick.title = 'You have read this chapter';
+                    a.parentElement.appendChild(tick);
+                } else if (!doneCh[m2[1]] && had) {
+                    had.remove();
+                }
+            });
             const contentsHead = document.getElementById('contents');
-            if (contentsHead && !document.getElementById('toc-progress')) {
-                const p = document.createElement('p');
-                p.id = 'toc-progress';
-                p.className = 'flush';
-                p.textContent = 'You have read ' + done + ' of ' + total + ' chapters.';
-                contentsHead.insertAdjacentElement('afterend', p);
+            let line = document.getElementById('toc-progress');
+            if (done > 0 && total > 0 && contentsHead) {
+                if (!line) {
+                    line = document.createElement('p');
+                    line.id = 'toc-progress';
+                    line.className = 'flush';
+                    contentsHead.insertAdjacentElement('afterend', line);
+                }
+                line.textContent = 'You have read ' + done + ' of ' + total + ' chapters.';
+            } else if (line) {
+                line.remove();
             }
         }
+
+        renderProgress();
+        window.addEventListener('mermaid-done', renderProgress);
+        let railTimer = null;
+        window.addEventListener('resize', () => {
+            clearTimeout(railTimer);
+            railTimer = setTimeout(renderProgress, 250);
+        });
+
+        // Footer reset: two taps, no browser dialogs
+        const reset = document.getElementById('reset-progress');
+        if (reset) reset.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (reset.dataset.armed) {
+                delete reset.dataset.armed;
+                reset.textContent = 'Reset Reading Progress';
+                try { localStorage.removeItem('book-read'); } catch (err) {}
+                renderProgress();
+            } else {
+                reset.dataset.armed = '1';
+                reset.textContent = 'Tap again to reset';
+                setTimeout(() => {
+                    if (reset.dataset.armed) {
+                        delete reset.dataset.armed;
+                        reset.textContent = 'Reset Reading Progress';
+                    }
+                }, 4000);
+            }
+        });
     })();
 </script>
 {% endif %}
