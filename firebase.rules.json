@@ -1,0 +1,27 @@
+{
+  "rules": {
+    "presence": {
+      ".read": true,
+      ".write": true
+    },
+    "stats": {
+      ".read": true,
+      "chapters": {
+        "$key": {
+          "$counter": {
+            ".write": true,
+            ".validate": "($counter === 'seconds' || $counter === 'visits' || $counter === 'uniques' || $counter === 'completes') && newData.isNumber() && (!data.exists() || (newData.val() > data.val() && newData.val() - data.val() <= 600))"
+          }
+        }
+      },
+      "sections": {
+        "$key": {
+          "$counter": {
+            ".write": true,
+            ".validate": "($counter === 'seconds' || $counter === 'visits' || $counter === 'uniques') && newData.isNumber() && (!data.exists() || (newData.val() > data.val() && newData.val() - data.val() <= 600))"
+          }
+        }
+      }
+    }
+  }
+}

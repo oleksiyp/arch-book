@@ -153,6 +153,19 @@
         }
     }
 
+    /* Local reading progress: ToC checkmarks and the chapters-read line */
+    .toc-check {
+        color: #22c55e;
+        margin-left: 0.4rem;
+        font-size: 0.9em;
+    }
+
+    #toc-progress {
+        color: #6a737d;
+        font-size: 0.92rem;
+        text-align: left;
+    }
+
     /* Chapter separators as ornaments */
     hr {
         border: 0;

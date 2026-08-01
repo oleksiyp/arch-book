@@ -351,7 +351,7 @@
             law: { regionalLaw: false },
             location: false,
             content: {
-                message: 'This site uses cookies for anonymous usage statistics.',
+                message: 'This site uses cookies for anonymous usage statistics. Independently of cookies, reading progress is remembered only on your device, and the site collects aggregate reading statistics with no identifiers.',
                 allow: 'Approve',
                 dismiss: 'Approve',
                 deny: 'Reject'
@@ -372,7 +372,7 @@
 {% if site.presence_database_url != "" %}
 <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
-    import { getDatabase, ref, push, set, remove, onValue, onDisconnect, serverTimestamp }
+    import { getDatabase, ref, push, set, remove, onValue, onDisconnect, serverTimestamp, update, increment }
         from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js';
 
     const db = getDatabase(initializeApp({ databaseURL: '{{ site.presence_database_url }}' }));
@@ -401,6 +401,133 @@
         janitorDone = true;
         if (n > 0) { label.textContent = n; part.hidden = false; }
     });
+
+    // ---- Anonymous reading stats -------------------------------------------
+    // The database holds only aggregate sums (seconds/visits/uniques per
+    // chapter and section) incremented atomically — no per-reader rows, no
+    // identifiers transmitted. The device remembers locally which parts it
+    // has read ('book-read' in localStorage); that map dedupes the uniques
+    // counters and drives the ToC checkmarks, and it never leaves the device.
+    (function () {
+        const content = document.querySelector('.main-content');
+        if (!content) return;
+
+        // Map every h2/h3 heading to its stats key and owning chapter
+        const marks = [];   // { el, key, chapter } in document order
+        let curCh = null;
+        content.querySelectorAll('h2[id], h3[id]').forEach((h) => {
+            if (h.tagName === 'H2') {
+                curCh = /^ch\d+$/.test(h.id) ? h.id : null;
+                if (curCh) marks.push({ el: h, key: curCh, chapter: curCh });
+            } else if (curCh) {
+                marks.push({ el: h, key: h.id, chapter: curCh });
+            }
+        });
+        if (!marks.length) return;
+
+        function readState() {
+            try { return JSON.parse(localStorage.getItem('book-read')) || {}; }
+            catch (e) { return {}; }
+        }
+        function saveState(s) {
+            try { localStorage.setItem('book-read', JSON.stringify(s)); } catch (e) {}
+        }
+
+        // Current chapter + section: last headings above the viewport midpoint
+        function current() {
+            const mid = window.innerHeight / 2;
+            let ch = null, sec = null;
+            for (const m of marks) {
+                if (m.el.getBoundingClientRect().top > mid) break;
+                if (m.key === m.chapter) { ch = m.chapter; sec = null; }
+                else { sec = m.key; ch = m.chapter; }
+            }
+            return { ch, sec };
+        }
+
+        const VISIT_MS = 15000, COMPLETE_MS = 90000, TICK = 5000, IDLE = 60000, FLUSH = 30000;
+        let lastActivity = Date.now();
+        ['scroll', 'mousemove', 'keydown', 'touchstart'].forEach((ev) =>
+            window.addEventListener(ev, () => { lastActivity = Date.now(); }, { passive: true }));
+
+        const acc = {}, counted = {};   // per-session active ms and visit flags
+        let pending = {};               // path -> delta, flushed in batches
+
+        function bump(path, d) { pending[path] = (pending[path] || 0) + d; }
+
+        function credit(kind, key, ms) {
+            acc[key] = (acc[key] || 0) + ms;
+            bump(kind + '/' + key + '/seconds', ms / 1000);
+            if (!counted[key] && acc[key] >= VISIT_MS) {
+                counted[key] = true;
+                bump(kind + '/' + key + '/visits', 1);
+                const st = readState();
+                if (!st[key]) {
+                    st[key] = 1;
+                    saveState(st);
+                    bump(kind + '/' + key + '/uniques', 1);
+                }
+            }
+            if (kind === 'chapters' && counted[key] !== 'done' && acc[key] >= COMPLETE_MS) {
+                counted[key] = 'done';
+                const st = readState();
+                if (st[key] !== 2) {
+                    st[key] = 2;
+                    saveState(st);
+                    bump('chapters/' + key + '/completes', 1);
+                }
+            }
+        }
+
+        setInterval(() => {
+            if (document.visibilityState !== 'visible') return;
+            if (Date.now() - lastActivity > IDLE) return;
+            const { ch, sec } = current();
+            if (ch) credit('chapters', ch, TICK);
+            if (sec) credit('sections', sec, TICK);
+        }, TICK);
+
+        function flush() {
+            const paths = Object.keys(pending);
+            if (!paths.length) return;
+            const batch = {};
+            paths.forEach((p) => { batch['stats/' + p] = increment(Math.round(pending[p])); });
+            pending = {};
+            update(ref(db), batch).catch(() => {});
+        }
+        setInterval(flush, FLUSH);
+        window.addEventListener('pagehide', flush);
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'hidden') flush();
+        });
+
+        // ToC checkmarks from the local read-state (completed chapters only)
+        const st = readState();
+        const done = Object.keys(st).filter((k) => st[k] === 2 && /^ch\d+$/.test(k)).length;
+        let total = 0;
+        document.querySelectorAll('#contents ~ ol a[href^="#ch"], ol a[href^="#ch"]').forEach((a) => {
+            const m = a.getAttribute('href').match(/^#(ch\d+)$/);
+            if (!m || a.closest('.book-footer')) return;
+            total++;
+            if (st[m[1]] === 2 && !a.parentElement.querySelector('.toc-check')) {
+                const tick = document.createElement('span');
+                tick.className = 'toc-check';
+                tick.textContent = '✓';
+                tick.title = 'You have read this chapter';
+                a.parentElement.appendChild(tick);
+            }
+        });
+        if (done > 0 && total > 0) {
+            const contentsHead = document.getElementById('contents');
+            if (contentsHead && !document.getElementById('toc-progress')) {
+                const p = document.createElement('p');
+                p.id = 'toc-progress';
+                p.className = 'flush';
+                p.textContent = 'You have read ' + done + ' of ' + total + ' chapters.';
+                contentsHead.insertAdjacentElement('afterend', p);
+            }
+        }
+    })();
 </script>
 {% endif %}
 </body>
