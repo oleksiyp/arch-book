@@ -435,6 +435,15 @@ html.in-app-browser .copy-toast {
 
         &.expandable { cursor: pointer; }
 
+        &.day-row { cursor: pointer; }
+
+        &.day-row.sel {
+            background: #fff4e6;
+            border-radius: 0.35rem;
+
+            .nm { color: #d97706; font-weight: 700; }
+        }
+
         &.expandable .nm::before {
             content: "▸ ";
             color: #9aa3b2;
@@ -467,6 +476,8 @@ html[data-theme="dark"] {
         .stats-tile { background: #222b44; }
         .stats-tile b { color: #e8ecf3; }
         .stats-row .barbox { background: #222b44; }
+        .stats-row.day-row.sel { background: #2a2438; }
+        .stats-row.day-row.sel .nm { color: #f0a32c; }
     }
 }
 

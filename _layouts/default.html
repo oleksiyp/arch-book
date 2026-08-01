@@ -776,74 +776,89 @@
         return row;
     }
 
-    function render(data) {
+    var cache = null, selectedDay = null;
+
+    function render() {
+        var data = cache;
         body.textContent = '';
         if (!data || (!data.book && !data.chapters)) {
             body.appendChild(el('p', 'stats-empty', 'No statistics recorded yet — check back once a few readers have passed through.'));
             return;
         }
         var heads = pageHeadings();
+        var daily = data.daily || {};
+        var dayData = selectedDay ? (daily[selectedDay] || {}) : null;
         var book = data.book || {};
 
-        // Book tiles
+        // Book tiles: all-time, or the selected day's book bucket
         var tiles = el('div', 'stats-tiles');
-        [['Readers', book.uniques], ['Sessions', book.visits],
-         ['Reading time', fmtTime(book.seconds)], ['Finished the book', book.completes]]
-            .forEach(function (t) {
-                var tile = el('div', 'stats-tile');
-                tile.appendChild(el('b', null, String(t[1] || 0)));
-                tile.appendChild(el('span', null, t[0]));
-                tiles.appendChild(tile);
-            });
+        var tileSpec = dayData
+            ? [['Sessions', (dayData.book || {}).visits],
+               ['Reading time', fmtTime((dayData.book || {}).seconds)]]
+            : [['Readers', book.uniques], ['Sessions', book.visits],
+               ['Reading time', fmtTime(book.seconds)], ['Finished the book', book.completes]];
+        tileSpec.forEach(function (t) {
+            var tile = el('div', 'stats-tile');
+            tile.appendChild(el('b', null, String(t[1] || 0)));
+            tile.appendChild(el('span', null, t[0] + (dayData ? ' · ' + selectedDay.slice(5).replace('-', '/') : '')));
+            tiles.appendChild(tile);
+        });
         body.appendChild(tiles);
 
-        // Last 7 days
-        var daily = data.daily || {};
+        // Last days — click a day to scope the whole view to it
         var days = Object.keys(daily).sort().slice(-7);
         if (days.length) {
-            body.appendChild(el('div', 'stats-sub', 'Last days'));
+            body.appendChild(el('div', 'stats-sub', 'Last days — click a day to filter, click again for all time'));
             var maxDay = Math.max.apply(null, days.map(function (d) {
                 return (daily[d].book && daily[d].book.seconds) || 0;
             }));
             days.forEach(function (d) {
                 var b = daily[d].book || {};
-                body.appendChild(statRow(
+                var row = statRow(
                     d.slice(5).replace('-', '/'),
                     b.seconds || 0, maxDay,
-                    fmtTime(b.seconds) + ' · ' + (b.visits || 0) + ' sessions'
-                ));
+                    fmtTime(b.seconds) + ' · ' + (b.visits || 0) + ' sessions',
+                    'day-row' + (selectedDay === d ? ' sel' : '')
+                );
+                row.addEventListener('click', function () {
+                    selectedDay = (selectedDay === d) ? null : d;
+                    render();
+                });
+                body.appendChild(row);
             });
         }
 
-        // Chapters, expandable into sections
-        var chs = data.chapters || {};
-        var keys = Object.keys(chs).sort(function (a, b) {
+        // Chapters (all-time or day-scoped), expandable into sections
+        var chSrc = dayData ? (dayData.chapters || {}) : (data.chapters || {});
+        var secSrc = dayData ? (dayData.sections || {}) : (data.sections || {});
+        var keys = Object.keys(chSrc).sort(function (a, b) {
             return parseInt(a.slice(2), 10) - parseInt(b.slice(2), 10);
         });
+        var scope = dayData ? selectedDay.slice(5).replace('-', '/') + ' — time · sessions' : 'all time — time · readers';
         if (keys.length) {
-            body.appendChild(el('div', 'stats-sub', 'Chapters — time · readers (click to expand sections)'));
-            var maxCh = Math.max.apply(null, keys.map(function (k) { return chs[k].seconds || 0; }));
+            body.appendChild(el('div', 'stats-sub', 'Chapters, ' + scope + ' (click to expand sections)'));
+            var maxCh = Math.max.apply(null, keys.map(function (k) { return chSrc[k].seconds || 0; }));
             keys.forEach(function (k) {
-                var c = chs[k];
+                var c = chSrc[k];
                 var row = statRow(
                     heads.titles[k] || ('Chapter ' + k.slice(2)),
                     c.seconds || 0, maxCh,
-                    fmtTime(c.seconds) + ' · ' + (c.uniques || 0),
+                    fmtTime(c.seconds) + ' · ' + (dayData ? (c.visits || 0) : (c.uniques || 0)),
                     'ch-row',
-                    (c.visits || 0) + ' sessions, ' + (c.completes || 0) + ' finished'
+                    dayData ? null : (c.visits || 0) + ' sessions, ' + (c.completes || 0) + ' finished'
                 );
                 body.appendChild(row);
                 var secKeys = (heads.sectionsOf[k] || []).filter(function (sk) {
-                    return data.sections && data.sections[sk];
+                    return secSrc[sk];
                 });
                 var box = el('div', 'sec-box');
                 box.hidden = true;
                 secKeys.forEach(function (sk) {
-                    var s = data.sections[sk];
+                    var s = secSrc[sk];
                     box.appendChild(statRow(
                         heads.titles[sk] || sk,
                         s.seconds || 0, maxCh,
-                        fmtTime(s.seconds) + ' · ' + (s.uniques || 0),
+                        fmtTime(s.seconds) + ' · ' + (dayData ? (s.visits || 0) : (s.uniques || 0)),
                         'sec-row'
                     ));
                 });
@@ -856,6 +871,8 @@
                     });
                 }
             });
+        } else if (dayData) {
+            body.appendChild(el('p', 'stats-empty', 'No chapter activity recorded on ' + selectedDay + '.'));
         }
     }
 
@@ -892,7 +909,7 @@
 
         fetch(DB + '/stats.json')
             .then(function (r) { return r.json(); })
-            .then(function (data) { if (overlay) render(data); })
+            .then(function (data) { cache = data; if (overlay) render(); })
             .catch(function () {
                 if (body) {
                     body.textContent = '';
