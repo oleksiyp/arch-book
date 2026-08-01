@@ -433,6 +433,20 @@
             try { localStorage.setItem('book-read', JSON.stringify(s)); } catch (e) {}
         }
 
+        // A quiet checkmark on headings the device has already read
+        const headByKey = {};
+        marks.forEach((m) => { headByKey[m.key] = m.el; });
+        function markHeading(key) {
+            const el = headByKey[key];
+            if (!el || el.querySelector('.head-check')) return;
+            const tick = document.createElement('span');
+            tick.className = 'head-check';
+            tick.textContent = '✓';
+            tick.title = 'You have read this';
+            el.appendChild(tick);
+        }
+        Object.keys(readState()).forEach(markHeading);
+
         // Current chapter + section: last headings above the viewport midpoint
         function current() {
             const mid = window.innerHeight / 2;
@@ -455,18 +469,23 @@
 
         function bump(path, d) { pending[path] = (pending[path] || 0) + d; }
 
+        function today() { return new Date().toISOString().slice(0, 10); }
+
         function credit(kind, key, ms) {
             acc[key] = (acc[key] || 0) + ms;
             bump(kind + '/' + key + '/seconds', ms / 1000);
+            bump('daily/' + today() + '/' + kind + '/' + key + '/seconds', ms / 1000);
             if (!counted[key] && acc[key] >= VISIT_MS) {
                 counted[key] = true;
                 bump(kind + '/' + key + '/visits', 1);
+                bump('daily/' + today() + '/' + kind + '/' + key + '/visits', 1);
                 const st = readState();
                 if (!st[key]) {
                     st[key] = 1;
                     saveState(st);
                     bump(kind + '/' + key + '/uniques', 1);
                 }
+                markHeading(key);
             }
             if (kind === 'chapters' && counted[key] !== 'done' && acc[key] >= COMPLETE_MS) {
                 counted[key] = 'done';

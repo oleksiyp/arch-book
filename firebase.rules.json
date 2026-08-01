@@ -21,6 +21,18 @@
             ".validate": "($counter === 'seconds' || $counter === 'visits' || $counter === 'uniques') && newData.isNumber() && (!data.exists() || (newData.val() > data.val() && newData.val() - data.val() <= 600))"
           }
         }
+      },
+      "daily": {
+        "$date": {
+          "$group": {
+            "$key": {
+              "$counter": {
+                ".write": true,
+                ".validate": "$date.matches(/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/) && ($group === 'chapters' || $group === 'sections') && ($counter === 'seconds' || $counter === 'visits') && newData.isNumber() && (!data.exists() || (newData.val() > data.val() && newData.val() - data.val() <= 600))"
+              }
+            }
+          }
+        }
       }
     }
   }

@@ -160,6 +160,15 @@
         font-size: 0.9em;
     }
 
+    /* Read marks on body headings: present but quiet */
+    .head-check {
+        color: #22c55e;
+        opacity: 0.55;
+        margin-left: 0.5rem;
+        font-size: 0.65em;
+        vertical-align: middle;
+    }
+
     #toc-progress {
         color: #6a737d;
         font-size: 0.92rem;
