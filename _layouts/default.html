@@ -529,12 +529,33 @@
             }
         }
 
+        // Whole-book rollup: seconds/visits count any active reading on the
+        // page (front matter included), uniques once per device ever
+        let bookMs = 0, bookVisited = false;
+        function creditBook(ms) {
+            bookMs += ms;
+            bump('book/seconds', ms / 1000);
+            bump('daily/' + today() + '/book/seconds', ms / 1000);
+            if (!bookVisited && bookMs >= VISIT_MS) {
+                bookVisited = true;
+                bump('book/visits', 1);
+                bump('daily/' + today() + '/book/visits', 1);
+                const cs = countedState();
+                if (!cs['book~']) {
+                    cs['book~'] = 1;
+                    saveCounted(cs);
+                    bump('book/uniques', 1);
+                }
+            }
+        }
+
         setInterval(() => {
             if (document.visibilityState !== 'visible') return;
             if (Date.now() - lastActivity > IDLE) return;
             const { ch, sec } = current();
             if (ch) credit('chapters', ch, TICK);
             if (sec) credit('sections', sec, TICK);
+            creditBook(TICK);
         }, TICK);
 
         // Read detection over units: every active second, every unit currently
@@ -637,6 +658,15 @@
                 if (ok) done++;
                 toggleCheck(headByKey[ch], ok, 'You have read this chapter');
             });
+            // Book complete: 80% of chapters read (full-book page only, once per device)
+            if (chapters.length >= 10 && done >= Math.ceil(chapters.length * 0.8)) {
+                const cs = countedState();
+                if (!cs['book~complete']) {
+                    cs['book~complete'] = 1;
+                    saveCounted(cs);
+                    bump('book/completes', 1);
+                }
+            }
             let total = 0;
             document.querySelectorAll('ol a[href^="#ch"]').forEach((a) => {
                 const m2 = a.getAttribute('href').match(/^#(ch\d+)$/);

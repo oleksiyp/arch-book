@@ -6,6 +6,12 @@
     },
     "stats": {
       ".read": true,
+      "book": {
+        "$counter": {
+          ".write": true,
+          ".validate": "($counter === 'seconds' || $counter === 'visits' || $counter === 'uniques' || $counter === 'completes') && newData.isNumber() && (!data.exists() || (newData.val() > data.val() && newData.val() - data.val() <= 600))"
+        }
+      },
       "chapters": {
         "$key": {
           "$counter": {
@@ -24,6 +30,12 @@
       },
       "daily": {
         "$date": {
+          "book": {
+            "$counter": {
+              ".write": true,
+              ".validate": "$date.matches(/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/) && ($counter === 'seconds' || $counter === 'visits') && newData.isNumber() && (!data.exists() || (newData.val() > data.val() && newData.val() - data.val() <= 600))"
+            }
+          },
           "$group": {
             "$key": {
               "$counter": {
