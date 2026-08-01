@@ -78,6 +78,7 @@
             <nav class="footer-nav">
                 <a href="https://www.linkedin.com/posts/oleksiyp_software-architecture-in-the-ai-cloud-era-activity-7485656040974503940-WGxc?utm_source=share&amp;utm_medium=member_desktop&amp;rcm=ACoAAADNl4kBdvwm9ge7YTU3l6qGKOFHjSeotGU" class="footer-link" target="_blank" rel="noopener noreferrer">Send Feedback</a>
                 {% if site.google_analytics != "" %}
+                <a href="#" class="footer-link" id="reading-stats">Reading Statistics</a>
                 <a href="#" class="footer-link" id="cookie-settings">Cookie Settings</a>
                 <a href="#" class="footer-link" id="reset-progress">Reset Reading Progress</a>
                 {% endif %}
@@ -721,6 +722,187 @@
             }
         });
     })();
+</script>
+
+<script>
+// Reading Statistics modal: public aggregate counters, fetched on open
+(function () {
+    var DB = '{{ site.presence_database_url }}';
+    var link = document.getElementById('reading-stats');
+    if (!link || !DB) return;
+
+    var overlay = null, body = null, escHandler = null;
+
+    function el(tag, cls, text) {
+        var e = document.createElement(tag);
+        if (cls) e.className = cls;
+        if (text != null) e.textContent = text;
+        return e;
+    }
+    function fmtTime(s) {
+        s = Math.round(s || 0);
+        if (s < 60) return s + 's';
+        var m = Math.floor(s / 60);
+        if (m < 60) return m + 'm';
+        return Math.floor(m / 60) + 'h ' + (m % 60) + 'm';
+    }
+    function cleanHead(h) { return h.textContent.replace(/✓\s*$/, '').trim(); }
+
+    function pageHeadings() {
+        var titles = {}, sectionsOf = {}, cur = null;
+        document.querySelectorAll('.main-content h2[id], .main-content h3[id]').forEach(function (h) {
+            if (h.tagName === 'H2' && /^ch\d+$/.test(h.id)) {
+                cur = h.id;
+                titles[cur] = cleanHead(h);
+                sectionsOf[cur] = [];
+            } else if (h.tagName === 'H3' && cur) {
+                titles[h.id] = cleanHead(h);
+                sectionsOf[cur].push(h.id);
+            }
+        });
+        return { titles: titles, sectionsOf: sectionsOf };
+    }
+
+    function statRow(name, seconds, maxSeconds, right, cls, tooltip) {
+        var row = el('div', 'stats-row' + (cls ? ' ' + cls : ''));
+        if (tooltip) row.title = tooltip;
+        row.appendChild(el('span', 'nm', name));
+        var barBox = el('span', 'barbox');
+        var bar = el('span', 'stats-bar');
+        bar.style.width = maxSeconds > 0 ? Math.max(2, (seconds / maxSeconds) * 100) + '%' : '2%';
+        barBox.appendChild(bar);
+        row.appendChild(barBox);
+        row.appendChild(el('span', 'num', right));
+        return row;
+    }
+
+    function render(data) {
+        body.textContent = '';
+        if (!data || (!data.book && !data.chapters)) {
+            body.appendChild(el('p', 'stats-empty', 'No statistics recorded yet — check back once a few readers have passed through.'));
+            return;
+        }
+        var heads = pageHeadings();
+        var book = data.book || {};
+
+        // Book tiles
+        var tiles = el('div', 'stats-tiles');
+        [['Readers', book.uniques], ['Sessions', book.visits],
+         ['Reading time', fmtTime(book.seconds)], ['Finished the book', book.completes]]
+            .forEach(function (t) {
+                var tile = el('div', 'stats-tile');
+                tile.appendChild(el('b', null, String(t[1] || 0)));
+                tile.appendChild(el('span', null, t[0]));
+                tiles.appendChild(tile);
+            });
+        body.appendChild(tiles);
+
+        // Last 7 days
+        var daily = data.daily || {};
+        var days = Object.keys(daily).sort().slice(-7);
+        if (days.length) {
+            body.appendChild(el('div', 'stats-sub', 'Last days'));
+            var maxDay = Math.max.apply(null, days.map(function (d) {
+                return (daily[d].book && daily[d].book.seconds) || 0;
+            }));
+            days.forEach(function (d) {
+                var b = daily[d].book || {};
+                body.appendChild(statRow(
+                    d.slice(5).replace('-', '/'),
+                    b.seconds || 0, maxDay,
+                    fmtTime(b.seconds) + ' · ' + (b.visits || 0) + ' sessions'
+                ));
+            });
+        }
+
+        // Chapters, expandable into sections
+        var chs = data.chapters || {};
+        var keys = Object.keys(chs).sort(function (a, b) {
+            return parseInt(a.slice(2), 10) - parseInt(b.slice(2), 10);
+        });
+        if (keys.length) {
+            body.appendChild(el('div', 'stats-sub', 'Chapters — time · readers (click to expand sections)'));
+            var maxCh = Math.max.apply(null, keys.map(function (k) { return chs[k].seconds || 0; }));
+            keys.forEach(function (k) {
+                var c = chs[k];
+                var row = statRow(
+                    heads.titles[k] || ('Chapter ' + k.slice(2)),
+                    c.seconds || 0, maxCh,
+                    fmtTime(c.seconds) + ' · ' + (c.uniques || 0),
+                    'ch-row',
+                    (c.visits || 0) + ' sessions, ' + (c.completes || 0) + ' finished'
+                );
+                body.appendChild(row);
+                var secKeys = (heads.sectionsOf[k] || []).filter(function (sk) {
+                    return data.sections && data.sections[sk];
+                });
+                var box = el('div', 'sec-box');
+                box.hidden = true;
+                secKeys.forEach(function (sk) {
+                    var s = data.sections[sk];
+                    box.appendChild(statRow(
+                        heads.titles[sk] || sk,
+                        s.seconds || 0, maxCh,
+                        fmtTime(s.seconds) + ' · ' + (s.uniques || 0),
+                        'sec-row'
+                    ));
+                });
+                body.appendChild(box);
+                if (secKeys.length) {
+                    row.classList.add('expandable');
+                    row.addEventListener('click', function () {
+                        box.hidden = !box.hidden;
+                        row.classList.toggle('open', !box.hidden);
+                    });
+                }
+            });
+        }
+    }
+
+    function close() {
+        if (overlay) overlay.remove();
+        overlay = null;
+        if (escHandler) document.removeEventListener('keydown', escHandler);
+        escHandler = null;
+    }
+
+    function open() {
+        if (window.gtag) window.gtag('event', 'stats_open');
+        overlay = el('div', 'stats-overlay');
+        var modal = el('div', 'stats-modal');
+        modal.setAttribute('role', 'dialog');
+        modal.setAttribute('aria-modal', 'true');
+        modal.setAttribute('aria-label', 'Reading statistics');
+        var head = el('div', 'stats-head');
+        head.appendChild(el('h3', null, 'Reading Statistics'));
+        var closeBtn = el('button', 'stats-close', '×');
+        closeBtn.setAttribute('aria-label', 'Close');
+        closeBtn.addEventListener('click', close);
+        head.appendChild(closeBtn);
+        modal.appendChild(head);
+        body = el('div', 'stats-body');
+        body.appendChild(el('p', 'stats-empty', 'Loading…'));
+        modal.appendChild(body);
+        overlay.appendChild(modal);
+        overlay.addEventListener('click', function (e) { if (e.target === overlay) close(); });
+        escHandler = function (e) { if (e.key === 'Escape') close(); };
+        document.addEventListener('keydown', escHandler);
+        document.body.appendChild(overlay);
+        closeBtn.focus();
+
+        fetch(DB + '/stats.json')
+            .then(function (r) { return r.json(); })
+            .then(function (data) { if (overlay) render(data); })
+            .catch(function () {
+                if (body) {
+                    body.textContent = '';
+                    body.appendChild(el('p', 'stats-empty', 'Could not load statistics. Try again later.'));
+                }
+            });
+    }
+
+    link.addEventListener('click', function (e) { e.preventDefault(); open(); });
+})();
 </script>
 {% endif %}
 </body>
