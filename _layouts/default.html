@@ -413,35 +413,65 @@
         const content = document.querySelector('.main-content');
         if (!content) return;
 
-        // Map every h2/h3 heading to its stats key and owning chapter
-        const marks = [];   // { el, key, chapter } in document order
-        let curCh = null;
-        content.querySelectorAll('h2[id], h3[id]').forEach((h) => {
+        // Two granularities. marks (h2/h3) drive the anonymous stats counters,
+        // unchanged. units are the smallest read-tracking pieces: every h2/h3/h4
+        // heading owns the span until the next heading of any level, so a
+        // subsection like "Thinking in components" is its own unit.
+        const marks = [];   // { el, key, chapter } — stats granularity
+        const units = [];   // { el, key, chapter, section } — read granularity
+        let curCh = null, curSec = null;
+        content.querySelectorAll('h2[id], h3[id], h4[id]').forEach((h) => {
             if (h.tagName === 'H2') {
                 curCh = /^ch\d+$/.test(h.id) ? h.id : null;
-                if (curCh) marks.push({ el: h, key: curCh, chapter: curCh });
-            } else if (curCh) {
+                curSec = null;
+                if (curCh) {
+                    marks.push({ el: h, key: curCh, chapter: curCh });
+                    units.push({ el: h, key: curCh, chapter: curCh, section: null });
+                }
+            } else if (h.tagName === 'H3' && curCh) {
+                curSec = h.id;
                 marks.push({ el: h, key: h.id, chapter: curCh });
+                units.push({ el: h, key: h.id, chapter: curCh, section: h.id });
+            } else if (h.tagName === 'H4' && curCh && curSec) {
+                units.push({ el: h, key: h.id, chapter: curCh, section: curSec });
             }
         });
         if (!marks.length) return;
 
+        // 'book-read-v2': the visual read-state (unit-level, resettable).
+        // 'book-counted': dedupe marks for the uniques/completes counters —
+        // kept separate so resetting visual progress never double-counts stats.
         function readState() {
-            try { return JSON.parse(localStorage.getItem('book-read')) || {}; }
+            try { return JSON.parse(localStorage.getItem('book-read-v2')) || {}; }
             catch (e) { return {}; }
         }
         function saveState(s) {
-            try { localStorage.setItem('book-read', JSON.stringify(s)); } catch (e) {}
+            try { localStorage.setItem('book-read-v2', JSON.stringify(s)); } catch (e) {}
+        }
+        function countedState() {
+            try { return JSON.parse(localStorage.getItem('book-counted')) || {}; }
+            catch (e) { return {}; }
+        }
+        function saveCounted(s) {
+            try { localStorage.setItem('book-counted', JSON.stringify(s)); } catch (e) {}
         }
 
-        // Heading lookup + hierarchy: a chapter counts as read when all its
-        // numbered sections are read (Kata/References don't gate completion)
-        const headByKey = {}, chapters = [], numbered = {};
+        // Hierarchy: a section is read when all its units are; a chapter when
+        // all its numbered sections are (Kata/References don't gate completion)
+        const headByKey = {}, chapters = [], numbered = {}, unitsBySection = {};
         marks.forEach((m) => {
             headByKey[m.key] = m.el;
             if (m.key === m.chapter) { chapters.push(m.key); numbered[m.key] = []; }
             else if (/^\d+\.\d+\s/.test(m.el.textContent)) numbered[m.chapter].push(m.key);
         });
+        units.forEach((u) => {
+            if (!u.section) return;
+            (unitsBySection[u.section] = unitsBySection[u.section] || []).push(u.key);
+        });
+        function sectionComplete(st, secKey) {
+            const us = unitsBySection[secKey] || [];
+            return us.length > 0 && us.every((k) => st[k]);
+        }
 
         // Read sections render as green rail segments on the right screen edge
         const rails = document.createElement('div');
@@ -481,20 +511,19 @@
                 counted[key] = true;
                 bump(kind + '/' + key + '/visits', 1);
                 bump('daily/' + today() + '/' + kind + '/' + key + '/visits', 1);
-                const st = readState();
-                if (!st[key]) {
-                    st[key] = 1;
-                    saveState(st);
+                const cs = countedState();
+                if (!cs[key]) {
+                    cs[key] = 1;
+                    saveCounted(cs);
                     bump(kind + '/' + key + '/uniques', 1);
                 }
-                renderProgress();
             }
             if (kind === 'chapters' && counted[key] !== 'done' && acc[key] >= COMPLETE_MS) {
                 counted[key] = 'done';
-                const st = readState();
-                if (st[key] !== 2) {
-                    st[key] = 2;
-                    saveState(st);
+                const cs = countedState();
+                if (cs[key] !== 2) {
+                    cs[key] = 2;
+                    saveCounted(cs);
                     bump('chapters/' + key + '/completes', 1);
                 }
             }
@@ -507,6 +536,38 @@
             if (ch) credit('chapters', ch, TICK);
             if (sec) credit('sections', sec, TICK);
         }, TICK);
+
+        // Read detection over units: every active second, every unit currently
+        // in view accumulates one; a unit that leaves the viewport resets to
+        // zero. A unit is read after 15 continuously-visible active seconds.
+        const READ_VIS_S = 15;
+        const visAcc = {};
+        function unitSpan(i) {
+            const top = docTop(units[i].el);
+            const next = units[i + 1];
+            const end = next ? docTop(next.el) : docTop(content) + content.offsetHeight;
+            return [top, end];
+        }
+        setInterval(() => {
+            if (document.visibilityState !== 'visible') return;
+            if (Date.now() - lastActivity > IDLE) return;
+            const vTop = window.scrollY, vBot = vTop + window.innerHeight;
+            const st = readState();
+            let changed = false;
+            for (let i = 0; i < units.length; i++) {
+                const key = units[i].key;
+                const span = unitSpan(i);
+                const overlap = Math.min(vBot, span[1]) - Math.max(vTop, span[0]);
+                const need = Math.min(span[1] - span[0], vBot - vTop) * 0.3;
+                if (overlap > 0 && overlap >= need) {
+                    visAcc[key] = (visAcc[key] || 0) + 1;
+                    if (!st[key] && visAcc[key] >= READ_VIS_S) { st[key] = 1; changed = true; }
+                } else {
+                    visAcc[key] = 0;
+                }
+            }
+            if (changed) { saveState(st); renderProgress(); }
+        }, 1000);
 
         function flush() {
             const paths = Object.keys(pending);
@@ -525,39 +586,43 @@
         // Render everything the read-state implies: rail segments per read
         // section, checkmarks on fully-read chapters (heading + ToC), and the
         // chapters-read line. Idempotent; re-run on state change and relayout.
+        function toggleCheck(el, ok, title) {
+            if (!el) return;
+            const had = el.querySelector('.head-check');
+            if (ok && !had) {
+                const tick = document.createElement('span');
+                tick.className = 'head-check';
+                tick.textContent = '✓';
+                tick.title = title;
+                el.appendChild(tick);
+            } else if (!ok && had) {
+                had.remove();
+            }
+        }
+
         function renderProgress() {
             const st = readState();
             rails.innerHTML = '';
-            for (let i = 0; i < marks.length; i++) {
-                const m = marks[i];
-                if (m.key === m.chapter || !st[m.key]) continue;
-                const top = docTop(m.el) - 4;
-                const next = marks[i + 1];
-                const end = next ? docTop(next.el) - 16 : docTop(content) + content.offsetHeight;
+            for (let i = 0; i < units.length; i++) {
+                if (!st[units[i].key]) continue;
+                const span = unitSpan(i);
                 const seg = document.createElement('div');
                 seg.className = 'read-rail';
-                seg.style.top = top + 'px';
-                seg.style.height = Math.max(end - top, 14) + 'px';
+                seg.style.top = (span[0] - 2) + 'px';
+                seg.style.height = Math.max(span[1] - span[0] - 8, 10) + 'px';
                 rails.appendChild(seg);
             }
+            Object.keys(unitsBySection).forEach((sk) => {
+                toggleCheck(headByKey[sk], sectionComplete(st, sk), 'All parts of this section read');
+            });
             let done = 0;
             const doneCh = {};
             chapters.forEach((ch) => {
                 const secs = numbered[ch];
-                const ok = secs.length > 0 && secs.every((k) => st[k]);
+                const ok = secs.length > 0 && secs.every((sk) => sectionComplete(st, sk));
                 doneCh[ch] = ok;
                 if (ok) done++;
-                const head = headByKey[ch];
-                const had = head.querySelector('.head-check');
-                if (ok && !had) {
-                    const tick = document.createElement('span');
-                    tick.className = 'head-check';
-                    tick.textContent = '✓';
-                    tick.title = 'All sections of this chapter read';
-                    head.appendChild(tick);
-                } else if (!ok && had) {
-                    had.remove();
-                }
+                toggleCheck(headByKey[ch], ok, 'All sections of this chapter read');
             });
             let total = 0;
             document.querySelectorAll('ol a[href^="#ch"]').forEach((a) => {
@@ -605,7 +670,7 @@
             if (reset.dataset.armed) {
                 delete reset.dataset.armed;
                 reset.textContent = 'Reset Reading Progress';
-                try { localStorage.removeItem('book-read'); } catch (err) {}
+                try { localStorage.removeItem('book-read-v2'); } catch (err) {}
                 renderProgress();
             } else {
                 reset.dataset.armed = '1';
