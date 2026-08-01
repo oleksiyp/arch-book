@@ -97,11 +97,14 @@
         color: #6a737d;
     }
 
-    /* Callout blockquotes: warm card with the brand accent */
+    /* Callout blockquotes: warm card with the brand accent.
+       margin-right 0 kills the UA default 40px so cards end flush with the
+       column (and the read rail stays on one vertical line) */
     blockquote {
         border-left: 3px solid #f38b1c;
         background: #fff8f0;
         padding: 0.65rem 1.1rem;
+        margin-right: 0;
         color: #3a3f46;
 
         p { text-align: left; }
@@ -161,8 +164,8 @@
         &::after {
             content: "";
             position: absolute;
-            top: -0.45em;
-            bottom: -0.45em;
+            top: -0.6em;
+            bottom: -0.6em;
             right: -2rem;
             width: 4px;
             border-radius: 2px;
