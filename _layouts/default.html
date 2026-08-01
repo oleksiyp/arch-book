@@ -636,6 +636,12 @@
         function renderProgress() {
             const st = readState();
             rails.innerHTML = '';
+            // Hug the text column's right edge; on narrow screens where the
+            // column reaches (almost) to the border, stick to the screen edge
+            const rect = content.getBoundingClientRect();
+            const pad = parseFloat(getComputedStyle(content).paddingRight) || 0;
+            const free = document.documentElement.clientWidth - (rect.right - pad) - 10;
+            rails.style.right = (free < 14 ? 0 : free) + 'px';
             for (let i = 0; i < units.length; i++) {
                 if (!st[units[i].key]) continue;
                 const span = unitSpan(i);
