@@ -32,9 +32,53 @@
         if (!t && window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches) t = 'dark';
         if (t === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
     } catch (e) {}
+    // Soft gate for readers in Russian timezones: hide the page pre-paint;
+    // the acknowledgement overlay is built at DOMContentLoaded
+    try {
+        var RU_TZ = /^(Europe\/(Kaliningrad|Moscow|Kirov|Volgograd|Astrakhan|Saratov|Ulyanovsk|Samara)|Asia\/(Yekaterinburg|Omsk|Novosibirsk|Barnaul|Tomsk|Novokuznetsk|Krasnoyarsk|Irkutsk|Chita|Yakutsk|Khandyga|Vladivostok|Ust-Nera|Magadan|Sakhalin|Srednekolymsk|Kamchatka|Anadyr))$/;
+        var tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+        if (RU_TZ.test(tz) && !localStorage.getItem('ru-gate-ack')) {
+            document.documentElement.classList.add('ru-gated');
+        }
+    } catch (e) {}
 })();
 </script>
 <body>
+<script>
+// The gate itself: shown only when the pre-paint check flagged the page
+(function () {
+    if (!document.documentElement.classList.contains('ru-gated')) return;
+    document.addEventListener('DOMContentLoaded', function () {
+        var gate = document.createElement('div');
+        gate.className = 'ru-gate';
+        var card = document.createElement('div');
+        card.className = 'ru-gate-card';
+        var h = document.createElement('h2');
+        h.textContent = 'A word before you read';
+        var p1 = document.createElement('p');
+        p1.textContent = 'This book is free for everyone. But if you are reading it from Russia, the author — a Ukrainian — asks you to pause on one thought: citizens share responsibility for what their state does.';
+        var p2 = document.createElement('p');
+        p2.lang = 'ru';
+        p2.textContent = 'Эта книга бесплатна для всех. Но если вы читаете её из России, автор — украинец — просит вас остановиться на одной мысли: граждане разделяют ответственность за действия своего государства.';
+        var btn = document.createElement('button');
+        btn.className = 'ru-gate-btn';
+        btn.textContent = 'I understand · Я понимаю';
+        btn.addEventListener('click', function () {
+            try { localStorage.setItem('ru-gate-ack', '1'); } catch (e) {}
+            if (window.gtag) window.gtag('event', 'ru_gate_ack');
+            document.documentElement.classList.remove('ru-gated');
+            gate.remove();
+        });
+        card.appendChild(h);
+        card.appendChild(p1);
+        card.appendChild(p2);
+        card.appendChild(btn);
+        gate.appendChild(card);
+        document.body.appendChild(gate);
+        btn.focus();
+    });
+})();
+</script>
 <section class="page-header">
     <h1 class="project-name"><a href="{{ '/' | relative_url }}">{{ site.title }}</a></h1>
     <h2 class="project-tagline">{{ site.tag_line | default: site.description }}</h2>

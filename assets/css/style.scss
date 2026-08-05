@@ -303,6 +303,65 @@ html.in-app-browser .copy-toast {
     bottom: calc(4.9rem + env(safe-area-inset-bottom, 0px));
 }
 
+/* Soft gate for Russian-timezone readers: content hidden until acknowledged */
+html.ru-gated {
+    .page-header,
+    .main-content,
+    .book-footer,
+    .action-bar {
+        display: none;
+    }
+}
+
+.ru-gate {
+    position: fixed;
+    inset: 0;
+    background: #14172e;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+
+    .ru-gate-card {
+        max-width: 34rem;
+        color: #e2e8f0;
+        font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+        h2 {
+            color: #f38b1c;
+            font-size: 1.4rem;
+            margin: 0 0 1rem;
+        }
+
+        p {
+            line-height: 1.65;
+            margin: 0 0 0.9rem;
+        }
+
+        p[lang="ru"] {
+            color: #94a3b8;
+        }
+    }
+
+    .ru-gate-btn {
+        appearance: none;
+        border: none;
+        cursor: pointer;
+        margin-top: 0.8rem;
+        background: #f38b1c;
+        color: #14172e;
+        font-weight: 700;
+        font-size: 1rem;
+        padding: 0.65rem 1.4rem;
+        border-radius: 0.5rem;
+
+        &:hover {
+            background: #f0a32c;
+        }
+    }
+}
+
 /* Reading Statistics modal */
 .stats-overlay {
     position: fixed;
