@@ -45,10 +45,13 @@
 </script>
 <body>
 <script>
-// The gate itself: shown only when the pre-paint check flagged the page
+// The gate itself: shown only when the pre-paint check flagged the page.
+// Exposed as window._ruGate() so it can be triggered manually for testing:
+//   document.documentElement.classList.add('ru-gated'); _ruGate()
 (function () {
-    if (!document.documentElement.classList.contains('ru-gated')) return;
-    document.addEventListener('DOMContentLoaded', function () {
+    function build() {
+        if (!document.documentElement.classList.contains('ru-gated')) return;
+        if (document.querySelector('.ru-gate')) return;
         var gate = document.createElement('div');
         gate.className = 'ru-gate';
         var card = document.createElement('div');
@@ -76,7 +79,10 @@
         gate.appendChild(card);
         document.body.appendChild(gate);
         btn.focus();
-    });
+    }
+    window._ruGate = build;
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', build);
+    else build();
 })();
 </script>
 <section class="page-header">
