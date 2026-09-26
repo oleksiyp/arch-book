@@ -59,10 +59,14 @@
   }
   // Book on a 64 grid: cover x 11..53, y 2..62; pattern area under the plate.
   // Cover front (wrap units) -> mini book on the 64 grid
+  const f = n => Math.round(n * 100) / 100;
   const K0 = 0.07, TX = x => 11 + (x - 667.5) * K0, TY = y => 2 + (y - 12.5) * K0;
   function book(o, runs) {
     // "built" region grows diagonally from the bottom-left with a wavy front
-    const built = (x, y) => (x - 12) * 0.9 + (62 - y) < o.front + 3.2 * Math.sin(x * 0.45 + y * 0.2);
+    // built region: a diagonal front from the bottom-left, or a wavy patch around a centre
+    const built = o.center
+      ? (x, y) => Math.hypot(x - o.center[0], y - o.center[1]) < o.r * (1 + 0.22 * Math.sin(Math.atan2(y - o.center[1], x - o.center[0]) * 3 + 1))
+      : (x, y) => (x - 12) * 0.9 + (62 - y) < o.front + 3.2 * Math.sin(x * 0.45 + y * 0.2);
     const second = o.cyan ? (x, y) => (x - 47) ** 2 + (y - 27) ** 2 < 55 : () => false;
     const groups = { built: [], cyan: [], rest: [] };
     for (const r of runs) {
@@ -82,7 +86,18 @@
       pattern += stroke(groups.rest.concat(groups.built, groups.cyan), INK, o.lw + 2 * o.bw);
       pattern += stroke(groups.rest, '#fff', o.lw) + stroke(groups.built, OR, o.lw) + stroke(groups.cyan, o.cyan ? CY : '#fff', o.lw);
     }
-    pattern = `<g transform="translate(11 2) scale(${K0}) translate(-667.5 -12.5)">${pattern}</g>`;
+    const T = inner => `<g transform="translate(11 2) scale(${K0}) translate(-667.5 -12.5)">${inner}</g>`;
+    if (o.center && o.style === 'blueprint') {
+      // colour by area: every worm inked and orange inside a wavy central patch, pencil elsewhere
+      const all = runs.map(r => r.d), pts = [];
+      for (let k = 0; k < 48; k++) {
+        const a = k / 48 * Math.PI * 2;
+        pts.push(`${f(o.center[0] + Math.cos(a) * o.r)} ${f(o.center[1] + Math.sin(a) * o.r)}`);
+      }
+      pattern = T(stroke(all, GHOST, o.lw * 0.9)) +
+        `<clipPath id="patch"><path d="M${pts.join('L')}Z"/></clipPath>` +
+        `<g clip-path="url(#patch)">${T(stroke(all, INK, o.lw + 2 * o.bw) + stroke(all, OR, o.lw))}</g>`;
+    } else pattern = T(pattern);
     const spine = o.spine ? `<rect x="11" y="2" width="3" height="60" fill="${INK}" opacity=".16"/>` : '';
     return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="512" height="512">
       <defs><clipPath id="c"><rect x="12" y="3" width="40" height="58"/></clipPath></defs>
@@ -120,7 +135,9 @@
     ['D', 'Two teams', 'Orange built from the bottom-left, a cyan patch started top-right.', { cyan: true }],
     ['E', 'Blueprint', 'Unbuilt worms are faint construction lines; only the built part is inked and coloured.', { style: 'blueprint' }],
     ['F', 'Blueprint, two teams', 'As E, with a cyan patch.', { style: 'blueprint', cyan: true }],
-    ['G', 'Blueprint, less colour (shipped)', 'Blueprint with only a small corner built.', { style: 'blueprint', front: 18 }],
+    ['G', 'Blueprint, corner', 'Blueprint with only a small corner built.', { style: 'blueprint', front: 18 }],
+    ['I', 'Blueprint, spot in the middle (shipped)', 'A round built spot in the centre of the pattern: inked and orange inside, pencil outside.', { style: 'blueprint', center: [32, 41], r: 8 }],
+    ['J', 'Blueprint, smaller spot', 'As I with a smaller spot.', { style: 'blueprint', center: [32, 41], r: 6 }],
     ['H', 'Half built', 'The built front has reached the middle.', { front: 42 }],
   ];
   // Used by favicon.mjs to export the chosen configuration

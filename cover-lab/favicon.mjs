@@ -3,7 +3,7 @@
 import puppeteer from 'puppeteer-core';
 import { writeFileSync } from 'node:fs';
 
-const CHOSEN = { style: 'blueprint', front: 18 };
+const CHOSEN = { style: 'blueprint', center: [32, 41], r: 8 };
 const browser = await puppeteer.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: true });
 const page = await browser.newPage();
 await page.goto('http://localhost:8766/cover-lab/favicon.html', { waitUntil: 'networkidle0' });
