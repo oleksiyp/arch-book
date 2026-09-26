@@ -162,6 +162,7 @@
                 <a href="#" class="footer-link" id="cookie-settings">Cookie Settings</a>
                 <a href="#" class="footer-link" id="reset-progress">Reset Reading Progress</a>
                 {% endif %}
+                <a href="{{ '/privacy/' | relative_url }}" class="footer-link">Privacy</a>
                 <a class="buy-button" href="https://buymeacoffee.com/oleksiyp.dev" target="_blank" rel="noopener noreferrer">
                     <img src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg" alt="" width="20" height="20">
                     <span>Buy me a coffee</span>
@@ -435,6 +436,9 @@
             location: false,
             content: {
                 message: 'This site uses cookies for anonymous usage statistics. Independently of cookies, reading progress is remembered only on your device, and the site collects aggregate reading statistics with no identifiers.',
+                link: 'Privacy',
+                href: '{{ "/privacy/" | relative_url }}',
+                target: '_self',
                 allow: 'Approve',
                 dismiss: 'Approve',
                 deny: 'Reject'

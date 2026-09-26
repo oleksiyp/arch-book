@@ -12,6 +12,7 @@
     var API = (script && script.dataset.api || '').replace(/\/$/, '');
     if (!API) return;
     var CHAPTER = parseInt(script.dataset.chapter || '0', 10) || 0;
+    var PRIVACY = new URL('../../privacy/', script.src).href; // this file lives in <site>/assets/js/
 
     var TAGS = [
         ['foundations', 'Foundations & trade-offs'], ['styles', 'Architecture styles'], ['ddd', 'Domain-driven design'],
@@ -140,7 +141,11 @@
         row.appendChild(submit);
         form.appendChild(row);
         form.appendChild(trap);
-        form.appendChild(el('p', 'nl-fine', 'You confirm by email first. One-click unsubscribe in every issue. No tracking by us.'));
+        var fine = el('p', 'nl-fine', 'You confirm by email first. One-click unsubscribe in every issue. No tracking by us. ');
+        var privacy = el('a', 'nl-privacy', 'Privacy');
+        privacy.href = PRIVACY;
+        fine.appendChild(privacy);
+        form.appendChild(fine);
         var peek = el('button', 'nl-btn nl-btn--quiet nl-peek', 'Preview this week\'s issue');
         peek.type = 'button';
         peek.addEventListener('click', function () {
