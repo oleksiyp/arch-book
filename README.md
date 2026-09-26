@@ -98,16 +98,16 @@ Where does architecture end and design begin? Nowhere — there is only a spectr
   <desc id="specDesc">A horizontal gradient bar from "more architectural" (left) to "more design" (right), with markers at: choice of style, sync vs. async, library choice, class naming.</desc>
   <defs>
     <linearGradient id="spec" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#f38b1c"/>
+      <stop offset="0" stop-color="#d9482b"/>
       <stop offset="1" stop-color="#00c9ff"/>
     </linearGradient>
   </defs>
   <rect x="20" y="45" width="600" height="18" rx="9" fill="url(#spec)"/>
-  <text x="20" y="30" font-family="sans-serif" font-size="13" fill="#d97706" font-weight="bold">more architectural</text>
+  <text x="20" y="30" font-family="sans-serif" font-size="13" fill="#b23a20" font-weight="bold">more architectural</text>
   <text x="620" y="30" font-family="sans-serif" font-size="13" fill="#0b7ecb" font-weight="bold" text-anchor="end">more design</text>
-  <line x1="60" y1="63" x2="60" y2="80" stroke="#d97706" stroke-width="2"/>
+  <line x1="60" y1="63" x2="60" y2="80" stroke="#b23a20" stroke-width="2"/>
   <text x="60" y="97" font-family="sans-serif" font-size="11" fill="#333" text-anchor="middle">choice of style</text>
-  <line x1="240" y1="63" x2="240" y2="80" stroke="#d97706" stroke-width="2"/>
+  <line x1="240" y1="63" x2="240" y2="80" stroke="#b23a20" stroke-width="2"/>
   <text x="240" y="97" font-family="sans-serif" font-size="11" fill="#333" text-anchor="middle">sync vs. async</text>
   <line x1="420" y1="63" x2="420" y2="80" stroke="#0b7ecb" stroke-width="2"/>
   <text x="420" y="97" font-family="sans-serif" font-size="11" fill="#333" text-anchor="middle">library choice</text>
@@ -145,7 +145,7 @@ flowchart LR
     encore -- charges cards --> psp
     encore -- issues tickets --> wallet
     classDef person fill:#1b1f3b,stroke:#1b1f3b,color:#fff
-    classDef system fill:#f38b1c,stroke:#f38b1c,color:#fff
+    classDef system fill:#d9482b,stroke:#d9482b,color:#fff
     classDef external fill:#eaf2f8,stroke:#7a93a8,color:#1b1f3b
     class fan,org person
     class encore system
@@ -526,7 +526,7 @@ flowchart LR
     end
     gate["Sale Gate<br/><small>separately deployed,<br/>scales to the spike</small>"] -- admits fans at a sustainable rate --> mono
     bot["Bot Screening"] --- gate
-    classDef hot fill:#f38b1c,stroke:#f38b1c,color:#fff
+    classDef hot fill:#d9482b,stroke:#d9482b,color:#fff
     class gate,bot hot
 </pre>
 
@@ -622,7 +622,7 @@ flowchart TB
     cat -- "customer–supplier<br/><small>(catalog serves admission)</small>" --> onsale
     inv -- "open-host service<br/><small>(published ticket events)</small>" --> sup
     pay -- "anticorruption layer<br/><small>(PSP's model kept outside)</small>" --> inv
-    classDef core fill:#f38b1c,stroke:#f38b1c,color:#fff
+    classDef core fill:#d9482b,stroke:#d9482b,color:#fff
     classDef supp fill:#1b1f3b,stroke:#1b1f3b,color:#fff
     classDef gen fill:#eaf2f8,stroke:#7a93a8,color:#1b1f3b
     class onsale,inv core
@@ -701,7 +701,7 @@ flowchart LR
     proxy -- "extracted capability" --> new["New Admission service"]
     proxy -- "everything else" --> old["Legacy monolith"]
     new -. "reads/writes via ACL" .-> old
-    classDef new fill:#f38b1c,stroke:#f38b1c,color:#fff
+    classDef new fill:#d9482b,stroke:#d9482b,color:#fff
     classDef old fill:#eaf2f8,stroke:#7a93a8,color:#1b1f3b
     class new new
     class old old
@@ -828,16 +828,16 @@ What vendors bury in appendices, architects must read as a menu with prices:
   <desc id="consDesc">A horizontal gradient bar from stronger consistency (slower, coordination-hungry) to weaker (faster, available), with markers at: linearizable, causal, read-your-writes, eventual.</desc>
   <defs>
     <linearGradient id="cons" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#f38b1c"/>
+      <stop offset="0" stop-color="#d9482b"/>
       <stop offset="1" stop-color="#00c9ff"/>
     </linearGradient>
   </defs>
   <rect x="20" y="40" width="600" height="16" rx="8" fill="url(#cons)"/>
-  <text x="20" y="26" font-family="sans-serif" font-size="13" fill="#d97706" font-weight="bold">stronger — slower, coordination-hungry</text>
+  <text x="20" y="26" font-family="sans-serif" font-size="13" fill="#b23a20" font-weight="bold">stronger — slower, coordination-hungry</text>
   <text x="620" y="26" font-family="sans-serif" font-size="13" fill="#0b7ecb" font-weight="bold" text-anchor="end">weaker — faster, available</text>
-  <line x1="70" y1="56" x2="70" y2="72" stroke="#d97706" stroke-width="2"/>
+  <line x1="70" y1="56" x2="70" y2="72" stroke="#b23a20" stroke-width="2"/>
   <text x="70" y="90" font-family="sans-serif" font-size="11" fill="#333" text-anchor="middle">linearizable</text>
-  <line x1="260" y1="56" x2="260" y2="72" stroke="#d97706" stroke-width="2"/>
+  <line x1="260" y1="56" x2="260" y2="72" stroke="#b23a20" stroke-width="2"/>
   <text x="260" y="90" font-family="sans-serif" font-size="11" fill="#333" text-anchor="middle">causal</text>
   <line x1="420" y1="56" x2="420" y2="72" stroke="#0b7ecb" stroke-width="2"/>
   <text x="420" y="90" font-family="sans-serif" font-size="11" fill="#333" text-anchor="middle">read-your-writes</text>
@@ -871,7 +871,7 @@ flowchart LR
     s1 & s2 --> db[("Primary store")]
     s1 & s2 -- "slow/async work" --> q[["Queue"]]
     q --> w1["Workers (scale independently)"]
-    classDef hot fill:#f38b1c,stroke:#f38b1c,color:#fff
+    classDef hot fill:#d9482b,stroke:#d9482b,color:#fff
     class lb,q hot
     classDef store fill:#d9f6ff,stroke:#0b7ecb,color:#1b1f3b
     class cache,db store
@@ -1168,7 +1168,7 @@ flowchart LR
     log --> p2["Projection: sales dashboard"]
     log --> p3["Projection: fan's tickets"]
     p1 & p2 & p3 --> q([queries])
-    classDef hot fill:#f38b1c,stroke:#f38b1c,color:#fff
+    classDef hot fill:#d9482b,stroke:#d9482b,color:#fff
     class log hot
 </pre>
 
@@ -1352,7 +1352,7 @@ flowchart LR
         pub --> inv["Inventory"] & ord["Orders"]
         bff --> inv
     end
-    classDef hot fill:#f38b1c,stroke:#f38b1c,color:#fff
+    classDef hot fill:#d9482b,stroke:#d9482b,color:#fff
     class gw hot
 </pre>
 
@@ -1516,7 +1516,7 @@ flowchart LR
     fbff --> cat["Catalog"] & inv["Inventory"] & ord["Orders"]
     obff --> cat & ana["Analytics"]
     inv -. "SSE: seat updates" .-> fan
-    classDef hot fill:#f38b1c,stroke:#f38b1c,color:#fff
+    classDef hot fill:#d9482b,stroke:#d9482b,color:#fff
     class fbff,obff hot
 </pre>
 
@@ -1666,7 +1666,7 @@ flowchart LR
     end
     s --> bi([Dashboards]) & ds([Data science])
     t --> fin([Finance close])
-    classDef hot fill:#f38b1c,stroke:#f38b1c,color:#fff
+    classDef hot fill:#d9482b,stroke:#d9482b,color:#fff
     class code hot
     classDef store fill:#d9f6ff,stroke:#0b7ecb,color:#1b1f3b
     class s,t store
@@ -1779,7 +1779,7 @@ flowchart LR
     ord -- "mTLS + policy:<br/><small>orders may reserve</small>" --> inv["Inventory"]
     bot["Bot Screening"] -- "policy: may query risk only" --> inv
     ana["Analytics"] -. "policy: no path to Inventory<br/><small>(reads events instead)</small>" .-> inv
-    classDef ok fill:#f38b1c,stroke:#f38b1c,color:#fff
+    classDef ok fill:#d9482b,stroke:#d9482b,color:#fff
     classDef deny fill:#fdeef2,stroke:#c66,color:#933
     class gw,ord,inv,bot ok
     class ana deny
@@ -1923,7 +1923,7 @@ flowchart LR
     b{"Error budget<br/>remaining?"} -- "yes" --> ship["Ship features<br/><small>canaries promote, flags open</small>"]
     b -- "burning fast" --> slow["Slow down<br/><small>canaries hold, risky flags freeze</small>"]
     b -- "exhausted" --> harden["Reliability work only<br/><small>until budget recovers</small>"]
-    classDef hot fill:#f38b1c,stroke:#f38b1c,color:#fff
+    classDef hot fill:#d9482b,stroke:#d9482b,color:#fff
     class b hot
 </pre>
 
@@ -2035,7 +2035,7 @@ flowchart LR
     chunk --> emb["Embedding"] --> idx[("Vector + keyword index")]
     q([Fan's question]) --> qr["Query rewrite<br/><small>+ fan's context</small>"] --> idx
     idx -- "top-k candidates" --> rr["Reranker"] -- "best 3–5" --> llm["Model<br/><small>answer with citations</small>"]
-    classDef hot fill:#f38b1c,stroke:#f38b1c,color:#fff
+    classDef hot fill:#d9482b,stroke:#d9482b,color:#fff
     class idx,rr hot
 </pre>
 
@@ -2177,7 +2177,7 @@ flowchart LR
     g["Genesis<br/><small>build — nobody sells it</small>"] --> c["Custom<br/><small>build or adopt — differentiate here?</small>"]
     c --> pr["Product<br/><small>buy — let vendors compete</small>"]
     pr --> co["Commodity<br/><small>rent — pay per unit, forget</small>"]
-    classDef hot fill:#f38b1c,stroke:#f38b1c,color:#fff
+    classDef hot fill:#d9482b,stroke:#d9482b,color:#fff
     class g hot
 </pre>
 
@@ -2289,7 +2289,7 @@ flowchart TB
         t1["Venue-chain tenant"] --- t2["Festival tenant"] --- t3["500 self-service venues"]
     end
     cp -- "provisions · configures · observes" --> ap
-    classDef plane fill:#fff4e6,stroke:#f38b1c,stroke-width:2px,color:#1b1f3b
+    classDef plane fill:#fdebe6,stroke:#d9482b,stroke-width:2px,color:#1b1f3b
     class cp plane
 </pre>
 
@@ -2457,7 +2457,7 @@ flowchart TB
     teams(["40 product teams — the platform's tenants"]) --> paths["Golden paths & self-service portal"]
     paths --> cp["Platform control plane<br/><small>provisioning · registry · scorecards · metering</small>"]
     cp --> c["Compute & delivery<br/><small>Ch. 11</small>"] & e["Event backbone<br/><small>Ch. 6</small>"] & d["Data products<br/><small>Ch. 9</small>"] & a["API & UI paths<br/><small>Ch. 7·Ch. 8</small>"] & s["Security guardrails<br/><small>Ch. 10</small>"] & ai["AI gateway<br/><small>Ch. 12</small>"]
-    classDef hot fill:#f38b1c,stroke:#f38b1c,color:#fff
+    classDef hot fill:#d9482b,stroke:#d9482b,color:#fff
     class cp hot
 </pre>
 

@@ -61,11 +61,11 @@ const Lab = (() => {
     return '#' + A.map((v, i) => Math.round(v + (B[i] - v) * t).toString(16).padStart(2, '0')).join('');
   }
   const PALETTES = {
-    paper: { label: 'Paper', ground: '#F6F4EF', line: '#FFFFFF', ink: '#111318', plate: '#FFFFFF', plateText: '#111318', text: '#111318', a: '#F38B1C', b: '#00C9FF' },
-    navy: { label: 'Navy', ground: '#1B1F3B', line: '#F4F2EC', ink: '#07091A', plate: '#F4F2EC', plateText: '#1B1F3B', text: '#F4F2EC', a: '#F38B1C', b: '#00C9FF' },
-    ink: { label: 'Ink', ground: '#15161A', line: '#EFECE5', ink: '#000000', plate: '#15161A', plateText: '#EFECE5', text: '#EFECE5', a: '#F38B1C', b: '#00C9FF' },
-    signal: { label: 'Signal orange', ground: '#F38B1C', line: '#FFFFFF', ink: '#1B1F3B', plate: '#FFFFFF', plateText: '#1B1F3B', text: '#1B1F3B', a: '#1B1F3B', b: '#00C9FF' },
-    sky: { label: 'Sky', ground: '#00C9FF', line: '#FFFFFF', ink: '#1B1F3B', plate: '#FFFFFF', plateText: '#1B1F3B', text: '#1B1F3B', a: '#F38B1C', b: '#1B1F3B' },
+    paper: { label: 'Paper', ground: '#F6F4EF', line: '#FFFFFF', ink: '#111318', plate: '#FFFFFF', plateText: '#111318', text: '#111318', a: '#D9482B', b: '#00C9FF' },
+    navy: { label: 'Navy', ground: '#1B1F3B', line: '#F4F2EC', ink: '#07091A', plate: '#F4F2EC', plateText: '#1B1F3B', text: '#F4F2EC', a: '#D9482B', b: '#00C9FF' },
+    ink: { label: 'Ink', ground: '#15161A', line: '#EFECE5', ink: '#000000', plate: '#15161A', plateText: '#EFECE5', text: '#EFECE5', a: '#D9482B', b: '#00C9FF' },
+    signal: { label: 'Signal orange', ground: '#D9482B', line: '#FFFFFF', ink: '#1B1F3B', plate: '#FFFFFF', plateText: '#1B1F3B', text: '#1B1F3B', a: '#1B1F3B', b: '#00C9FF' },
+    sky: { label: 'Sky', ground: '#00C9FF', line: '#FFFFFF', ink: '#1B1F3B', plate: '#FFFFFF', plateText: '#1B1F3B', text: '#1B1F3B', a: '#D9482B', b: '#1B1F3B' },
   };
   const ACCENTS = { both: 'Orange + cyan', ba: 'Cyan + orange', a: 'First only', b: 'Second only', none: 'Black & white' };
   const WEIGHTS = { '4/2': [4, 2], '6/2': [6, 2], '8/3': [8, 3], '3/1.5': [3, 1.5] };

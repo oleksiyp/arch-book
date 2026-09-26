@@ -1,4 +1,4 @@
-const CACHE = 'arch-book-v2'; // v2: drop cached live data (stats) held by v1
+const CACHE = 'arch-book-v3'; // v3: vermilion palette (cover, icons); v2 dropped cached live data held by v1
 
 self.addEventListener('install', (e) => {
   e.waitUntil(
