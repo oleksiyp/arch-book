@@ -127,7 +127,11 @@
         row.appendChild(submit);
         form.appendChild(row);
         form.appendChild(trap);
-        form.appendChild(el('p', 'nl-fine', 'You confirm by email first. One-click unsubscribe in every issue. No tracking pixels.'));
+        form.appendChild(el('p', 'nl-fine', 'You confirm by email first. One-click unsubscribe in every issue. No tracking by us.'));
+        var lost = el('button', 'nl-link', 'Already subscribed? Get a link to change topics or unsubscribe');
+        lost.type = 'button';
+        lost.addEventListener('click', function () { manageLinkView(box); });
+        form.appendChild(lost);
         form.addEventListener('submit', function (e) {
             e.preventDefault();
             var picked = picker.value();
@@ -171,6 +175,11 @@
                 row.appendChild(unsub);
             }
             box.appendChild(row);
+            if (active) box.appendChild(el('p', 'nl-fine', 'Topic changes apply from next Monday\'s digest.'));
+            var del = el('button', 'nl-link', 'Delete my address entirely');
+            del.type = 'button';
+            del.addEventListener('click', function () { forgetView(box, token, sub.email); });
+            box.appendChild(del);
             save.addEventListener('click', function () {
                 var picked = picker.value();
                 if (!picked.length) { status(box, 'Pick at least one topic, or unsubscribe.', 'error'); return; }
@@ -183,6 +192,63 @@
                 }, function (err) { save.disabled = false; status(box, err.message, 'error'); });
             });
         }, function (err) { box.textContent = ''; status(box, err.message, 'error'); });
+    }
+
+    // "I lost my emails": the service mails a fresh manage link if the address is on the list.
+    function manageLinkView(box) {
+        box.textContent = '';
+        box.appendChild(el('p', 'nl-lead', 'Enter the address you subscribed with. If it is on the list, we will email you a link to change topics, unsubscribe or delete your address.'));
+        var form = el('form', 'nl-form');
+        form.noValidate = true;
+        var row = el('div', 'nl-row');
+        var email = el('input', 'nl-email');
+        email.type = 'email';
+        email.autocomplete = 'email';
+        email.placeholder = 'you@example.com';
+        email.setAttribute('aria-label', 'Email address');
+        var send = el('button', 'nl-btn', 'Email me a link');
+        send.type = 'submit';
+        row.appendChild(email);
+        row.appendChild(send);
+        form.appendChild(row);
+        var back = el('button', 'nl-link', 'Back to subscribing');
+        back.type = 'button';
+        back.addEventListener('click', function () { subscribeView(box, defaultTags); });
+        form.appendChild(back);
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) { status(box, 'Please enter a valid email address.', 'error'); return; }
+            send.disabled = true;
+            call('/v1/manage-link', { email: email.value.trim() }).then(function () {
+                track('newsletter_manage_link');
+                box.textContent = '';
+                box.appendChild(el('p', 'nl-done', 'Check your inbox. If that address is subscribed, a link is on its way.'));
+            }, function (err) { send.disabled = false; status(box, err.message, 'error'); });
+        });
+        box.appendChild(form);
+        email.focus();
+    }
+
+    function forgetView(box, token, emailMasked) {
+        box.textContent = '';
+        box.appendChild(el('p', 'nl-lead', 'Delete ' + (emailMasked || 'your address') + ' and everything stored about it? This also unsubscribes you. To come back later you would subscribe again from scratch.'));
+        var row = el('div', 'nl-row');
+        var yes = el('button', 'nl-btn', 'Delete my address');
+        yes.type = 'button';
+        var no = el('button', 'nl-btn nl-btn--quiet', 'Cancel');
+        no.type = 'button';
+        row.appendChild(yes);
+        row.appendChild(no);
+        box.appendChild(row);
+        no.addEventListener('click', function () { manageView(box, token); });
+        yes.addEventListener('click', function () {
+            yes.disabled = true;
+            call('/v1/forget', { token: token }).then(function () {
+                track('newsletter_forget');
+                box.textContent = '';
+                box.appendChild(el('p', 'nl-done', 'Done. Your address and everything about it is deleted.'));
+            }, function (err) { yes.disabled = false; status(box, err.message, 'error'); });
+        });
     }
 
     function unsubscribeView(box, token, emailMasked) {

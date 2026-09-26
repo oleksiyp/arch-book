@@ -1238,6 +1238,23 @@ html[data-theme="dark"] {
     opacity: 0;
 }
 
+.nl-link {
+    display: block;
+    margin: 0.7rem 0 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: #b45f06;
+    font: 600 0.82rem "Open Sans", "Helvetica Neue", Arial, sans-serif;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    cursor: pointer;
+}
+
+html[data-theme="dark"] .nl-link {
+    color: #f0a32c;
+}
+
 .nl-fine {
     margin: 0.7rem 0 0;
     font-size: 0.8rem;
