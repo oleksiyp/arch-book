@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Brand assets</title>
+<!-- Stages for the share image and icons, rendered from assets/cover/wrap.svg.
+     Serve the repo root on :8766 and run `node brand.mjs` to write the PNGs. -->
+<style>
+  @font-face { font-family: "Open Sans"; font-weight: 400; src: url("/assets/fonts/open-sans-400.woff2") format("woff2"); }
+  @font-face { font-family: "Open Sans"; font-weight: 700; src: url("/assets/fonts/open-sans-700.woff2") format("woff2"); }
+  body { margin: 0; padding: 20px; background: #888; display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start; font-family: "Open Sans", Arial, sans-serif; }
+  .paper { background:
+      radial-gradient(50% 70% at 24% 60%, rgba(243,139,28,.12), rgba(243,139,28,0) 70%),
+      radial-gradient(40% 60% at 85% 25%, rgba(0,201,255,.10), rgba(0,201,255,0) 70%),
+      #f3f1ec; }
+  #og { position: relative; width: 1200px; height: 630px; overflow: hidden; color: #1b1f3b; }
+  #og .book { position: absolute; left: 20px; top: 0; width: 520px; height: 630px; }
+  #og .text { position: absolute; left: 540px; right: 64px; top: 0; bottom: 0; display: flex; flex-direction: column; justify-content: center; }
+  #og h1 { margin: 0; font-size: 62px; line-height: 1.1; font-weight: 700; letter-spacing: -0.01em; }
+  #og .tag { margin: 18px 0 0; font-size: 27px; opacity: .85; }
+  #og .chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
+  #og .chips span { border: 2px solid #1b1f3b; border-radius: 999px; padding: 5px 16px; font-size: 19px; font-weight: 700; }
+  #og .chips span.hot { background: #f38b1c; border-color: #f38b1c; }
+  #og .url { margin-top: 38px; font-size: 22px; font-weight: 700; color: #b45f06; }
+  .icon { position: relative; overflow: hidden; background-repeat: no-repeat; background-color: #f6f4ef; }
+</style>
+</head>
+<body>
+<div id="og" class="paper">
+  <div class="book" id="og-book"></div>
+  <div class="text">
+    <h1>Software Architecture in the AI &amp; Cloud Era</h1>
+    <p class="tag">the road to platform architecture</p>
+    <div class="chips"><span class="hot">free online book</span><span>15 chapters</span><span>diagrams as code</span></div>
+    <div class="url">oleksiyp.github.io/arch-book</div>
+  </div>
+</div>
+<div id="icon-512" class="icon" data-size="512" data-crop="wide"></div>
+<div id="icon-192" class="icon" data-size="192" data-crop="wide"></div>
+<div id="icon-180" class="icon" data-size="180" data-crop="wide"></div>
+<!-- At tab size a crop of the pattern is mush, so the favicon is one worm drawn in the cover's cased style -->
+<div id="icon-32" style="width:32px;height:32px"><svg width="32" height="32" viewBox="0 0 32 32">
+  <rect width="32" height="32" fill="#f6f4ef"/>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M27 29c0-4-4-4-4-7" stroke="#111318" stroke-width="5.5"/><path d="M27 29c0-4-4-4-4-7" stroke="#fff" stroke-width="2.2"/>
+    <path d="M6 27C6 18 16 21 16 15.5S26 13 26 5" stroke="#111318" stroke-width="7.5"/>
+    <path d="M6 27C6 18 16 21 16 15.5S26 13 26 5" stroke="#F38B1C" stroke-width="3.6"/>
+  </g></svg></div>
+
+<script src="/assets/js/book3d.js"></script>
+<script>
+  // Geometry of assets/cover/wrap.svg (units of 0.01 in)
+  const WRAP = { url: '/assets/cover/wrap.svg', W: 1280, H: 925,
+    back: { x: 12.5, y: 12.5, w: 600, h: 900 }, spine: { x: 612.5, y: 12.5, w: 55, h: 900 }, front: { x: 667.5, y: 12.5, w: 600, h: 900 } };
+  // Square crops of the front cover around the orange worm; the tight one keeps lines legible at 32 px.
+  const CROPS = { wide: { x: 735, y: 500, s: 290 }, };
+  for (const el of document.querySelectorAll('.icon')) {
+    const n = +el.dataset.size, c = CROPS[el.dataset.crop], k = n / c.s;
+    Object.assign(el.style, { width: n + 'px', height: n + 'px', backgroundImage: `url(${WRAP.url})`,
+      backgroundSize: `${WRAP.W * k}px ${WRAP.H * k}px`, backgroundPosition: `${-c.x * k}px ${-c.y * k}px` });
+  }
+  Book3D.create(document.getElementById('og-book'), { wrap: WRAP, depth: 55 / 600, margin: 0.09, ry: 26, rx: -8, intro: false, idle: false, tilt: false });
+  Promise.all([document.fonts.ready, new Promise(r => { const i = new Image(); i.onload = r; i.src = WRAP.url; })])
+    .then(() => setTimeout(() => { window.brandReady = true; }, 400));
+</script>
+</body>
+</html>
