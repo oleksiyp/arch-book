@@ -1084,3 +1084,169 @@ html[data-theme="dark"] {
         background: #2e5a42;
     }
 }
+
+/* Weekly digest (assets/js/newsletter.js). The dialog reuses the Reading Statistics
+   overlay/frame; these are the form parts and the inline card at the end of each page. */
+.nl-inline {
+    max-width: 54rem;
+    margin: 0 auto 3rem;
+    padding: 1.4rem 1.5rem 1.2rem;
+    border: 2px solid #1b1f3b;
+    border-radius: 0.6rem;
+    background: #f3f1ec;
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+    h2 {
+        margin: 0 0 0.4rem;
+        font-size: 1.25rem;
+        color: #1b1f3b;
+    }
+}
+
+@media (max-width: 54rem) {
+    .nl-inline {
+        margin-inline: 1rem;
+    }
+}
+
+.nl-box {
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #2b3138;
+}
+
+.nl-modal {
+    max-width: 38rem;
+}
+
+.nl-modal .nl-box {
+    padding: 1rem 1.25rem 1.25rem;
+    overflow-y: auto;
+}
+
+.nl-lead {
+    margin: 0 0 0.9rem;
+    font-size: 0.98rem;
+    line-height: 1.5;
+    text-align: left;
+}
+
+.nl-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 0.9rem;
+}
+
+.nl-chip {
+    appearance: none;
+    border: 1.5px solid #c9c4b8;
+    background: #fff;
+    color: #1b1f3b;
+    border-radius: 999px;
+    padding: 0.28rem 0.75rem;
+    font: 600 0.82rem/1.3 "Open Sans", "Helvetica Neue", Arial, sans-serif;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+
+    &[aria-pressed="true"] {
+        background: #f38b1c;
+        border-color: #f38b1c;
+    }
+
+    &--all {
+        border-style: dashed;
+    }
+
+    &:focus-visible {
+        outline: 2px solid #00a3d9;
+        outline-offset: 2px;
+    }
+}
+
+.nl-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.nl-email {
+    flex: 1 1 14rem;
+    min-width: 0;
+    padding: 0.6rem 0.9rem;
+    border: 1.5px solid #1b1f3b;
+    border-radius: 999px;
+    font: 1rem "Open Sans", "Helvetica Neue", Arial, sans-serif;
+    background: #fff;
+    color: #1b1f3b;
+}
+
+.nl-btn {
+    appearance: none;
+    border: 2px solid #1b1f3b;
+    background: #1b1f3b;
+    color: #fff;
+    border-radius: 999px;
+    padding: 0.55rem 1.2rem;
+    font: 700 0.95rem "Open Sans", "Helvetica Neue", Arial, sans-serif;
+    cursor: pointer;
+
+    &--quiet {
+        background: transparent;
+        color: #1b1f3b;
+    }
+
+    &:disabled {
+        opacity: 0.55;
+        cursor: default;
+    }
+}
+
+/* the honeypot: off-screen, not display:none (some bots skip hidden fields) */
+.nl-trap {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+}
+
+.nl-fine {
+    margin: 0.7rem 0 0;
+    font-size: 0.8rem;
+    color: #5c6078;
+    text-align: left;
+}
+
+.nl-done {
+    margin: 0 0 0.8rem;
+    font-weight: 700;
+    color: #1b1f3b;
+    text-align: left;
+}
+
+.nl-status {
+    margin: 0.6rem 0 0;
+    font-size: 0.9rem;
+    text-align: left;
+
+    &--error { color: #b42318; }
+    &--ok { color: #1f7a3a; }
+}
+
+html[data-theme="dark"] {
+    .nl-inline {
+        background: #1b2237;
+        border-color: #3a4566;
+
+        h2 { color: #e8ecf3; }
+    }
+
+    .nl-box, .nl-lead, .nl-done { color: #c6cdd6; }
+    .nl-chip { background: #222b44; color: #e8ecf3; border-color: #3a4566; }
+    .nl-chip[aria-pressed="true"] { background: #f38b1c; border-color: #f38b1c; color: #1b1f3b; }
+    .nl-email { background: #222b44; color: #e8ecf3; border-color: #3a4566; }
+    .nl-btn { background: #f38b1c; border-color: #f38b1c; color: #1b1f3b; }
+    .nl-btn--quiet { background: transparent; color: #e8ecf3; border-color: #3a4566; }
+    .nl-fine { color: #97a0b5; }
+}
