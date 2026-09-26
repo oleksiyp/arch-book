@@ -80,7 +80,7 @@
         function picked() { return buttons.filter(function (b) { return b.getAttribute('aria-pressed') === 'true'; }).length; }
         function sync() {
             var n = picked();
-            count.textContent = n === buttons.length ? 'all ' + n : n + ' of ' + buttons.length;
+            count.textContent = (n === buttons.length ? 'all ' + n : n + ' of ' + buttons.length) + ' selected';
             all.textContent = n === buttons.length ? 'Clear' : 'Select all';
         }
         all.addEventListener('click', function () {
