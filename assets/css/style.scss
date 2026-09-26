@@ -1184,38 +1184,93 @@ html[data-theme="dark"] {
     text-align: left;
 }
 
+.nl-topics {
+    margin-bottom: 0.6rem;
+}
+
+.nl-topics-head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin-bottom: 0.45rem;
+    font: 0.78rem/1.3 "Open Sans", "Helvetica Neue", Arial, sans-serif;
+}
+
+.nl-topics-label {
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #1b1f3b;
+}
+
+.nl-topics-count {
+    color: #6a6f80;
+}
+
+.nl-mini {
+    appearance: none;
+    margin-left: auto;
+    padding: 0.15rem 0;
+    border: 0;
+    background: none;
+    color: #b23a20;
+    font: 600 0.8rem "Open Sans", "Helvetica Neue", Arial, sans-serif;
+    cursor: pointer;
+
+    &:hover { text-decoration: underline; }
+}
+
 .nl-chips {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.4rem;
-    margin-bottom: 0.9rem;
+    gap: 0.35rem;
 }
 
+/* Unpicked: a quiet outline. Picked: a light vermilion tint with a tick, so a full
+   selection reads as a calm list rather than a wall of red. */
 .nl-chip {
     appearance: none;
-    border: 1.5px solid #c9c4b8;
+    border: 1px solid #d6d2c8;
     background: #fff;
-    color: #1b1f3b;
+    color: #5a6072;
     border-radius: 999px;
-    padding: 0.28rem 0.75rem;
-    font: 600 0.82rem/1.3 "Open Sans", "Helvetica Neue", Arial, sans-serif;
+    padding: 0.26rem 0.7rem;
+    font: 600 0.8rem/1.3 "Open Sans", "Helvetica Neue", Arial, sans-serif;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
+    transition: background-color 0.12s, border-color 0.12s, color 0.12s;
+
+    &::before {
+        content: "+ ";
+        color: #9aa0ae;
+    }
 
     &[aria-pressed="true"] {
-        background: #d9482b;
-        border-color: #d9482b;
-        color: #ffffff;
+        background: #fbe9e4;
+        border-color: #e7a595;
+        color: #8f2d18;
+
+        &::before {
+            content: "✓ ";
+            color: #d9482b;
+        }
     }
 
-    &--all {
-        border-style: dashed;
-    }
+    &:hover { border-color: #d9482b; }
 
     &:focus-visible {
         outline: 2px solid #00a3d9;
         outline-offset: 2px;
     }
+}
+
+.nl-peek {
+    margin: 0.2rem 0 0.9rem;
+    padding: 0.38rem 0.9rem;
+    border-width: 1.5px;
+    font-size: 0.82rem;
+
+    &::before { content: "▸ "; }
 }
 
 .nl-row {
@@ -1251,6 +1306,14 @@ html[data-theme="dark"] {
         color: #1b1f3b;
     }
 
+    &--accent {
+        border-color: #d9482b;
+        background: #d9482b;
+        color: #fff;
+
+        &:hover { background: #c23e23; border-color: #c23e23; }
+    }
+
     &:disabled {
         opacity: 0.55;
         cursor: default;
@@ -1281,6 +1344,19 @@ html[data-theme="dark"] {
 
 html[data-theme="dark"] .nl-link {
     color: #f0714f;
+}
+
+.nl-link--foot {
+    margin-top: 1rem;
+    padding-top: 0.8rem;
+    width: 100%;
+    text-align: left;
+    border-top: 1px solid #e6e3dc;
+    color: #5c6078;
+    font-weight: 400;
+    text-decoration: none;
+
+    &:hover { color: #b23a20; text-decoration: underline; }
 }
 
 .nl-fine {
@@ -1315,10 +1391,16 @@ html[data-theme="dark"] {
     }
 
     .nl-box, .nl-lead, .nl-done { color: #c6cdd6; }
-    .nl-chip { background: #222b44; color: #e8ecf3; border-color: #3a4566; }
-    .nl-chip[aria-pressed="true"] { background: #d9482b; border-color: #d9482b; color: #ffffff; }
+    .nl-topics-label { color: #e8ecf3; }
+    .nl-topics-count { color: #97a0b5; }
+    .nl-mini { color: #f0714f; }
+    .nl-chip { background: #1b2237; color: #aab3c4; border-color: #3a4566; }
+    .nl-chip[aria-pressed="true"] { background: rgba(217, 72, 43, 0.18); border-color: rgba(240, 113, 79, 0.6); color: #ffd9cf; }
+    .nl-chip[aria-pressed="true"]::before { color: #f0714f; }
+    .nl-link--foot { color: #97a0b5; border-top-color: #2e3650; }
     .nl-email { background: #222b44; color: #e8ecf3; border-color: #3a4566; }
-    .nl-btn { background: #d9482b; border-color: #d9482b; color: #ffffff; }
+    .nl-btn { background: #e8ecf3; border-color: #e8ecf3; color: #1b1f3b; }
+    .nl-btn--accent { background: #d9482b; border-color: #d9482b; color: #ffffff; }
     .nl-btn--quiet { background: transparent; color: #e8ecf3; border-color: #3a4566; }
     .nl-fine { color: #97a0b5; }
 }

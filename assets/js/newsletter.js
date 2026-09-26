@@ -45,16 +45,25 @@
         }, function () { throw new Error('Could not reach the newsletter service. Please try again later.'); });
     }
 
-    /* Topic chips: toggle buttons with aria-pressed, plus an "All topics" switch. */
+    /* Topic chips: toggle buttons with aria-pressed, under a header with a count and a
+       select-all / clear switch. */
     function chips(selected) {
+        var node = el('div', 'nl-topics');
+        var head = el('div', 'nl-topics-head');
+        var label = el('span', 'nl-topics-label', 'Topics');
+        var count = el('span', 'nl-topics-count');
+        var all = el('button', 'nl-mini');
+        all.type = 'button';
+        head.appendChild(label);
+        head.appendChild(count);
+        head.appendChild(all);
+        node.appendChild(head);
         var wrap = el('div', 'nl-chips');
         wrap.setAttribute('role', 'group');
         wrap.setAttribute('aria-label', 'Topics');
+        node.appendChild(wrap);
         var set = {};
         selected.forEach(function (t) { set[t] = true; });
-        var all = el('button', 'nl-chip nl-chip--all', 'All topics');
-        all.type = 'button';
-        wrap.appendChild(all);
         var buttons = TAGS.map(function (t, i) {
             var b = el('button', 'nl-chip', t[1]);
             b.type = 'button';
@@ -68,18 +77,20 @@
             wrap.appendChild(b);
             return b;
         });
+        function picked() { return buttons.filter(function (b) { return b.getAttribute('aria-pressed') === 'true'; }).length; }
         function sync() {
-            var n = buttons.filter(function (b) { return b.getAttribute('aria-pressed') === 'true'; }).length;
-            all.setAttribute('aria-pressed', n === buttons.length ? 'true' : 'false');
+            var n = picked();
+            count.textContent = n === buttons.length ? 'all ' + n : n + ' of ' + buttons.length;
+            all.textContent = n === buttons.length ? 'Clear' : 'Select all';
         }
         all.addEventListener('click', function () {
-            var on = all.getAttribute('aria-pressed') !== 'true';
+            var on = picked() !== buttons.length;
             buttons.forEach(function (b) { b.setAttribute('aria-pressed', on ? 'true' : 'false'); });
             sync();
         });
         sync();
         return {
-            node: wrap,
+            node: node,
             value: function () {
                 return buttons.filter(function (b) { return b.getAttribute('aria-pressed') === 'true'; })
                     .map(function (b) { return b.dataset.tag; });
@@ -123,14 +134,14 @@
         trap.tabIndex = -1;
         trap.autocomplete = 'off';
         trap.setAttribute('aria-hidden', 'true');
-        var submit = el('button', 'nl-btn', 'Subscribe');
+        var submit = el('button', 'nl-btn nl-btn--accent', 'Subscribe');
         submit.type = 'submit';
         row.appendChild(email);
         row.appendChild(submit);
         form.appendChild(row);
         form.appendChild(trap);
         form.appendChild(el('p', 'nl-fine', 'You confirm by email first. One-click unsubscribe in every issue. No tracking by us.'));
-        var peek = el('button', 'nl-link', 'See this week\'s issue for these topics');
+        var peek = el('button', 'nl-btn nl-btn--quiet nl-peek', 'Preview this week\'s issue');
         peek.type = 'button';
         peek.addEventListener('click', function () {
             var picked = picker.value();
@@ -138,8 +149,8 @@
             var show = function (b) { previewView(b, picked, email.value); };
             if (box.closest('.nl-modal')) show(box); else open(show);
         });
-        form.appendChild(peek);
-        var lost = el('button', 'nl-link', 'Already subscribed? Get a link to change topics or unsubscribe');
+        form.insertBefore(peek, row);
+        var lost = el('button', 'nl-link nl-link--foot', 'Already subscribed? Change topics or unsubscribe');
         lost.type = 'button';
         lost.addEventListener('click', function () { manageLinkView(box); });
         form.appendChild(lost);
@@ -194,7 +205,7 @@
             var picker = chips(sub.tags && sub.tags.length ? sub.tags : defaultTags);
             box.appendChild(picker.node);
             var row = el('div', 'nl-row');
-            var save = el('button', 'nl-btn', active ? 'Save topics' : 'Subscribe again');
+            var save = el('button', 'nl-btn nl-btn--accent', active ? 'Save topics' : 'Subscribe again');
             save.type = 'button';
             row.appendChild(save);
             if (active) {
@@ -236,7 +247,7 @@
         email.placeholder = 'you@example.com';
         email.setAttribute('aria-label', 'Email address');
         if (typed) email.value = typed;
-        var send = el('button', 'nl-btn', 'Email me a link');
+        var send = el('button', 'nl-btn nl-btn--accent', 'Email me a link');
         send.type = 'submit';
         row.appendChild(email);
         row.appendChild(send);
