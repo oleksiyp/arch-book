@@ -1,13 +1,9 @@
-// Render the share image and app icons from brand.html into assets/.
+// Render the share image from brand.html into assets/. (Favicons and app icons come from favicon.mjs.)
 // Usage: serve the repo root on :8766 (python3 -m http.server 8766), then node brand.mjs
 import puppeteer from 'puppeteer-core';
 
 const OUT = {
   '#og': '../assets/og-banner.png',
-  '#icon-512': '../assets/icons/icon-512.png',
-  '#icon-192': '../assets/icons/icon-192.png',
-  '#icon-180': '../assets/icons/apple-touch-icon.png',
-  '#icon-32': '../assets/icons/favicon-32.png',
 };
 const browser = await puppeteer.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: true });
 const page = await browser.newPage();

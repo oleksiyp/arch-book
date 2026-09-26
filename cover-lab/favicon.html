@@ -145,6 +145,17 @@
     const img = await load(book({ ...BASE, ...over }, await coverRuns()));
     return { png64: (await supersample(img, 64)).toDataURL('image/png'), png32: (await supersample(img, 32)).toDataURL('image/png') };
   };
+  // App icons: the book scaled into a square of `size`, on `bg` (null = transparent), rendered at 2x and halved.
+  window.renderIcon = async (over, size, scale, bg) => {
+    const img = await load(book({ ...BASE, ...over }, await coverRuns()));
+    const big = document.createElement('canvas'); big.width = big.height = size * 2;
+    const x = big.getContext('2d');
+    if (bg) { x.fillStyle = bg; x.fillRect(0, 0, size * 2, size * 2); }
+    const d = size * 2 * scale; x.drawImage(img, (size * 2 - d) / 2, (size * 2 - d) / 2, d, d);
+    const out = document.createElement('canvas'); out.width = out.height = size;
+    const o = out.getContext('2d'); o.imageSmoothingEnabled = true; o.imageSmoothingQuality = 'high'; o.drawImage(big, 0, 0, size, size);
+    return out.toDataURL('image/png');
+  };
   let pick = null;
   try { pick = localStorage.getItem('favlab2.pick'); } catch (e) { /* storage blocked */ }
   const grid = document.getElementById('grid');
