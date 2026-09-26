@@ -1,0 +1,7 @@
+{
+  "name": "cover-lab",
+  "private": true,
+  "type": "module",
+  "scripts": { "export": "node export.mjs" },
+  "devDependencies": { "opentype.js": "1.3.4", "puppeteer-core": "24.10.0" }
+}

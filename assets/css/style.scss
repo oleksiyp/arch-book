@@ -19,22 +19,258 @@
     src: url("{{ '/assets/fonts/open-sans-700.woff2' | relative_url }}") format("woff2");
 }
 
-.page-header {
-    /* The "slash": a rapid color break aligned with "the" in the centered title.
-       Tune here: position of the break, its sharpness, and the slash tilt. */
-    --slash-pos: 52%;
-    --slash-width: 8%;
-    --slash-angle: 105deg;
-    background-image: linear-gradient(
-        var(--slash-angle),
-        #1b1f3b,
-        #f38b1c 30%,
-        #f38b1c var(--slash-pos),
-        #00c9ff calc(var(--slash-pos) + var(--slash-width)),
-        #00c9ff
-    );
-    background-color: #f38b1c;
-    padding-bottom: 1.2rem;
+/* Header: the book itself. The 3D book (assets/js/book3d.js) renders into
+   .book-hero__stage; without JS the flat front cover shows instead. */
+.page-header.book-hero {
+    display: grid;
+    align-items: center;
+    padding: 0;
+    text-align: left;
+    color: #fff;
+    background:
+        radial-gradient(55% 75% at 28% 58%, rgba(243, 139, 28, 0.32), rgba(243, 139, 28, 0) 70%),
+        radial-gradient(45% 65% at 80% 30%, rgba(0, 201, 255, 0.22), rgba(0, 201, 255, 0) 70%),
+        #1b1f3b;
+    overflow: hidden;
+
+    .project-name {
+        margin: 0 0 0.35rem;
+        font-weight: 800;
+        line-height: 1.12;
+        text-wrap: balance;
+    }
+
+    .project-tagline {
+        margin: 0;
+        font-weight: 400;
+        opacity: 0.85;
+    }
+}
+
+.book-hero__stage {
+    position: relative;
+    min-width: 0;
+}
+
+.book-hero__fallback {
+    position: absolute;
+    top: 8%;
+    bottom: 8%;
+    left: 50%;
+    aspect-ratio: 2 / 3;
+    transform: translateX(-50%);
+    background-size: 213.33% auto;
+    background-position: 98.16% 50%;
+    background-repeat: no-repeat;
+    box-shadow: 0 18px 40px -12px rgba(0, 0, 0, 0.6);
+}
+
+.book-hero__stage.is-live .book-hero__fallback {
+    display: none;
+}
+
+.book-hero--home {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    min-height: clamp(460px, 76vh, 760px);
+
+    .book-hero__stage {
+        height: clamp(460px, 76vh, 760px);
+    }
+
+    .book-hero__text {
+        padding: 2rem 4rem 2rem 0;
+        max-width: 34rem;
+    }
+
+    .project-name {
+        font-size: clamp(2rem, 3.4vw, 3.1rem);
+    }
+
+    .project-tagline {
+        font-size: 1.25rem;
+    }
+}
+
+.book-hero__meta {
+    margin: 1.2rem 0 0;
+    text-wrap: balance;
+    font-size: 0.95rem;
+    opacity: 0.7;
+}
+
+.book-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.8rem 1.2rem;
+    margin: 1.6rem 0 0;
+}
+
+.book-hero__cta:link, .book-hero__cta:visited {
+    display: inline-block;
+    padding: 0.7rem 1.4rem;
+    border-radius: 999px;
+    background: #f38b1c;
+    color: #1b1f3b;
+    font-weight: 700;
+    text-decoration: none;
+    box-shadow: 0 6px 18px -6px rgba(243, 139, 28, 0.7);
+}
+
+.book-hero__cta:hover {
+    background: #ffa04a;
+    text-decoration: none;
+}
+
+.book-hero__hint {
+    font-size: 0.85rem;
+    opacity: 0.6;
+}
+
+@media (hover: none) {
+    .book-hero__hint::after { content: " · tilt your phone"; }
+}
+
+.book-hero--compact {
+    grid-template-columns: 9.5rem minmax(0, 1fr);
+    min-height: 11rem;
+
+    .book-hero__stage {
+        height: 11rem;
+    }
+
+    .book-hero__text {
+        padding: 1rem 2rem 1rem 0.5rem;
+    }
+
+    .project-name {
+        font-size: 1.6rem;
+    }
+
+    .project-tagline {
+        font-size: 1.05rem;
+    }
+}
+
+@media (max-width: 800px) {
+    .book-hero--home {
+        grid-template-columns: minmax(0, 1fr);
+        min-height: 0;
+
+        .book-hero__stage {
+            height: min(66svh, 560px);
+            min-height: 380px;
+        }
+
+        .book-hero__text {
+            padding: 0 16px 1.8rem;
+            max-width: none;
+            text-align: center;
+            margin-top: -1.5rem;
+        }
+
+        .project-name {
+            font-size: 1.55rem;
+        }
+
+        .project-tagline {
+            font-size: 1.05rem;
+        }
+
+        .book-hero__actions {
+            justify-content: center;
+            flex-direction: column;
+        }
+    }
+
+    .book-hero--compact {
+        grid-template-columns: 5.6rem minmax(0, 1fr);
+        min-height: 7.6rem;
+
+        .book-hero__stage {
+            height: 7.6rem;
+        }
+
+        .book-hero__text {
+            padding: 0.6rem 16px 0.6rem 0.2rem;
+        }
+
+        .project-name {
+            font-size: 1.1rem;
+        }
+
+        .project-tagline {
+            font-size: 0.9rem;
+        }
+    }
+}
+
+/* The title page revealed when the cover opens; sized in em of the page width */
+.book-tp {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 1.6em 1.5em 1.4em 1.8em;
+    color: #1b1f3b;
+    font-family: "Open Sans", "Helvetica Neue", Arial, sans-serif;
+    text-align: left;
+}
+
+.book-tp__kicker {
+    font-size: 0.62em;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #b45f06;
+}
+
+.book-tp__title {
+    margin-top: 0.8em;
+    font-size: 1.3em;
+    font-weight: 800;
+    line-height: 1.1;
+
+    span {
+        display: block;
+        margin-top: 0.2em;
+        font-size: 0.62em;
+        font-weight: 400;
+    }
+}
+
+.book-tp__sub {
+    margin-top: 0.7em;
+    font-family: Charter, "Bitstream Charter", Cambria, Georgia, serif;
+    font-style: italic;
+    font-size: 0.8em;
+}
+
+.book-tp__arc {
+    margin: 1.4em 0 0;
+    padding: 0 0 0 1.2em;
+    font-size: 0.7em;
+    line-height: 1.7;
+    color: #3b4060;
+}
+
+.book-tp__go:link, .book-tp__go:visited {
+    align-self: flex-start;
+    margin-top: auto;
+    padding: 0.5em 1em;
+    border-radius: 999px;
+    background: #1b1f3b;
+    color: #fff;
+    font-size: 0.8em;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.book-tp__author {
+    margin-top: 1em;
+    font-size: 0.6em;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    opacity: 0.7;
 }
 
 .project-name a:link, .project-name a:visited {

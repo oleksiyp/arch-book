@@ -6,3 +6,6 @@ _site/
 chapters/
 llms-full.txt
 sitemap.xml
+
+cover-lab/node_modules/
+cover-lab/_preview/

@@ -85,9 +85,18 @@
     else build();
 })();
 </script>
-<section class="page-header">
-    <h1 class="project-name"><a href="{{ '/' | relative_url }}">{{ site.title }}</a></h1>
-    <h2 class="project-tagline">{{ site.tag_line | default: site.description }}</h2>
+{% assign is_home = false %}{% if page.url == "/" or page.url == "/index.html" %}{% assign is_home = true %}{% endif %}
+{% assign cover_url = '/assets/cover/wrap.svg' | relative_url %}
+<section class="page-header book-hero{% if is_home %} book-hero--home{% else %} book-hero--compact{% endif %}">
+    <div class="book-hero__stage" id="book-hero-stage" data-cover="{{ cover_url }}" data-home="{{ is_home }}" data-home-url="{{ '/' | relative_url }}">
+        <div class="book-hero__fallback" style="background-image:url('{{ cover_url }}')"></div>
+    </div>
+    <div class="book-hero__text">
+        <h1 class="project-name"><a href="{{ '/' | relative_url }}">{{ site.title }}</a></h1>
+        <h2 class="project-tagline">{{ site.tag_line | default: site.description }}</h2>
+        {% if is_home %}<p class="book-hero__meta">15 chapters · free to read online · by Oleksiy Pylypenko</p>
+        <p class="book-hero__actions"><a class="book-hero__cta" href="#preface">Start reading</a><span class="book-hero__hint">Tap the book to open it, drag to turn it</span></p>{% endif %}
+    </div>
 </section>
 
 <section class="main-content">
@@ -972,5 +981,31 @@
 })();
 </script>
 {% endif %}
+<script src="{{ '/assets/js/book3d.js?v=' | append: site.github.build_revision | relative_url }}" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var el = document.getElementById('book-hero-stage');
+    if (!el || !window.Book3D) return;
+    var home = el.dataset.home === 'true';
+    // Print wrap geometry from assets/cover/wrap.svg (units of 0.01 in, bleed included)
+    var wrap = { url: el.dataset.cover, W: 1280, H: 925,
+        back: { x: 12.5, y: 12.5, w: 600, h: 900 }, spine: { x: 612.5, y: 12.5, w: 55, h: 900 }, front: { x: 667.5, y: 12.5, w: 600, h: 900 } };
+    var titlePage = '<div class="book-tp"><div class="book-tp__kicker">A free online book</div>' +
+        '<div class="book-tp__title">Software Architecture <span>in the AI &amp; Cloud Era</span></div>' +
+        '<div class="book-tp__sub">The road to platform architecture</div>' +
+        '<ol class="book-tp__arc"><li>Foundations &amp; styles</li><li>Distributed systems &amp; data</li><li>Security, operations, AI</li><li>Platform architecture</li></ol>' +
+        '<a class="book-tp__go" href="#preface">Start reading &rarr;</a><div class="book-tp__author">Oleksiy Pylypenko</div></div>';
+    el.classList.add('is-live');
+    window.bookHero = Book3D.create(el, home
+        ? { wrap: wrap, depth: 55 / 600, margin: 0.15, titlePage: titlePage }
+        : { wrap: wrap, depth: 55 / 600, margin: 0.06, intro: false, ry: 24, rx: -8,
+            label: 'The book cover. Opens the whole book.', onTap: function () { location.href = el.dataset.homeUrl; } });
+    // "Start reading" inside the opened book scrolls to the preface
+    el.addEventListener('click', function (e) {
+        var a = e.target.closest && e.target.closest('.book-tp__go');
+        if (a) { e.preventDefault(); var t = document.getElementById('preface'); if (t) t.scrollIntoView({ behavior: 'smooth' }); }
+    });
+});
+</script>
 </body>
 </html>

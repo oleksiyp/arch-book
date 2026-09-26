@@ -1,0 +1,194 @@
+<title>Cover Lab</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800;900&family=Big+Shoulders+Display:wght@500;600;700;900&family=IBM+Plex+Mono:wght@400;500&family=Open+Sans:ital,wght@0,400;0,700;0,800;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+<style>
+  :root {
+    --bg: #E4E2DC; --surface: #EFEEEA; --raised: #F8F7F4; --text: #17181D; --muted: #5C5D65; --rule: #C9C6BD;
+    --accent: #C4650A; --accent-soft: #F38B1C; --focus: #0098C7; --shadow: 20, 18, 14;
+    --ui: "Archivo", "Helvetica Neue", Arial, sans-serif; --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #111216; --surface: #1A1B21; --raised: #22232A; --text: #ECEAE4; --muted: #9C9CA5; --rule: #30313A;
+      --accent: #F38B1C; --accent-soft: #F38B1C; --focus: #00C9FF; --shadow: 0, 0, 0; color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #111216; --surface: #1A1B21; --raised: #22232A; --text: #ECEAE4; --muted: #9C9CA5; --rule: #30313A;
+    --accent: #F38B1C; --accent-soft: #F38B1C; --focus: #00C9FF; --shadow: 0, 0, 0; color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  html, body { background: var(--bg); color: var(--text); }
+  body { margin: 0; font: 15px/1.5 var(--ui); padding-inline: 16px; padding-block: 0 48px; }
+  button, select, input { font: inherit; color: inherit; }
+  :focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+  .top { max-width: 1320px; margin: 0 auto; padding-block: 28px 20px; display: grid; gap: 18px; }
+  .brand { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 18px; }
+  .brand h1 { margin: 0; font-size: clamp(28px, 5vw, 44px); font-weight: 900; letter-spacing: -0.02em; line-height: 1; }
+  .brand p { margin: 0; color: var(--muted); font-family: var(--mono); font-size: 12.5px; }
+  .controls { display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: end; padding: 12px 14px; background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; }
+  .ctl { display: grid; gap: 3px; }
+  .ctl label, .label { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+  .ctl select { background: var(--raised); border: 1px solid var(--rule); border-radius: 4px; padding: 5px 8px; min-width: 0; }
+  .ctl input[type=range] { width: 130px; accent-color: var(--accent); }
+  .ctl output { font-family: var(--mono); font-size: 12px; font-variant-numeric: tabular-nums; }
+
+  .shortlist { max-width: 1320px; margin: 0 auto 18px; }
+  .shortlist-row { display: flex; gap: 12px; overflow-x: auto; padding-block: 8px 12px; }
+  .shortlist-head { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  .shortlist-head h2 { margin: 0; font-size: 15px; font-weight: 800; }
+  .mini { flex: 0 0 auto; width: 92px; display: grid; gap: 4px; background: none; border: 0; padding: 0; cursor: pointer; text-align: left; }
+  .mini .cover { width: 92px; }
+  .mini span { font-family: var(--mono); font-size: 10.5px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  .grid { max-width: 1320px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 34px 26px; }
+  .card { display: grid; gap: 12px; align-content: start; background: none; border: 0; padding: 0; text-align: left; cursor: pointer; }
+  .card:hover .cover { transform: translateY(-3px) rotate(-0.4deg); }
+  .card h3 { margin: 0; font-size: 18px; font-weight: 800; line-height: 1.15; text-wrap: balance; }
+  .card .num { font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.06em; }
+  .card p { margin: 0; color: var(--muted); font-size: 13.5px; }
+  .meta { display: grid; gap: 3px; }
+
+  .cover { position: relative; aspect-ratio: 2 / 3; width: 100%; max-width: 100%; background: var(--raised); border-radius: 2px 5px 5px 2px; overflow: hidden;
+    box-shadow: 0 1px 1px rgba(var(--shadow), .18), 0 6px 14px -4px rgba(var(--shadow), .28), 0 22px 40px -18px rgba(var(--shadow), .45);
+    transition: transform .25s ease; }
+  .cover > svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .cover::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(90deg, rgba(0,0,0,.22) 0, rgba(255,255,255,.18) 1.1%, rgba(0,0,0,.10) 2.3%, rgba(0,0,0,0) 4.5%),
+                linear-gradient(115deg, rgba(255,255,255,.08) 0, rgba(255,255,255,0) 40%); }
+  .cover.loading::before { content: "rendering…"; position: absolute; inset: 0; display: grid; place-items: center; font-family: var(--mono); font-size: 12px; color: var(--muted); }
+
+  /* detail */
+  .detail { position: fixed; inset: 0; z-index: 10; background: var(--bg); overflow-y: auto; padding-inline: 16px; padding-block: env(safe-area-inset-top, 0px) 40px; }
+  .detail-bar { position: sticky; top: 0; z-index: 2; background: var(--bg); display: flex; gap: 10px; align-items: center; flex-wrap: wrap; padding-block: 12px; max-width: 1320px; margin: 0 auto; border-bottom: 1px solid var(--rule); }
+  .detail-bar h2 { margin: 0; font-size: 20px; font-weight: 900; flex: 1 1 auto; min-width: 0; }
+  .detail-bar h2 small { font-family: var(--mono); font-weight: 500; font-size: 12px; color: var(--accent); margin-right: 8px; }
+  .btn { background: var(--raised); border: 1px solid var(--rule); border-radius: 4px; padding: 6px 11px; cursor: pointer; font-size: 13.5px; font-weight: 600; white-space: nowrap; }
+  .btn:hover { border-color: var(--text); }
+  .btn.primary { background: var(--text); color: var(--bg); border-color: var(--text); }
+  .btn[aria-pressed="true"] { background: var(--accent-soft); color: #17181D; border-color: var(--accent-soft); }
+  .detail-body { max-width: 1320px; margin: 18px auto 0; display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 28px; align-items: start; }
+  @media (max-width: 900px) { .detail-body { grid-template-columns: minmax(0, 1fr); } }
+  .tabs { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 14px; }
+  .tabs button { background: none; border: 1px solid transparent; border-radius: 4px; padding: 5px 10px; cursor: pointer; font-family: var(--mono); font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); }
+  .tabs button[aria-selected="true"] { color: var(--text); border-color: var(--text); }
+  .stage { position: relative; display: grid; place-items: center; height: var(--stage-h, 70vh); min-height: 320px; background: var(--surface); border-radius: 6px; overflow: hidden; }
+  .stage .cover { width: var(--fw); height: var(--fh); }
+  .spread { display: grid; gap: 10px; justify-items: center; }
+  .spread svg { display: block; width: var(--fw); height: var(--fh); box-shadow: 0 10px 30px -12px rgba(var(--shadow), .5); }
+  .spread-legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 16px; font-family: var(--mono); font-size: 11px; color: var(--muted); }
+  .spread-legend i { display: inline-block; width: 18px; height: 0; border-top: 1.5px dashed; vertical-align: middle; margin-right: 6px; }
+  .bookwrap { position: absolute; inset: 0; }
+  .poses { position: absolute; left: 0; right: 0; bottom: 10px; display: flex; justify-content: center; flex-wrap: wrap; gap: 6px; }
+  .poses button { background: var(--raised); border: 1px solid var(--rule); border-radius: 999px; padding: 3px 11px; cursor: pointer; font-family: var(--mono); font-size: 11px; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); }
+  .poses button:hover { color: var(--text); border-color: var(--text); }
+  .stage-hint { position: absolute; top: 10px; left: 0; right: 0; text-align: center; font-family: var(--mono); font-size: 11px; color: var(--muted); pointer-events: none; }
+  .side { display: grid; gap: 20px; }
+  .side p { margin: 0; line-height: 1.55; }
+  .seedrow { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+  .seedrow output { font-family: var(--mono); font-size: 14px; min-width: 64px; text-align: center; font-variant-numeric: tabular-nums; }
+  .variants { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .variants button { background: none; border: 0; padding: 0; cursor: pointer; display: grid; gap: 3px; }
+  .variants button span { font-family: var(--mono); font-size: 10.5px; color: var(--muted); text-align: left; }
+  .actions { display: flex; flex-wrap: wrap; gap: 8px; }
+  .spec { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; font-family: var(--mono); font-size: 12px; }
+  .spec dt { color: var(--muted); }
+  .spec dd { margin: 0; font-variant-numeric: tabular-nums; }
+  textarea { width: 100%; min-height: 70px; background: var(--raised); color: var(--text); border: 1px solid var(--rule); border-radius: 4px; padding: 8px; font: 13.5px/1.45 var(--ui); resize: vertical; }
+  .toast { position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--text); color: var(--bg); padding: 8px 14px; border-radius: 4px; font-size: 13px; z-index: 20; }
+  .hint { color: var(--muted); font-size: 13px; }
+  @media (prefers-reduced-motion: reduce) { .cover, .card:hover .cover { transition: none; transform: none; } }
+</style>
+
+<header class="top">
+  <div class="brand">
+    <h1>Cover Lab</h1>
+    <p>Software Architecture in the AI &amp; Cloud Era · trim 6 × 9 in · bleed 0.125 in · wrap = back + spine + front</p>
+  </div>
+  <div class="controls" id="controls">
+    <div class="ctl"><label for="c-palette">Palette</label><select id="c-palette"></select></div>
+    <div class="ctl"><label for="c-accents">Accents</label><select id="c-accents"></select></div>
+    <div class="ctl"><label for="c-weight">Line / border</label><select id="c-weight"></select></div>
+    <div class="ctl"><label for="c-plateStyle">Title plate</label>
+      <select id="c-plateStyle"><option value="boxed">Framed plate</option><option value="band">Band</option><option value="clear">No plate</option></select></div>
+    <div class="ctl"><label for="c-plate">Title position</label>
+      <select id="c-plate"><option value="auto">Design default</option><option value="top">Top</option><option value="middle">Middle</option><option value="bottom">Bottom</option></select></div>
+    <div class="ctl"><label for="c-font">Title face</label><select id="c-font"></select></div>
+    <div class="ctl"><label for="c-spine">Spine width</label><input id="c-spine" type="range" min="0.3" max="1.6" step="0.05"><output id="o-spine"></output></div>
+  </div>
+</header>
+
+<section class="shortlist" id="shortlist" hidden>
+  <div class="shortlist-head"><h2>Shortlist</h2><button class="btn" id="copy-shortlist" type="button">Copy shortlist for Claude</button></div>
+  <div class="shortlist-row" id="shortlist-row"></div>
+</section>
+
+<main class="grid" id="gallery"></main>
+
+<div class="detail" id="detail" hidden>
+  <div class="detail-bar">
+    <button class="btn" id="d-close" type="button">← All covers</button>
+    <h2 id="d-title"></h2>
+    <button class="btn" id="d-prev" type="button" aria-label="Previous design">‹</button>
+    <button class="btn" id="d-next" type="button" aria-label="Next design">›</button>
+  </div>
+  <div class="detail-body">
+    <div>
+      <div class="tabs" role="tablist" id="d-tabs">
+        <button role="tab" data-view="front" type="button">Front</button>
+        <button role="tab" data-view="back" type="button">Back</button>
+        <button role="tab" data-view="spread" type="button">Print spread</button>
+        <button role="tab" data-view="book" type="button">Book</button>
+      </div>
+      <div class="stage" id="d-stage"></div>
+    </div>
+    <aside class="side">
+      <p id="d-concept"></p>
+      <div>
+        <div class="label">Seed</div>
+        <div class="seedrow">
+          <button class="btn" id="s-prev" type="button" aria-label="Previous seed">−</button>
+          <output id="s-val"></output>
+          <button class="btn" id="s-next" type="button" aria-label="Next seed">+</button>
+          <button class="btn" id="s-rand" type="button">Random</button>
+        </div>
+      </div>
+      <div>
+        <div class="label">Other seeds</div>
+        <div class="variants" id="d-variants"></div>
+      </div>
+      <div>
+        <label class="label" for="d-note">Note</label>
+        <textarea id="d-note" placeholder="What works, what to change…"></textarea>
+      </div>
+      <div class="actions">
+        <button class="btn primary" id="d-save" type="button" aria-pressed="false">Add to shortlist</button>
+        <button class="btn" id="d-copy" type="button">Copy settings</button>
+        <button class="btn" id="d-svg" type="button" hidden>Download SVG</button>
+      </div>
+      <dl class="spec" id="d-spec"></dl>
+    </aside>
+  </div>
+</div>
+
+<svg id="defs" width="0" height="0" style="position:absolute" aria-hidden="true"><defs id="defs-g"></defs></svg>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script src="lab.js"></script>
+<script src="book3d.js"></script>
+<script src="designs/01-weave.js"></script>
+<script src="designs/02-road.js"></script>
+<script src="designs/03-contexts.js"></script>
+<script src="designs/04-streams.js"></script>
+<script src="designs/05-transit.js"></script>
+<script src="designs/06-roots.js"></script>
+<script src="designs/07-city.js"></script>
+<script src="designs/08-terrain.js"></script>
+<script src="designs/09-turing.js"></script>
+<script src="designs/10-mesh.js"></script>
+<script src="designs/11-oneline.js"></script>
+<script src="app.js"></script>
