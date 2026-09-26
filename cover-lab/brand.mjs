@@ -4,6 +4,7 @@ import puppeteer from 'puppeteer-core';
 
 const OUT = {
   '#og': '../assets/og-banner.png',
+  '#email-header': '../assets/email/header.png',
 };
 const browser = await puppeteer.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: true });
 const page = await browser.newPage();
