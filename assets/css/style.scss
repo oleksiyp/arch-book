@@ -26,12 +26,17 @@
     align-items: center;
     padding: 0;
     text-align: left;
-    color: #fff;
+    color: #1b1f3b;
     background:
-        radial-gradient(55% 75% at 28% 58%, rgba(243, 139, 28, 0.32), rgba(243, 139, 28, 0) 70%),
-        radial-gradient(45% 65% at 80% 30%, rgba(0, 201, 255, 0.22), rgba(0, 201, 255, 0) 70%),
-        #1b1f3b;
+        radial-gradient(50% 70% at 28% 60%, rgba(243, 139, 28, 0.10), rgba(243, 139, 28, 0) 70%),
+        radial-gradient(40% 60% at 80% 30%, rgba(0, 201, 255, 0.08), rgba(0, 201, 255, 0) 70%),
+        #f3f1ec;
+    border-bottom: 1px solid rgba(27, 31, 59, 0.08);
     overflow: hidden;
+
+    .project-name a:link, .project-name a:visited, .project-name a:hover {
+        color: #1b1f3b;
+    }
 
     .project-name {
         margin: 0 0 0.35rem;
@@ -44,6 +49,20 @@
         margin: 0;
         font-weight: 400;
         opacity: 0.85;
+    }
+}
+
+/* Dark theme keeps the navy stage: a bright paper band would glare */
+html[data-theme="dark"] .page-header.book-hero {
+    color: #fff;
+    background:
+        radial-gradient(55% 75% at 28% 58%, rgba(243, 139, 28, 0.32), rgba(243, 139, 28, 0) 70%),
+        radial-gradient(45% 65% at 80% 30%, rgba(0, 201, 255, 0.22), rgba(0, 201, 255, 0) 70%),
+        #1b1f3b;
+    border-bottom-color: transparent;
+
+    .project-name a:link, .project-name a:visited, .project-name a:hover {
+        color: #fff;
     }
 }
 
@@ -128,7 +147,7 @@
     color: #1b1f3b;
     font-weight: 700;
     text-decoration: none;
-    box-shadow: 0 6px 18px -6px rgba(243, 139, 28, 0.7);
+    box-shadow: 0 6px 18px -8px rgba(243, 139, 28, 0.8);
 }
 
 .book-hero__cta:hover {
