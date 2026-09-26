@@ -1150,6 +1150,33 @@ html[data-theme="dark"] {
     overflow-y: auto;
 }
 
+/* The sample issue: the email itself, framed, as tall as the dialog allows. */
+.nl-modal:has(.nl-box--preview) {
+    max-width: 46rem;
+}
+
+.nl-box--preview .nl-link { margin: 0; }
+
+.nl-box--preview {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.nl-preview {
+    display: block;
+    width: 100%;
+    height: 70vh;
+    border: 1px solid #e2ded4;
+    border-radius: 6px;
+    background: #f6f1e7;
+}
+
+@media (max-width: 600px) {
+    .nl-modal .nl-box--preview { padding: 0.6rem; }
+    .nl-preview { height: 72vh; }
+}
+
 .nl-lead {
     margin: 0 0 0.9rem;
     font-size: 0.98rem;

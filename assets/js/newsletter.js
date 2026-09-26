@@ -100,9 +100,10 @@
 
     /* ---- views; each renders into a container box ---- */
 
-    function subscribeView(box, tags) {
+    function subscribeView(box, tags, typed) {
         box.textContent = '';
-        box.appendChild(el('p', 'nl-lead', 'Every Monday: the few articles, talks and releases worth an architect\'s time, picked from 500 sources and summarised in one line each. Only your topics.'));
+        box.classList.remove('nl-box--preview');
+        box.appendChild(el('p', 'nl-lead', 'Every Monday: the articles, talks and releases worth an architect\'s time, picked from 500 sources, each with why it matters and the key takeaways. Only your topics.'));
         var form = el('form', 'nl-form');
         form.noValidate = true;
         var picker = chips(tags);
@@ -115,6 +116,7 @@
         email.autocomplete = 'email';
         email.placeholder = 'you@example.com';
         email.setAttribute('aria-label', 'Email address');
+        if (typed) email.value = typed;
         var trap = el('input', 'nl-trap');
         trap.type = 'text';
         trap.name = 'website';
@@ -128,6 +130,15 @@
         form.appendChild(row);
         form.appendChild(trap);
         form.appendChild(el('p', 'nl-fine', 'You confirm by email first. One-click unsubscribe in every issue. No tracking by us.'));
+        var peek = el('button', 'nl-link', 'See this week\'s issue for these topics');
+        peek.type = 'button';
+        peek.addEventListener('click', function () {
+            var picked = picker.value();
+            if (!picked.length) { status(box, 'Pick at least one topic.', 'error'); return; }
+            var show = function (b) { previewView(b, picked, email.value); };
+            if (box.closest('.nl-modal')) show(box); else open(show);
+        });
+        form.appendChild(peek);
         var lost = el('button', 'nl-link', 'Already subscribed? Get a link to change topics or unsubscribe');
         lost.type = 'button';
         lost.addEventListener('click', function () { manageLinkView(box); });
@@ -150,6 +161,24 @@
             });
         });
         box.appendChild(form);
+    }
+
+    // A sample of this week's issue, rendered by the API and cached a day at the CDN; tags
+    // go in chapter order so each combination is one cache entry.
+    function previewView(box, tags, typed) {
+        track('newsletter_preview');
+        box.textContent = '';
+        var back = el('button', 'nl-link', '← Back to subscribing');
+        back.type = 'button';
+        back.addEventListener('click', function () { subscribeView(box, tags, typed); });
+        box.appendChild(back);
+        var frame = el('iframe', 'nl-preview');
+        frame.title = 'Sample issue of the weekly digest';
+        frame.setAttribute('sandbox', 'allow-popups allow-popups-to-escape-sandbox');
+        frame.src = API + '/v1/preview-email?tags=' + ALL.filter(function (t) { return tags.indexOf(t) >= 0; }).join(',');
+        box.appendChild(frame);
+        box.classList.add('nl-box--preview');
+        back.focus();
     }
 
     function manageView(box, token, intro) {
@@ -206,6 +235,7 @@
         email.autocomplete = 'email';
         email.placeholder = 'you@example.com';
         email.setAttribute('aria-label', 'Email address');
+        if (typed) email.value = typed;
         var send = el('button', 'nl-btn', 'Email me a link');
         send.type = 'submit';
         row.appendChild(email);
