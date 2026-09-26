@@ -155,6 +155,42 @@ html[data-theme="dark"] .page-header.book-hero {
     text-decoration: none;
 }
 
+/* Share: only in the installed app, where there is no browser share button */
+.book-hero__share {
+    display: none;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.62rem 1.2rem;
+    border: 2px solid currentColor;
+    border-radius: 999px;
+    background: transparent;
+    color: inherit;
+    font: 700 1rem/1 "Open Sans", "Helvetica Neue", Arial, sans-serif;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.book-hero__share:active {
+    transform: scale(0.97);
+}
+
+@media (display-mode: standalone) {
+    .book-hero__share {
+        display: inline-flex;
+    }
+}
+
+html.is-standalone .book-hero__share {
+    display: inline-flex;
+}
+
+.book-hero__share--compact {
+    margin-top: 0.5rem;
+    padding: 0.3rem 0.8rem;
+    border-width: 1.5px;
+    font-size: 0.85rem;
+}
+
 .book-hero__hint {
     font-size: 0.85rem;
     opacity: 0.6;

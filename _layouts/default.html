@@ -99,7 +99,8 @@
         <h1 class="project-name"><a href="{{ '/' | relative_url }}">{{ site.title }}</a></h1>
         <h2 class="project-tagline">{{ site.tag_line | default: site.description }}</h2>
         {% if is_home %}<p class="book-hero__meta">15 chapters · free to read online · by Oleksiy Pylypenko</p>
-        <p class="book-hero__actions"><a class="book-hero__cta" href="#preface">Start reading</a><span class="book-hero__hint">Tap the book to open it, drag to turn it</span></p>{% endif %}
+        <p class="book-hero__actions"><a class="book-hero__cta" href="#preface">Start reading</a><button type="button" class="book-hero__share"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 .8l3.2 3.2-.75.75L8.5 2.8V10h-1V2.8L5.55 4.75 4.8 4 8 .8z"/><path d="M3 6.5h2.5v1H4v6.5h8V7.5h-1.5v-1H13v8.5H3V6.5z"/></svg><span>Share</span></button><span class="book-hero__hint">Tap the book to open it, drag to turn it</span></p>
+        {% else %}<button type="button" class="book-hero__share book-hero__share--compact" aria-label="Share this chapter"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 .8l3.2 3.2-.75.75L8.5 2.8V10h-1V2.8L5.55 4.75 4.8 4 8 .8z"/><path d="M3 6.5h2.5v1H4v6.5h8V7.5h-1.5v-1H13v8.5H3V6.5z"/></svg><span>Share</span></button>{% endif %}
     </div>
 </section>
 
@@ -1000,6 +1001,11 @@ document.addEventListener('DOMContentLoaded', function () {
         '<ol class="book-tp__arc"><li>Foundations &amp; styles</li><li>Distributed systems &amp; data</li><li>Security, operations, AI</li><li>Platform architecture</li></ol>' +
         '<a class="book-tp__go" href="#preface">Start reading &rarr;</a><div class="book-tp__author">Oleksiy Pylypenko</div></div>';
     el.classList.add('is-live');
+    // Installed app (no browser chrome): show the header's Share button. iOS reports this via navigator.standalone.
+    if (navigator.standalone) document.documentElement.classList.add('is-standalone');
+    document.querySelectorAll('.book-hero__share').forEach(function (b) {
+        b.addEventListener('click', function () { if (window._shareBook) window._shareBook(b.querySelector('span')); });
+    });
     window.bookHero = Book3D.create(el, home
         ? { wrap: wrap, depth: 55 / 600, margin: 0.15, titlePage: titlePage }
         : { wrap: wrap, depth: 55 / 600, margin: 0.06, intro: false, ry: 24, rx: -8,
