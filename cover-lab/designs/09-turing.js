@@ -41,7 +41,8 @@ Lab.register({
       if (it % 200 === 0) await ctx.yieldFrame();
     }
     const cont = ctx.contours(V, gw, gh, cs, 0.2, -cs, -cs);
-    const mode = rng.pick(['outline', 'outline', 'solid']);
+    const picked = rng.pick(['outline', 'outline', 'solid']);
+    const mode = ctx.cfg.mode || picked; // cfg.mode overrides without changing the pattern
     let out = '';
     if (mode === 'solid') {
       const d = cont.filter(c => c.closed && c.pts.length > 4).map(c => ctx.smooth(c.pts.filter((_, i) => i % 2 === 0), true)).join('');

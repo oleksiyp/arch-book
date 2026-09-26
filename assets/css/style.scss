@@ -73,6 +73,10 @@
     grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
     min-height: clamp(460px, 76vh, 760px);
 
+    @media (min-width: 76rem) {
+        padding-inline: calc((100% - 76rem) / 2);
+    }
+
     .book-hero__stage {
         height: clamp(460px, 76vh, 760px);
     }
@@ -88,6 +92,16 @@
 
     .project-tagline {
         font-size: 1.25rem;
+    }
+}
+
+/* The README opens with its title, tagline and licence line for GitHub readers;
+   on the site the hero and the footer already say all three. */
+.book-hero--home ~ .main-content {
+    > h1:first-child,
+    > h1:first-child + p,
+    > h1:first-child + p + p:has(> small) {
+        display: none;
     }
 }
 

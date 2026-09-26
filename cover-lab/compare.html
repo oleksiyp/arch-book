@@ -1,0 +1,89 @@
+<title>Cover Palette Shootout</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800;900&family=Big+Shoulders+Display:wght@500;600;700;900&family=IBM+Plex+Mono:wght@400;500&family=Open+Sans:ital,wght@0,400;0,700;0,800;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+<style>
+  :root { --bg: #E4E2DC; --text: #17181D; --muted: #5C5D65; --rule: #C9C6BD; --raised: #F8F7F4; color-scheme: light;
+    --ui: "Archivo", "Helvetica Neue", Arial, sans-serif; --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #111216; --text: #ECEAE4; --muted: #9C9CA5; --rule: #30313A; --raised: #22232A; color-scheme: dark; } }
+  :root[data-theme="dark"] { --bg: #111216; --text: #ECEAE4; --muted: #9C9CA5; --rule: #30313A; --raised: #22232A; color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.5 var(--ui); padding-inline: 16px; padding-block: 24px 48px; }
+  header { max-width: 1320px; margin: 0 auto 18px; display: grid; gap: 10px; }
+  h1 { margin: 0; font-size: clamp(26px, 4vw, 38px); font-weight: 900; letter-spacing: -0.02em; }
+  header p { margin: 0; color: var(--muted); max-width: 70ch; }
+  .bgs { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .bgs span { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-right: 4px; }
+  .bgs button { background: var(--raised); border: 1px solid var(--rule); border-radius: 999px; padding: 4px 12px; cursor: pointer; font: 600 13px var(--ui); color: var(--text); }
+  .bgs button[aria-pressed="true"] { background: var(--text); color: var(--bg); border-color: var(--text); }
+  .grid { max-width: 1320px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 22px; }
+  figure { margin: 0; display: grid; gap: 8px; }
+  .hero { position: relative; height: 420px; border-radius: 6px; overflow: hidden; transition: background .3s; }
+  .hero.navy { background: radial-gradient(55% 75% at 35% 58%, rgba(243,139,28,.32), rgba(243,139,28,0) 70%), radial-gradient(45% 65% at 80% 30%, rgba(0,201,255,.22), rgba(0,201,255,0) 70%), #1b1f3b; }
+  .hero.gradient { background: linear-gradient(105deg, #1b1f3b, #f38b1c 30%, #f38b1c 52%, #00c9ff 60%, #00c9ff); }
+  .hero.paper { background: #F3F1EC; }
+  .hero.white { background: #FFFFFF; }
+  .hero.loading::after { content: "rendering…"; position: absolute; inset: 0; display: grid; place-items: center; font-family: var(--mono); font-size: 12px; color: #9aa; }
+  figcaption { display: grid; gap: 2px; }
+  figcaption b { font-size: 16px; }
+  figcaption span { color: var(--muted); font-size: 13.5px; }
+  figcaption code { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+</style>
+
+<header>
+  <h1>Cover Palette Shootout</h1>
+  <p>Emergence, seed 1, the pattern you picked. Every variant keeps the same shapes; only colour, line weight and fill change. Drag any book to turn it. Tap to flip.</p>
+  <div class="bgs" id="bgs"><span>Hero background</span>
+    <button type="button" data-bg="navy" aria-pressed="true">Navy (current)</button>
+    <button type="button" data-bg="gradient" aria-pressed="false">Old orange/cyan gradient</button>
+    <button type="button" data-bg="paper" aria-pressed="false">Paper</button>
+    <button type="button" data-bg="white" aria-pressed="false">White</button>
+  </div>
+</header>
+<main class="grid" id="grid"></main>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs id="defs-g"></defs></svg>
+
+<script src="lab.js"></script>
+<script src="designs/09-turing.js"></script>
+<script src="book3d.js"></script>
+<script>
+(() => {
+  const base = { palette: 'paper', accents: 'both', weight: '4/2', plateStyle: 'boxed', plate: 'auto', font: 'archivo', spine: 0.55, seed: 1 };
+  const V = [
+    ['A', 'Current', 'Cream paper, thin lines, orange only on the front.', {}],
+    ['B', 'Bolder lines, cyan first', 'Same paper, lines 6/2 so they survive at thumbnail size; cyan leads, orange follows.', { weight: '6/2', accents: 'ba' }],
+    ['C', 'Solid ink', 'The pattern filled black, colour zones filled orange and cyan. Loudest at a distance.', { mode: 'solid' }],
+    ['D', 'Solid ink, cyan first', 'As C with the zone colours swapped.', { mode: 'solid', accents: 'ba' }],
+    ['E', 'Signal orange', 'Orange cover, navy ink, cyan accent. Carries the old header colour.', { palette: 'signal' }],
+    ['F', 'Sky', 'Cyan cover, navy ink, orange accent.', { palette: 'sky', weight: '6/2' }],
+    ['G', 'Ink', 'Near-black cover, cream lines, both accents glow.', { palette: 'ink', weight: '6/2' }],
+    ['H', 'Navy', 'The site navy as the cover; works on a light hero, not on the navy one.', { palette: 'navy', weight: '6/2' }],
+  ];
+  const design = Lab.designs.find(d => d.id === 'turing');
+  const grid = document.getElementById('grid');
+  const heroes = [];
+  let bg = 'navy';
+  try { bg = localStorage.getItem('shootout.bg') || 'navy'; } catch (e) { /* storage blocked */ }
+  const view = (r, part) => { const c = r.geo[part]; return `<svg viewBox="${c.x} ${c.y} ${c.w} ${c.h}" preserveAspectRatio="none"><use href="#${r.id}"/></svg>`; };
+  V.forEach(([id, name, note, over]) => {
+    const cfg = { ...base, ...over };
+    const fig = document.createElement('figure');
+    fig.innerHTML = `<div class="hero ${bg} loading"></div><figcaption><b>${id} · ${name}</b><span>${note}</span><code>${JSON.stringify(over)}</code></figcaption>`;
+    grid.appendChild(fig);
+    const hero = fig.firstElementChild; heroes.push(hero);
+    Lab.build(design, cfg).then(r => {
+      document.getElementById('defs-g').insertAdjacentHTML('beforeend', `<g id="${r.id}">${r.markup}</g>`);
+      hero.classList.remove('loading');
+      Book3D.create(hero, { front: view(r, 'front'), back: view(r, 'back'), spine: view(r, 'spine'), depth: r.geo.S / 600, margin: 0.12, intro: false, titlePage: null, onTap: null });
+    });
+  });
+  const setBg = b => {
+    bg = b;
+    for (const h of heroes) h.className = h.className.replace(/\b(navy|gradient|paper|white)\b/, b);
+    for (const btn of document.querySelectorAll('#bgs button')) btn.setAttribute('aria-pressed', String(btn.dataset.bg === b));
+    try { localStorage.setItem('shootout.bg', b); } catch (e) { /* storage blocked */ }
+  };
+  document.getElementById('bgs').addEventListener('click', e => { const b = e.target.closest('button')?.dataset.bg; if (b) setBg(b); });
+  setBg(bg);
+})();
+</script>

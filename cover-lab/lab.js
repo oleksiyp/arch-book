@@ -67,7 +67,7 @@ const Lab = (() => {
     signal: { label: 'Signal orange', ground: '#F38B1C', line: '#FFFFFF', ink: '#1B1F3B', plate: '#FFFFFF', plateText: '#1B1F3B', text: '#1B1F3B', a: '#1B1F3B', b: '#00C9FF' },
     sky: { label: 'Sky', ground: '#00C9FF', line: '#FFFFFF', ink: '#1B1F3B', plate: '#FFFFFF', plateText: '#1B1F3B', text: '#1B1F3B', a: '#F38B1C', b: '#1B1F3B' },
   };
-  const ACCENTS = { both: 'Orange + cyan', a: 'First only', b: 'Second only', none: 'Black & white' };
+  const ACCENTS = { both: 'Orange + cyan', ba: 'Cyan + orange', a: 'First only', b: 'Second only', none: 'Black & white' };
   const WEIGHTS = { '4/2': [4, 2], '6/2': [6, 2], '8/3': [8, 3], '3/1.5': [3, 1.5] };
 
   // ---------- fonts & text
@@ -235,7 +235,7 @@ const Lab = (() => {
     const rng = makeRng(cfg.seed * 7919 + design.id.length * 31 + design.id.charCodeAt(0));
     const noise = makeNoise(rng);
     const pal = PALETTES[cfg.palette] || PALETTES.paper;
-    const accents = { both: [pal.a, pal.b], a: [pal.a], b: [pal.b], none: [] }[cfg.accents] || [pal.a, pal.b];
+    const accents = { both: [pal.a, pal.b], ba: [pal.b, pal.a], a: [pal.a], b: [pal.b], none: [] }[cfg.accents] || [pal.a, pal.b];
     const [lw, bw] = WEIGHTS[cfg.weight] || WEIGHTS['4/2'];
     const margin = cfg.plateStyle === 'clear' ? 14 : 6;
     const uid = 'u' + Math.random().toString(36).slice(2, 8);
