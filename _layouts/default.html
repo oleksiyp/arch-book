@@ -203,7 +203,16 @@
 (function () {
     var key = 'book-scroll:' + location.pathname;
 
+    // The second restore waits for the diagrams, which can take seconds. Once the reader has
+    // moved on their own (Start reading, a ToC link, scrolling, a key), jumping back would
+    // undo that, so any interaction cancels the pending restore.
+    var userMoved = false;
+    function moved() { userMoved = true; }
+    ['wheel', 'touchstart', 'keydown', 'mousedown', 'hashchange'].forEach(function (ev) {
+        window.addEventListener(ev, moved, { once: true, passive: true });
+    });
     function restore() {
+        if (userMoved) return;
         var saved = localStorage.getItem(key);
         if (saved !== null) window.scrollTo(0, parseInt(saved, 10));
     }
