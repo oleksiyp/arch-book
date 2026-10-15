@@ -1,4 +1,4 @@
-<div class="dg-figure"><svg class="dg" viewBox="0 0 864 284" style="min-width:864px" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-1-4-title fig-1-4-desc">
+<div class="dg-figure" data-fig="fig-1-4" style="--dg-w:864px"><div class="dg-scroll"><svg class="dg" viewBox="0 0 864 284" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-1-4-title fig-1-4-desc">
 <title id="fig-1-4-title">An ADR&#x27;s life</title>
 <desc id="fig-1-4-desc">An architecture decision record is written and proposed for review; the team either accepts it, and a later ADR may supersede it, or rejects it with reasons, and the rejected record is kept because it saves the next person from re-arguing the question.</desc>
 <defs><marker id="fig-1-4-m-muted" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-muted" points="0 0, 8 3, 0 6"/></marker><marker id="fig-1-4-m-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-accent" points="0 0, 8 3, 0 6"/></marker><marker id="fig-1-4-m-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-link" points="0 0, 8 3, 0 6"/></marker></defs>
@@ -34,4 +34,4 @@
 <text class="dg-legend" x="201" y="263">Kept even when rejected</text>
 <line class="dg-a dg-a-muted" x1="357" y1="260" x2="381" y2="260" marker-end="url(#fig-1-4-m-muted)"/>
 <text class="dg-legend" x="389" y="263">Transition: event</text>
-</svg></div>
+</svg></div></div>

@@ -1,4 +1,4 @@
-<div class="dg-figure"><svg class="dg" viewBox="0 0 864 284" style="min-width:864px" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-12-1-title fig-12-1-desc">
+<div class="dg-figure" data-fig="fig-12-1" style="--dg-w:864px"><div class="dg-scroll"><svg class="dg" viewBox="0 0 864 284" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-12-1-title fig-12-1-desc">
 <title id="fig-12-1-title">The RAG pipeline</title>
 <desc id="fig-12-1-desc">Data products are chunked, embedded and stored in a hybrid vector and keyword index; a fan&#x27;s question is rewritten with the fan&#x27;s context and searched against that index filtered by the fan&#x27;s permissions, and a reranker passes the best three to five of the top-k candidates to the model, which answers with citations.</desc>
 <defs><marker id="fig-12-1-m-muted" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-muted" points="0 0, 8 3, 0 6"/></marker><marker id="fig-12-1-m-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-accent" points="0 0, 8 3, 0 6"/></marker><marker id="fig-12-1-m-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-link" points="0 0, 8 3, 0 6"/></marker></defs>
@@ -54,4 +54,4 @@
 <text class="dg-legend" x="357" y="263">Where quality is won</text>
 <line class="dg-a dg-a-muted" x1="497" y1="260" x2="521" y2="260" marker-end="url(#fig-12-1-m-muted)"/>
 <text class="dg-legend" x="529" y="263">Flow</text>
-</svg></div>
+</svg></div></div>

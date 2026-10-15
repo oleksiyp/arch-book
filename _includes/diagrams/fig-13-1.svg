@@ -1,4 +1,4 @@
-<div class="dg-figure"><svg class="dg" viewBox="0 0 864 172" style="min-width:864px" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-13-1-title fig-13-1-desc">
+<div class="dg-figure" data-fig="fig-13-1" style="--dg-w:864px"><div class="dg-scroll"><svg class="dg" viewBox="0 0 864 172" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-13-1-title fig-13-1-desc">
 <title id="fig-13-1-title">The evolution road and the posture per stage</title>
 <desc id="fig-13-1-desc">Every capability moves from genesis, where you build because nobody sells it, to custom, where you build or adopt if it differentiates, to product, where you buy and let vendors compete, to commodity, where you rent, pay per unit and forget.</desc>
 <defs><marker id="fig-13-1-m-muted" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-muted" points="0 0, 8 3, 0 6"/></marker><marker id="fig-13-1-m-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-accent" points="0 0, 8 3, 0 6"/></marker><marker id="fig-13-1-m-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-link" points="0 0, 8 3, 0 6"/></marker></defs>
@@ -37,4 +37,4 @@
 <text class="dg-legend" x="191" y="151">Stage · tag is the winning posture</text>
 <line class="dg-a dg-a-muted" x1="409" y1="148" x2="433" y2="148" marker-end="url(#fig-13-1-m-muted)"/>
 <text class="dg-legend" x="441" y="151">Evolves toward</text>
-</svg></div>
+</svg></div></div>

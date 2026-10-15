@@ -1,4 +1,4 @@
-<div class="dg-figure"><svg class="dg" viewBox="0 0 864 300" style="min-width:864px" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-10-2-title fig-10-2-desc">
+<div class="dg-figure" data-fig="fig-10-2" style="--dg-w:864px"><div class="dg-scroll"><svg class="dg" viewBox="0 0 864 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-10-2-title fig-10-2-desc">
 <title id="fig-10-2-title">Service-to-service authorization as policy</title>
 <desc id="fig-10-2-desc">The API gateway verifies fan and partner tokens and calls Orders, identified as spiffe://encore/orders, which may reserve with Inventory over mTLS; Sale Gate may only query Bot Screening for risk; Analytics has no path to Inventory and reads events instead.</desc>
 <defs><marker id="fig-10-2-m-muted" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-muted" points="0 0, 8 3, 0 6"/></marker><marker id="fig-10-2-m-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-accent" points="0 0, 8 3, 0 6"/></marker><marker id="fig-10-2-m-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-link" points="0 0, 8 3, 0 6"/></marker></defs>
@@ -40,4 +40,4 @@
 <text class="dg-legend" x="351" y="279">Allowed call</text>
 <line class="dg-a dg-a-accent dg-dash" x1="446" y1="276" x2="470" y2="276" marker-end="url(#fig-10-2-m-accent)"/>
 <text class="dg-legend" x="478" y="279">Denied by policy</text>
-</svg></div>
+</svg></div></div>

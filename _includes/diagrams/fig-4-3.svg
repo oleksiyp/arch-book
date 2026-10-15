@@ -1,4 +1,4 @@
-<div class="dg-figure"><svg class="dg" viewBox="0 0 864 416" style="min-width:864px" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-4-3-title fig-4-3-desc">
+<div class="dg-figure" data-fig="fig-4-3" style="--dg-w:864px"><div class="dg-scroll"><svg class="dg" viewBox="0 0 864 416" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-4-3-title fig-4-3-desc">
 <title id="fig-4-3-title">The workhorse topology</title>
 <desc id="fig-4-3-desc">Clients reach a load balancer that spreads requests over stateless service instances, more of which are added on demand; the instances use a distributed cache and a primary store, and hand slow or asynchronous work to a queue drained by workers that scale independently.</desc>
 <defs><marker id="fig-4-3-m-muted" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-muted" points="0 0, 8 3, 0 6"/></marker><marker id="fig-4-3-m-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-accent" points="0 0, 8 3, 0 6"/></marker><marker id="fig-4-3-m-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-link" points="0 0, 8 3, 0 6"/></marker></defs>
@@ -63,4 +63,4 @@
 <text class="dg-legend" x="624" y="395">Call</text>
 <line class="dg-a dg-a-muted dg-dash" x1="674" y1="392" x2="698" y2="392" marker-end="url(#fig-4-3-m-muted)"/>
 <text class="dg-legend" x="706" y="395">Async</text>
-</svg></div>
+</svg></div></div>

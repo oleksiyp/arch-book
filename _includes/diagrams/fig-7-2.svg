@@ -1,4 +1,4 @@
-<div class="dg-figure"><svg class="dg" viewBox="0 0 864 368" style="min-width:864px" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-7-2-title fig-7-2-desc">
+<div class="dg-figure" data-fig="fig-7-2" style="--dg-w:864px"><div class="dg-scroll"><svg class="dg" viewBox="0 0 864 368" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-7-2-title fig-7-2-desc">
 <title id="fig-7-2-title">Edge vs. interior: gateway and mesh</title>
 <desc id="fig-7-2-desc">Partners and apps reach the API gateway at the edge, which handles authentication, quotas, rate limits and canary routing and forwards into the interior; there the BFFs and public API services call Inventory and Orders east–west, inside the service mesh with mTLS, retries and telemetry.</desc>
 <defs><marker id="fig-7-2-m-muted" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-muted" points="0 0, 8 3, 0 6"/></marker><marker id="fig-7-2-m-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-accent" points="0 0, 8 3, 0 6"/></marker><marker id="fig-7-2-m-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-link" points="0 0, 8 3, 0 6"/></marker></defs>
@@ -41,4 +41,4 @@
 <text class="dg-legend" x="370" y="347">Service in the mesh: east–west</text>
 <line class="dg-a dg-a-muted" x1="566" y1="344" x2="590" y2="344" marker-end="url(#fig-7-2-m-muted)"/>
 <text class="dg-legend" x="598" y="347">Call</text>
-</svg></div>
+</svg></div></div>

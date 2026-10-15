@@ -159,11 +159,13 @@ class Diagram:
             f'<polygon class="dg-head dg-head-{k}" points="0 0, 8 3, 0 6"/></marker>'
             for k in ("muted", "accent", "link"))
         body = "\n".join([*self.zones, *self.arrows, *self.labels, *self.nodes, *self.extra, self._legend()])
-        return (f'<div class="dg-figure"><svg class="dg" viewBox="0 0 {self.w} {self.h}" '
-                f'style="min-width:{self.w}px" xmlns="http://www.w3.org/2000/svg" role="img" '
+        # .dg-scroll is the frame that scrolls when a figure is shown at full size on a narrow
+        # screen; the zoom button the page adds to .dg-figure stays outside it, so it never scrolls.
+        return (f'<div class="dg-figure" data-fig="{s}" style="--dg-w:{self.w}px"><div class="dg-scroll">'
+                f'<svg class="dg" viewBox="0 0 {self.w} {self.h}" xmlns="http://www.w3.org/2000/svg" role="img" '
                 f'aria-labelledby="{s}-title {s}-desc">\n'
                 f'<title id="{s}-title">{escape(self.title)}</title>\n'
                 f'<desc id="{s}-desc">{escape(self.desc)}</desc>\n'
                 f'<defs>{markers}</defs>\n'
                 f'<rect class="dg-paper" width="100%" height="100%" rx="8"/>\n'
-                f'{body}\n</svg></div>\n')
+                f'{body}\n</svg></div></div>\n')

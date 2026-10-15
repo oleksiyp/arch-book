@@ -1,4 +1,4 @@
-<div class="dg-figure"><svg class="dg" viewBox="0 0 864 388" style="min-width:864px" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-9-2-title fig-9-2-desc">
+<div class="dg-figure" data-fig="fig-9-2" style="--dg-w:864px"><div class="dg-scroll"><svg class="dg" viewBox="0 0 864 388" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-9-2-title fig-9-2-desc">
 <title id="fig-9-2-title">Anatomy of a data product</title>
 <desc id="fig-9-2-desc">Operational events feed the transformation code of the ticket-sales data product, owned by the Orders team, which publishes a stream port of sales events and a table port of daily aggregates alongside its contract, SLOs, lineage and docs; dashboards and data science subscribe to the stream, revenue reporting to the table.</desc>
 <defs><marker id="fig-9-2-m-muted" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-muted" points="0 0, 8 3, 0 6"/></marker><marker id="fig-9-2-m-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-accent" points="0 0, 8 3, 0 6"/></marker><marker id="fig-9-2-m-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-link" points="0 0, 8 3, 0 6"/></marker></defs>
@@ -53,4 +53,4 @@
 <text class="dg-legend" x="564" y="367">Consumer</text>
 <line class="dg-a dg-a-muted" x1="636" y1="364" x2="660" y2="364" marker-end="url(#fig-9-2-m-muted)"/>
 <text class="dg-legend" x="668" y="367">Data flow</text>
-</svg></div>
+</svg></div></div>

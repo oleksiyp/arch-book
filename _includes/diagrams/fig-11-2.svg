@@ -1,4 +1,4 @@
-<div class="dg-figure"><svg class="dg" viewBox="0 0 864 356" style="min-width:864px" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-11-2-title fig-11-2-desc">
+<div class="dg-figure" data-fig="fig-11-2" style="--dg-w:864px"><div class="dg-scroll"><svg class="dg" viewBox="0 0 864 356" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-11-2-title fig-11-2-desc">
 <title id="fig-11-2-title">The error budget as automatic policy</title>
 <desc id="fig-11-2-desc">The remaining error budget decides the release posture: with budget left, ship features as canaries promote and flags open; when it is burning fast, slow down as canaries hold and risky flags freeze; when it is exhausted, do reliability work only until the budget recovers.</desc>
 <defs><marker id="fig-11-2-m-muted" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-muted" points="0 0, 8 3, 0 6"/></marker><marker id="fig-11-2-m-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-accent" points="0 0, 8 3, 0 6"/></marker><marker id="fig-11-2-m-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-link" points="0 0, 8 3, 0 6"/></marker></defs>
@@ -32,4 +32,4 @@
 <text class="dg-legend" x="196" y="335">Release posture</text>
 <line class="dg-a dg-a-muted" x1="308" y1="332" x2="332" y2="332" marker-end="url(#fig-11-2-m-muted)"/>
 <text class="dg-legend" x="340" y="335">Budget state</text>
-</svg></div>
+</svg></div></div>

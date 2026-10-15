@@ -1,4 +1,4 @@
-<div class="dg-figure"><svg class="dg" viewBox="0 0 864 440" style="min-width:864px" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-8-3-title fig-8-3-desc">
+<div class="dg-figure" data-fig="fig-8-3" style="--dg-w:864px"><div class="dg-scroll"><svg class="dg" viewBox="0 0 864 440" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-8-3-title fig-8-3-desc">
 <title id="fig-8-3-title">BFFs per experience</title>
 <desc id="fig-8-3-desc">The fan app calls its own Fan BFF, owned by the fan-web team, which fans out to Catalog, Inventory and Orders; the organizer web app calls the Organizer BFF, which uses Catalog and Analytics; Inventory&#x27;s seat events reach the fan app through a realtime SSE edge.</desc>
 <defs><marker id="fig-8-3-m-muted" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-muted" points="0 0, 8 3, 0 6"/></marker><marker id="fig-8-3-m-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-accent" points="0 0, 8 3, 0 6"/></marker><marker id="fig-8-3-m-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-link" points="0 0, 8 3, 0 6"/></marker></defs>
@@ -55,4 +55,4 @@
 <text class="dg-legend" x="413" y="419">Call</text>
 <line class="dg-a dg-a-muted dg-dash" x1="463" y1="416" x2="487" y2="416" marker-end="url(#fig-8-3-m-muted)"/>
 <text class="dg-legend" x="495" y="419">Pushed event</text>
-</svg></div>
+</svg></div></div>

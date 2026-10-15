@@ -1,13 +1,13 @@
 /* Diagram skin for the book: diagram-design roles mapped to the book's palette.
    Light: cover paper, navy ink, vermilion accent, deep cyan for links.
    Dark: the book's dark card, light ink, the dark-mode vermilion and cyan.
-   Copied into assets/css/style.scss; kept here for the preview page. */
+   The source of the figure styles: the end of assets/css/style.scss is generated from this file. */
 .dg-figure {
   --dg-paper: #f6f4ef; --dg-ink: #1b1f3b; --dg-muted: #4a5068; --dg-soft: #5c6178;
   --dg-accent: #c23f22; --dg-link: #0a6c8a;
   --dg-ink-rgb: 27, 31, 59; --dg-accent-rgb: 194, 63, 34; --dg-muted-rgb: 74, 80, 104;
   --dg-backend: #ffffff;
-  width: 100%; overflow-x: auto; margin: 1.4rem 0 0.6rem;
+  position: relative; margin: 1.4rem 0 0.6rem;
 }
 .dg-dark .dg-figure, html[data-theme="dark"] .dg-figure {
   --dg-paper: #1b2237; --dg-ink: #e8ecf3; --dg-muted: #a9b2c3; --dg-soft: #97a0b5;
@@ -15,7 +15,32 @@
   --dg-ink-rgb: 232, 236, 243; --dg-accent-rgb: 240, 113, 79; --dg-muted-rgb: 169, 178, 195;
   --dg-backend: #222b44;
 }
+/* A figure fits its width by default. On a screen narrower than the drawing, the zoom button
+   (added by the page) switches it to full size, scrolling inside .dg-scroll. */
+.dg-scroll { overflow-x: auto; }
 svg.dg { width: 100%; height: auto; display: block; }
+.dg-figure.is-full svg.dg { min-width: var(--dg-w); }
+.dg-zoom {
+  display: none; position: absolute; left: 8px; bottom: 8px; z-index: 1;
+  width: 32px; height: 32px; padding: 0; border-radius: 8px; cursor: pointer;
+  place-items: center; color: var(--dg-ink); background: var(--dg-paper);
+  border: 1px solid rgba(var(--dg-ink-rgb), 0.25);
+  -webkit-tap-highlight-color: transparent;
+}
+.dg-zoom svg { width: 16px; height: 16px; display: block; }
+.dg-figure.is-narrow .dg-zoom { display: grid; }
+/* On narrow screens the frame grows a paper strip under the drawing, so the button sits in
+   the corner without covering the legend. */
+.dg-figure.is-narrow .dg-scroll { background: var(--dg-paper); border-radius: 8px; padding-bottom: 40px; }
+.dg-figure.is-narrow .dg-zoom { left: 6px; bottom: 6px; width: 30px; height: 30px; }
+.dg-zoom:focus-visible { outline: 2px solid var(--dg-link); outline-offset: 2px; }
+/* Like the book's tables: figures may bleed past the prose column (864px drawings in a
+   ~780px column), centred on it. */
+.main-content .dg-figure {
+  width: min(864px, 94vw);
+  left: 50%;
+  transform: translateX(-50%);
+}
 .dg .dg-paper, .dg .dg-mask { fill: var(--dg-paper); }
 .dg text { font-family: "Open Sans", "Helvetica Neue", Arial, sans-serif; }
 .dg .dg-name { fill: var(--dg-ink); font-size: 12px; font-weight: 600; text-anchor: middle; }

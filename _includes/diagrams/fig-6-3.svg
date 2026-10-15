@@ -1,4 +1,4 @@
-<div class="dg-figure"><svg class="dg" viewBox="0 0 864 572" style="min-width:864px" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-6-3-title fig-6-3-desc">
+<div class="dg-figure" data-fig="fig-6-3" style="--dg-w:864px"><div class="dg-scroll"><svg class="dg" viewBox="0 0 864 572" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-6-3-title fig-6-3-desc">
 <title id="fig-6-3-title">Encore&#x27;s refund process as an explicit model</title>
 <desc id="fig-6-3-desc">A refund request is approved automatically under 80 euros and more than 48 hours before the show, otherwise it goes to a human review; approval revokes the ticket, then the PSP refund retries until it succeeds or goes to manual resolution, and the seat is re-listed only if the show is more than 48 hours away.</desc>
 <defs><marker id="fig-6-3-m-muted" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-muted" points="0 0, 8 3, 0 6"/></marker><marker id="fig-6-3-m-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-accent" points="0 0, 8 3, 0 6"/></marker><marker id="fig-6-3-m-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-link" points="0 0, 8 3, 0 6"/></marker></defs>
@@ -70,4 +70,4 @@
 <text class="dg-legend" x="229" y="551">Where people step in</text>
 <line class="dg-a dg-a-muted" x1="369" y1="548" x2="393" y2="548" marker-end="url(#fig-6-3-m-muted)"/>
 <text class="dg-legend" x="401" y="551">Transition: event · guard</text>
-</svg></div>
+</svg></div></div>

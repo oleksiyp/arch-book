@@ -1022,5 +1022,54 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 </script>
+<script>
+/* Figures fit the screen by default. Where a figure is narrower than its drawing (phones),
+   a corner button shows it at full size, scrolling sideways; the choice is remembered per
+   figure on this device. */
+(function () {
+    var KEY = 'book-figures-full';
+    function load() { try { return JSON.parse(localStorage.getItem(KEY)) || []; } catch (e) { return []; } }
+    function save(list) { try { localStorage.setItem(KEY, JSON.stringify(list)); } catch (e) {} }
+    var ICON = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="';
+    var EXPAND = ICON + 'M2 6V2h4M14 6V2h-4M2 10v4h4M14 10v4h-4"/></svg>';
+    var FIT = ICON + 'M6 2v4H2M10 2v4h4M6 14v-4H2M10 14v-4h4"/></svg>';
+    var figs = [].slice.call(document.querySelectorAll('.dg-figure[data-fig]'));
+    if (!figs.length) return;
+    var full = load();
+    figs.forEach(function (f) {
+        var id = f.dataset.fig;
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'dg-zoom';
+        f.appendChild(b);
+        function render() {
+            var on = f.classList.contains('is-full');
+            var label = on ? 'Fit the diagram to the screen' : 'Show the diagram at full size';
+            b.innerHTML = on ? FIT : EXPAND;
+            b.setAttribute('aria-pressed', on ? 'true' : 'false');
+            b.setAttribute('aria-label', label);
+            b.title = label;
+        }
+        if (full.indexOf(id) >= 0) f.classList.add('is-full');
+        render();
+        b.addEventListener('click', function () {
+            var on = f.classList.toggle('is-full');
+            var list = load().filter(function (x) { return x !== id; });
+            if (on) list.push(id);
+            save(list);
+            render();
+        });
+    });
+    // The button only appears where the figure is narrower than its drawing.
+    function measure() {
+        figs.forEach(function (f) {
+            var w = parseFloat(getComputedStyle(f).getPropertyValue('--dg-w')) || 864;
+            f.classList.toggle('is-narrow', f.clientWidth < w - 1);
+        });
+    }
+    measure();
+    window.addEventListener('resize', measure);
+})();
+</script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-<div class="dg-figure"><svg class="dg" viewBox="0 0 864 340" style="min-width:864px" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-14-1-title fig-14-1-desc">
+<div class="dg-figure" data-fig="fig-14-1" style="--dg-w:864px"><div class="dg-scroll"><svg class="dg" viewBox="0 0 864 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-14-1-title fig-14-1-desc">
 <title id="fig-14-1-title">The two planes of a SaaS platform</title>
 <desc id="fig-14-1-desc">The control plane manages tenants through onboarding, tenant identity, config and tiering, billing and metering, and tenant-aware ops; it provisions, configures and observes the application plane, which serves the venue-chain tenant, the festival tenant and 500 self-service venues.</desc>
 <defs><marker id="fig-14-1-m-muted" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-muted" points="0 0, 8 3, 0 6"/></marker><marker id="fig-14-1-m-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-accent" points="0 0, 8 3, 0 6"/></marker><marker id="fig-14-1-m-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-link" points="0 0, 8 3, 0 6"/></marker></defs>
@@ -38,4 +38,4 @@
 <text class="dg-legend" x="247" y="319">Capability or tenant</text>
 <line class="dg-a dg-a-accent" x1="387" y1="316" x2="411" y2="316" marker-end="url(#fig-14-1-m-accent)"/>
 <text class="dg-legend" x="419" y="319">Manages</text>
-</svg></div>
+</svg></div></div>

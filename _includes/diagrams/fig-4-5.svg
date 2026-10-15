@@ -1,4 +1,4 @@
-<div class="dg-figure"><svg class="dg" viewBox="0 0 864 344" style="min-width:864px" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-4-5-title fig-4-5-desc">
+<div class="dg-figure" data-fig="fig-4-5" style="--dg-w:864px"><div class="dg-scroll"><svg class="dg" viewBox="0 0 864 344" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-4-5-title fig-4-5-desc">
 <title id="fig-4-5-title">The circuit breaker&#x27;s three states</title>
 <desc id="fig-4-5-desc">A circuit breaker starts Closed and trips to Open when failures exceed a threshold; while Open, calls fail instantly so no threads are parked and the dependency gets air; after a cool-down it goes Half-open, where a probe that succeeds closes it and a probe that fails opens it again.</desc>
 <defs><marker id="fig-4-5-m-muted" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-muted" points="0 0, 8 3, 0 6"/></marker><marker id="fig-4-5-m-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-accent" points="0 0, 8 3, 0 6"/></marker><marker id="fig-4-5-m-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-link" points="0 0, 8 3, 0 6"/></marker></defs>
@@ -39,4 +39,4 @@
 <text class="dg-legend" x="401" y="323">Trip</text>
 <line class="dg-a dg-a-muted" x1="451" y1="320" x2="475" y2="320" marker-end="url(#fig-4-5-m-muted)"/>
 <text class="dg-legend" x="483" y="323">Transition: event</text>
-</svg></div>
+</svg></div></div>

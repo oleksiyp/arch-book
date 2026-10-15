@@ -1,4 +1,4 @@
-<div class="dg-figure"><svg class="dg" viewBox="0 0 864 532" style="min-width:864px" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-2-1-title fig-2-1-desc">
+<div class="dg-figure" data-fig="fig-2-1" style="--dg-w:864px"><div class="dg-scroll"><svg class="dg" viewBox="0 0 864 532" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-2-1-title fig-2-1-desc">
 <title id="fig-2-1-title">The style catalog on two axes</title>
 <desc id="fig-2-1-desc">Quadrant chart placing eight architecture styles by code partitioning, technical to domain, and deployment, monolithic to distributed: layered, microkernel and pipeline are classic monoliths; modular monolith is a domain-partitioned monolith; service-based, microservices and space-based are domain-partitioned and distributed; event-driven sits on the dividing line; and the technical-plus-distributed quadrant is empty.</desc>
 <defs><marker id="fig-2-1-m-muted" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-muted" points="0 0, 8 3, 0 6"/></marker><marker id="fig-2-1-m-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-accent" points="0 0, 8 3, 0 6"/></marker><marker id="fig-2-1-m-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-link" points="0 0, 8 3, 0 6"/></marker></defs>
@@ -33,4 +33,4 @@
 <text class="dg-legend" x="40" y="511">Architecture style</text>
 <rect class="dg-n dg-n-focal" x="168" y="503" width="16" height="10" rx="2"/>
 <text class="dg-legend" x="190" y="511">Lonely quadrant: distribution costs, no benefits</text>
-</svg></div>
+</svg></div></div>

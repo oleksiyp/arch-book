@@ -1,4 +1,4 @@
-<div class="dg-figure"><svg class="dg" viewBox="0 0 864 448" style="min-width:864px" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-2-3-title fig-2-3-desc">
+<div class="dg-figure" data-fig="fig-2-3" style="--dg-w:864px"><div class="dg-scroll"><svg class="dg" viewBox="0 0 864 448" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-2-3-title fig-2-3-desc">
 <title id="fig-2-3-title">Encore&#x27;s chosen shape</title>
 <desc id="fig-2-3-desc">Sale Gate and Bot Screening form a separately deployed on-sale quantum that scales to the spike; the quantum admits fans at a sustainable rate into Encore&#x27;s modular monolith, one deployment in which Order works with Event Catalog, Seat Inventory, Payment Integration and Notification and feeds Sales Analytics.</desc>
 <defs><marker id="fig-2-3-m-muted" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-muted" points="0 0, 8 3, 0 6"/></marker><marker id="fig-2-3-m-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-accent" points="0 0, 8 3, 0 6"/></marker><marker id="fig-2-3-m-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-link" points="0 0, 8 3, 0 6"/></marker></defs>
@@ -59,4 +59,4 @@
 <text class="dg-legend" x="550" y="427">In-process link</text>
 <line class="dg-a dg-a-muted dg-dash" x1="662" y1="424" x2="686" y2="424" marker-end="url(#fig-2-3-m-muted)"/>
 <text class="dg-legend" x="694" y="427">Fact, not a call</text>
-</svg></div>
+</svg></div></div>
