@@ -1,0 +1,43 @@
+<div class="dg-figure"><svg class="dg" viewBox="0 0 864 300" style="min-width:864px" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-10-2-title fig-10-2-desc">
+<title id="fig-10-2-title">Service-to-service authorization as policy</title>
+<desc id="fig-10-2-desc">The API gateway verifies fan and partner tokens and calls Orders, identified as spiffe://encore/orders, which may reserve with Inventory over mTLS; Sale Gate may only query Bot Screening for risk; Analytics has no path to Inventory and reads events instead.</desc>
+<defs><marker id="fig-10-2-m-muted" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-muted" points="0 0, 8 3, 0 6"/></marker><marker id="fig-10-2-m-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-accent" points="0 0, 8 3, 0 6"/></marker><marker id="fig-10-2-m-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-link" points="0 0, 8 3, 0 6"/></marker></defs>
+<rect class="dg-paper" width="100%" height="100%" rx="8"/>
+<path class="dg-a dg-a-muted" d="M 200,76 L 344,76" marker-end="url(#fig-10-2-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 520,76 L 664,76" marker-end="url(#fig-10-2-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 200,204 L 344,204" marker-end="url(#fig-10-2-m-muted)"/>
+<path class="dg-a dg-a-accent dg-dash" d="M 752,176 L 752,104" marker-end="url(#fig-10-2-m-accent)"/>
+<rect class="dg-mask" x="538" y="56" width="108" height="12" rx="2"/><text class="dg-label" x="592" y="65">MTLS · MAY RESERVE</text>
+<rect class="dg-mask" x="216" y="184" width="112" height="12" rx="2"/><text class="dg-label" x="272" y="193">MAY QUERY RISK ONLY</text>
+<rect class="dg-mask" x="648" y="134" width="96" height="12" rx="2"/><text class="dg-label dg-l-accent" x="696" y="143">NO PATH · DENIED</text>
+<rect class="dg-mask" x="24" y="48" width="176" height="56" rx="6"/>
+<rect class="dg-n dg-n-backend" x="24" y="48" width="176" height="56" rx="6"/>
+<text class="dg-name" x="112" y="78">API Gateway</text>
+<text class="dg-sub" x="112" y="93">fan/partner tokens verified</text>
+<rect class="dg-mask" x="344" y="48" width="176" height="56" rx="6"/>
+<rect class="dg-n dg-n-backend" x="344" y="48" width="176" height="56" rx="6"/>
+<text class="dg-name" x="432" y="78">Orders</text>
+<text class="dg-sub" x="432" y="93">spiffe://encore/orders</text>
+<rect class="dg-mask" x="664" y="48" width="176" height="56" rx="6"/>
+<rect class="dg-n dg-n-backend" x="664" y="48" width="176" height="56" rx="6"/>
+<text class="dg-name" x="752" y="80">Inventory</text>
+<rect class="dg-mask" x="24" y="176" width="176" height="56" rx="6"/>
+<rect class="dg-n dg-n-backend" x="24" y="176" width="176" height="56" rx="6"/>
+<text class="dg-name" x="112" y="208">Sale Gate</text>
+<rect class="dg-mask" x="344" y="176" width="176" height="56" rx="6"/>
+<rect class="dg-n dg-n-backend" x="344" y="176" width="176" height="56" rx="6"/>
+<text class="dg-name" x="432" y="208">Bot Screening</text>
+<rect class="dg-mask" x="664" y="176" width="176" height="56" rx="6"/>
+<rect class="dg-n dg-n-focal" x="664" y="176" width="176" height="56" rx="6"/>
+<text class="dg-name" x="752" y="206">Analytics</text>
+<text class="dg-sub" x="752" y="221">reads events instead</text>
+<line class="dg-rule" x1="24" y1="260" x2="840" y2="260"/>
+<rect class="dg-n dg-n-backend" x="24" y="271" width="16" height="10" rx="2"/>
+<text class="dg-legend" x="46" y="279">Workload with identity</text>
+<rect class="dg-n dg-n-focal" x="197" y="271" width="16" height="10" rx="2"/>
+<text class="dg-legend" x="219" y="279">Denied caller</text>
+<line class="dg-a dg-a-muted" x1="319" y1="276" x2="343" y2="276" marker-end="url(#fig-10-2-m-muted)"/>
+<text class="dg-legend" x="351" y="279">Allowed call</text>
+<line class="dg-a dg-a-accent dg-dash" x1="446" y1="276" x2="470" y2="276" marker-end="url(#fig-10-2-m-accent)"/>
+<text class="dg-legend" x="478" y="279">Denied by policy</text>
+</svg></div>

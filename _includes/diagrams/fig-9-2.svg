@@ -1,0 +1,56 @@
+<div class="dg-figure"><svg class="dg" viewBox="0 0 864 388" style="min-width:864px" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-9-2-title fig-9-2-desc">
+<title id="fig-9-2-title">Anatomy of a data product</title>
+<desc id="fig-9-2-desc">Operational events feed the transformation code of the ticket-sales data product, owned by the Orders team, which publishes a stream port of sales events and a table port of daily aggregates alongside its contract, SLOs, lineage and docs; dashboards and data science subscribe to the stream, revenue reporting to the table.</desc>
+<defs><marker id="fig-9-2-m-muted" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-muted" points="0 0, 8 3, 0 6"/></marker><marker id="fig-9-2-m-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-accent" points="0 0, 8 3, 0 6"/></marker><marker id="fig-9-2-m-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-link" points="0 0, 8 3, 0 6"/></marker></defs>
+<rect class="dg-paper" width="100%" height="100%" rx="8"/>
+<rect class="dg-zone" x="212" y="56" width="412" height="272" rx="8"/><rect class="dg-mask" x="224" y="50" width="264" height="12" rx="2"/><text class="dg-eyebrow" x="356" y="59">DATA PRODUCT: TICKET-SALES · OWNER: ORDERS TEAM</text>
+<path class="dg-a dg-a-muted" d="M 176,164 L 236,164" marker-end="url(#fig-9-2-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 396,152 L 412,152 Q 420,152 420,144 L 420,124 Q 420,116 428,116 L 448,116" marker-end="url(#fig-9-2-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 396,176 L 412,176 Q 420,176 420,184 L 420,200 Q 420,208 428,208 L 448,208" marker-end="url(#fig-9-2-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 600,104 L 644,104 Q 652,104 652,96 L 652,64 Q 652,56 660,56 L 704,56" marker-end="url(#fig-9-2-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 600,128 L 704,128" marker-end="url(#fig-9-2-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 600,208 L 704,208" marker-end="url(#fig-9-2-m-muted)"/>
+<rect class="dg-mask" x="24" y="136" width="152" height="56" rx="6"/>
+<rect class="dg-n dg-n-external" x="24" y="136" width="152" height="56" rx="6"/>
+<text class="dg-name" x="100" y="166">Operational events</text>
+<text class="dg-sub" x="100" y="181">Chapter 6 backbone</text>
+<rect class="dg-mask" x="236" y="136" width="160" height="56" rx="6"/>
+<rect class="dg-n dg-n-focal" x="236" y="136" width="160" height="56" rx="6"/>
+<text class="dg-name" x="316" y="166">Transformation code</text>
+<text class="dg-sub" x="316" y="181">owned logic</text>
+<rect class="dg-mask" x="448" y="88" width="152" height="56" rx="6"/>
+<rect class="dg-n dg-n-store" x="448" y="88" width="152" height="56" rx="6"/>
+<text class="dg-name" x="524" y="118">Port · stream</text>
+<text class="dg-sub" x="524" y="133">sales events</text>
+<rect class="dg-mask" x="448" y="180" width="152" height="56" rx="6"/>
+<rect class="dg-n dg-n-store" x="448" y="180" width="152" height="56" rx="6"/>
+<text class="dg-name" x="524" y="210">Port · table</text>
+<text class="dg-sub" x="524" y="225">daily aggregates</text>
+<rect class="dg-mask" x="236" y="268" width="364" height="40" rx="6"/>
+<rect class="dg-n dg-n-optional" x="236" y="268" width="364" height="40" rx="6" stroke-dasharray="4,3"/>
+<text class="dg-name" x="418" y="292">Contract · SLOs · lineage · docs</text>
+<rect class="dg-mask" x="704" y="32" width="136" height="48" rx="6"/>
+<rect class="dg-n dg-n-input" x="704" y="32" width="136" height="48" rx="6"/>
+<text class="dg-name" x="772" y="60">Dashboards</text>
+<rect class="dg-mask" x="704" y="104" width="136" height="48" rx="6"/>
+<rect class="dg-n dg-n-input" x="704" y="104" width="136" height="48" rx="6"/>
+<text class="dg-name" x="772" y="132">Data science</text>
+<rect class="dg-mask" x="704" y="184" width="136" height="48" rx="6"/>
+<rect class="dg-n dg-n-input" x="704" y="184" width="136" height="48" rx="6"/>
+<text class="dg-name" x="772" y="212">Revenue reporting</text>
+<text class="dg-note" x="772" y="260" text-anchor="middle">subscribe to ports,</text>
+<text class="dg-note" x="772" y="274" text-anchor="middle">never to tables</text>
+<line class="dg-rule" x1="24" y1="348" x2="840" y2="348"/>
+<rect class="dg-n dg-n-external" x="24" y="359" width="16" height="10" rx="2"/>
+<text class="dg-legend" x="46" y="367">Upstream source</text>
+<rect class="dg-n dg-n-focal" x="158" y="359" width="16" height="10" rx="2"/>
+<text class="dg-legend" x="180" y="367">Product code</text>
+<rect class="dg-n dg-n-store" x="275" y="359" width="16" height="10" rx="2"/>
+<text class="dg-legend" x="297" y="367">Output port</text>
+<rect class="dg-n dg-n-optional" x="386" y="359" width="16" height="10" rx="2" stroke-dasharray="4,3"/>
+<text class="dg-legend" x="408" y="367">Contract · metadata</text>
+<rect class="dg-n dg-n-input" x="542" y="359" width="16" height="10" rx="2"/>
+<text class="dg-legend" x="564" y="367">Consumer</text>
+<line class="dg-a dg-a-muted" x1="636" y1="364" x2="660" y2="364" marker-end="url(#fig-9-2-m-muted)"/>
+<text class="dg-legend" x="668" y="367">Data flow</text>
+</svg></div>

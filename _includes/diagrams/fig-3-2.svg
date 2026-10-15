@@ -1,0 +1,66 @@
+<div class="dg-figure"><svg class="dg" viewBox="0 0 864 468" style="min-width:864px" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-3-2-title fig-3-2-desc">
+<title id="fig-3-2-title">Encore&#x27;s context map</title>
+<desc id="fig-3-2-desc">Three core contexts, On-Sale Admission, Seat Inventory and Ticketing, and Orders and Payments, are partners; Event Catalog supplies On-Sale Admission as customer and supplier; Seat Inventory publishes ticket events to Support and Refunds as an open-host service; and the external payment provider reaches Orders and Payments only through an anticorruption layer.</desc>
+<defs><marker id="fig-3-2-m-muted" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-muted" points="0 0, 8 3, 0 6"/></marker><marker id="fig-3-2-m-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-accent" points="0 0, 8 3, 0 6"/></marker><marker id="fig-3-2-m-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-link" points="0 0, 8 3, 0 6"/></marker></defs>
+<rect class="dg-paper" width="100%" height="100%" rx="8"/>
+<path class="dg-a dg-a-muted" d="M 168,224 L 332,224"/>
+<path class="dg-a dg-a-muted" d="M 532,224 L 696,224"/>
+<path class="dg-a dg-a-muted" d="M 96,96 L 96,192" marker-end="url(#fig-3-2-m-muted)"/>
+<path class="dg-a dg-a-accent" d="M 768,96 L 768,192" marker-end="url(#fig-3-2-m-accent)"/>
+<path class="dg-a dg-a-muted" d="M 432,248 L 432,344" marker-end="url(#fig-3-2-m-muted)"/>
+<rect class="dg-mask" x="214" y="204" width="72" height="12" rx="2"/><text class="dg-label" x="250" y="213">PARTNERSHIP</text>
+<rect class="dg-mask" x="204" y="232" width="92" height="12" rx="2"/><text class="dg-label" x="250" y="241">EVOLVE TOGETHER</text>
+<rect class="dg-mask" x="578" y="204" width="72" height="12" rx="2"/><text class="dg-label" x="614" y="213">PARTNERSHIP</text>
+<rect class="dg-mask" x="540" y="232" width="148" height="12" rx="2"/><text class="dg-label" x="614" y="241">ONE SALE, ONE TRANSACTION</text>
+<rect class="dg-mask" x="104" y="130" width="104" height="12" rx="2"/><text class="dg-label" x="156" y="139">CUSTOMER–SUPPLIER</text>
+<rect class="dg-mask" x="104" y="146" width="140" height="12" rx="2"/><text class="dg-label" x="174" y="155">CATALOG SERVES ADMISSION</text>
+<rect class="dg-mask" x="640" y="130" width="120" height="12" rx="2"/><text class="dg-label dg-l-accent" x="700" y="139">ANTICORRUPTION LAYER</text>
+<rect class="dg-mask" x="632" y="146" width="128" height="12" rx="2"/><text class="dg-label" x="696" y="155">PSP MODEL KEPT OUTSIDE</text>
+<rect class="dg-mask" x="440" y="282" width="104" height="12" rx="2"/><text class="dg-label" x="492" y="291">OPEN-HOST SERVICE</text>
+<rect class="dg-mask" x="440" y="298" width="136" height="12" rx="2"/><text class="dg-label" x="508" y="307">PUBLISHED TICKET EVENTS</text>
+<rect class="dg-mask" x="24" y="40" width="144" height="56" rx="6"/>
+<rect class="dg-n dg-n-backend" x="24" y="40" width="144" height="56" rx="6"/>
+<rect class="dg-tagbox dg-t-backend" x="32" y="46" width="64" height="12" rx="2"/>
+<text class="dg-tag dg-t-backend" x="64" y="55">SUPPORTING</text>
+<text class="dg-name" x="96" y="76">Event Catalog</text>
+<rect class="dg-mask" x="696" y="40" width="144" height="56" rx="6"/>
+<rect class="dg-n dg-n-external" x="696" y="40" width="144" height="56" rx="6"/>
+<rect class="dg-tagbox dg-t-external" x="704" y="46" width="48" height="12" rx="2"/>
+<text class="dg-tag dg-t-external" x="728" y="55">GENERIC</text>
+<text class="dg-name" x="768" y="74">Payment provider</text>
+<text class="dg-sub" x="768" y="89">external PSP</text>
+<rect class="dg-mask" x="24" y="192" width="144" height="56" rx="6"/>
+<rect class="dg-n dg-n-backend" x="24" y="192" width="144" height="56" rx="6"/>
+<rect class="dg-tagbox dg-t-backend" x="32" y="198" width="32" height="12" rx="2"/>
+<text class="dg-tag dg-t-backend" x="48" y="207">CORE</text>
+<text class="dg-name" x="96" y="228">On-Sale Admission</text>
+<rect class="dg-mask" x="332" y="192" width="200" height="56" rx="6"/>
+<rect class="dg-n dg-n-backend" x="332" y="192" width="200" height="56" rx="6"/>
+<rect class="dg-tagbox dg-t-backend" x="340" y="198" width="32" height="12" rx="2"/>
+<text class="dg-tag dg-t-backend" x="356" y="207">CORE</text>
+<text class="dg-name" x="432" y="228">Seat Inventory &amp; Ticketing</text>
+<rect class="dg-mask" x="696" y="192" width="144" height="56" rx="6"/>
+<rect class="dg-n dg-n-focal" x="696" y="192" width="144" height="56" rx="6"/>
+<rect class="dg-tagbox dg-t-focal" x="704" y="198" width="32" height="12" rx="2"/>
+<text class="dg-tag dg-t-focal" x="720" y="207">CORE</text>
+<text class="dg-name" x="768" y="226">Orders &amp; Payments</text>
+<text class="dg-sub" x="768" y="241">ACL translator</text>
+<rect class="dg-mask" x="332" y="344" width="200" height="56" rx="6"/>
+<rect class="dg-n dg-n-backend" x="332" y="344" width="200" height="56" rx="6"/>
+<rect class="dg-tagbox dg-t-backend" x="340" y="350" width="64" height="12" rx="2"/>
+<text class="dg-tag dg-t-backend" x="372" y="359">SUPPORTING</text>
+<text class="dg-name" x="432" y="380">Support &amp; Refunds</text>
+<line class="dg-rule" x1="24" y1="428" x2="840" y2="428"/>
+<rect class="dg-n dg-n-backend" x="24" y="439" width="16" height="10" rx="2"/>
+<text class="dg-legend" x="46" y="447">Context</text>
+<rect class="dg-n dg-n-focal" x="113" y="439" width="16" height="10" rx="2"/>
+<text class="dg-legend" x="135" y="447">ACL owner</text>
+<rect class="dg-n dg-n-external" x="213" y="439" width="16" height="10" rx="2"/>
+<text class="dg-legend" x="235" y="447">Outside party</text>
+<line class="dg-a dg-a-muted" x1="335" y1="444" x2="359" y2="444"/>
+<text class="dg-legend" x="367" y="447">Partnership</text>
+<line class="dg-a dg-a-muted" x1="456" y1="444" x2="480" y2="444" marker-end="url(#fig-3-2-m-muted)"/>
+<text class="dg-legend" x="488" y="447">Upstream to downstream</text>
+<line class="dg-a dg-a-accent" x1="639" y1="444" x2="663" y2="444" marker-end="url(#fig-3-2-m-accent)"/>
+<text class="dg-legend" x="671" y="447">Anticorruption layer</text>
+</svg></div>

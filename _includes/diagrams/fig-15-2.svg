@@ -1,0 +1,60 @@
+<div class="dg-figure"><svg class="dg" viewBox="0 0 864 408" style="min-width:864px" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-15-2-title fig-15-2-desc">
+<title id="fig-15-2-title">The platform as the book&#x27;s index page</title>
+<desc id="fig-15-2-desc">Forty product teams use golden paths and a self-service portal on a platform control plane for provisioning, registry, scorecards and metering, which manages the capabilities built in earlier chapters: compute and delivery, the event backbone, data products, API and UI paths, security guardrails and the AI gateway.</desc>
+<defs><marker id="fig-15-2-m-muted" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-muted" points="0 0, 8 3, 0 6"/></marker><marker id="fig-15-2-m-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-accent" points="0 0, 8 3, 0 6"/></marker><marker id="fig-15-2-m-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-link" points="0 0, 8 3, 0 6"/></marker></defs>
+<rect class="dg-paper" width="100%" height="100%" rx="8"/>
+<path class="dg-a dg-a-muted" d="M 432,76 L 432,108" marker-end="url(#fig-15-2-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 432,160 L 432,192" marker-end="url(#fig-15-2-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 82,264 L 82,296" marker-end="url(#fig-15-2-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 222,264 L 222,296" marker-end="url(#fig-15-2-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 362,264 L 362,296" marker-end="url(#fig-15-2-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 502,264 L 502,296" marker-end="url(#fig-15-2-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 642,264 L 642,296" marker-end="url(#fig-15-2-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 782,264 L 782,296" marker-end="url(#fig-15-2-m-muted)"/>
+<rect class="dg-mask" x="272" y="24" width="320" height="52" rx="6"/>
+<rect class="dg-n dg-n-input" x="272" y="24" width="320" height="52" rx="6"/>
+<text class="dg-name" x="432" y="52">40 product teams</text>
+<text class="dg-sub" x="432" y="67">the platform&#x27;s tenants</text>
+<rect class="dg-mask" x="272" y="108" width="320" height="52" rx="6"/>
+<rect class="dg-n dg-n-backend" x="272" y="108" width="320" height="52" rx="6"/>
+<text class="dg-name" x="432" y="136">Golden paths</text>
+<text class="dg-sub" x="432" y="151">self-service portal</text>
+<rect class="dg-mask" x="20" y="192" width="824" height="72" rx="6"/>
+<rect class="dg-n dg-n-focal" x="20" y="192" width="824" height="72" rx="6"/>
+<text class="dg-name" x="432" y="218">Platform control plane</text>
+<text class="dg-sub" x="432" y="234">provisioning · registry · scorecards · metering</text>
+<text class="dg-sub" x="432" y="248">Ch. 14’s pattern, teams as tenants</text>
+<rect class="dg-mask" x="20" y="296" width="124" height="52" rx="6"/>
+<rect class="dg-n dg-n-backend" x="20" y="296" width="124" height="52" rx="6"/>
+<text class="dg-name" x="82" y="324">Compute</text>
+<text class="dg-sub" x="82" y="339">&amp; delivery · Ch. 11</text>
+<rect class="dg-mask" x="160" y="296" width="124" height="52" rx="6"/>
+<rect class="dg-n dg-n-backend" x="160" y="296" width="124" height="52" rx="6"/>
+<text class="dg-name" x="222" y="324">Event backbone</text>
+<text class="dg-sub" x="222" y="339">Ch. 6</text>
+<rect class="dg-mask" x="300" y="296" width="124" height="52" rx="6"/>
+<rect class="dg-n dg-n-backend" x="300" y="296" width="124" height="52" rx="6"/>
+<text class="dg-name" x="362" y="324">Data products</text>
+<text class="dg-sub" x="362" y="339">Ch. 9</text>
+<rect class="dg-mask" x="440" y="296" width="124" height="52" rx="6"/>
+<rect class="dg-n dg-n-backend" x="440" y="296" width="124" height="52" rx="6"/>
+<text class="dg-name" x="502" y="324">API &amp; UI paths</text>
+<text class="dg-sub" x="502" y="339">Ch. 7 · Ch. 8</text>
+<rect class="dg-mask" x="580" y="296" width="124" height="52" rx="6"/>
+<rect class="dg-n dg-n-backend" x="580" y="296" width="124" height="52" rx="6"/>
+<text class="dg-name" x="642" y="324">Security</text>
+<text class="dg-sub" x="642" y="339">guardrails · Ch. 10</text>
+<rect class="dg-mask" x="720" y="296" width="124" height="52" rx="6"/>
+<rect class="dg-n dg-n-backend" x="720" y="296" width="124" height="52" rx="6"/>
+<text class="dg-name" x="782" y="324">AI gateway</text>
+<text class="dg-sub" x="782" y="339">Ch. 12</text>
+<line class="dg-rule" x1="24" y1="368" x2="840" y2="368"/>
+<rect class="dg-n dg-n-input" x="24" y="379" width="16" height="10" rx="2"/>
+<text class="dg-legend" x="46" y="387">Tenants</text>
+<rect class="dg-n dg-n-backend" x="113" y="379" width="16" height="10" rx="2"/>
+<text class="dg-legend" x="135" y="387">Path or capability</text>
+<rect class="dg-n dg-n-focal" x="263" y="379" width="16" height="10" rx="2"/>
+<text class="dg-legend" x="285" y="387">The platform&#x27;s contribution</text>
+<line class="dg-a dg-a-muted" x1="464" y1="384" x2="488" y2="384" marker-end="url(#fig-15-2-m-muted)"/>
+<text class="dg-legend" x="496" y="387">Uses / manages</text>
+</svg></div>

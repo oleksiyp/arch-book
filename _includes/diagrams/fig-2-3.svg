@@ -1,0 +1,62 @@
+<div class="dg-figure"><svg class="dg" viewBox="0 0 864 448" style="min-width:864px" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-2-3-title fig-2-3-desc">
+<title id="fig-2-3-title">Encore&#x27;s chosen shape</title>
+<desc id="fig-2-3-desc">Sale Gate and Bot Screening form a separately deployed on-sale quantum that scales to the spike; the quantum admits fans at a sustainable rate into Encore&#x27;s modular monolith, one deployment in which Order works with Event Catalog, Seat Inventory, Payment Integration and Notification and feeds Sales Analytics.</desc>
+<defs><marker id="fig-2-3-m-muted" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-muted" points="0 0, 8 3, 0 6"/></marker><marker id="fig-2-3-m-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-accent" points="0 0, 8 3, 0 6"/></marker><marker id="fig-2-3-m-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-link" points="0 0, 8 3, 0 6"/></marker></defs>
+<rect class="dg-paper" width="100%" height="100%" rx="8"/>
+<rect class="dg-zone" x="24" y="152" width="232" height="216" rx="8"/><rect class="dg-mask" x="36" y="146" width="184" height="12" rx="2"/><text class="dg-eyebrow" x="128" y="155">ON-SALE QUANTUM · OWN DEPLOYMENT</text>
+<rect class="dg-zone" x="320" y="40" width="520" height="328" rx="8"/><rect class="dg-mask" x="332" y="34" width="228" height="12" rx="2"/><text class="dg-eyebrow" x="446" y="43">ENCORE MODULAR MONOLITH · ONE DEPLOYMENT</text>
+<path class="dg-a dg-a-muted" d="M 136,232 L 136,288" marker-end="url(#fig-2-3-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 256,260 L 320,260" marker-end="url(#fig-2-3-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 432,176 L 432,120"/>
+<path class="dg-a dg-a-muted" d="M 432,232 L 432,288"/>
+<path class="dg-a dg-a-muted" d="M 512,188 L 560,188 Q 568,188 568,180 L 568,100 Q 568,92 576,92 L 648,92"/>
+<path class="dg-a dg-a-muted" d="M 512,204 L 648,204"/>
+<path class="dg-a dg-a-muted dg-dash" d="M 512,220 L 576,220 Q 584,220 584,228 L 584,308 Q 584,316 592,316 L 648,316" marker-end="url(#fig-2-3-m-muted)"/>
+<rect class="dg-mask" x="232" y="240" width="112" height="12" rx="2"/><text class="dg-label" x="288" y="249">ADMITS AT SAFE RATE</text>
+<rect class="dg-mask" x="592" y="262" width="72" height="12" rx="2"/><text class="dg-label" x="628" y="271">SALES FACTS</text>
+<rect class="dg-mask" x="48" y="176" width="176" height="56" rx="6"/>
+<rect class="dg-n dg-n-focal" x="48" y="176" width="176" height="56" rx="6"/>
+<text class="dg-name" x="136" y="206">Sale Gate</text>
+<text class="dg-sub" x="136" y="221">scales to the spike</text>
+<rect class="dg-mask" x="48" y="288" width="176" height="56" rx="6"/>
+<rect class="dg-n dg-n-focal" x="48" y="288" width="176" height="56" rx="6"/>
+<text class="dg-name" x="136" y="318">Bot Screening</text>
+<text class="dg-sub" x="136" y="333">risk signals</text>
+<rect class="dg-mask" x="352" y="64" width="160" height="56" rx="6"/>
+<rect class="dg-n dg-n-backend" x="352" y="64" width="160" height="56" rx="6"/>
+<text class="dg-name" x="432" y="94">Event Catalog</text>
+<text class="dg-sub" x="432" y="109">events · seats</text>
+<rect class="dg-mask" x="352" y="176" width="160" height="56" rx="6"/>
+<rect class="dg-n dg-n-backend" x="352" y="176" width="160" height="56" rx="6"/>
+<text class="dg-name" x="432" y="206">Order</text>
+<text class="dg-sub" x="432" y="221">purchase flow</text>
+<rect class="dg-mask" x="352" y="288" width="160" height="56" rx="6"/>
+<rect class="dg-n dg-n-backend" x="352" y="288" width="160" height="56" rx="6"/>
+<text class="dg-name" x="432" y="318">Notification</text>
+<text class="dg-sub" x="432" y="333">tickets · email</text>
+<rect class="dg-mask" x="648" y="64" width="168" height="56" rx="6"/>
+<rect class="dg-n dg-n-store" x="648" y="64" width="168" height="56" rx="6"/>
+<text class="dg-name" x="732" y="94">Seat Inventory</text>
+<text class="dg-sub" x="732" y="109">holds · sales</text>
+<rect class="dg-mask" x="648" y="176" width="168" height="56" rx="6"/>
+<rect class="dg-n dg-n-backend" x="648" y="176" width="168" height="56" rx="6"/>
+<text class="dg-name" x="732" y="206">Payment Integration</text>
+<text class="dg-sub" x="732" y="221">PSP integration</text>
+<rect class="dg-mask" x="648" y="288" width="168" height="56" rx="6"/>
+<rect class="dg-n dg-n-store" x="648" y="288" width="168" height="56" rx="6"/>
+<text class="dg-name" x="732" y="318">Sales Analytics</text>
+<text class="dg-sub" x="732" y="333">dashboards</text>
+<line class="dg-rule" x1="24" y1="408" x2="840" y2="408"/>
+<rect class="dg-n dg-n-focal" x="24" y="419" width="16" height="10" rx="2"/>
+<text class="dg-legend" x="46" y="427">Elasticity outlier, scaled apart</text>
+<rect class="dg-n dg-n-backend" x="253" y="419" width="16" height="10" rx="2"/>
+<text class="dg-legend" x="275" y="427">Module</text>
+<rect class="dg-n dg-n-store" x="336" y="419" width="16" height="10" rx="2"/>
+<text class="dg-legend" x="358" y="427">Owns data</text>
+<line class="dg-a dg-a-muted" x1="436" y1="424" x2="460" y2="424" marker-end="url(#fig-2-3-m-muted)"/>
+<text class="dg-legend" x="468" y="427">Call</text>
+<line class="dg-a dg-a-muted" x1="518" y1="424" x2="542" y2="424"/>
+<text class="dg-legend" x="550" y="427">In-process link</text>
+<line class="dg-a dg-a-muted dg-dash" x1="662" y1="424" x2="686" y2="424" marker-end="url(#fig-2-3-m-muted)"/>
+<text class="dg-legend" x="694" y="427">Fact, not a call</text>
+</svg></div>

@@ -178,27 +178,6 @@
     </div>
 </footer>
 
-<script type="module">
-    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
-    mermaid.initialize({
-        startOnLoad: false,
-        theme: 'base',
-        themeVariables: {
-            primaryColor: '#fdebe6',
-            primaryBorderColor: '#b23a20',
-            primaryTextColor: '#1b1f3b',
-            secondaryColor: '#d9f6ff',
-            tertiaryColor: '#f8f9fb',
-            lineColor: '#5b6472',
-            clusterBkg: '#f6f8fb',
-            clusterBorder: '#c6cdd6',
-            edgeLabelBackground: '#ffffff',
-            fontFamily: '"Open Sans", "Helvetica Neue", sans-serif'
-        }
-    });
-    await mermaid.run();
-    window.dispatchEvent(new Event('mermaid-done'));
-</script>
 <script>
 (function () {
     var key = 'book-scroll:' + location.pathname;
@@ -216,19 +195,13 @@
         var saved = localStorage.getItem(key);
         if (saved !== null) window.scrollTo(0, parseInt(saved, 10));
     }
-    // Restore only when not following an explicit anchor link
+    // Restore only when not following an explicit anchor link: once now, and once more after
+    // fonts and images have settled the layout (diagrams are inline SVG, so nothing else moves).
     if (!location.hash) {
-        restore();                                          // approximate, pre-mermaid
-        window.addEventListener('mermaid-done', function () { // exact, post-render
-            restore();
-            watch();
-        }, { once: true });
-        // fallback if mermaid never fires (CDN blocked)
-        setTimeout(watch, 4000);
-    } else {
-        window.addEventListener('mermaid-done', watch, { once: true });
-        setTimeout(watch, 4000);
+        restore();
+        window.addEventListener('load', restore, { once: true });
     }
+    watch();
 
     var watching = false;
     function watch() {
@@ -670,7 +643,7 @@
         function railable(el) {
             const t = el.tagName.toUpperCase();
             return t !== 'TABLE' && t !== 'SVG' && t !== 'HR' &&
-                !(t === 'PRE' && el.classList.contains('mermaid'));
+                !el.classList.contains('dg-figure');
         }
         function thresholdFor(key) {
             return Math.max(4, Math.min(15, Math.round((unitWords[key] || 0) / 10)));

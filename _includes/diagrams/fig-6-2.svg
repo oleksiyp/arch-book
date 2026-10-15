@@ -1,0 +1,56 @@
+<div class="dg-figure"><svg class="dg" viewBox="0 0 864 320" style="min-width:864px" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-6-2-title fig-6-2-desc">
+<title id="fig-6-2-title">CQRS fed by an event log</title>
+<desc id="fig-6-2-desc">Commands reach the write model, the EventSeating aggregate, which appends events to an event store that is read as a stream; three projections (the seat-map view, the sales dashboard and the fan&#x27;s tickets) are built from that stream and answer queries.</desc>
+<defs><marker id="fig-6-2-m-muted" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-muted" points="0 0, 8 3, 0 6"/></marker><marker id="fig-6-2-m-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-accent" points="0 0, 8 3, 0 6"/></marker><marker id="fig-6-2-m-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-link" points="0 0, 8 3, 0 6"/></marker></defs>
+<rect class="dg-paper" width="100%" height="100%" rx="8"/>
+<path class="dg-a dg-a-muted" d="M 120,140 L 152,140" marker-end="url(#fig-6-2-m-muted)"/>
+<path class="dg-a dg-a-accent" d="M 296,140 L 416,140" marker-end="url(#fig-6-2-m-accent)"/>
+<path class="dg-a dg-a-muted" d="M 536,128 L 552,128 Q 560,128 560,120 L 560,60 Q 560,52 568,52 L 584,52" marker-end="url(#fig-6-2-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 536,140 L 584,140" marker-end="url(#fig-6-2-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 536,152 L 552,152 Q 560,152 560,160 L 560,220 Q 560,228 568,228 L 584,228" marker-end="url(#fig-6-2-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 712,52 L 724,52 Q 732,52 732,60 L 732,120 Q 732,128 740,128 L 752,128" marker-end="url(#fig-6-2-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 712,140 L 752,140" marker-end="url(#fig-6-2-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 712,228 L 724,228 Q 732,228 732,220 L 732,160 Q 732,152 740,152 L 752,152" marker-end="url(#fig-6-2-m-muted)"/>
+<rect class="dg-mask" x="302" y="120" width="108" height="12" rx="2"/><text class="dg-label dg-l-accent" x="356" y="129">EVENTS · THE TRUTH</text>
+<rect class="dg-mask" x="24" y="112" width="96" height="56" rx="6"/>
+<rect class="dg-n dg-n-input" x="24" y="112" width="96" height="56" rx="6"/>
+<text class="dg-name" x="72" y="142">Commands</text>
+<text class="dg-sub" x="72" y="157">writes in</text>
+<rect class="dg-mask" x="152" y="112" width="144" height="56" rx="6"/>
+<rect class="dg-n dg-n-backend" x="152" y="112" width="144" height="56" rx="6"/>
+<text class="dg-name" x="224" y="142">Write model</text>
+<text class="dg-sub" x="224" y="157">EventSeating aggregate</text>
+<rect class="dg-mask" x="416" y="112" width="120" height="56" rx="6"/>
+<rect class="dg-n dg-n-focal" x="416" y="112" width="120" height="56" rx="6"/>
+<text class="dg-name" x="476" y="142">Event store</text>
+<text class="dg-sub" x="476" y="157">→ stream</text>
+<rect class="dg-mask" x="584" y="24" width="128" height="56" rx="6"/>
+<rect class="dg-n dg-n-store" x="584" y="24" width="128" height="56" rx="6"/>
+<text class="dg-name" x="648" y="54">Seat-map view</text>
+<text class="dg-sub" x="648" y="69">projection</text>
+<rect class="dg-mask" x="584" y="112" width="128" height="56" rx="6"/>
+<rect class="dg-n dg-n-store" x="584" y="112" width="128" height="56" rx="6"/>
+<text class="dg-name" x="648" y="142">Sales dashboard</text>
+<text class="dg-sub" x="648" y="157">projection</text>
+<rect class="dg-mask" x="584" y="200" width="128" height="56" rx="6"/>
+<rect class="dg-n dg-n-store" x="584" y="200" width="128" height="56" rx="6"/>
+<text class="dg-name" x="648" y="230">Fan&#x27;s tickets</text>
+<text class="dg-sub" x="648" y="245">projection</text>
+<rect class="dg-mask" x="752" y="112" width="88" height="56" rx="6"/>
+<rect class="dg-n dg-n-input" x="752" y="112" width="88" height="56" rx="6"/>
+<text class="dg-name" x="796" y="142">Queries</text>
+<text class="dg-sub" x="796" y="157">reads out</text>
+<line class="dg-rule" x1="24" y1="280" x2="840" y2="280"/>
+<rect class="dg-n dg-n-input" x="24" y="291" width="16" height="10" rx="2"/>
+<text class="dg-legend" x="46" y="299">Commands · queries</text>
+<rect class="dg-n dg-n-backend" x="174" y="291" width="16" height="10" rx="2"/>
+<text class="dg-legend" x="196" y="299">Write model</text>
+<rect class="dg-n dg-n-focal" x="285" y="291" width="16" height="10" rx="2"/>
+<text class="dg-legend" x="307" y="299">System of record</text>
+<rect class="dg-n dg-n-store" x="424" y="291" width="16" height="10" rx="2"/>
+<text class="dg-legend" x="446" y="299">Projection: disposable</text>
+<line class="dg-a dg-a-accent" x1="597" y1="296" x2="621" y2="296" marker-end="url(#fig-6-2-m-accent)"/>
+<text class="dg-legend" x="629" y="299">Events appended</text>
+<line class="dg-a dg-a-muted" x1="741" y1="296" x2="765" y2="296" marker-end="url(#fig-6-2-m-muted)"/>
+<text class="dg-legend" x="773" y="299">Flow</text>
+</svg></div>

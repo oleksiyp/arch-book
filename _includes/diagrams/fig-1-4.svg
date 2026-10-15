@@ -1,0 +1,37 @@
+<div class="dg-figure"><svg class="dg" viewBox="0 0 864 284" style="min-width:864px" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-1-4-title fig-1-4-desc">
+<title id="fig-1-4-title">An ADR&#x27;s life</title>
+<desc id="fig-1-4-desc">An architecture decision record is written and proposed for review; the team either accepts it, and a later ADR may supersede it, or rejects it with reasons, and the rejected record is kept because it saves the next person from re-arguing the question.</desc>
+<defs><marker id="fig-1-4-m-muted" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-muted" points="0 0, 8 3, 0 6"/></marker><marker id="fig-1-4-m-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-accent" points="0 0, 8 3, 0 6"/></marker><marker id="fig-1-4-m-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-link" points="0 0, 8 3, 0 6"/></marker></defs>
+<rect class="dg-paper" width="100%" height="100%" rx="8"/>
+<path class="dg-a dg-a-muted" d="M 120,38 L 120,72" marker-end="url(#fig-1-4-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 200,96 L 352,96" marker-end="url(#fig-1-4-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 120,120 L 120,192 Q 120,200 128,200 L 352,200" marker-end="url(#fig-1-4-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 512,96 L 664,96" marker-end="url(#fig-1-4-m-muted)"/>
+<rect class="dg-mask" x="128" y="49" width="112" height="12" rx="2"/><text class="dg-label" x="184" y="58">WRITTEN · IN REVIEW</text>
+<rect class="dg-mask" x="240" y="76" width="72" height="12" rx="2"/><text class="dg-label" x="276" y="85">TEAM AGREES</text>
+<rect class="dg-mask" x="198" y="180" width="76" height="12" rx="2"/><text class="dg-label" x="236" y="189">WITH REASONS</text>
+<rect class="dg-mask" x="532" y="76" width="112" height="12" rx="2"/><text class="dg-label" x="588" y="85">NEW ADR REPLACES IT</text>
+<circle class="dg-start" cx="120" cy="32" r="6"/>
+<rect class="dg-mask" x="40" y="72" width="160" height="48" rx="8"/>
+<rect class="dg-n dg-n-backend" x="40" y="72" width="160" height="48" rx="8"/>
+<text class="dg-name" x="120" y="100">Proposed</text>
+<rect class="dg-mask" x="352" y="72" width="160" height="48" rx="8"/>
+<rect class="dg-n dg-n-backend" x="352" y="72" width="160" height="48" rx="8"/>
+<text class="dg-name" x="432" y="100">Accepted</text>
+<rect class="dg-mask" x="352" y="176" width="160" height="48" rx="8"/>
+<rect class="dg-n dg-n-focal" x="352" y="176" width="160" height="48" rx="8"/>
+<text class="dg-name" x="432" y="198">Rejected</text>
+<text class="dg-sub" x="432" y="212">still worth keeping</text>
+<rect class="dg-mask" x="664" y="72" width="160" height="48" rx="8"/>
+<rect class="dg-n dg-n-backend" x="664" y="72" width="160" height="48" rx="8"/>
+<text class="dg-name" x="744" y="100">Superseded</text>
+<line class="dg-rule" x1="24" y1="244" x2="840" y2="244"/>
+<circle class="dg-start" cx="30" cy="260" r="5"/>
+<text class="dg-legend" x="40" y="263">Start</text>
+<rect class="dg-n dg-n-backend" x="96" y="255" width="16" height="10" rx="2"/>
+<text class="dg-legend" x="118" y="263">Status</text>
+<rect class="dg-n dg-n-focal" x="179" y="255" width="16" height="10" rx="2"/>
+<text class="dg-legend" x="201" y="263">Kept even when rejected</text>
+<line class="dg-a dg-a-muted" x1="357" y1="260" x2="381" y2="260" marker-end="url(#fig-1-4-m-muted)"/>
+<text class="dg-legend" x="389" y="263">Transition: event</text>
+</svg></div>

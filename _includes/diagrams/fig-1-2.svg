@@ -1,0 +1,45 @@
+<div class="dg-figure"><svg class="dg" viewBox="0 0 864 292" style="min-width:864px" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-1-2-title fig-1-2-desc">
+<title id="fig-1-2-title">Encore&#x27;s system context</title>
+<desc id="fig-1-2-desc">Fans browse, queue and buy, and organizers manage events, all through Encore, a single system whose insides are not yet decided; Encore charges cards through a payment provider and issues tickets to mobile wallets.</desc>
+<defs><marker id="fig-1-2-m-muted" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-muted" points="0 0, 8 3, 0 6"/></marker><marker id="fig-1-2-m-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-accent" points="0 0, 8 3, 0 6"/></marker><marker id="fig-1-2-m-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-link" points="0 0, 8 3, 0 6"/></marker></defs>
+<rect class="dg-paper" width="100%" height="100%" rx="8"/>
+<path class="dg-a dg-a-muted" d="M 200,76 L 352,76" marker-end="url(#fig-1-2-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 200,204 L 352,204" marker-end="url(#fig-1-2-m-muted)"/>
+<path class="dg-a dg-a-link" d="M 512,76 L 664,76" marker-end="url(#fig-1-2-m-link)"/>
+<path class="dg-a dg-a-link" d="M 512,204 L 664,204" marker-end="url(#fig-1-2-m-link)"/>
+<rect class="dg-mask" x="208" y="56" width="136" height="12" rx="2"/><text class="dg-label" x="276" y="65">BROWSES · QUEUES · BUYS</text>
+<rect class="dg-mask" x="232" y="184" width="88" height="12" rx="2"/><text class="dg-label" x="276" y="193">MANAGES EVENTS</text>
+<rect class="dg-mask" x="548" y="56" width="80" height="12" rx="2"/><text class="dg-label dg-l-link" x="588" y="65">CHARGES CARDS</text>
+<rect class="dg-mask" x="544" y="184" width="88" height="12" rx="2"/><text class="dg-label dg-l-link" x="588" y="193">ISSUES TICKETS</text>
+<rect class="dg-mask" x="24" y="48" width="176" height="56" rx="6"/>
+<rect class="dg-n dg-n-input" x="24" y="48" width="176" height="56" rx="6"/>
+<text class="dg-name" x="112" y="78">Fan</text>
+<text class="dg-sub" x="112" y="93">finds events, buys tickets</text>
+<rect class="dg-mask" x="24" y="176" width="176" height="56" rx="6"/>
+<rect class="dg-n dg-n-input" x="24" y="176" width="176" height="56" rx="6"/>
+<text class="dg-name" x="112" y="206">Organizer</text>
+<text class="dg-sub" x="112" y="221">creates events, tracks sales</text>
+<rect class="dg-mask" x="352" y="48" width="160" height="184" rx="6"/>
+<rect class="dg-n dg-n-focal" x="352" y="48" width="160" height="184" rx="6"/>
+<text class="dg-name" x="432" y="142">Encore</text>
+<text class="dg-sub" x="432" y="157">ticketing platform</text>
+<rect class="dg-mask" x="664" y="48" width="176" height="56" rx="6"/>
+<rect class="dg-n dg-n-external" x="664" y="48" width="176" height="56" rx="6"/>
+<text class="dg-name" x="752" y="78">Payment Provider</text>
+<text class="dg-sub" x="752" y="93">card processing</text>
+<rect class="dg-mask" x="664" y="176" width="176" height="56" rx="6"/>
+<rect class="dg-n dg-n-external" x="664" y="176" width="176" height="56" rx="6"/>
+<text class="dg-name" x="752" y="206">Mobile Wallets</text>
+<text class="dg-sub" x="752" y="221">ticket delivery</text>
+<line class="dg-rule" x1="24" y1="252" x2="840" y2="252"/>
+<rect class="dg-n dg-n-input" x="24" y="263" width="16" height="10" rx="2"/>
+<text class="dg-legend" x="46" y="271">People</text>
+<rect class="dg-n dg-n-focal" x="107" y="263" width="16" height="10" rx="2"/>
+<text class="dg-legend" x="129" y="271">The system</text>
+<rect class="dg-n dg-n-external" x="213" y="263" width="16" height="10" rx="2"/>
+<text class="dg-legend" x="235" y="271">Outside party</text>
+<line class="dg-a dg-a-muted" x1="335" y1="268" x2="359" y2="268" marker-end="url(#fig-1-2-m-muted)"/>
+<text class="dg-legend" x="367" y="271">Interaction</text>
+<line class="dg-a dg-a-link" x1="456" y1="268" x2="480" y2="268" marker-end="url(#fig-1-2-m-link)"/>
+<text class="dg-legend" x="488" y="271">Call to an outside party</text>
+</svg></div>

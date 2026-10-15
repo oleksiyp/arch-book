@@ -1,0 +1,46 @@
+<div class="dg-figure"><svg class="dg" viewBox="0 0 864 444" style="min-width:864px" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-5-2-title fig-5-2-desc">
+<title id="fig-5-2-title">A saga compensating a declined card</title>
+<desc id="fig-5-2-desc">Orders &amp; Payments reserves seat 14B with Seat Inventory, charges the card through the PSP, gets a decline, and compensates by releasing the seat, so the order fails and the seat goes back on sale.</desc>
+<defs><marker id="fig-5-2-m-muted" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-muted" points="0 0, 8 3, 0 6"/></marker><marker id="fig-5-2-m-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-accent" points="0 0, 8 3, 0 6"/></marker><marker id="fig-5-2-m-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-link" points="0 0, 8 3, 0 6"/></marker></defs>
+<rect class="dg-paper" width="100%" height="100%" rx="8"/>
+<line class="dg-lifeline" x1="160" y1="76" x2="160" y2="376"/>
+<line class="dg-lifeline" x1="432" y1="76" x2="432" y2="376"/>
+<line class="dg-lifeline" x1="704" y1="76" x2="704" y2="376"/>
+<path class="dg-a dg-a-muted" d="M 164,128 L 428,128" marker-end="url(#fig-5-2-m-muted)"/>
+<path class="dg-a dg-a-muted dg-dash" d="M 428,152 L 164,152" marker-end="url(#fig-5-2-m-muted)"/>
+<path class="dg-a dg-a-link" d="M 164,200 L 700,200" marker-end="url(#fig-5-2-m-link)"/>
+<path class="dg-a dg-a-muted dg-dash" d="M 700,224 L 164,224" marker-end="url(#fig-5-2-m-muted)"/>
+<path class="dg-a dg-a-accent" d="M 164,288 L 428,288" marker-end="url(#fig-5-2-m-accent)"/>
+<path class="dg-a dg-a-muted dg-dash" d="M 164,332 L 196,332 Q 204,332 204,340 L 204,344 Q 204,352 196,352 L 164,352" marker-end="url(#fig-5-2-m-muted)"/>
+<rect class="dg-mask" x="248" y="108" width="96" height="12" rx="2"/><text class="dg-label" x="296" y="117">RESERVE SEAT 14B</text>
+<rect class="dg-mask" x="236" y="132" width="120" height="12" rx="2"/><text class="dg-label" x="296" y="141">RESERVED · TTL 5 MIN</text>
+<rect class="dg-mask" x="378" y="180" width="108" height="12" rx="2"/><text class="dg-label dg-l-link" x="432" y="189">CHARGE INTENT #881</text>
+<rect class="dg-mask" x="404" y="204" width="56" height="12" rx="2"/><text class="dg-label" x="432" y="213">DECLINED</text>
+<rect class="dg-mask" x="248" y="268" width="96" height="12" rx="2"/><text class="dg-label dg-l-accent" x="296" y="277">RELEASE SEAT 14B</text>
+<rect class="dg-mask" x="52" y="24" width="216" height="52" rx="6"/>
+<rect class="dg-n dg-n-backend" x="52" y="24" width="216" height="52" rx="6"/>
+<text class="dg-name" x="160" y="52">Orders &amp; Payments</text>
+<text class="dg-sub" x="160" y="67">orchestrator</text>
+<rect class="dg-mask" x="324" y="24" width="216" height="48" rx="6"/>
+<rect class="dg-n dg-n-store" x="324" y="24" width="216" height="48" rx="6"/>
+<text class="dg-name" x="432" y="52">Seat Inventory &amp; Ticketing</text>
+<rect class="dg-mask" x="624" y="24" width="160" height="52" rx="6"/>
+<rect class="dg-n dg-n-external" x="624" y="24" width="160" height="52" rx="6"/>
+<text class="dg-name" x="704" y="52">PSP</text>
+<text class="dg-sub" x="704" y="67">external</text>
+<rect class="dg-activation" x="428" y="280" width="8" height="32"/>
+<rect class="dg-activation" x="700" y="192" width="8" height="32"/>
+<rect class="dg-activation" x="428" y="120" width="8" height="32"/>
+<rect class="dg-activation" x="156" y="104" width="8" height="256"/>
+<text class="dg-note" x="444" y="308" text-anchor="start">compensation: a forward action, not an undo</text>
+<text class="dg-note" x="216" y="346" text-anchor="start">order failed · seat back on sale</text>
+<line class="dg-rule" x1="24" y1="404" x2="840" y2="404"/>
+<line class="dg-a dg-a-muted" x1="24" y1="420" x2="48" y2="420" marker-end="url(#fig-5-2-m-muted)"/>
+<text class="dg-legend" x="56" y="423">Call</text>
+<line class="dg-a dg-a-muted dg-dash" x1="106" y1="420" x2="130" y2="420" marker-end="url(#fig-5-2-m-muted)"/>
+<text class="dg-legend" x="138" y="423">Reply</text>
+<line class="dg-a dg-a-link" x1="194" y1="420" x2="218" y2="420" marker-end="url(#fig-5-2-m-link)"/>
+<text class="dg-legend" x="226" y="423">External call</text>
+<line class="dg-a dg-a-accent" x1="326" y1="420" x2="350" y2="420" marker-end="url(#fig-5-2-m-accent)"/>
+<text class="dg-legend" x="358" y="423">Compensation</text>
+</svg></div>

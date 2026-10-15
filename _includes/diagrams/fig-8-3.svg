@@ -1,0 +1,58 @@
+<div class="dg-figure"><svg class="dg" viewBox="0 0 864 440" style="min-width:864px" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-8-3-title fig-8-3-desc">
+<title id="fig-8-3-title">BFFs per experience</title>
+<desc id="fig-8-3-desc">The fan app calls its own Fan BFF, owned by the fan-web team, which fans out to Catalog, Inventory and Orders; the organizer web app calls the Organizer BFF, which uses Catalog and Analytics; Inventory&#x27;s seat events reach the fan app through a realtime SSE edge.</desc>
+<defs><marker id="fig-8-3-m-muted" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-muted" points="0 0, 8 3, 0 6"/></marker><marker id="fig-8-3-m-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-accent" points="0 0, 8 3, 0 6"/></marker><marker id="fig-8-3-m-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-link" points="0 0, 8 3, 0 6"/></marker></defs>
+<rect class="dg-paper" width="100%" height="100%" rx="8"/>
+<path class="dg-a dg-a-muted dg-dash" d="M 760,112 L 760,64 Q 760,56 752,56 L 512,56" marker-end="url(#fig-8-3-m-muted)"/>
+<path class="dg-a dg-a-muted dg-dash" d="M 336,56 L 100,56 Q 92,56 92,64 L 92,180" marker-end="url(#fig-8-3-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 160,208 L 336,208" marker-end="url(#fig-8-3-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 160,352 L 336,352" marker-end="url(#fig-8-3-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 512,192 L 588,192 Q 596,192 596,184 L 596,144 Q 596,136 604,136 L 680,136" marker-end="url(#fig-8-3-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 512,208 L 680,208" marker-end="url(#fig-8-3-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 512,224 L 588,224 Q 596,224 596,232 L 596,264 Q 596,272 604,272 L 680,272" marker-end="url(#fig-8-3-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 512,336 L 612,336 Q 620,336 620,328 L 620,296 Q 620,288 628,288 L 680,288" marker-end="url(#fig-8-3-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 512,360 L 680,360" marker-end="url(#fig-8-3-m-muted)"/>
+<rect class="dg-mask" x="600" y="36" width="72" height="12" rx="2"/><text class="dg-label" x="636" y="45">SEAT EVENTS</text>
+<rect class="dg-mask" x="160" y="36" width="108" height="12" rx="2"/><text class="dg-label" x="214" y="45">SSE · SEAT UPDATES</text>
+<rect class="dg-mask" x="220" y="188" width="56" height="12" rx="2"/><text class="dg-label" x="248" y="197">REQUESTS</text>
+<rect class="dg-mask" x="220" y="332" width="56" height="12" rx="2"/><text class="dg-label" x="248" y="341">REQUESTS</text>
+<rect class="dg-mask" x="24" y="180" width="136" height="56" rx="6"/>
+<rect class="dg-n dg-n-input" x="24" y="180" width="136" height="56" rx="6"/>
+<text class="dg-name" x="92" y="212">Fan app</text>
+<rect class="dg-mask" x="24" y="324" width="136" height="56" rx="6"/>
+<rect class="dg-n dg-n-input" x="24" y="324" width="136" height="56" rx="6"/>
+<text class="dg-name" x="92" y="356">Organizer web</text>
+<rect class="dg-mask" x="336" y="32" width="176" height="48" rx="6"/>
+<rect class="dg-n dg-n-backend" x="336" y="32" width="176" height="48" rx="6"/>
+<text class="dg-name" x="424" y="60">Realtime edge (SSE)</text>
+<rect class="dg-mask" x="336" y="180" width="176" height="56" rx="6"/>
+<rect class="dg-n dg-n-focal" x="336" y="180" width="176" height="56" rx="6"/>
+<text class="dg-name" x="424" y="210">Fan BFF</text>
+<text class="dg-sub" x="424" y="225">owned by fan-web team</text>
+<rect class="dg-mask" x="336" y="324" width="176" height="56" rx="6"/>
+<rect class="dg-n dg-n-focal" x="336" y="324" width="176" height="56" rx="6"/>
+<text class="dg-name" x="424" y="356">Organizer BFF</text>
+<rect class="dg-mask" x="680" y="112" width="160" height="48" rx="6"/>
+<rect class="dg-n dg-n-backend" x="680" y="112" width="160" height="48" rx="6"/>
+<text class="dg-name" x="760" y="140">Inventory</text>
+<rect class="dg-mask" x="680" y="184" width="160" height="48" rx="6"/>
+<rect class="dg-n dg-n-backend" x="680" y="184" width="160" height="48" rx="6"/>
+<text class="dg-name" x="760" y="212">Orders</text>
+<rect class="dg-mask" x="680" y="256" width="160" height="48" rx="6"/>
+<rect class="dg-n dg-n-backend" x="680" y="256" width="160" height="48" rx="6"/>
+<text class="dg-name" x="760" y="284">Catalog</text>
+<rect class="dg-mask" x="680" y="336" width="160" height="48" rx="6"/>
+<rect class="dg-n dg-n-backend" x="680" y="336" width="160" height="48" rx="6"/>
+<text class="dg-name" x="760" y="364">Analytics</text>
+<line class="dg-rule" x1="24" y1="400" x2="840" y2="400"/>
+<rect class="dg-n dg-n-input" x="24" y="411" width="16" height="10" rx="2"/>
+<text class="dg-legend" x="46" y="419">Experience</text>
+<rect class="dg-n dg-n-focal" x="130" y="411" width="16" height="10" rx="2"/>
+<text class="dg-legend" x="152" y="419">BFF · frontend-owned</text>
+<rect class="dg-n dg-n-backend" x="292" y="411" width="16" height="10" rx="2"/>
+<text class="dg-legend" x="314" y="419">Service</text>
+<line class="dg-a dg-a-muted" x1="381" y1="416" x2="405" y2="416" marker-end="url(#fig-8-3-m-muted)"/>
+<text class="dg-legend" x="413" y="419">Call</text>
+<line class="dg-a dg-a-muted dg-dash" x1="463" y1="416" x2="487" y2="416" marker-end="url(#fig-8-3-m-muted)"/>
+<text class="dg-legend" x="495" y="419">Pushed event</text>
+</svg></div>

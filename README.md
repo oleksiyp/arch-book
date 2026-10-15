@@ -135,24 +135,7 @@ The first law is why this chapter teaches analysis rather than answers: any book
 
 Let's establish our running example properly. Encore sells tickets for live events. Fans browse listings, join an on-sale when tickets drop, pick seats, and pay. Event organizers create events and watch sales dashboards. Payments run through an external provider; tickets are delivered to fans' phones.
 
-<pre class="mermaid">
-flowchart LR
-    fan(["Fan<br/><small>finds events, buys tickets</small>"])
-    org(["Organizer<br/><small>creates events, tracks sales</small>"])
-    encore["<b>Encore</b><br/>ticketing platform"]
-    psp["Payment Provider<br/><small>card processing</small>"]
-    wallet["Mobile Wallets<br/><small>ticket delivery</small>"]
-    fan -- browses, queues, buys --> encore
-    org -- manages events --> encore
-    encore -- charges cards --> psp
-    encore -- issues tickets --> wallet
-    classDef person fill:#1b1f3b,stroke:#1b1f3b,color:#fff
-    classDef system fill:#d9482b,stroke:#d9482b,color:#fff
-    classDef external fill:#eaf2f8,stroke:#7a93a8,color:#1b1f3b
-    class fan,org person
-    class encore system
-    class psp,wallet external
-</pre>
+{% include diagrams/fig-1-2.svg %}
 
 *Figure 1.2 — Encore's system context: two kinds of users, two external dependencies, one system whose insides we haven't decided yet. Notice how much this diagram refuses to say — that restraint is deliberate, and Section 1.4 explains it.*
 
@@ -238,19 +221,7 @@ Run both and a component set precipitates:
 | Notification | Tickets to wallets, emails to fans | (deliberately modest) |
 | Sales Analytics | Organizer dashboards | cost (isolate the load) |
 
-<pre class="mermaid">
-flowchart LR
-    fan([Fan]) -- browses --> cat[Event Catalog]
-    fan -- joins on-sale --> gate[Sale Gate]
-    gate -- screens --> bot[Bot Screening]
-    gate -- admits to --> order[Order]
-    order -- reserves seats --> seats[Seat Inventory]
-    order -- charges --> pay[Payment Integration]
-    order -- sends ticket --> notif[Notification]
-    order -. sales facts .-> analytics[Sales Analytics]
-    org([Organizer]) -- manages events --> cat
-    org -- watches sales --> analytics
-</pre>
+{% include diagrams/fig-1-3.svg %}
 
 *Figure 1.3 — Encore's first-cut logical components. The chain from Sale Gate through Order to Payment Integration is the purchase path; the dotted arrow hints that analytics should learn about sales without sitting inside the sale — a distinction that will matter enormously in Chapters 4 and 6.*
 
@@ -302,13 +273,7 @@ The second law says the *why* is the most valuable artifact. The **Architecture 
 
 Read the consequences row again — it lists what is *lost*, in ink. An ADR that admits no losses is advertising, and by the first law it is also lying. This honesty compounds: ADRs are never edited to look right in hindsight. A reversed decision gets a new ADR that supersedes the old one, and the old one becomes the fossil record that stops teams from re-arguing settled questions — or from repeating errors whose reasoning nobody remembered.
 
-<pre class="mermaid">
-stateDiagram-v2
-    [*] --> Proposed : written, under review
-    Proposed --> Accepted : team agrees
-    Proposed --> Rejected : with reasons — still worth keeping!
-    Accepted --> Superseded : new ADR replaces it
-</pre>
+{% include diagrams/fig-1-4.svg %}
 
 *Figure 1.4 — An ADR's life. Even rejected records earn their keep: "we considered sharding and declined, here's why" saves the next person a week.*
 
@@ -328,28 +293,9 @@ A third reader has arrived. ADRs and diagrams-as-code in the repository are now 
 
 Time to practice the first law deliberately. When a fan completes a purchase, three things must learn about it: Notification (send the ticket), Sales Analytics (update dashboards), and Bot Screening (learn purchase patterns). Should Order tell each consumer through dedicated **queues**, or publish once to a shared **topic**?
 
-<pre class="mermaid">
-sequenceDiagram
-    participant O as Order
-    participant Q1 as notif.queue
-    participant Q2 as analytics.queue
-    participant Q3 as botscreen.queue
-    Note over O,Q3: Option A — a queue per consumer
-    O->>Q1: OrderPlaced (ticket fields)
-    O->>Q2: OrderPlaced (stats fields)
-    O->>Q3: OrderPlaced (risk fields)
-</pre>
+{% include diagrams/fig-1-5a.svg %}
 
-<pre class="mermaid">
-sequenceDiagram
-    participant O as Order
-    participant T as orders.topic
-    Note over O,T: Option B — one topic, many subscribers
-    O->>T: OrderPlaced (one shared schema)
-    T-->>Notification: subscribe
-    T-->>Analytics: subscribe
-    T-->>BotScreening: subscribe
-</pre>
+{% include diagrams/fig-1-5b.svg %}
 
 *Figure 1.5 — Two honest options. Neither is wrong; that's what makes it architecture.*
 
@@ -425,23 +371,7 @@ Every style here comes with its costs attached. One of them, the monolith, gets 
 
 The catalog of styles looks arbitrary until you see the two axes that generate it. First: is the code partitioned *technically* (by layer: presentation, business, persistence) or *by domain* (by business capability: orders, inventory, payments)? Second: does the system deploy as *one unit* or *many*? Cross them and the whole catalog falls into four quadrants:
 
-<pre class="mermaid">
-quadrantChart
-    x-axis Technical partitioning --> Domain partitioning
-    y-axis Monolithic deployment --> Distributed deployment
-    quadrant-1 Domain + distributed
-    quadrant-2 Technical + distributed
-    quadrant-3 Classic monoliths
-    quadrant-4 Domain-partitioned monoliths
-    Layered: [0.2, 0.25]
-    Microkernel: [0.35, 0.3]
-    Pipeline: [0.3, 0.15]
-    Modular monolith: [0.75, 0.25]
-    Service-based: [0.7, 0.65]
-    Microservices: [0.85, 0.9]
-    Event-driven: [0.5, 0.85]
-    Space-based: [0.55, 0.78]
-</pre>
+{% include diagrams/fig-2-1.svg %}
 
 *Figure 2.1 — The style catalog on its two generating axes. Notice the crowded and lonely corners: distributed-but-technically-partitioned (top left) is nearly empty because it is nearly always a mistake — services sliced by layer must all change together, giving you distribution's costs with none of its benefits. Event-driven sits on the line because its event processors can be sliced either way; the anti-pattern is services cut by layer. Axes after Richards & Ford.*
 
@@ -533,22 +463,7 @@ Run Encore through them. Encore has nine engineers on one team, so microservices
 
 And here is the insight that makes this section worth its tuition: *a style decision need not be singular.* The unit of style is the **architecture quantum** — a term the book *Building Evolutionary Architectures* coined and *The Hard Parts* sharpened: the smallest piece of a system that deploys independently and still functions, carrying everything it needs — code, data, and its own set of characteristics — with high cohesion inside and no synchronous dependence outside. The quantum is where characteristics actually live. Asking "how elastic is Encore?" is a malformed question; the honest answer is *"which quantum?"* The catalog's ratings, the drivers above, the whole selection method — all of it applies per quantum, not per company. One system may legitimately contain a modular-monolith quantum and a serverless quantum, each rated on its own card. Encore's defensible answer:
 
-<pre class="mermaid">
-flowchart LR
-    subgraph mono["Encore modular monolith — one deployment"]
-        cat[Event Catalog] --- ord[Order]
-        ord --- inv[Seat Inventory]
-        ord --- pay[Payment Integration]
-        ord --- notif[Notification]
-        ord -. sales facts .-> ana[Sales Analytics]
-    end
-    subgraph onsale["On-sale quantum — separately deployed, scales to the spike"]
-        gate["Sale Gate"] --> bot["Bot Screening"]
-    end
-    onsale -- admits fans at a sustainable rate --> mono
-    classDef hot fill:#d9482b,stroke:#d9482b,color:#fff
-    class gate,bot hot
-</pre>
+{% include diagrams/fig-2-3.svg %}
 
 *Figure 2.3 — Encore's chosen shape: a modular monolith for the steady majority, with the elasticity outliers extracted and scaled independently. The style decision followed the characteristic outlier — not a trend.*
 
@@ -633,26 +548,7 @@ The bounded context is DDD's answer: a boundary inside which words have exactly 
 
 Contexts must still talk, and *how* they relate is an architectural decision with names:
 
-<pre class="mermaid">
-flowchart TB
-    onsale["On-Sale Admission<br/><small>core</small>"]
-    inv["Seat Inventory & Ticketing<br/><small>core</small>"]
-    ord["Orders & Payments<br/><small>core</small>"]
-    cat["Event Catalog<br/><small>supporting</small>"]
-    sup["Support & Refunds<br/><small>supporting</small>"]
-    pay["Payment provider<br/><small>generic — external PSP</small>"]
-    onsale -- "partnership<br/><small>(evolve together)</small>" --- inv
-    inv -- "partnership<br/><small>(one sale, one transaction)</small>" --- ord
-    cat -- "customer–supplier<br/><small>(catalog serves admission)</small>" --> onsale
-    inv -- "open-host service<br/><small>(published ticket events)</small>" --> sup
-    pay -- "anticorruption layer<br/><small>(PSP's model kept outside)</small>" --> ord
-    classDef core fill:#d9482b,stroke:#d9482b,color:#fff
-    classDef supp fill:#1b1f3b,stroke:#1b1f3b,color:#fff
-    classDef gen fill:#eaf2f8,stroke:#7a93a8,color:#1b1f3b
-    class onsale,inv,ord core
-    class cat,sup supp
-    class pay gen
-</pre>
+{% include diagrams/fig-3-2.svg %}
 
 *Figure 3.2 — Encore's context map. The anticorruption layer around Payments is the map's most load-bearing label: the payment provider's model of the world stops at that line and is translated into Encore's own terms, so a PSP migration touches one translator in Orders & Payments and leaves every other context alone. On-Sale Admission is the Sale Gate of Chapters 1–2; Bot Screening, Notifications, and Sales Analytics are omitted to keep the map readable.*
 
@@ -721,17 +617,7 @@ Encore, remember, is lucky — it is young. The system you will actually be aske
 
 When the answer is yes, the master pattern is the **strangler fig**: grow the new system around the old, redirect traffic capability by capability, and let the old code die of irrelevance rather than surgery.
 
-<pre class="mermaid">
-flowchart LR
-    users([Users]) --> proxy["Routing facade"]
-    proxy -- "extracted capability" --> new["New Admission service"]
-    proxy -- "everything else" --> old["Legacy monolith"]
-    new -. "reads/writes via ACL" .-> old
-    classDef new fill:#d9482b,stroke:#d9482b,color:#fff
-    classDef old fill:#eaf2f8,stroke:#7a93a8,color:#1b1f3b
-    class new new
-    class old old
-</pre>
+{% include diagrams/fig-3-4.svg %}
 
 *Figure 3.4 — The strangler fig. The routing facade is the whole trick: every capability behind it can move without users knowing, and every move is reversible by routing rule — your rollback is a config change, not a war room.*
 
@@ -895,19 +781,7 @@ One further caveat earns its place: leadership itself expires. A leader that sta
 
 Most scalable request-serving systems converge on one silhouette, worth having as reflex:
 
-<pre class="mermaid">
-flowchart LR
-    fans([Clients]) --> lb["Load balancer"]
-    lb --> s1["Service instance"] & s2["Service instance"] & s3["..."]
-    s1 & s2 --> cache[("Distributed cache")]
-    s1 & s2 --> db[("Primary store")]
-    s1 & s2 -- "slow/async work" --> q[["Queue"]]
-    q --> w1["Workers (scale independently)"]
-    classDef hot fill:#d9482b,stroke:#d9482b,color:#fff
-    class lb,q hot
-    classDef store fill:#d9f6ff,stroke:#0b7ecb,color:#1b1f3b
-    class cache,db store
-</pre>
+{% include diagrams/fig-4-3.svg %}
 
 *Figure 4.3 — The workhorse topology. Its two load-bearing ideas are highlighted: stateless instances behind the balancer (any instance can serve anyone) and the queue (turning spikes into schedules).*
 
@@ -943,18 +817,7 @@ Read the chain again: no component failed. Every link did its naive best. Resili
 
 *Figure 4.4 — Each link of the outage chain has a named countermeasure. None is exotic; all must be present, because one missing countermeasure is enough to let the cascade through.*
 
-<pre class="mermaid">
-stateDiagram-v2
-    Closed --> Open : failures exceed threshold
-    Open --> HalfOpen : cool-down elapses
-    HalfOpen --> Closed : probe succeeds
-    HalfOpen --> Open : probe fails
-    note right of Open
-        calls fail instantly
-        no threads parked
-        dependency gets air
-    end note
-</pre>
+{% include diagrams/fig-4-5.svg %}
 
 *Figure 4.5 — The circuit breaker's three states. Its gift is twofold: your threads stop dying in queues, and the struggling dependency gets the quiet it needs to recover.*
 
@@ -1051,18 +914,7 @@ Every inter-service link picks a row of this table, and the rows have owners fro
 
 Buying a ticket spans two services and an external payment provider: Seat Inventory & Ticketing reserves and later issues, and Orders & Payments charges the card through the PSP. No database transaction will span them for you. The distributed answer is the **saga**, an idea Hector Garcia-Molina and Kenneth Salem published in 1987 for long-lived database transactions, where it waited patiently for microservices to make it famous: a sequence of local transactions, each with a *compensating* action for when a later step fails.
 
-<pre class="mermaid">
-sequenceDiagram
-    participant O as Orders & Payments (orchestrator)
-    participant I as Seat Inventory & Ticketing
-    participant P as PSP (external)
-    O->>I: reserve seat 14B
-    I-->>O: reserved (TTL 5 min)
-    O->>P: charge intent #881
-    P-->>O: DECLINED
-    O->>I: release seat 14B ← compensation
-    O-->>O: order failed, seat back on sale
-</pre>
+{% include diagrams/fig-5-2.svg %}
 
 *Figure 5.2 — An orchestrated saga compensating a declined card. Note what compensation is: not "undo" (the decline already happened) but a forward action restoring business sense. Sagas are business processes expressed as engineering — which is why the compensations must be designed with the business, not invented in code review.*
 
@@ -1208,17 +1060,7 @@ Push the idea to its limit and you reach **event sourcing**: the events *are* th
 
 Command Query Responsibility Segregation splits the write model (aggregates guarding invariants — Chapter 3) from read models (projections built *from the events*, shaped per question):
 
-<pre class="mermaid">
-flowchart LR
-    cmd([commands]) --> agg["Write model<br/><small>EventSeating aggregate</small>"]
-    agg -- "events (the truth)" --> log[["Event store → stream"]]
-    log --> p1["Projection: seat-map view"]
-    log --> p2["Projection: sales dashboard"]
-    log --> p3["Projection: fan's tickets"]
-    p1 & p2 & p3 --> q([queries])
-    classDef hot fill:#d9482b,stroke:#d9482b,color:#fff
-    class log hot
-</pre>
+{% include diagrams/fig-6-2.svg %}
 
 *Figure 6.2 — CQRS fed by an event log. Each projection is disposable — wrong shape? Rebuild from the log with new code. The log is the system of record; projections are opinions about it. The lag between write and projection is Chapter 4's replication lag in domain terms: declared, monitored, and honest.*
 
@@ -1254,23 +1096,7 @@ Stream processors compute *while data flows* — fraud scores during the on-sale
 
 Choreography's weakness surfaces the day someone asks: *"where is order #881 stuck?"* When a workflow exists only as five services' reactions to each other's events, that question has no owner and no screen. For long-running, accountable processes — refunds with approval steps, payouts with dunning, anything involving humans and deadlines — Encore uses **process orchestration**: the saga orchestrator of Chapter 5 grown up into a workflow engine, where the process is *modeled explicitly*, versioned, monitored, and able to wait forty days without holding a thread. Engines in this space (Temporal, Restate, Camunda, AWS Step Functions) are often grouped as **durable execution**. Their price: code-first engines require deterministic workflow code so it can be replayed, and changing a process while thousands of instances are mid-flight is the hard part of versioning.
 
-<pre class="mermaid">
-stateDiagram-v2
-    [*] --> Requested : fan requests refund
-    Requested --> Approved : auto, < €80 and > 48h to show
-    Requested --> Review : otherwise (human task, SLA 24h)
-    Review --> Approved : approved
-    Review --> Denied : denied, with reason event
-    Approved --> InvalidateTicket : ticket revoked
-    InvalidateTicket --> Reversing : PSP refund (retry w/ backoff)
-    Reversing --> ManualResolution : retries exhausted
-    Reversing --> Relisting : > 48h to show → seat back on sale
-    Reversing --> Closed : ≤ 48h → seat stays retired
-    Relisting --> Closed
-    ManualResolution --> Closed : resolved by finance ops
-    Denied --> [*]
-    Closed --> [*]
-</pre>
+{% include diagrams/fig-6-3.svg %}
 
 *Figure 6.3 — Encore's refund process as an explicit model. Everything folklore choreography hides is visible: the human step with an SLA, the ticket revoked before money moves, the retrying PSP call and its exit when retries run out, the business rule at re-listing. The engine emits events at every transition — orchestrated inside, choreographed at the edges, which is the mature hybrid.*
 
@@ -1398,20 +1224,7 @@ Public traffic enters through an **API gateway**, and the design question is wha
 
 North–south traffic — the edge — is the gateway's job. East–west traffic between services belongs to Chapter 5's mesh: the mechanics are the same, but the trust context is different. Collapse the two, and you couple your partner-facing surface to your internal topology.
 
-<pre class="mermaid">
-flowchart LR
-    p([Partners & apps]) --> gw["Gateway<br/><small>authn · quotas · rate limits · canary</small>"]
-    gw --> bff["BFFs (Chapter 8)"]
-    gw --> pub["Public API services"]
-    subgraph internal["Internal — mesh territory (mTLS, retries, telemetry)"]
-        inv["Inventory"]
-        ord["Orders"]
-    end
-    pub --> inv & ord
-    bff --> inv
-    classDef hot fill:#d9482b,stroke:#d9482b,color:#fff
-    class gw hot
-</pre>
+{% include diagrams/fig-7-2.svg %}
 
 *Figure 7.2 — Edge vs. interior. The gateway speaks to strangers about quotas; the mesh speaks to family about retries. Different conversations, different machinery.*
 
@@ -1569,18 +1382,7 @@ Some organizations genuinely do need to compose a frontend from independently de
 
 Chapter 5 warned against the screen that calls nine services; the **backend-for-frontend** is the standing answer. Each *experience* — fan app, organizer web, partner embed — gets its own thin aggregation layer, owned by the frontend team that consumes it: it fans out to services (in parallel — it exists to kill client-visible waterfalls), shapes responses to screen needs, and holds the tokens so the browser doesn't have to (Section 8.5 will thank it).
 
-<pre class="mermaid">
-flowchart LR
-    fan([Fan app]) --> fbff["Fan BFF<br/><small>owned by fan-web team</small>"]
-    org([Organizer web]) --> obff["Organizer BFF"]
-    fbff --> cat["Catalog"] & inv["Inventory"] & ord["Orders"]
-    obff --> cat & ana["Analytics"]
-    push["Realtime edge (SSE)"]
-    inv -. "seat events" .-> push
-    push -. "SSE: seat updates" .-> fan
-    classDef hot fill:#d9482b,stroke:#d9482b,color:#fff
-    class fbff,obff hot
-</pre>
+{% include diagrams/fig-8-3.svg %}
 
 *Figure 8.3 — BFFs per experience. Ownership is the subtle part: the BFF belongs to the frontend team, because it changes at the screen's cadence, not the services'. A shared "general-purpose BFF" is just an API gateway growing business logic — Chapter 7's ESB trap, one floor up. Seat updates reach the browser through a thin realtime edge, never straight from Inventory.*
 
@@ -1722,22 +1524,7 @@ Read the four principles of Zhamak Dehghani's data mesh as this chapter's greate
 
 A data product, concretely, is not a table with good intentions:
 
-<pre class="mermaid">
-flowchart LR
-    src[["Operational events<br/>(Chapter 6 backbone)"]] --> code
-    subgraph dp["Data product: ticket-sales (owner: Orders team)"]
-        code["Transformation code"] --> s[("port — stream:<br/>sales events")] & t[("port — table:<br/>daily aggregates")]
-        meta["Contract · SLOs · lineage · docs"]
-    end
-    s --> bi([Dashboards]) & ds([Data science])
-    t --> fin([Revenue reporting])
-    classDef hot fill:#d9482b,stroke:#d9482b,color:#fff
-    class code hot
-    classDef store fill:#d9f6ff,stroke:#0b7ecb,color:#1b1f3b
-    class s,t store
-    classDef meta fill:#f6f8fb,stroke:#c6cdd6,stroke-dasharray:4 3,color:#1b1f3b
-    class meta meta
-</pre>
+{% include diagrams/fig-9-2.svg %}
 
 *Figure 9.2 — Anatomy of a data product: code, ports, and contract travel together under one owner. Consumers subscribe to ports; nobody subscribes to somebody's tables. The unit of analytical architecture stops being "the warehouse" and becomes this.*
 
@@ -1839,17 +1626,7 @@ The castle model — hard shell, soft interior — died of its own success condi
 
 **Networks, demoted but not dismissed.** Segmentation survives as defense-in-depth: private subnets, no public database endpoints, controlled egress (exfiltration's chokepoint — the least glamorous control, and one that breach postmortems keep wishing had been in place).
 
-<pre class="mermaid">
-flowchart LR
-    gw["API Gateway<br/><small>fan/partner tokens verified</small>"] --> ord["Orders<br/><small>id: spiffe://encore/orders</small>"]
-    ord -- "mTLS + policy:<br/><small>orders may reserve</small>" --> inv["Inventory"]
-    gate["Sale Gate"] -- "policy: may query risk only" --> bot["Bot Screening"]
-    ana["Analytics"] -. "policy: no path to Inventory<br/><small>(reads events instead)</small>" .-> inv
-    classDef ok fill:#d9482b,stroke:#d9482b,color:#fff
-    classDef deny fill:#fdeef2,stroke:#c66,color:#933
-    class gw,ord,inv,bot,gate ok
-    class ana deny
-</pre>
+{% include diagrams/fig-10-2.svg %}
 
 *Figure 10.2 — Service-to-service authorization as declared policy. The dotted line is the diagram's whole point: Analytics has no path to Inventory — it learns from the event stream, which is least privilege expressed as architecture (Chapter 6 was a security chapter in disguise).*
 
@@ -1986,14 +1763,7 @@ On this substrate, Chapter 5's progressive delivery gets its infrastructure teet
 
 Chapter 5 installed the instruments: logs, metrics, traces, correlation IDs. In 2026 the default way to emit them is **OpenTelemetry**, the vendor-neutral standard that lets Encore instrument once and change backends without touching service code. SRE practice turns them into a decision system. The chain: **SLI** (what users experience, measured: "share of seat-map requests served in ≤ 800 ms"), **SLO** (the promise: "99.9% over a rolling 28 days"), **error budget** (the arithmetic complement: 0.1%, so about 1 slow or failed request in 1,000, or roughly 40 minutes of full-outage equivalent per 28 days). The budget is the masterstroke, because it converts the eternal speed-vs-stability argument into policy that needs no meeting:
 
-<pre class="mermaid">
-flowchart LR
-    b{"Error budget<br/>remaining?"} -- "yes" --> ship["Ship features<br/><small>canaries promote, flags open</small>"]
-    b -- "burning fast" --> slow["Slow down<br/><small>canaries hold, risky flags freeze</small>"]
-    b -- "exhausted" --> harden["Reliability work only<br/><small>until budget recovers</small>"]
-    classDef hot fill:#d9482b,stroke:#d9482b,color:#fff
-    class b hot
-</pre>
+{% include diagrams/fig-11-2.svg %}
 
 *Figure 11.2 — The error budget as automatic policy. Nobody argues about whether to ship; the budget already decided. Product and reliability stop being departments and become two hands on one dial.*
 
@@ -2102,15 +1872,7 @@ Classic ML keeps its seat: forecasting, ranking, and fraud scoring remain traine
 
 A general-purpose model knows its training data's past and nothing about *your* refund policy or order #881. RAG closes the gap by retrieving relevant private context and placing it in the prompt — which means RAG quality is decided in a *data pipeline* long before any model sees a token:
 
-<pre class="mermaid">
-flowchart LR
-    src[["Data products<br/><small>policies · orders · FAQs (Chapter 9)</small>"]] --> chunk["Chunking<br/><small>semantic units, not page breaks</small>"]
-    chunk --> emb["Embedding"] --> idx[("Vector + keyword index")]
-    q(["Fan's question"]) --> qr["Query rewrite<br/><small>+ fan's context</small>"] -- "filtered by fan's permissions" --> idx
-    idx -- "top-k candidates" --> rr["Reranker"] -- "best 3–5" --> llm["Model<br/><small>answer with citations</small>"]
-    classDef hot fill:#d9482b,stroke:#d9482b,color:#fff
-    class idx,rr hot
-</pre>
+{% include diagrams/fig-12-1.svg %}
 
 *Figure 12.1 — The RAG pipeline. The highlighted stages are where quality is won: hybrid (vector + keyword) retrieval, because embeddings miss exact codes and names that keyword search catches; and reranking, because the cheap first pass optimizes recall while the reranker buys precision. The model merely phrases what retrieval found.*
 
@@ -2263,14 +2025,7 @@ Run Encore's queue through the filter. Bot Screening is core: keep building it, 
 
 Capabilities are not fixed points; they move. Simon Wardley's insight, which Chapter 15 will apply to whole platforms, is that every capability travels the same road, in a predictable direction if not at a predictable speed: **genesis** (novel, experimental, nobody sells it), **custom** (understood, hand-built by those who need it), **product** (competing vendors, feature checklists), **commodity** (undifferentiated, priced per unit, boring). The posture that wins at one stage loses at the next:
 
-<pre class="mermaid">
-flowchart LR
-    g["Genesis<br/><small>build — nobody sells it</small>"] --> c["Custom<br/><small>build or adopt — differentiate here?</small>"]
-    c --> pr["Product<br/><small>buy — let vendors compete</small>"]
-    pr --> co["Commodity<br/><small>rent — pay per unit, forget</small>"]
-    classDef hot fill:#d9482b,stroke:#d9482b,color:#fff
-    class g hot
-</pre>
+{% include diagrams/fig-13-1.svg %}
 
 *Figure 13.1 — The evolution road and the posture per stage. The failure mode is posture lag: still hand-building what became a product years ago, or renting what should differentiate you.*
 
@@ -2377,18 +2132,7 @@ This chapter is the full treatment, and it is deliberately the penultimate chapt
 
 The foundational split — Tod Golding's, and the one that organizes everything after it — is between the **application plane** (the ticketing machinery tenants use) and the **control plane** (the machinery that *manages tenants*: onboarding, identity, configuration, billing, per-tenant operations). The control plane is where SaaS-ness lives; it has no tenant-facing features and it is the most load-bearing software the company will now write.
 
-<pre class="mermaid">
-flowchart TB
-    subgraph cp["Control plane — manages tenants"]
-        onb["Onboarding"] --- idm["Tenant identity"] --- cfg["Config & tiering"] --- bil["Billing & metering"] --- ops["Tenant-aware ops"]
-    end
-    subgraph ap["Application plane — serves tenants"]
-        t1["Venue-chain tenant"] --- t2["Festival tenant"] --- t3["500 self-service venues"]
-    end
-    cp -- "provisions · configures · observes" --> ap
-    classDef plane fill:#fdebe6,stroke:#d9482b,stroke-width:2px,color:#1b1f3b
-    class cp plane
-</pre>
+{% include diagrams/fig-14-1.svg %}
 
 *Figure 14.1 — The two planes. Everything the next four sections build lives in one of these planes. Companies that skip the control plane still have one — made of runbooks, spreadsheets, and a heroic ops engineer named something like Dana.*
 
@@ -2554,14 +2298,7 @@ The anti-patterns are all failures of this stance:
 
 The platform's product surface is the **golden path**: an opinionated, supported, self-service route through a common need. The anatomy of Encore's "new service" path has four parts. A template: a service skeleton with Chapter 5's contracts, Chapter 10's identity, and Chapter 11's observability pre-wired. A provisioning workflow: pipeline, dashboards, on-call rotation, and cost budget — created, not documented. A registry entry: ownership, tier, and SLOs, forming the service catalog that answers "who owns this?" at 3 a.m. And a scorecard: Chapter 11's production-readiness, now continuously graded. Underneath, the platform is *architecturally* Chapter 14's lesson applied inward: a **control plane** managing internal tenants — the teams — over the planes this book built one by one:
 
-<pre class="mermaid">
-flowchart TB
-    teams(["40 product teams — the platform's tenants"]) --> paths["Golden paths & self-service portal"]
-    paths --> cp["Platform control plane<br/><small>provisioning · registry · scorecards · metering<br/>Ch. 14's pattern, teams as tenants</small>"]
-    cp --> c["Compute & delivery<br/><small>Ch. 11</small>"] & e["Event backbone<br/><small>Ch. 6</small>"] & d["Data products<br/><small>Ch. 9</small>"] & a["API & UI paths<br/><small>Ch. 7·Ch. 8</small>"] & s["Security guardrails<br/><small>Ch. 10</small>"] & ai["AI gateway<br/><small>Ch. 12</small>"]
-    classDef hot fill:#d9482b,stroke:#d9482b,color:#fff
-    class cp hot
-</pre>
+{% include diagrams/fig-15-2.svg %}
 
 *Figure 15.2 — The platform as the book's index page. Nothing in the bottom row is new; the platform's contribution is the middle: one control plane making it all self-service, registered, and metered — Chapter 14's machinery with teams for tenants.*
 

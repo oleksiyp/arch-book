@@ -1,0 +1,53 @@
+<div class="dg-figure"><svg class="dg" viewBox="0 0 864 356" style="min-width:864px" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-1-5b-title fig-1-5b-desc">
+<title id="fig-1-5b-title">Option B: one topic, many subscribers</title>
+<desc id="fig-1-5b-desc">Order publishes OrderPlaced once, with one shared schema, to the orders topic, which delivers the same event to every subscriber: Notification, Analytics and Bot Screening.</desc>
+<defs><marker id="fig-1-5b-m-muted" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-muted" points="0 0, 8 3, 0 6"/></marker><marker id="fig-1-5b-m-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-accent" points="0 0, 8 3, 0 6"/></marker><marker id="fig-1-5b-m-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-link" points="0 0, 8 3, 0 6"/></marker></defs>
+<rect class="dg-paper" width="100%" height="100%" rx="8"/>
+<line class="dg-lifeline" x1="96" y1="76" x2="96" y2="296"/>
+<line class="dg-lifeline" x1="288" y1="76" x2="288" y2="296"/>
+<line class="dg-lifeline" x1="456" y1="76" x2="456" y2="296"/>
+<line class="dg-lifeline" x1="608" y1="76" x2="608" y2="296"/>
+<line class="dg-lifeline" x1="760" y1="76" x2="760" y2="296"/>
+<rect class="dg-mask" x="24" y="92" width="808" height="28" rx="4"/><rect class="dg-frame" x="24" y="92" width="808" height="28" rx="4"/><text class="dg-name" x="428" y="110">Option B — one topic, many subscribers</text>
+<path class="dg-a dg-a-muted" d="M 100,168 L 287,168" marker-end="url(#fig-1-5b-m-muted)"/>
+<path class="dg-a dg-a-muted dg-dash" d="M 292,208 L 452,208" marker-end="url(#fig-1-5b-m-muted)"/>
+<path class="dg-a dg-a-muted dg-dash" d="M 292,240 L 604,240" marker-end="url(#fig-1-5b-m-muted)"/>
+<path class="dg-a dg-a-muted dg-dash" d="M 292,272 L 756,272" marker-end="url(#fig-1-5b-m-muted)"/>
+<rect class="dg-mask" x="122" y="148" width="140" height="12" rx="2"/><text class="dg-label" x="192" y="157">ORDERPLACED · ONE SCHEMA</text>
+<rect class="dg-mask" x="342" y="188" width="60" height="12" rx="2"/><text class="dg-label" x="372" y="197">SUBSCRIBE</text>
+<rect class="dg-mask" x="342" y="220" width="60" height="12" rx="2"/><text class="dg-label" x="372" y="229">SUBSCRIBE</text>
+<rect class="dg-mask" x="342" y="252" width="60" height="12" rx="2"/><text class="dg-label" x="372" y="261">SUBSCRIBE</text>
+<rect class="dg-mask" x="32" y="24" width="128" height="52" rx="6"/>
+<rect class="dg-n dg-n-focal" x="32" y="24" width="128" height="52" rx="6"/>
+<text class="dg-name" x="96" y="52">Order</text>
+<text class="dg-sub" x="96" y="67">producer</text>
+<rect class="dg-mask" x="224" y="24" width="128" height="52" rx="6"/>
+<rect class="dg-n dg-n-store" x="224" y="24" width="128" height="52" rx="6"/>
+<text class="dg-name" x="288" y="52">orders.topic</text>
+<text class="dg-sub" x="288" y="67">topic</text>
+<rect class="dg-mask" x="392" y="24" width="128" height="52" rx="6"/>
+<rect class="dg-n dg-n-backend" x="392" y="24" width="128" height="52" rx="6"/>
+<text class="dg-name" x="456" y="52">Notification</text>
+<text class="dg-sub" x="456" y="67">subscriber</text>
+<rect class="dg-mask" x="544" y="24" width="128" height="52" rx="6"/>
+<rect class="dg-n dg-n-backend" x="544" y="24" width="128" height="52" rx="6"/>
+<text class="dg-name" x="608" y="52">Analytics</text>
+<text class="dg-sub" x="608" y="67">subscriber</text>
+<rect class="dg-mask" x="696" y="24" width="128" height="52" rx="6"/>
+<rect class="dg-n dg-n-backend" x="696" y="24" width="128" height="52" rx="6"/>
+<text class="dg-name" x="760" y="52">BotScreening</text>
+<text class="dg-sub" x="760" y="67">subscriber</text>
+<rect class="dg-activation" x="284" y="160" width="8" height="120"/>
+<rect class="dg-activation" x="92" y="140" width="8" height="44"/>
+<line class="dg-rule" x1="24" y1="316" x2="840" y2="316"/>
+<rect class="dg-n dg-n-focal" x="24" y="327" width="16" height="10" rx="2"/>
+<text class="dg-legend" x="46" y="335">Producer</text>
+<rect class="dg-n dg-n-store" x="118" y="327" width="16" height="10" rx="2"/>
+<text class="dg-legend" x="140" y="335">Topic</text>
+<rect class="dg-n dg-n-backend" x="196" y="327" width="16" height="10" rx="2"/>
+<text class="dg-legend" x="218" y="335">Subscriber</text>
+<line class="dg-a dg-a-muted" x1="302" y1="332" x2="326" y2="332" marker-end="url(#fig-1-5b-m-muted)"/>
+<text class="dg-legend" x="334" y="335">Publish</text>
+<line class="dg-a dg-a-muted dg-dash" x1="401" y1="332" x2="425" y2="332" marker-end="url(#fig-1-5b-m-muted)"/>
+<text class="dg-legend" x="433" y="335">Delivery to a subscriber</text>
+</svg></div>

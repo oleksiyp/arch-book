@@ -1,0 +1,44 @@
+<div class="dg-figure"><svg class="dg" viewBox="0 0 864 368" style="min-width:864px" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-7-2-title fig-7-2-desc">
+<title id="fig-7-2-title">Edge vs. interior: gateway and mesh</title>
+<desc id="fig-7-2-desc">Partners and apps reach the API gateway at the edge, which handles authentication, quotas, rate limits and canary routing and forwards into the interior; there the BFFs and public API services call Inventory and Orders east–west, inside the service mesh with mTLS, retries and telemetry.</desc>
+<defs><marker id="fig-7-2-m-muted" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-muted" points="0 0, 8 3, 0 6"/></marker><marker id="fig-7-2-m-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-accent" points="0 0, 8 3, 0 6"/></marker><marker id="fig-7-2-m-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-link" points="0 0, 8 3, 0 6"/></marker></defs>
+<rect class="dg-paper" width="100%" height="100%" rx="8"/>
+<rect class="dg-zone" x="212" y="108" width="252" height="120" rx="8"/><rect class="dg-mask" x="224" y="102" width="108" height="12" rx="2"/><text class="dg-eyebrow" x="278" y="111">EDGE · NORTH–SOUTH</text>
+<rect class="dg-zone" x="484" y="52" width="368" height="260" rx="8"/><rect class="dg-mask" x="496" y="46" width="200" height="12" rx="2"/><text class="dg-eyebrow" x="596" y="55">INTERIOR · EAST–WEST · SERVICE MESH</text>
+<path class="dg-a dg-a-muted" d="M 148,168 L 228,168" marker-end="url(#fig-7-2-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 448,156 L 472,156 Q 480,156 480,148 L 480,116 Q 480,108 488,108 L 508,108" marker-end="url(#fig-7-2-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 448,180 L 472,180 Q 480,180 480,188 L 480,220 Q 480,228 488,228 L 508,228" marker-end="url(#fig-7-2-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 660,108 L 704,108" marker-end="url(#fig-7-2-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 660,220 L 668,220 Q 676,220 676,212 L 676,132 Q 676,124 684,124 L 704,124" marker-end="url(#fig-7-2-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 660,236 L 704,236" marker-end="url(#fig-7-2-m-muted)"/>
+<rect class="dg-mask" x="24" y="140" width="124" height="56" rx="6"/>
+<rect class="dg-n dg-n-input" x="24" y="140" width="124" height="56" rx="6"/>
+<text class="dg-name" x="86" y="172">Partners &amp; apps</text>
+<rect class="dg-mask" x="228" y="140" width="220" height="56" rx="6"/>
+<rect class="dg-n dg-n-focal" x="228" y="140" width="220" height="56" rx="6"/>
+<text class="dg-name" x="338" y="170">Gateway</text>
+<text class="dg-sub" x="338" y="185">authn · quotas · rate limits · canary</text>
+<rect class="dg-mask" x="508" y="80" width="152" height="56" rx="6"/>
+<rect class="dg-n dg-n-backend" x="508" y="80" width="152" height="56" rx="6"/>
+<text class="dg-name" x="584" y="110">BFFs</text>
+<text class="dg-sub" x="584" y="125">Chapter 8</text>
+<rect class="dg-mask" x="508" y="200" width="152" height="56" rx="6"/>
+<rect class="dg-n dg-n-backend" x="508" y="200" width="152" height="56" rx="6"/>
+<text class="dg-name" x="584" y="232">Public API services</text>
+<rect class="dg-mask" x="704" y="80" width="128" height="56" rx="6"/>
+<rect class="dg-n dg-n-backend" x="704" y="80" width="128" height="56" rx="6"/>
+<text class="dg-name" x="768" y="112">Inventory</text>
+<rect class="dg-mask" x="704" y="200" width="128" height="56" rx="6"/>
+<rect class="dg-n dg-n-backend" x="704" y="200" width="128" height="56" rx="6"/>
+<text class="dg-name" x="768" y="232">Orders</text>
+<text class="dg-note" x="668" y="292" text-anchor="middle">mTLS · retries · telemetry between services</text>
+<line class="dg-rule" x1="24" y1="328" x2="840" y2="328"/>
+<rect class="dg-n dg-n-input" x="24" y="339" width="16" height="10" rx="2"/>
+<text class="dg-legend" x="46" y="347">Outside callers</text>
+<rect class="dg-n dg-n-focal" x="158" y="339" width="16" height="10" rx="2"/>
+<text class="dg-legend" x="180" y="347">Edge gateway: north–south</text>
+<rect class="dg-n dg-n-backend" x="348" y="339" width="16" height="10" rx="2"/>
+<text class="dg-legend" x="370" y="347">Service in the mesh: east–west</text>
+<line class="dg-a dg-a-muted" x1="566" y1="344" x2="590" y2="344" marker-end="url(#fig-7-2-m-muted)"/>
+<text class="dg-legend" x="598" y="347">Call</text>
+</svg></div>

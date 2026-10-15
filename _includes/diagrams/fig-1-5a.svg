@@ -1,0 +1,41 @@
+<div class="dg-figure"><svg class="dg" viewBox="0 0 864 356" style="min-width:864px" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-1-5a-title fig-1-5a-desc">
+<title id="fig-1-5a-title">Option A: a queue per consumer</title>
+<desc id="fig-1-5a-desc">Order publishes OrderPlaced three times, once into each consumer&#x27;s own queue, with a payload tailored to that consumer: ticket fields for notifications, stats fields for analytics and risk fields for bot screening.</desc>
+<defs><marker id="fig-1-5a-m-muted" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-muted" points="0 0, 8 3, 0 6"/></marker><marker id="fig-1-5a-m-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-accent" points="0 0, 8 3, 0 6"/></marker><marker id="fig-1-5a-m-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-link" points="0 0, 8 3, 0 6"/></marker></defs>
+<rect class="dg-paper" width="100%" height="100%" rx="8"/>
+<line class="dg-lifeline" x1="96" y1="76" x2="96" y2="296"/>
+<line class="dg-lifeline" x1="456" y1="76" x2="456" y2="296"/>
+<line class="dg-lifeline" x1="608" y1="76" x2="608" y2="296"/>
+<line class="dg-lifeline" x1="760" y1="76" x2="760" y2="296"/>
+<rect class="dg-mask" x="24" y="92" width="808" height="28" rx="4"/><rect class="dg-frame" x="24" y="92" width="808" height="28" rx="4"/><text class="dg-name" x="428" y="110">Option A — a queue per consumer</text>
+<path class="dg-a dg-a-muted" d="M 100,168 L 455,168" marker-end="url(#fig-1-5a-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 100,208 L 607,208" marker-end="url(#fig-1-5a-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 100,248 L 759,248" marker-end="url(#fig-1-5a-m-muted)"/>
+<rect class="dg-mask" x="114" y="148" width="156" height="12" rx="2"/><text class="dg-label" x="192" y="157">ORDERPLACED · TICKET FIELDS</text>
+<rect class="dg-mask" x="116" y="188" width="152" height="12" rx="2"/><text class="dg-label" x="192" y="197">ORDERPLACED · STATS FIELDS</text>
+<rect class="dg-mask" x="118" y="228" width="148" height="12" rx="2"/><text class="dg-label" x="192" y="237">ORDERPLACED · RISK FIELDS</text>
+<rect class="dg-mask" x="32" y="24" width="128" height="52" rx="6"/>
+<rect class="dg-n dg-n-focal" x="32" y="24" width="128" height="52" rx="6"/>
+<text class="dg-name" x="96" y="52">Order</text>
+<text class="dg-sub" x="96" y="67">producer</text>
+<rect class="dg-mask" x="392" y="24" width="128" height="52" rx="6"/>
+<rect class="dg-n dg-n-store" x="392" y="24" width="128" height="52" rx="6"/>
+<text class="dg-name" x="456" y="52">notif.queue</text>
+<text class="dg-sub" x="456" y="67">queue</text>
+<rect class="dg-mask" x="544" y="24" width="128" height="52" rx="6"/>
+<rect class="dg-n dg-n-store" x="544" y="24" width="128" height="52" rx="6"/>
+<text class="dg-name" x="608" y="52">analytics.queue</text>
+<text class="dg-sub" x="608" y="67">queue</text>
+<rect class="dg-mask" x="696" y="24" width="128" height="52" rx="6"/>
+<rect class="dg-n dg-n-store" x="696" y="24" width="128" height="52" rx="6"/>
+<text class="dg-name" x="760" y="52">botscreen.queue</text>
+<text class="dg-sub" x="760" y="67">queue</text>
+<rect class="dg-activation" x="92" y="140" width="8" height="132"/>
+<line class="dg-rule" x1="24" y1="316" x2="840" y2="316"/>
+<rect class="dg-n dg-n-focal" x="24" y="327" width="16" height="10" rx="2"/>
+<text class="dg-legend" x="46" y="335">Producer</text>
+<rect class="dg-n dg-n-store" x="118" y="327" width="16" height="10" rx="2"/>
+<text class="dg-legend" x="140" y="335">Queue</text>
+<line class="dg-a dg-a-muted" x1="196" y1="332" x2="220" y2="332" marker-end="url(#fig-1-5a-m-muted)"/>
+<text class="dg-legend" x="228" y="335">Publish</text>
+</svg></div>

@@ -1,0 +1,63 @@
+/* Diagram skin for the book: diagram-design roles mapped to the book's palette.
+   Light: cover paper, navy ink, vermilion accent, deep cyan for links.
+   Dark: the book's dark card, light ink, the dark-mode vermilion and cyan.
+   Copied into assets/css/style.scss; kept here for the preview page. */
+.dg-figure {
+  --dg-paper: #f6f4ef; --dg-ink: #1b1f3b; --dg-muted: #4a5068; --dg-soft: #5c6178;
+  --dg-accent: #c23f22; --dg-link: #0a6c8a;
+  --dg-ink-rgb: 27, 31, 59; --dg-accent-rgb: 194, 63, 34; --dg-muted-rgb: 74, 80, 104;
+  --dg-backend: #ffffff;
+  width: 100%; overflow-x: auto; margin: 1.4rem 0 0.6rem;
+}
+.dg-dark .dg-figure, html[data-theme="dark"] .dg-figure {
+  --dg-paper: #1b2237; --dg-ink: #e8ecf3; --dg-muted: #a9b2c3; --dg-soft: #97a0b5;
+  --dg-accent: #f0714f; --dg-link: #00c9ff;
+  --dg-ink-rgb: 232, 236, 243; --dg-accent-rgb: 240, 113, 79; --dg-muted-rgb: 169, 178, 195;
+  --dg-backend: #222b44;
+}
+svg.dg { width: 100%; height: auto; display: block; }
+.dg .dg-paper, .dg .dg-mask { fill: var(--dg-paper); }
+.dg text { font-family: "Open Sans", "Helvetica Neue", Arial, sans-serif; }
+.dg .dg-name { fill: var(--dg-ink); font-size: 12px; font-weight: 600; text-anchor: middle; }
+.dg .dg-sub, .dg .dg-label, .dg .dg-tag, .dg .dg-eyebrow, .dg .dg-note, .dg .dg-legend-mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+}
+.dg .dg-sub { fill: var(--dg-muted); font-size: 9px; text-anchor: middle; }
+.dg .dg-label { fill: var(--dg-soft); font-size: 8px; letter-spacing: 0.06em; text-anchor: middle; }
+.dg .dg-l-accent { fill: var(--dg-accent); }
+.dg .dg-l-link { fill: var(--dg-link); }
+.dg .dg-tag { font-size: 7px; letter-spacing: 0.08em; text-anchor: middle; fill: var(--dg-soft); }
+.dg .dg-eyebrow { fill: var(--dg-soft); font-size: 7px; letter-spacing: 0.14em; text-anchor: middle; }
+.dg .dg-note { fill: var(--dg-soft); font-size: 9px; }
+.dg .dg-legend { fill: var(--dg-muted); font-size: 9px; }
+.dg .dg-rule { stroke: rgba(var(--dg-ink-rgb), 0.12); stroke-width: 0.8; }
+.dg .dg-zone { fill: rgba(var(--dg-ink-rgb), 0.025); stroke: rgba(var(--dg-ink-rgb), 0.14); stroke-width: 0.8; }
+
+/* Node treatments (style-guide § Node type → treatment) */
+.dg .dg-n { stroke-width: 1; }
+.dg .dg-n-focal { fill: rgba(var(--dg-accent-rgb), 0.08); stroke: var(--dg-accent); }
+.dg .dg-n-backend { fill: var(--dg-backend); stroke: var(--dg-ink); }
+.dg .dg-n-store { fill: rgba(var(--dg-ink-rgb), 0.05); stroke: var(--dg-muted); }
+.dg .dg-n-external { fill: rgba(var(--dg-ink-rgb), 0.03); stroke: rgba(var(--dg-ink-rgb), 0.32); }
+.dg .dg-n-input { fill: rgba(var(--dg-muted-rgb), 0.10); stroke: var(--dg-soft); }
+.dg .dg-n-optional { fill: rgba(var(--dg-ink-rgb), 0.02); stroke: rgba(var(--dg-ink-rgb), 0.30); }
+.dg .dg-tagbox { fill: none; stroke-width: 0.8; stroke: rgba(var(--dg-ink-rgb), 0.30); }
+.dg .dg-tagbox.dg-t-focal { stroke: rgba(var(--dg-accent-rgb), 0.5); }
+.dg .dg-tag.dg-t-focal { fill: var(--dg-accent); }
+.dg .dg-start { fill: var(--dg-ink); }
+.dg .dg-end-ring { fill: none; stroke: var(--dg-ink); stroke-width: 1; }
+
+/* Connectors */
+.dg .dg-a { fill: none; stroke-width: 1.2; stroke: var(--dg-muted); }
+.dg .dg-a-accent { stroke: var(--dg-accent); stroke-width: 1.4; }
+.dg .dg-a-link { stroke: var(--dg-link); }
+.dg .dg-dash { stroke-dasharray: 4 3; stroke-width: 1; }
+.dg .dg-head-muted { fill: var(--dg-muted); }
+.dg .dg-head-accent { fill: var(--dg-accent); }
+.dg .dg-head-link { fill: var(--dg-link); }
+
+/* Sequence */
+.dg .dg-lifeline { stroke: rgba(var(--dg-ink-rgb), 0.22); stroke-width: 1; stroke-dasharray: 3 3; }
+.dg .dg-activation { fill: rgba(var(--dg-ink-rgb), 0.06); stroke: var(--dg-muted); stroke-width: 0.8; }
+.dg .dg-frame { fill: rgba(var(--dg-ink-rgb), 0.02); stroke: rgba(var(--dg-ink-rgb), 0.22); stroke-width: 1; }
+.dg .dg-frame-tab { fill: var(--dg-paper); stroke: rgba(var(--dg-ink-rgb), 0.22); stroke-width: 1; }

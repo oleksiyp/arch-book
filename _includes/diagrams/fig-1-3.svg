@@ -1,0 +1,79 @@
+<div class="dg-figure"><svg class="dg" viewBox="0 0 864 404" style="min-width:864px" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-1-3-title fig-1-3-desc">
+<title id="fig-1-3-title">Encore&#x27;s first-cut logical components</title>
+<desc id="fig-1-3-desc">Fans browse the event catalog and join an on-sale through the Sale Gate, which screens bots and admits fans to Order; Order reserves seats, charges through payments, sends tickets and feeds sales analytics, which organizers watch along with the catalog they manage.</desc>
+<defs><marker id="fig-1-3-m-muted" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-muted" points="0 0, 8 3, 0 6"/></marker><marker id="fig-1-3-m-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-accent" points="0 0, 8 3, 0 6"/></marker><marker id="fig-1-3-m-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-link" points="0 0, 8 3, 0 6"/></marker></defs>
+<rect class="dg-paper" width="100%" height="100%" rx="8"/>
+<path class="dg-a dg-a-muted" d="M 84,168 L 84,84 Q 84,76 92,76 L 200,76" marker-end="url(#fig-1-3-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 144,196 L 200,196" marker-end="url(#fig-1-3-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 260,224 L 260,288" marker-end="url(#fig-1-3-m-muted)"/>
+<path class="dg-a dg-a-accent" d="M 320,196 L 376,196" marker-end="url(#fig-1-3-m-accent)"/>
+<path class="dg-a dg-a-muted" d="M 436,168 L 436,104" marker-end="url(#fig-1-3-m-muted)"/>
+<path class="dg-a dg-a-accent" d="M 496,184 L 552,184" marker-end="url(#fig-1-3-m-accent)"/>
+<path class="dg-a dg-a-muted" d="M 436,224 L 436,288" marker-end="url(#fig-1-3-m-muted)"/>
+<path class="dg-a dg-a-muted dg-dash" d="M 496,208 L 516,208 Q 524,208 524,216 L 524,308 Q 524,316 532,316 L 552,316" marker-end="url(#fig-1-3-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 728,316 L 672,316" marker-end="url(#fig-1-3-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 788,288 L 788,32 Q 788,24 780,24 L 268,24 Q 260,24 260,32 L 260,48" marker-end="url(#fig-1-3-m-muted)"/>
+<rect class="dg-mask" x="118" y="56" width="48" height="12" rx="2"/><text class="dg-label" x="142" y="65">BROWSES</text>
+<rect class="dg-mask" x="152" y="176" width="40" height="12" rx="2"/><text class="dg-label" x="172" y="185">JOINS</text>
+<rect class="dg-mask" x="268" y="250" width="48" height="12" rx="2"/><text class="dg-label" x="292" y="259">SCREENS</text>
+<rect class="dg-mask" x="326" y="176" width="44" height="12" rx="2"/><text class="dg-label dg-l-accent" x="348" y="185">ADMITS</text>
+<rect class="dg-mask" x="444" y="130" width="56" height="12" rx="2"/><text class="dg-label" x="472" y="139">RESERVES</text>
+<rect class="dg-mask" x="500" y="164" width="48" height="12" rx="2"/><text class="dg-label dg-l-accent" x="524" y="173">CHARGES</text>
+<rect class="dg-mask" x="444" y="250" width="76" height="12" rx="2"/><text class="dg-label" x="482" y="259">SENDS TICKET</text>
+<rect class="dg-mask" x="532" y="256" width="72" height="12" rx="2"/><text class="dg-label" x="568" y="265">SALES FACTS</text>
+<rect class="dg-mask" x="676" y="296" width="48" height="12" rx="2"/><text class="dg-label" x="700" y="305">WATCHES</text>
+<rect class="dg-mask" x="480" y="32" width="88" height="12" rx="2"/><text class="dg-label" x="524" y="41">MANAGES EVENTS</text>
+<rect class="dg-mask" x="24" y="168" width="120" height="56" rx="6"/>
+<rect class="dg-n dg-n-input" x="24" y="168" width="120" height="56" rx="6"/>
+<text class="dg-name" x="84" y="198">Fan</text>
+<text class="dg-sub" x="84" y="213">browser · app</text>
+<rect class="dg-mask" x="728" y="288" width="120" height="56" rx="6"/>
+<rect class="dg-n dg-n-input" x="728" y="288" width="120" height="56" rx="6"/>
+<text class="dg-name" x="788" y="318">Organizer</text>
+<text class="dg-sub" x="788" y="333">venue staff</text>
+<rect class="dg-mask" x="200" y="48" width="120" height="56" rx="6"/>
+<rect class="dg-n dg-n-backend" x="200" y="48" width="120" height="56" rx="6"/>
+<text class="dg-name" x="260" y="78">Event Catalog</text>
+<text class="dg-sub" x="260" y="93">events · seats</text>
+<rect class="dg-mask" x="200" y="168" width="120" height="56" rx="6"/>
+<rect class="dg-n dg-n-backend" x="200" y="168" width="120" height="56" rx="6"/>
+<text class="dg-name" x="260" y="198">Sale Gate</text>
+<text class="dg-sub" x="260" y="213">admission</text>
+<rect class="dg-mask" x="200" y="288" width="120" height="56" rx="6"/>
+<rect class="dg-n dg-n-backend" x="200" y="288" width="120" height="56" rx="6"/>
+<text class="dg-name" x="260" y="318">Bot Screening</text>
+<text class="dg-sub" x="260" y="333">risk signals</text>
+<rect class="dg-mask" x="376" y="168" width="120" height="56" rx="6"/>
+<rect class="dg-n dg-n-backend" x="376" y="168" width="120" height="56" rx="6"/>
+<text class="dg-name" x="436" y="198">Order</text>
+<text class="dg-sub" x="436" y="213">purchase flow</text>
+<rect class="dg-mask" x="376" y="48" width="120" height="56" rx="6"/>
+<rect class="dg-n dg-n-store" x="376" y="48" width="120" height="56" rx="6"/>
+<text class="dg-name" x="436" y="78">Seat Inventory</text>
+<text class="dg-sub" x="436" y="93">holds · sales</text>
+<rect class="dg-mask" x="376" y="288" width="120" height="56" rx="6"/>
+<rect class="dg-n dg-n-backend" x="376" y="288" width="120" height="56" rx="6"/>
+<text class="dg-name" x="436" y="318">Notification</text>
+<text class="dg-sub" x="436" y="333">tickets · email</text>
+<rect class="dg-mask" x="552" y="168" width="120" height="56" rx="6"/>
+<rect class="dg-n dg-n-external" x="552" y="168" width="120" height="56" rx="6"/>
+<text class="dg-name" x="612" y="198">Payments</text>
+<text class="dg-sub" x="612" y="213">PSP integration</text>
+<rect class="dg-mask" x="552" y="288" width="120" height="56" rx="6"/>
+<rect class="dg-n dg-n-store" x="552" y="288" width="120" height="56" rx="6"/>
+<text class="dg-name" x="612" y="318">Sales Analytics</text>
+<text class="dg-sub" x="612" y="333">dashboards</text>
+<line class="dg-rule" x1="24" y1="364" x2="840" y2="364"/>
+<rect class="dg-n dg-n-input" x="24" y="375" width="16" height="10" rx="2"/>
+<text class="dg-legend" x="46" y="383">People</text>
+<rect class="dg-n dg-n-backend" x="107" y="375" width="16" height="10" rx="2"/>
+<text class="dg-legend" x="129" y="383">Component</text>
+<rect class="dg-n dg-n-store" x="207" y="375" width="16" height="10" rx="2"/>
+<text class="dg-legend" x="229" y="383">Owns data</text>
+<rect class="dg-n dg-n-external" x="307" y="375" width="16" height="10" rx="2"/>
+<text class="dg-legend" x="329" y="383">Outside party</text>
+<line class="dg-a dg-a-accent" x1="429" y1="380" x2="453" y2="380" marker-end="url(#fig-1-3-m-accent)"/>
+<text class="dg-legend" x="461" y="383">Purchase path</text>
+<line class="dg-a dg-a-muted dg-dash" x1="561" y1="380" x2="585" y2="380" marker-end="url(#fig-1-3-m-muted)"/>
+<text class="dg-legend" x="593" y="383">Fact, not a call</text>
+</svg></div>

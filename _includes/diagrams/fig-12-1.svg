@@ -1,0 +1,57 @@
+<div class="dg-figure"><svg class="dg" viewBox="0 0 864 284" style="min-width:864px" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-12-1-title fig-12-1-desc">
+<title id="fig-12-1-title">The RAG pipeline</title>
+<desc id="fig-12-1-desc">Data products are chunked, embedded and stored in a hybrid vector and keyword index; a fan&#x27;s question is rewritten with the fan&#x27;s context and searched against that index filtered by the fan&#x27;s permissions, and a reranker passes the best three to five of the top-k candidates to the model, which answers with citations.</desc>
+<defs><marker id="fig-12-1-m-muted" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-muted" points="0 0, 8 3, 0 6"/></marker><marker id="fig-12-1-m-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-accent" points="0 0, 8 3, 0 6"/></marker><marker id="fig-12-1-m-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-link" points="0 0, 8 3, 0 6"/></marker></defs>
+<rect class="dg-paper" width="100%" height="100%" rx="8"/>
+<path class="dg-a dg-a-muted" d="M 176,68 L 208,68" marker-end="url(#fig-12-1-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 320,68 L 352,68" marker-end="url(#fig-12-1-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 464,68 L 496,68" marker-end="url(#fig-12-1-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 176,196 L 208,196" marker-end="url(#fig-12-1-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 320,196 L 552,196 Q 560,196 560,188 L 560,96" marker-end="url(#fig-12-1-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 624,68 L 680,68" marker-end="url(#fig-12-1-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 752,96 L 752,168" marker-end="url(#fig-12-1-m-muted)"/>
+<rect class="dg-mask" x="384" y="176" width="112" height="12" rx="2"/><text class="dg-label" x="440" y="185">PERMISSION-FILTERED</text>
+<rect class="dg-mask" x="632" y="48" width="40" height="12" rx="2"/><text class="dg-label" x="652" y="57">TOP-K</text>
+<rect class="dg-mask" x="760" y="126" width="56" height="12" rx="2"/><text class="dg-label" x="788" y="135">BEST 3–5</text>
+<rect class="dg-mask" x="24" y="40" width="152" height="56" rx="6"/>
+<rect class="dg-n dg-n-store" x="24" y="40" width="152" height="56" rx="6"/>
+<text class="dg-name" x="100" y="70">Data products</text>
+<text class="dg-sub" x="100" y="85">policies · orders · FAQs</text>
+<rect class="dg-mask" x="208" y="40" width="112" height="56" rx="6"/>
+<rect class="dg-n dg-n-backend" x="208" y="40" width="112" height="56" rx="6"/>
+<text class="dg-name" x="264" y="70">Chunking</text>
+<text class="dg-sub" x="264" y="85">semantic units</text>
+<rect class="dg-mask" x="352" y="40" width="112" height="56" rx="6"/>
+<rect class="dg-n dg-n-backend" x="352" y="40" width="112" height="56" rx="6"/>
+<text class="dg-name" x="408" y="72">Embedding</text>
+<rect class="dg-mask" x="496" y="40" width="128" height="56" rx="6"/>
+<rect class="dg-n dg-n-focal" x="496" y="40" width="128" height="56" rx="6"/>
+<text class="dg-name" x="560" y="70">Hybrid index</text>
+<text class="dg-sub" x="560" y="85">vector + keyword</text>
+<rect class="dg-mask" x="680" y="40" width="144" height="56" rx="6"/>
+<rect class="dg-n dg-n-focal" x="680" y="40" width="144" height="56" rx="6"/>
+<text class="dg-name" x="752" y="70">Reranker</text>
+<text class="dg-sub" x="752" y="85">precision</text>
+<rect class="dg-mask" x="24" y="168" width="152" height="56" rx="6"/>
+<rect class="dg-n dg-n-input" x="24" y="168" width="152" height="56" rx="6"/>
+<text class="dg-name" x="100" y="200">Fan&#x27;s question</text>
+<rect class="dg-mask" x="208" y="168" width="112" height="56" rx="6"/>
+<rect class="dg-n dg-n-backend" x="208" y="168" width="112" height="56" rx="6"/>
+<text class="dg-name" x="264" y="198">Query rewrite</text>
+<text class="dg-sub" x="264" y="213">+ fan&#x27;s context</text>
+<rect class="dg-mask" x="680" y="168" width="144" height="56" rx="6"/>
+<rect class="dg-n dg-n-backend" x="680" y="168" width="144" height="56" rx="6"/>
+<text class="dg-name" x="752" y="198">Model</text>
+<text class="dg-sub" x="752" y="213">answer with citations</text>
+<line class="dg-rule" x1="24" y1="244" x2="840" y2="244"/>
+<rect class="dg-n dg-n-input" x="24" y="255" width="16" height="10" rx="2"/>
+<text class="dg-legend" x="46" y="263">Person</text>
+<rect class="dg-n dg-n-store" x="107" y="255" width="16" height="10" rx="2"/>
+<text class="dg-legend" x="129" y="263">Owns data</text>
+<rect class="dg-n dg-n-backend" x="207" y="255" width="16" height="10" rx="2"/>
+<text class="dg-legend" x="229" y="263">Pipeline stage</text>
+<rect class="dg-n dg-n-focal" x="335" y="255" width="16" height="10" rx="2"/>
+<text class="dg-legend" x="357" y="263">Where quality is won</text>
+<line class="dg-a dg-a-muted" x1="497" y1="260" x2="521" y2="260" marker-end="url(#fig-12-1-m-muted)"/>
+<text class="dg-legend" x="529" y="263">Flow</text>
+</svg></div>

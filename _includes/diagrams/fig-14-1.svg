@@ -1,0 +1,41 @@
+<div class="dg-figure"><svg class="dg" viewBox="0 0 864 340" style="min-width:864px" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-14-1-title fig-14-1-desc">
+<title id="fig-14-1-title">The two planes of a SaaS platform</title>
+<desc id="fig-14-1-desc">The control plane manages tenants through onboarding, tenant identity, config and tiering, billing and metering, and tenant-aware ops; it provisions, configures and observes the application plane, which serves the venue-chain tenant, the festival tenant and 500 self-service venues.</desc>
+<defs><marker id="fig-14-1-m-muted" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-muted" points="0 0, 8 3, 0 6"/></marker><marker id="fig-14-1-m-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-accent" points="0 0, 8 3, 0 6"/></marker><marker id="fig-14-1-m-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-link" points="0 0, 8 3, 0 6"/></marker></defs>
+<rect class="dg-paper" width="100%" height="100%" rx="8"/>
+<rect class="dg-n dg-n-focal" x="24" y="24" width="816" height="96" rx="8"/><rect class="dg-mask" x="36" y="18" width="180" height="12" rx="2"/><text class="dg-eyebrow dg-l-accent" x="126" y="27">CONTROL PLANE · MANAGES TENANTS</text>
+<rect class="dg-zone" x="24" y="184" width="816" height="96" rx="8"/><rect class="dg-mask" x="36" y="178" width="196" height="12" rx="2"/><text class="dg-eyebrow" x="134" y="187">APPLICATION PLANE · SERVES TENANTS</text>
+<path class="dg-a dg-a-accent" d="M 432,120 L 432,184" marker-end="url(#fig-14-1-m-accent)"/>
+<rect class="dg-mask" x="440" y="146" width="196" height="12" rx="2"/><text class="dg-label dg-l-accent" x="538" y="155">PROVISIONS · CONFIGURES · OBSERVES</text>
+<rect class="dg-mask" x="48" y="48" width="144" height="48" rx="6"/>
+<rect class="dg-n dg-n-backend" x="48" y="48" width="144" height="48" rx="6"/>
+<text class="dg-name" x="120" y="76">Onboarding</text>
+<rect class="dg-mask" x="204" y="48" width="144" height="48" rx="6"/>
+<rect class="dg-n dg-n-backend" x="204" y="48" width="144" height="48" rx="6"/>
+<text class="dg-name" x="276" y="76">Tenant identity</text>
+<rect class="dg-mask" x="360" y="48" width="144" height="48" rx="6"/>
+<rect class="dg-n dg-n-backend" x="360" y="48" width="144" height="48" rx="6"/>
+<text class="dg-name" x="432" y="76">Config &amp; tiering</text>
+<rect class="dg-mask" x="516" y="48" width="144" height="48" rx="6"/>
+<rect class="dg-n dg-n-backend" x="516" y="48" width="144" height="48" rx="6"/>
+<text class="dg-name" x="588" y="76">Billing &amp; metering</text>
+<rect class="dg-mask" x="672" y="48" width="144" height="48" rx="6"/>
+<rect class="dg-n dg-n-backend" x="672" y="48" width="144" height="48" rx="6"/>
+<text class="dg-name" x="744" y="76">Tenant-aware ops</text>
+<rect class="dg-mask" x="48" y="208" width="224" height="48" rx="6"/>
+<rect class="dg-n dg-n-backend" x="48" y="208" width="224" height="48" rx="6"/>
+<text class="dg-name" x="160" y="236">Venue-chain tenant</text>
+<rect class="dg-mask" x="320" y="208" width="224" height="48" rx="6"/>
+<rect class="dg-n dg-n-backend" x="320" y="208" width="224" height="48" rx="6"/>
+<text class="dg-name" x="432" y="236">Festival tenant</text>
+<rect class="dg-mask" x="592" y="208" width="224" height="48" rx="6"/>
+<rect class="dg-n dg-n-backend" x="592" y="208" width="224" height="48" rx="6"/>
+<text class="dg-name" x="704" y="236">500 self-service venues</text>
+<line class="dg-rule" x1="24" y1="300" x2="840" y2="300"/>
+<rect class="dg-n dg-n-focal" x="24" y="311" width="16" height="10" rx="2"/>
+<text class="dg-legend" x="46" y="319">Control plane (highlighted)</text>
+<rect class="dg-n dg-n-backend" x="225" y="311" width="16" height="10" rx="2"/>
+<text class="dg-legend" x="247" y="319">Capability or tenant</text>
+<line class="dg-a dg-a-accent" x1="387" y1="316" x2="411" y2="316" marker-end="url(#fig-14-1-m-accent)"/>
+<text class="dg-legend" x="419" y="319">Manages</text>
+</svg></div>

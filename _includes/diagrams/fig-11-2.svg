@@ -1,0 +1,35 @@
+<div class="dg-figure"><svg class="dg" viewBox="0 0 864 356" style="min-width:864px" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-11-2-title fig-11-2-desc">
+<title id="fig-11-2-title">The error budget as automatic policy</title>
+<desc id="fig-11-2-desc">The remaining error budget decides the release posture: with budget left, ship features as canaries promote and flags open; when it is burning fast, slow down as canaries hold and risky flags freeze; when it is exhausted, do reliability work only until the budget recovers.</desc>
+<defs><marker id="fig-11-2-m-muted" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-muted" points="0 0, 8 3, 0 6"/></marker><marker id="fig-11-2-m-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-accent" points="0 0, 8 3, 0 6"/></marker><marker id="fig-11-2-m-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-link" points="0 0, 8 3, 0 6"/></marker></defs>
+<rect class="dg-paper" width="100%" height="100%" rx="8"/>
+<path class="dg-a dg-a-muted" d="M 176,108 L 176,76 Q 176,68 184,68 L 504,68" marker-end="url(#fig-11-2-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 272,168 L 504,168" marker-end="url(#fig-11-2-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 176,228 L 176,260 Q 176,268 184,268 L 504,268" marker-end="url(#fig-11-2-m-muted)"/>
+<rect class="dg-mask" x="326" y="48" width="28" height="12" rx="2"/><text class="dg-label" x="340" y="57">YES</text>
+<rect class="dg-mask" x="350" y="148" width="76" height="12" rx="2"/><text class="dg-label" x="388" y="157">BURNING FAST</text>
+<rect class="dg-mask" x="310" y="248" width="60" height="12" rx="2"/><text class="dg-label" x="340" y="257">EXHAUSTED</text>
+<polygon class="dg-mask" points="176,108 272,168 176,228 80,168"/>
+<polygon class="dg-n dg-n-focal" points="176,108 272,168 176,228 80,168"/>
+<text class="dg-name" x="176" y="164">Error budget</text>
+<text class="dg-name" x="176" y="180">remaining?</text>
+<rect class="dg-mask" x="504" y="40" width="280" height="56" rx="6"/>
+<rect class="dg-n dg-n-backend" x="504" y="40" width="280" height="56" rx="6"/>
+<text class="dg-name" x="644" y="70">Ship features</text>
+<text class="dg-sub" x="644" y="85">canaries promote, flags open</text>
+<rect class="dg-mask" x="504" y="140" width="280" height="56" rx="6"/>
+<rect class="dg-n dg-n-backend" x="504" y="140" width="280" height="56" rx="6"/>
+<text class="dg-name" x="644" y="170">Slow down</text>
+<text class="dg-sub" x="644" y="185">canaries hold, risky flags freeze</text>
+<rect class="dg-mask" x="504" y="240" width="280" height="56" rx="6"/>
+<rect class="dg-n dg-n-backend" x="504" y="240" width="280" height="56" rx="6"/>
+<text class="dg-name" x="644" y="270">Reliability work only</text>
+<text class="dg-sub" x="644" y="285">until budget recovers</text>
+<line class="dg-rule" x1="24" y1="316" x2="840" y2="316"/>
+<rect class="dg-n dg-n-focal" x="24" y="327" width="16" height="10" rx="2"/>
+<text class="dg-legend" x="46" y="335">The budget decides</text>
+<rect class="dg-n dg-n-backend" x="174" y="327" width="16" height="10" rx="2"/>
+<text class="dg-legend" x="196" y="335">Release posture</text>
+<line class="dg-a dg-a-muted" x1="308" y1="332" x2="332" y2="332" marker-end="url(#fig-11-2-m-muted)"/>
+<text class="dg-legend" x="340" y="335">Budget state</text>
+</svg></div>

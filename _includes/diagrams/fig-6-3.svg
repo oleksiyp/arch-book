@@ -1,0 +1,73 @@
+<div class="dg-figure"><svg class="dg" viewBox="0 0 864 572" style="min-width:864px" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-6-3-title fig-6-3-desc">
+<title id="fig-6-3-title">Encore&#x27;s refund process as an explicit model</title>
+<desc id="fig-6-3-desc">A refund request is approved automatically under 80 euros and more than 48 hours before the show, otherwise it goes to a human review; approval revokes the ticket, then the PSP refund retries until it succeeds or goes to manual resolution, and the seat is re-listed only if the show is more than 48 hours away.</desc>
+<defs><marker id="fig-6-3-m-muted" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-muted" points="0 0, 8 3, 0 6"/></marker><marker id="fig-6-3-m-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-accent" points="0 0, 8 3, 0 6"/></marker><marker id="fig-6-3-m-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-head dg-head-link" points="0 0, 8 3, 0 6"/></marker></defs>
+<rect class="dg-paper" width="100%" height="100%" rx="8"/>
+<path class="dg-a dg-a-muted" d="M 120,38 L 120,72" marker-end="url(#fig-6-3-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 200,96 L 352,96" marker-end="url(#fig-6-3-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 120,120 L 120,176" marker-end="url(#fig-6-3-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 200,200 L 272,200 Q 280,200 280,192 L 280,116 Q 280,108 288,108 L 352,108" marker-end="url(#fig-6-3-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 120,224 L 120,280" marker-end="url(#fig-6-3-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 120,328 L 120,364" marker-end="url(#fig-6-3-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 432,120 L 432,176" marker-end="url(#fig-6-3-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 432,224 L 432,280" marker-end="url(#fig-6-3-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 512,292 L 664,292" marker-end="url(#fig-6-3-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 432,328 L 432,400" marker-end="url(#fig-6-3-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 512,316 L 576,316 Q 584,316 584,324 L 584,404 Q 584,412 592,412 L 664,412" marker-end="url(#fig-6-3-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 512,432 L 664,432" marker-end="url(#fig-6-3-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 744,328 L 744,400" marker-end="url(#fig-6-3-m-muted)"/>
+<path class="dg-a dg-a-muted" d="M 744,448 L 744,484" marker-end="url(#fig-6-3-m-muted)"/>
+<rect class="dg-mask" x="128" y="49" width="112" height="12" rx="2"/><text class="dg-label" x="184" y="58">FAN REQUESTS REFUND</text>
+<rect class="dg-mask" x="222" y="76" width="108" height="12" rx="2"/><text class="dg-label" x="276" y="85">AUTO · &lt;€80 · &gt;48H</text>
+<rect class="dg-mask" x="128" y="142" width="112" height="12" rx="2"/><text class="dg-label" x="184" y="151">OTHERWISE · SLA 24H</text>
+<rect class="dg-mask" x="288" y="148" width="56" height="12" rx="2"/><text class="dg-label" x="316" y="157">APPROVED</text>
+<rect class="dg-mask" x="128" y="246" width="92" height="12" rx="2"/><text class="dg-label" x="174" y="255">DENIED · REASON</text>
+<rect class="dg-mask" x="440" y="142" width="88" height="12" rx="2"/><text class="dg-label" x="484" y="151">TICKET REVOKED</text>
+<rect class="dg-mask" x="440" y="246" width="108" height="12" rx="2"/><text class="dg-label" x="494" y="255">PSP REFUND · RETRY</text>
+<rect class="dg-mask" x="536" y="272" width="104" height="12" rx="2"/><text class="dg-label" x="588" y="281">RETRIES EXHAUSTED</text>
+<rect class="dg-mask" x="440" y="358" width="112" height="12" rx="2"/><text class="dg-label" x="496" y="367">&gt;48H · BACK ON SALE</text>
+<rect class="dg-mask" x="592" y="358" width="88" height="12" rx="2"/><text class="dg-label" x="636" y="367">≤48H · RETIRED</text>
+<rect class="dg-mask" x="752" y="358" width="72" height="12" rx="2"/><text class="dg-label" x="788" y="367">FINANCE OPS</text>
+<circle class="dg-start" cx="120" cy="32" r="6"/>
+<circle class="dg-end-ring" cx="120" cy="372" r="8"/><circle class="dg-start" cx="120" cy="372" r="5"/>
+<circle class="dg-end-ring" cx="744" cy="492" r="8"/><circle class="dg-start" cx="744" cy="492" r="5"/>
+<rect class="dg-mask" x="40" y="72" width="160" height="48" rx="8"/>
+<rect class="dg-n dg-n-backend" x="40" y="72" width="160" height="48" rx="8"/>
+<text class="dg-name" x="120" y="100">Requested</text>
+<rect class="dg-mask" x="40" y="176" width="160" height="48" rx="8"/>
+<rect class="dg-n dg-n-focal" x="40" y="176" width="160" height="48" rx="8"/>
+<text class="dg-name" x="120" y="198">Review</text>
+<text class="dg-sub" x="120" y="212">human task</text>
+<rect class="dg-mask" x="40" y="280" width="160" height="48" rx="8"/>
+<rect class="dg-n dg-n-backend" x="40" y="280" width="160" height="48" rx="8"/>
+<text class="dg-name" x="120" y="308">Denied</text>
+<rect class="dg-mask" x="352" y="72" width="160" height="48" rx="8"/>
+<rect class="dg-n dg-n-backend" x="352" y="72" width="160" height="48" rx="8"/>
+<text class="dg-name" x="432" y="100">Approved</text>
+<rect class="dg-mask" x="352" y="176" width="160" height="48" rx="8"/>
+<rect class="dg-n dg-n-backend" x="352" y="176" width="160" height="48" rx="8"/>
+<text class="dg-name" x="432" y="204">Invalidate ticket</text>
+<rect class="dg-mask" x="352" y="280" width="160" height="48" rx="8"/>
+<rect class="dg-n dg-n-backend" x="352" y="280" width="160" height="48" rx="8"/>
+<text class="dg-name" x="432" y="302">Reversing</text>
+<text class="dg-sub" x="432" y="316">PSP refund</text>
+<rect class="dg-mask" x="352" y="400" width="160" height="48" rx="8"/>
+<rect class="dg-n dg-n-backend" x="352" y="400" width="160" height="48" rx="8"/>
+<text class="dg-name" x="432" y="428">Relisting</text>
+<rect class="dg-mask" x="664" y="280" width="160" height="48" rx="8"/>
+<rect class="dg-n dg-n-focal" x="664" y="280" width="160" height="48" rx="8"/>
+<text class="dg-name" x="744" y="302">Manual resolution</text>
+<text class="dg-sub" x="744" y="316">finance ops</text>
+<rect class="dg-mask" x="664" y="400" width="160" height="48" rx="8"/>
+<rect class="dg-n dg-n-backend" x="664" y="400" width="160" height="48" rx="8"/>
+<text class="dg-name" x="744" y="428">Closed</text>
+<line class="dg-rule" x1="24" y1="532" x2="840" y2="532"/>
+<circle class="dg-start" cx="30" cy="548" r="5"/>
+<text class="dg-legend" x="40" y="551">Start / end</text>
+<rect class="dg-n dg-n-backend" x="129" y="543" width="16" height="10" rx="2"/>
+<text class="dg-legend" x="151" y="551">State</text>
+<rect class="dg-n dg-n-focal" x="207" y="543" width="16" height="10" rx="2"/>
+<text class="dg-legend" x="229" y="551">Where people step in</text>
+<line class="dg-a dg-a-muted" x1="369" y1="548" x2="393" y2="548" marker-end="url(#fig-6-3-m-muted)"/>
+<text class="dg-legend" x="401" y="551">Transition: event · guard</text>
+</svg></div>
