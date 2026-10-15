@@ -24,7 +24,7 @@ def fig_8_3():
     # nodes
     d.node(PX, 180, PW, 56, "Fan app", None, "input")
     d.node(PX, 324, PW, 56, "Organizer web", None, "input")
-    d.node(BX, 32, BW, 48, "Realtime edge (SSE)")
+    d.node(BX, 32, BW, 48, "Real-time edge (SSE)")
     d.node(BX, 180, BW, 56, "Fan BFF", "owned by fan-web team", "focal")
     d.node(BX, 324, BW, 56, "Organizer BFF", None, "focal")
     d.node(SX, 112, SW, 48, "Inventory")

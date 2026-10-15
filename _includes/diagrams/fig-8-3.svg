@@ -24,7 +24,7 @@
 <text class="dg-name" x="92" y="356">Organizer web</text>
 <rect class="dg-mask" x="336" y="32" width="176" height="48" rx="6"/>
 <rect class="dg-n dg-n-backend" x="336" y="32" width="176" height="48" rx="6"/>
-<text class="dg-name" x="424" y="60">Realtime edge (SSE)</text>
+<text class="dg-name" x="424" y="60">Real-time edge (SSE)</text>
 <rect class="dg-mask" x="336" y="180" width="176" height="56" rx="6"/>
 <rect class="dg-n dg-n-focal" x="336" y="180" width="176" height="56" rx="6"/>
 <text class="dg-name" x="424" y="210">Fan BFF</text>
