@@ -495,7 +495,7 @@ In the architecture decision record (ADR), the consequences row says Encore acce
 
 **Exercise 2.4.** Write Encore's style ADR (Figure 2.3) in the Chapter 1 format. The consequences row must name at least two real losses.
 
-### 2.5 Hedging Style Decisions {#25-styles-are-bets--hedge-them}
+<h3 id="25-styles-are-bets--hedge-them">2.5 Hedging Style Decisions</h3>
 
 Every style is a bet about which changes will come, so hedge it. Keep domain boundaries clean *inside* whatever you build: a modular monolith splits along its module boundaries far more cheaply than a tangled one, though transactions that span modules still have to be unwound (Chapter 9). Automate the boundary checks so the option to split stays open.
 
@@ -664,7 +664,7 @@ Two companion patterns cover the risky middle. **Branch by abstraction** (an int
 
 **Exercise 3.4.** For a monolith you know, name the first capability you would extract. Which disintegrator justifies it, and what would its routing rule look like?
 
-### 3.5 Decomposing the Database {#35-the-database-is-the-hardest-part}
+<h3 id="35-the-database-is-the-hardest-part">3.5 Decomposing the Database</h3>
 
 Splitting code is the easier half. The shared database is where migrations stall, and it yields only to a sequence. First give each context its own *schema*, which sets ownership on paper. Next replace cross-context joins with API calls or replicated read models. Then move the data: **change data capture** (CDC) streams every write from the old store to the new one while reads migrate gradually.
 
@@ -1205,7 +1205,7 @@ Chapter 5's dividing line still holds: choreograph the propagation of facts, and
 
 **Exercise 6.4.** Name one process at your work with a business name ("onboarding," "settlement") but no explicit model, only code reacting to code. What would its Figure 6.3 reveal?
 
-### 6.5 Streams as Products {#65-flow--streams-as-products}
+<h3 id="65-flow--streams-as-products">6.5 Streams as Products</h3>
 
 A stream can also be run as a **product**: discoverable, documented, schema-governed, and backed by a service-level objective (SLO), so teams *subscribe to* it the way they call an API. Encore's `ticket-sales.v2` stream has an owner, a contract, a lag SLO, and three consumers the producer has never met. When a data-science team builds demand forecasting in Chapter 12, it subscribes without meetings or export jobs. CloudEvents (for the envelope) and AsyncAPI (for the contract) keep such streams portable across brokers and clouds.
 
@@ -2279,7 +2279,7 @@ This settles Encore's search question. Search engines became products a decade a
 
 **Exercise 13.2.** Place your organization's five biggest homegrown systems on the evolution road. For any in product or commodity territory, name what keeping them costs per year.
 
-### 13.3 The Economics of Build and Buy {#133-the-honest-economics}
+<h3 id="133-the-honest-economics">13.3 The Economics of Build and Buy</h3>
 
 Build estimates run low because teams price the *construction* and forget the *ownership*. Robert Glass's widely cited estimate puts maintenance at 40% to 80% of software cost, about 60% on average, and that cost arrives after the builders have moved on. Then add your best engineers doing undifferentiated work, the bus factor of a system three people understand, and harder hiring for a stack nobody else runs. You can build it; the question is whether you want to be paying for it in year six.
 
