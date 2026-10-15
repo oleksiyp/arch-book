@@ -1413,6 +1413,14 @@ html[data-theme="dark"] .dg-figure {
   --dg-backend: #222b44;
 }
 svg.dg { width: 100%; height: auto; display: block; }
+/* Like the book's tables: figures may bleed past the prose column (864px drawings in a
+   ~780px column), centred on it; on screens narrower than that they scroll in their frame. */
+.main-content .dg-figure {
+  width: min(864px, 94vw);
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
 .dg .dg-paper, .dg .dg-mask { fill: var(--dg-paper); }
 .dg text { font-family: "Open Sans", "Helvetica Neue", Arial, sans-serif; }
 .dg .dg-name { fill: var(--dg-ink); font-size: 12px; font-weight: 600; text-anchor: middle; }
