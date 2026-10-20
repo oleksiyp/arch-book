@@ -1874,8 +1874,9 @@ html[data-theme="dark"] .series {
 
     svg { width: 0.66em; height: 0.66em; }
 
+    /* The label exists only while shown: a hidden one would still widen the page on phones. */
     &::after {
-        content: attr(data-tip);
+        content: none;
         position: absolute;
         z-index: 30;
         bottom: calc(100% + 8px);
@@ -1896,20 +1897,22 @@ html[data-theme="dark"] .series {
         font-family: "Open Sans", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
         white-space: normal;
         box-shadow: 0 6px 18px -6px rgba(0, 0, 0, 0.45);
-        transform: translate(-50%, 4px);
-        opacity: 0;
+        transform: translate(-50%, 0);
         pointer-events: none;
-        transition: opacity 0.15s ease, transform 0.15s ease;
+        animation: xref-tip 0.15s ease;
     }
 
     &:hover, &:focus-visible {
         border-color: #d9482b;
         background: #fff;
         text-decoration: none;
-
-        &::after { opacity: 1; transform: translate(-50%, 0); }
     }
+
+    &:focus-visible::after { content: attr(data-tip); }
+    @media (hover: hover) { &:hover::after { content: attr(data-tip); } }
 }
+
+@keyframes xref-tip { from { opacity: 0; transform: translate(-50%, 4px); } }
 
 html[data-theme="dark"] .main-content a.xref {
     border-color: rgba(232, 236, 243, 0.22);
