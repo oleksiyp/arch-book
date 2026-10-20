@@ -1483,3 +1483,364 @@ svg.dg { width: 100%; height: auto; display: block; }
 .dg .dg-activation { fill: RGBA(var(--dg-ink-rgb), 0.06); stroke: var(--dg-muted); stroke-width: 0.8; }
 .dg .dg-frame { fill: RGBA(var(--dg-ink-rgb), 0.02); stroke: RGBA(var(--dg-ink-rgb), 0.22); stroke-width: 1; }
 .dg .dg-frame-tab { fill: var(--dg-paper); stroke: RGBA(var(--dg-ink-rgb), 0.22); stroke-width: 1; }
+
+$wood-oak: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='140'%3E%3Cfilter id='w' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.0025 0.16' numOctaves='5' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.36 0 0 0 0 0.2 0 0 0 0 0.08 0 0 0 -3.4 2.1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' fill='%23c08a55'/%3E%3Crect width='100%25' height='100%25' filter='url(%23w)'/%3E%3C/svg%3E");
+$wood-walnut: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='140'%3E%3Cfilter id='w' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.0025 0.16' numOctaves='5' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.2 0 0 0 0 0.11 0 0 0 0 0.04 0 0 0 -3.4 2.1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' fill='%236a4429'/%3E%3Crect width='100%25' height='100%25' filter='url(%23w)'/%3E%3C/svg%3E");
+
+/* The series shelf (_includes/series.html). Closed, it is a wooden plank carrying the series name;
+   open, the books stand on a wooden shelf below it: turned to show their spines on wide screens,
+   a row of covers to swipe on phones. */
+.series {
+    /* oak by day, walnut by night: an SVG noise filter stretched sideways makes the grain */
+    --wood: #{$wood-oak};
+    --wood-ink: #3a210d;
+    --wood-glow: rgba(255, 228, 190, 0.4);
+    --wood-side: #a8713f;
+    --wood-back: rgba(62, 34, 12, 0.62);
+    --series-bg: #e9e6df;
+    --series-ink: #1b1f3b;
+    --series-muted: #5c6178;
+    --series-accent: #d9482b;
+    --series-blank: rgba(27, 31, 59, 0.35);
+    /* five books across the case: as wide as 8.5rem, narrower when the column is */
+    --cover-w: clamp(5.5rem, calc((min(100vw, 64rem) - 10.6rem) / 5 - 0.4rem), 8.5rem);
+    background: var(--series-bg);
+    color: var(--series-ink);
+    border-bottom: 1px solid rgba(27, 31, 59, 0.08);
+}
+
+html[data-theme="dark"] .series {
+    --wood: #{$wood-walnut};
+    --wood-ink: #f3e2c8;
+    --wood-glow: rgba(0, 0, 0, 0.5);
+    --wood-side: #573620;
+    --wood-back: rgba(20, 10, 4, 0.6);
+    --series-bg: #151931;
+    --series-ink: #e8ecf3;
+    --series-muted: #a9b2c3;
+    --series-accent: #f0714f;
+    --series-blank: rgba(232, 236, 243, 0.35);
+    border-bottom-color: transparent;
+}
+
+.series__inner {
+    max-width: 64rem;
+    margin: 0 auto;
+    padding: 1.6rem 1.5rem;
+}
+
+/* A board of wood: grain, a lit top edge, a darker front edge and a shadow beneath */
+.series__plank, .series__shelf::before {
+    background: var(--wood) 0 0 / 900px 140px;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 240, 215, 0.35),
+        inset 0 -5px 0 rgba(40, 20, 5, 0.28),
+        0 12px 18px -10px rgba(0, 0, 0, 0.55);
+}
+
+.series__plank {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    width: 100%;
+    margin: 0;
+    padding: 0.85rem 1.4rem 1.05rem;
+    border: 0;
+    border-radius: 5px;
+    color: var(--wood-ink);
+    text-align: left;
+    font: inherit;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+
+    transition: border-radius 0.3s ease;
+
+    &:focus-visible {
+        outline: 2px solid var(--series-accent);
+        outline-offset: 3px;
+    }
+}
+
+/* Open, the plank is the top board of a bookcase */
+.series.is-open .series__plank { border-radius: 5px 5px 0 0; }
+
+.series__sign {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-width: 0;
+    text-shadow: 0 1px 0 var(--wood-glow);
+}
+
+.series__label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    opacity: 0.85;
+}
+
+.series__title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    line-height: 1.2;
+    text-wrap: balance;
+}
+
+.series__toggle {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.8rem;
+    border: 1.5px solid currentColor;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-shadow: 0 1px 0 var(--wood-glow);
+
+    svg { transition: transform 0.3s ease; }
+}
+
+.series.is-open .series__toggle svg { transform: rotate(180deg); }
+
+/* Opening: the body grows from nothing to its height (grid rows animate where height cannot) */
+.series__body {
+    display: grid;
+    grid-template-rows: 1fr;
+}
+
+.series.js-ready:not(.is-open) .series__body { grid-template-rows: 0fr; }
+
+.series.can-animate .series__body { transition: grid-template-rows 0.45s ease; }
+
+.series__clip {
+    min-height: 0;
+    overflow: hidden;
+}
+
+.series__shelf {
+    --pad: 1.8rem;
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 1.2rem;
+    margin: 0;
+    padding: var(--pad) 1.4rem 0.4rem;
+    list-style: none;
+
+    /* the back of the case, between its side boards, in the shadow of the top board */
+    &::after {
+        content: "";
+        position: absolute;
+        z-index: -1;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: calc(var(--pad) + var(--cover-w) * 1.5);
+        background: linear-gradient(var(--wood-back), var(--wood-back)), var(--wood) 0 0 / 900px 140px;
+        box-shadow:
+            inset 0.7rem 0 0 var(--wood-side),
+            inset -0.7rem 0 0 var(--wood-side),
+            inset 0 1.4rem 1.4rem -0.8rem rgba(0, 0, 0, 0.55),
+            inset 1.6rem 0 1.2rem -1rem rgba(0, 0, 0, 0.35),
+            inset -1.6rem 0 1.2rem -1rem rgba(0, 0, 0, 0.35);
+    }
+
+    /* the shelf the books stand on: a lit top face over the front edge */
+    &::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: calc(var(--pad) + var(--cover-w) * 1.5);
+        height: 1.1rem;
+        border-radius: 0 0 4px 4px;
+        background: linear-gradient(rgba(255, 236, 205, 0.32) 0 0.3rem, rgba(0, 0, 0, 0.12) 0.3rem 0.36rem, transparent 0.36rem), var(--wood) 0 40px / 900px 140px;
+    }
+}
+
+.series__item {
+    position: relative;
+    margin: 0;
+    min-width: 0;
+}
+
+.series__book {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.9rem;
+    color: inherit;
+    text-decoration: none;
+    perspective: 900px;
+
+    &:hover, &:focus-visible { text-decoration: none; }
+}
+
+/* A cover and its spine folded back along the left edge */
+.series__3d {
+    position: relative;
+    display: block;
+    width: var(--cover-w);
+    height: calc(var(--cover-w) * 1.5);
+    transform-style: preserve-3d;
+    transform: rotateY(26deg);
+    transition: transform 0.35s ease;
+}
+
+.series__front, .series__spine {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    margin: 0;
+    max-width: none;
+    backface-visibility: hidden;
+}
+
+.series__front {
+    left: 0;
+    width: 100%;
+    box-shadow: 6px 10px 18px -8px rgba(0, 0, 0, 0.6);
+}
+
+.series__spine {
+    left: 0;
+    width: calc(var(--cover-w) * var(--spine));
+    transform-origin: left center;
+    transform: rotateY(-90deg);
+    filter: brightness(0.8);
+}
+
+.series__book:hover .series__3d,
+.series__book:focus-visible .series__3d {
+    transform: rotateY(8deg) translateY(-0.4rem);
+}
+
+/* The book in hand stands turned to the reader, a little forward of the others */
+.is-current .series__3d {
+    transform: rotateY(6deg) translateZ(24px);
+}
+
+.is-current .series__front {
+    box-shadow: 8px 14px 24px -8px rgba(0, 0, 0, 0.55);
+}
+
+/* The unwritten book: a dashed outline in the same place on the shelf */
+.series__blank {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.6rem;
+    border: 1.5px dashed rgba(255, 236, 205, 0.45);
+    color: rgba(255, 236, 205, 0.75);
+    background: rgba(255, 236, 205, 0.06);
+    font-size: 0.8rem;
+    font-weight: 700;
+    line-height: 1.25;
+    text-align: center;
+    box-shadow: none;
+    box-sizing: border-box;
+}
+
+.series__spine.series__blank { padding: 0; }
+
+.series__cap {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    text-align: center;
+    line-height: 1.3;
+}
+
+.series__num {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--series-muted);
+}
+
+.is-current .series__num { color: var(--series-accent); }
+
+.series__name {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--series-ink);
+    text-wrap: balance;
+}
+
+.series__sub {
+    font-size: 0.82rem;
+    color: var(--series-muted);
+}
+
+.is-soon .series__sub { font-style: italic; }
+
+/* Phones: no 3D; a row of front covers that scrolls sideways along the shelf */
+@media (max-width: 40rem) {
+    .series { --cover-w: 6.5rem; }
+
+    .series__shelf { --pad: 1.3rem; }
+
+    .series__inner { padding: 1.2rem 1rem; }
+
+    .series__plank { padding: 0.75rem 1rem 0.95rem; }
+
+    .series__title { font-size: 1.1rem; }
+
+    .series__label { font-size: 0.66rem; }
+
+    .series__toggle { padding: 0.35rem 0.65rem; font-size: 0.8rem; }
+
+    .series__clip { margin-inline: 0; }
+
+    .series__shelf {
+        display: flex;
+        gap: 1rem;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scroll-padding-inline: 1rem;
+        padding: var(--pad) 1.6rem 0.4rem;
+        scrollbar-width: none;
+
+        &::-webkit-scrollbar { display: none; }
+
+        /* the case runs behind the whole row and scrolls with it */
+        &::before, &::after {
+            right: auto;
+            width: calc(5 * var(--cover-w) + 4rem + 3.2rem);
+        }
+
+        &::before { height: 0.9rem; }
+    }
+
+    .series__item {
+        flex: 0 0 var(--cover-w);
+        scroll-snap-align: start;
+    }
+
+    .series__book { gap: 1.1rem; perspective: none; }
+
+    .series__3d,
+    .is-current .series__3d,
+    .series__book:hover .series__3d { transform: none; }
+
+    .series__spine { display: none; }
+
+    .is-current .series__front {
+        outline: 2px solid var(--series-accent);
+        outline-offset: 3px;
+    }
+
+    .series__name { font-size: 0.85rem; }
+
+    .series__sub { font-size: 0.75rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .series__3d, .series.can-animate .series__body, .series__toggle svg { transition: none; }
+}
+

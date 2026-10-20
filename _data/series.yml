@@ -1,0 +1,25 @@
+- key: architecture
+  title: Software Architecture
+  subtitle: The road to platform architecture
+  url: https://oleksiyp.github.io/arch-book/
+  spine: 0.0917
+- key: products
+  title: Building Products
+  subtitle: Deciding what to build
+  url: https://oleksiyp.github.io/buildproducts-book/
+  spine: 0.125
+- key: software
+  title: Building Software at Scale
+  subtitle: The system that builds the system
+  url: https://oleksiyp.github.io/buildsoftware-book/
+  spine: 0.1333
+- key: resilience
+  title: Building Resilient Systems
+  subtitle: Production engineering
+  url: https://oleksiyp.github.io/resilienteng-book/
+  spine: 0.125
+- key: operations
+  title: Operating Production Systems
+  subtitle: Keeping systems running
+  url: https://oleksiyp.github.io/prodsys-book/
+  spine: 0.1167

@@ -1,0 +1,69 @@
+{%- comment -%} The series shelf. Closed, it is a wooden plank carrying the series name; a tap opens it
+into the shelf: standing books on wide screens, a row of covers to swipe on phones.
+Pass open=true to show it open (the last chapter does). {%- endcomment -%}
+<section class="series" aria-label="The AI &amp; Cloud Era series"{% if include.open %} data-open="true"{% endif %}>
+    <div class="series__inner">
+        <button type="button" class="series__plank" aria-expanded="true" aria-controls="series-books">
+            <span class="series__sign">
+                <span class="series__label">The AI &amp; Cloud Era series</span>
+                <span class="series__title">Building modern software systems</span>
+            </span>
+            <span class="series__toggle"><span class="series__toggle-text">{{ site.data.series | size }} books</span><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 11.2L2.8 6l.75-.75L8 9.7l4.45-4.45.75.75L8 11.2z"/></svg></span>
+        </button>
+        <div class="series__body" id="series-books">
+            <div class="series__clip">
+                <ol class="series__shelf">
+                    {%- for b in site.data.series %}
+                    {%- assign current = false %}{% if b.key == site.series_key %}{% assign current = true %}{% endif %}
+                    <li class="series__item{% if current %} is-current{% endif %}{% if b.status == 'writing' %} is-soon{% endif %}" style="--spine: {{ b.spine | default: 0.1 }}">
+                        {%- if b.status == 'writing' %}
+                        <div class="series__book" aria-label="Book {{ forloop.index }}, {{ b.title }}: in writing">
+                            <span class="series__3d" aria-hidden="true"><span class="series__front series__blank">{{ b.title }}</span><span class="series__spine series__blank"></span></span>
+                        {%- else %}
+                        <a class="series__book" href="{{ b.url }}"{% if current %} aria-current="page"{% endif %}>
+                            <span class="series__3d" aria-hidden="true"><img class="series__front" src="{{ '/assets/series/' | append: b.key | append: '-front.webp' | relative_url }}" alt="" width="120" height="180" loading="lazy" decoding="async"><img class="series__spine" src="{{ '/assets/series/' | append: b.key | append: '-spine.webp' | relative_url }}" alt="" loading="lazy" decoding="async"></span>
+                        {%- endif %}
+                            <span class="series__cap">
+                                <span class="series__num">Book {{ forloop.index }}{% if current %} · reading now{% endif %}</span>
+                                <span class="series__name">{{ b.title }}</span>
+                                <span class="series__sub">{{ b.subtitle }}</span>
+                            </span>
+                        {%- if b.status == 'writing' %}</div>{% else %}</a>{% endif %}
+                    </li>
+                    {%- endfor %}
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+// Closed by default (open on the last chapter); a reader's choice is remembered on this device.
+// Without JS the shelf simply stays open.
+(function () {
+    var sec = document.currentScript.previousElementSibling;
+    var btn = sec.querySelector('.series__plank'), body = sec.querySelector('.series__body');
+    var shelf = sec.querySelector('.series__shelf'), text = sec.querySelector('.series__toggle-text');
+    var books = text.textContent;
+    function set(open) {
+        sec.classList.toggle('is-open', open);
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        body.inert = !open;
+        text.textContent = open ? 'Hide' : books;
+    }
+    var open = sec.dataset.open === 'true';
+    if (!open) try { open = localStorage.getItem('series-open') === '1'; } catch (e) {}
+    sec.classList.add('js-ready');
+    set(open);
+    // On phones the books scroll sideways: start with the book being read in the middle
+    var c = shelf.querySelector('.is-current');
+    if (c && shelf.scrollWidth > shelf.clientWidth) shelf.scrollLeft = c.offsetLeft - (shelf.clientWidth - c.offsetWidth) / 2;
+    requestAnimationFrame(function () { sec.classList.add('can-animate'); });
+    btn.addEventListener('click', function (e) {
+        if (e.detail) btn.blur();   // a mouse or a finger, not the keyboard: no focus ring
+        var o = !sec.classList.contains('is-open');
+        set(o);
+        try { localStorage.setItem('series-open', o ? '1' : '0'); } catch (e) {}
+        if (window.gtag) window.gtag('event', o ? 'series_open' : 'series_close');
+    });
+})();
+</script>

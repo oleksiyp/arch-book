@@ -9,3 +9,6 @@ google_analytics: "G-N146BPW9JR"
 newsletter_api: "https://newsletter-api.zengarden.space"
 presence_database_url: "https://arch-book-b857d-default-rtdb.europe-west1.firebasedatabase.app"
 exclude: [scripts, venv, README.md.bak, cover-lab]
+# This book's place in the series (_data/series.yml) and the page that ends it, where the shelf shows again
+series_key: architecture
+series_last: /ch/15/
