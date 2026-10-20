@@ -1844,3 +1844,79 @@ html[data-theme="dark"] .series {
     .series__3d, .series.can-animate .series__body, .series__toggle svg { transition: none; }
 }
 
+
+/* A link to another book of the series (_includes/xref.html): the book's cover, small, and an
+   arrow; hover or focus shows which book, chapter and section it opens. */
+.main-content a.xref {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    margin-left: 0.2em;
+    padding: 1px 3px 1px 2px;
+    border: 1px solid rgba(27, 31, 59, 0.18);
+    border-radius: 4px;
+    vertical-align: -0.15em;
+    line-height: 1;
+    color: #b23a20;
+    background: rgba(255, 255, 255, 0.55);
+    text-decoration: none;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+
+    img {
+        display: block;
+        width: 0.72em;
+        height: 1.08em;
+        max-width: none;
+        border-radius: 1px;
+        box-shadow: 0 0 0 0.5px rgba(27, 31, 59, 0.45);
+    }
+
+    svg { width: 0.66em; height: 0.66em; }
+
+    &::after {
+        content: attr(data-tip);
+        position: absolute;
+        z-index: 30;
+        bottom: calc(100% + 8px);
+        left: 50%;
+        width: max-content;
+        max-width: min(320px, 80vw);
+        padding: 6px 10px;
+        border-radius: 6px;
+        background: #1b1f3b;
+        color: #fff;
+        font-size: 0.78rem;
+        font-weight: 600;
+        line-height: 1.35;
+        text-align: left;
+        text-indent: 0;
+        word-spacing: normal;
+        hyphens: manual;
+        font-family: "Open Sans", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+        white-space: normal;
+        box-shadow: 0 6px 18px -6px rgba(0, 0, 0, 0.45);
+        transform: translate(-50%, 4px);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.15s ease, transform 0.15s ease;
+    }
+
+    &:hover, &:focus-visible {
+        border-color: #d9482b;
+        background: #fff;
+        text-decoration: none;
+
+        &::after { opacity: 1; transform: translate(-50%, 0); }
+    }
+}
+
+html[data-theme="dark"] .main-content a.xref {
+    border-color: rgba(232, 236, 243, 0.22);
+    background: rgba(255, 255, 255, 0.06);
+    color: #f0714f;
+
+    &::after { background: #e8ecf3; color: #1b1f3b; }
+
+    &:hover, &:focus-visible { border-color: #f0714f; background: rgba(255, 255, 255, 0.1); }
+}

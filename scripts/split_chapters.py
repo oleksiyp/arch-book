@@ -14,7 +14,7 @@ def describe(m):
     desc = re.search(r"<desc[^>]*>(.*?)</desc>", svg, re.S).group(1)
     return f"[Diagram: {html.unescape(title)}. {html.unescape(desc)}]"
 
-open("llms-full.txt", "w").write(re.sub(r"\{% include diagrams/([\w-]+)\.svg %\}", describe, readme))
+open("llms-full.txt", "w").write(re.sub(r"\{% include diagrams/([\w-]+)\.svg %\}", describe, re.sub(r"\{% include xref\.html[^%]*%\}", "", readme)))
 
 parts = re.split(r'\n(?=## Chapter (?:\d+):)', readme)
 os.makedirs("chapters", exist_ok=True)
